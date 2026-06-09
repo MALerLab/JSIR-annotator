@@ -1,0 +1,135 @@
+* { box-sizing: border-box; }
+
+:root {
+  --bg: #14171c;
+  --panel: #1c2127;
+  --panel2: #232a32;
+  --line: #2d343d;
+  --text: #e6e9ee;
+  --muted: #8b96a3;
+  --accent: #4f9dff;
+  --accent2: #ffb454;
+  --danger: #ff5d5d;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+#app { display: flex; height: 100vh; overflow: hidden; }
+
+/* ----- Sidebar ----- */
+#sidebar {
+  width: 260px;
+  min-width: 260px;
+  background: var(--panel);
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+}
+#sidebar h1 { font-size: 15px; margin: 4px 4px 10px; }
+#song-filter {
+  width: 100%;
+  padding: 7px 9px;
+  margin-bottom: 8px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text);
+}
+#song-list { list-style: none; margin: 0; padding: 0; overflow-y: auto; flex: 1; }
+#song-list li {
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 3px;
+  border: 1px solid transparent;
+}
+#song-list li:hover { background: var(--panel2); }
+#song-list li.active { background: var(--panel2); border-color: var(--accent); }
+#song-list li .t { font-weight: 600; }
+#song-list li .a { color: var(--muted); font-size: 12px; }
+#song-list li .dot { color: var(--accent2); font-size: 11px; margin-left: 4px; }
+
+/* ----- Editor ----- */
+#editor { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+#song-header { padding: 12px 16px 6px; }
+#song-title { font-size: 18px; font-weight: 700; }
+#song-sub { color: var(--muted); font-size: 12px; }
+
+#toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+}
+#toolbar button {
+  background: var(--panel2);
+  color: var(--text);
+  border: 1px solid var(--line);
+  padding: 6px 11px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#toolbar button:hover:not(:disabled) { border-color: var(--accent); }
+#toolbar button:disabled { opacity: 0.4; cursor: default; }
+#toolbar .chk { color: var(--muted); display: inline-flex; align-items: center; gap: 4px; }
+#toolbar .sep { width: 1px; height: 22px; background: var(--line); margin: 0 4px; }
+#zoom-label { color: var(--muted); min-width: 56px; text-align: center; }
+#time-readout { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--muted); }
+#status { color: var(--accent2); min-width: 80px; }
+
+/* ----- Waveform ----- */
+#wave-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: #0e1116;
+  flex: 1;
+  min-height: 200px;
+  position: relative;
+}
+/* full-timeline-width spacer: gives the native horizontal scrollbar its range */
+#wave-stage { position: relative; height: 100%; }
+/* viewport-width layer pinned to the left edge while the stage scrolls under it */
+#wave-sticky { position: sticky; left: 0; top: 0; height: 100%; }
+#wave-canvas, #overlay-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+#overlay-canvas { pointer-events: none; }
+#wave-canvas { cursor: crosshair; }
+
+/* ----- Inspector ----- */
+#inspector {
+  border-top: 1px solid var(--line);
+  background: var(--panel);
+  padding: 12px 16px;
+  min-height: 120px;
+}
+#inspector h2 { font-size: 13px; margin: 0 0 8px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
+.field { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.field label { width: 80px; color: var(--muted); }
+.field input[type="number"], .field input[type="text"] {
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text);
+  padding: 6px 9px;
+  min-width: 220px;
+}
+button.danger { background: transparent; border: 1px solid var(--danger); color: var(--danger); padding: 6px 11px; border-radius: 6px; cursor: pointer; }
+button.danger:hover { background: rgba(255,93,93,0.12); }
+button.small { background: var(--panel2); border: 1px solid var(--line); color: var(--text); padding: 4px 8px; border-radius: 5px; cursor: pointer; }
+
+#legend { padding: 8px 16px; border-top: 1px solid var(--line); font-size: 12px; }
+.muted { color: var(--muted); }
+.hidden { display: none; }

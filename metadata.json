@@ -1,0 +1,22 @@
+[
+    {
+        "title": "On Green Dolphin Street",
+        "artist": "Miles Davis",
+        "album": "Birth of the Cool",
+        "year": 1958,
+        "files": {
+            "audio": "audio/dolphin.mp3",
+            "beats": "beats/dolphin.txt"
+        }
+    },
+    {
+        "title": "Joy Spring",
+        "artist": "Clifford Brown",
+        "album": "Clifford Brown and Max Roach",
+        "year": 1958,
+        "files": {
+            "audio": "audio/spring.mp3",
+            "beats": "beats/spring.txt"
+        }
+    }
+]

@@ -1,0 +1,188 @@
+"""
+Web-based annotation tool for beat-tracked jazz recordings.
+
+Backend responsibilities:
+  - serve the single-page UI
+  - expose the dataset metadata
+  - serve audio files (with HTTP range support so seeking works)
+  - read / write beat files       (beats/<name>.txt   : one float per line)
+  - read / write section files     (sections/<name>.csv : columns "time","name")
+
+Run:
+    pip install flask          # or: pipenv install && pipenv shell
+    python app.py
+    # then open http://127.0.0.1:5000
+"""
+
+import csv
+import io
+import json
+import os
+import shutil
+
+from flask import (
+    Flask,
+    abort,
+    jsonify,
+    request,
+    send_file,
+    send_from_directory,
+)
+
+ROOT = os.path.dirname(os.path.abspath(__file__))
+AUDIO_DIR = os.path.join(ROOT, "audio")
+BEATS_DIR = os.path.join(ROOT, "beats")
+SECTIONS_DIR = os.path.join(ROOT, "sections")
+METADATA_PATH = os.path.join(ROOT, "metadata.json")
+
+app = Flask(__name__, static_folder="static", static_url_path="/static")
+
+
+# --------------------------------------------------------------------------- #
+# Helpers
+# --------------------------------------------------------------------------- #
+def load_metadata():
+    with open(METADATA_PATH, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def stem_for(audio_rel_path):
+    """audio/dolphin.mp3 -> dolphin"""
+    return os.path.splitext(os.path.basename(audio_rel_path))[0]
+
+
+def safe_stem(stem):
+    """Reject anything that could escape the data directories."""
+    if not stem or os.path.basename(stem) != stem:
+        abort(400, "invalid name")
+    return stem
+
+
+def read_beats(stem):
+    path = os.path.join(BEATS_DIR, stem + ".txt")
+    if not os.path.exists(path):
+        return []
+    beats = []
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                try:
+                    beats.append(float(line))
+                except ValueError:
+                    pass
+    beats.sort()
+    return beats
+
+
+def write_beats(stem, beats):
+    path = os.path.join(BEATS_DIR, stem + ".txt")
+    # Keep a one-time pristine backup of the original madmom output.
+    backup = path + ".orig"
+    if os.path.exists(path) and not os.path.exists(backup):
+        shutil.copy2(path, backup)
+    beats = sorted(float(b) for b in beats)
+    with open(path, "w", encoding="utf-8") as f:
+        for b in beats:
+            f.write(f"{b:.3f}\n")
+
+
+def read_sections(stem):
+    path = os.path.join(SECTIONS_DIR, stem + ".csv")
+    if not os.path.exists(path):
+        return []
+    sections = []
+    with open(path, "r", encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            try:
+                sections.append(
+                    {"time": float(row["time"]), "name": row.get("name", "")}
+                )
+            except (ValueError, KeyError, TypeError):
+                pass
+    sections.sort(key=lambda s: s["time"])
+    return sections
+
+
+def write_sections(stem, sections):
+    os.makedirs(SECTIONS_DIR, exist_ok=True)
+    path = os.path.join(SECTIONS_DIR, stem + ".csv")
+    sections = sorted(sections, key=lambda s: float(s["time"]))
+    buf = io.StringIO()
+    writer = csv.writer(buf)
+    writer.writerow(["time", "name"])
+    for s in sections:
+        writer.writerow([f"{float(s['time']):.3f}", s.get("name", "")])
+    with open(path, "w", encoding="utf-8", newline="") as f:
+        f.write(buf.getvalue())
+
+
+# --------------------------------------------------------------------------- #
+# Routes
+# --------------------------------------------------------------------------- #
+@app.route("/")
+def index():
+    return send_from_directory("static", "index.html")
+
+
+@app.route("/api/songs")
+def api_songs():
+    meta = load_metadata()
+    out = []
+    for entry in meta:
+        audio_rel = entry.get("files", {}).get("audio", "")
+        stem = stem_for(audio_rel)
+        out.append(
+            {
+                **{k: v for k, v in entry.items() if k != "files"},
+                "stem": stem,
+                "audio": audio_rel,
+                "beats_file": entry.get("files", {}).get("beats", ""),
+                "has_sections": os.path.exists(
+                    os.path.join(SECTIONS_DIR, stem + ".csv")
+                ),
+            }
+        )
+    return jsonify(out)
+
+
+@app.route("/api/song/<stem>")
+def api_song(stem):
+    stem = safe_stem(stem)
+    return jsonify(
+        {
+            "stem": stem,
+            "beats": read_beats(stem),
+            "sections": read_sections(stem),
+        }
+    )
+
+
+@app.route("/api/beats/<stem>", methods=["POST"])
+def api_save_beats(stem):
+    stem = safe_stem(stem)
+    data = request.get_json(force=True)
+    write_beats(stem, data.get("beats", []))
+    return jsonify({"ok": True, "count": len(data.get("beats", []))})
+
+
+@app.route("/api/sections/<stem>", methods=["POST"])
+def api_save_sections(stem):
+    stem = safe_stem(stem)
+    data = request.get_json(force=True)
+    write_sections(stem, data.get("sections", []))
+    return jsonify({"ok": True, "count": len(data.get("sections", []))})
+
+
+@app.route("/audio/<path:filename>")
+def serve_audio(filename):
+    path = os.path.join(AUDIO_DIR, filename)
+    if not os.path.isfile(path):
+        abort(404)
+    # conditional=True enables HTTP range requests -> smooth seeking.
+    return send_file(path, conditional=True)
+
+
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port=5000, debug=True)
