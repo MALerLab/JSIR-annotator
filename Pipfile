@@ -5,8 +5,13 @@ name = "pypi"
 
 [packages]
 flask = "*"
+"madmom " = {git = "https://github.com/CPJKU/madmom.git"}
+tqdm = "*"
+pandas = "*"
 
 [dev-packages]
+jupyter = "*"
+notebook = "*"
 
 [requires]
 python_version = "3.11"

@@ -80,23 +80,42 @@ function renderSongList() {
   ul.innerHTML = '';
   state.songs
     .filter((s) =>
-      (s.title + ' ' + (s.artist || '') + ' ' + (s.album || ''))
-        .toLowerCase()
-        .includes(filter)
+      [s.standard, s.artist, s.album, s.instrumentation]
+        .filter(Boolean).join(' ').toLowerCase().includes(filter)
     )
     .forEach((s) => {
       const li = document.createElement('li');
       if (state.current && state.current.stem === s.stem) li.classList.add('active');
+      const sub = [s.artist, s.instrumentation].filter(Boolean).join(' · ');
       li.innerHTML =
-        `<div class="t">${escapeHtml(s.title)}` +
+        `<div class="t">${escapeHtml(s.standard || '(untitled)')}` +
         (s.has_sections ? '<span class="dot" title="has saved sections">●</span>' : '') +
-        `</div><div class="a">${escapeHtml(s.artist || '')}${s.year ? ' · ' + s.year : ''}</div>`;
+        `</div><div class="a">${escapeHtml(sub)}</div>`;
       li.onclick = () => selectSong(s);
       ul.appendChild(li);
     });
 }
 
 $('song-filter').addEventListener('input', renderSongList);
+
+function renderSongMeta(song) {
+  const fields = [
+    ['Standard', song.standard],
+    ['Artist', song.artist],
+    ['Album', song.album],
+    ['Instrumentation', song.instrumentation],
+  ];
+  let html = fields
+    .filter(([, v]) => v)
+    .map(([k, v]) => `<span class="meta-field"><b>${k}:</b> ${escapeHtml(v)}</span>`)
+    .join('');
+  if (song.yt_id) {
+    const url = `https://www.youtube.com/watch?v=${encodeURIComponent(song.yt_id)}`;
+    html += `<a class="meta-yt" href="${url}" target="_blank" rel="noopener" ` +
+            `title="Open source video">▶ YouTube (${escapeHtml(song.yt_id)})</a>`;
+  }
+  $('song-meta').innerHTML = html;
+}
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"]/g, (c) =>
@@ -116,19 +135,32 @@ async function selectSong(song) {
   state.currentTime = 0;
   renderSongList();
   setStatus('loading…');
-  $('song-title').textContent = song.title;
-  $('song-sub').textContent =
-    [song.artist, song.album, song.year].filter(Boolean).join(' · ');
+  $('song-title').textContent = song.standard || '(untitled)';
+  renderSongMeta(song);
 
-  const [annRes, audioRes] = await Promise.all([
-    fetch(`/api/song/${song.stem}`).then((r) => r.json()),
-    fetch(`/audio/${song.audio.replace(/^audio\//, '')}`).then((r) => r.arrayBuffer()),
-  ]);
+  let annRes, buffer;
+  try {
+    const audioUrl = `/audio/${song.audio.replace(/^audio\//, '')}`;
+    const [ann, audioResp] = await Promise.all([
+      fetch(`/api/song/${song.stem}`).then((r) => r.json()),
+      fetch(audioUrl),
+    ]);
+    if (!audioResp.ok) throw new Error(`audio HTTP ${audioResp.status}`);
+    annRes = ann;
+    buffer = await ctx().decodeAudioData(await audioResp.arrayBuffer());
+  } catch (err) {
+    // stale selection? ignore if the user moved on
+    if (state.current !== song) return;
+    state.buffer = null;
+    enableControls(false);
+    setStatus(`could not load audio (${err.message})`);
+    return;
+  }
+  if (state.current !== song) return; // a newer selection won the race
 
   state.beats = annRes.beats.map((t) => ({ t }));
   state.sections = annRes.sections.map((s) => ({ time: s.time, name: s.name }));
-
-  state.buffer = await ctx().decodeAudioData(audioRes);
+  state.buffer = buffer;
   state.duration = state.buffer.duration;
 
   fitZoom();
