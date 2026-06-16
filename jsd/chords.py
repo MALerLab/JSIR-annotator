@@ -22,11 +22,47 @@ roots = {
   "A#": 10,
   "B": 11,
   "Bb": 10,
-  "B#": 0,
-  "NC": None
+  "B#": 0
 }
 
-qualities = {
+wjd_degrees = {
+  "1": 0,
+  "3b": 3,
+  "3": 4,
+  "4": 5,
+  "5b": 6,
+  "5": 7,
+  "6b": 8,
+  "6": 9,
+  "7b": 10,
+  "7": 11,
+  "9": 2,
+  "9b": 1,
+  "9#": 3,
+  "11": 5,
+  "11b": 4,
+  "11#": 6,
+  "13b": 8,
+  "13": 9,
+}
+
+cace_degrees = {
+  "1": 0,
+  "b3": 3,
+  "3": 4,
+  "4": 5,
+  "b5": 6,
+  "5": 7,
+  "b6": 8,
+  "6": 9,
+  "b7": 10,
+  "7": 11,
+  "9": 2,
+  "b9": 1,
+}
+
+
+wjd_qualities = {
   "j": [0, 4, 7],
   "-": [0, 3, 7],
   "j7": [0, 4, 7, 11],
@@ -49,13 +85,31 @@ qualities = {
   "-69": [0, 3, 7, 9, 14],
 }
 
+cace_qualities = {
+  "maj": [0, 4, 7],
+  "min": [0, 3, 7],
+  "maj7": [0, 4, 7, 11],
+  "maj9": [0, 4, 7, 11, 14],
+  "min7": [0, 3, 7, 10],
+  "min9": [0, 3, 7, 10, 14],
+  "minmaj7": [0, 3, 7, 11],
+  "hdim7": [0, 3, 6, 10],
+  "7": [0, 4, 7, 10],
+  "dim": [0, 3, 6],
+  "maj6": [0, 4, 7, 9],
+  "min6": [0, 3, 7, 9],
+  "9": [0, 4, 7, 10, 14],
+  "sus4": [0, 5, 7],
+}
 
-def parse_chord(chord_str) -> tuple[Union[str, None], Union[str, None], Union[str, None], Union[str, None]]:
+
+def parse_wjd_chord(chord_str) -> tuple[Union[int, None], Union[list[int], None], Union[int, None], Union[list[int], None]]:
   if chord_str == "NC":
     return None, None, None, None
 
   if "/" in chord_str:
     chord_str, bass = chord_str.split("/")
+    bass = roots.get(bass)
   else:
     bass = None
 
@@ -63,22 +117,79 @@ def parse_chord(chord_str) -> tuple[Union[str, None], Union[str, None], Union[st
   root = None
   for i in range(1, 3):
     if chord_str[:i] in roots:
-      root = chord_str[:i]
+      root = roots[chord_str[:i]]
+      root_str = chord_str[:i]
   if root is None:
     raise ValueError(f"Invalid chord: {chord_str}")
 
   # find quality
-  if chord_str[len(root):] == "":
+  if chord_str[len(root_str):] == "":
     return root, None, bass, None
   
   quality = None
   for i in range (1, 5):
-    if chord_str[len(root):len(root)+i] in qualities:
-      quality = chord_str[len(root):len(root)+i]
-      extensions = chord_str[len(root)+i:] if len(chord_str) > len(root) + i else None
+    if chord_str[len(root_str):len(root_str)+i] in wjd_qualities:
+      quality = chord_str[len(root_str):len(root_str)+i]
+      extension_str = chord_str[len(root_str)+i:] if len(chord_str) > len(root_str) + i else None
 
   if quality is None:
-    raise ValueError(f"Invalid chord quality: {chord_str[len(root):]} in chord {chord_str}")
+    raise ValueError(f"Invalid chord quality: {chord_str[len(root_str):]} in chord {chord_str}")
 
+  quality = wjd_qualities[quality]
   
+  extensions = []
+  # in this version, extensions are written with no separator, e.g. "C7911" instead of "C7(9,11)"
+  if extension_str is None:
+    return root, quality, bass, None
+  
+  while len(extension_str) > 0:
+    extension_candidate = None
+    last_i = 0
+    for i in range(1, 4):
+      if extension_str[:i] in wjd_degrees:
+        extension_candidate = wjd_degrees[extension_str[:i]]
+        last_i = i
+    extensions.append(extension_candidate)
+    extension_str = extension_str[last_i:]
+  
+  return root, quality, bass, extensions
+
+
+def parse_cace_chord(chord_str) -> tuple[Union[int, None], Union[list[int], None], Union[int, None], Union[list[int], None]]:
+  if chord_str == "N":
+    return None, None, None, None
+
+  if "/" in chord_str:
+    chord_str, bass = chord_str.split("/")
+    bass = cace_degrees.get(bass)
+  else:
+    bass = None
+
+  # find root note
+  root_str = chord_str.split(":")[0]
+  root = roots.get(root_str)
+  if root is None:
+    raise ValueError(f"Invalid chord: {chord_str}")
+
+  quality_str = chord_str[len(root_str)+1:]
+
+  # find quality
+  if chord_str[len(root_str)+1:] == "":
+    return root, None, bass, None
+
+  quality = None
+  extensions = None
+  if quality_str.startswith("("):
+    quality = [cace_degrees[note] for note in quality_str[1:-1].split(",") if note in cace_degrees]
+  else:
+    for i in range (1, 8):
+      if len(quality_str) < i:
+        break
+      if quality_str[:i] in cace_qualities:
+        quality = cace_qualities[quality_str[:i]]
+        extensions = [cace_degrees[note] for note in quality_str[i+1:-1].split(",")] if len(quality_str) > i and quality_str[i] == "(" else None
+
+  if quality is None:
+    raise ValueError(f"Invalid chord quality: {chord_str[len(root_str)+1:]} in chord {chord_str}")
+
   return root, quality, bass, extensions
