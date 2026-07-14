@@ -13,9 +13,10 @@ python app.py
 
 The dataset is read from this folder:
 
-- `metadata.json` — song list (audio ↔ beats pairing + metadata)
-- `audio/*.mp3`   — recordings
+- `metadata.json` — song list (audio/beats/chords pairing + metadata)
+- `audio/*.wav`   — recordings
 - `beats/*.txt`   — beat times, one float (seconds) per line
+- `chords/*.csv`  — chord events (`time,chord`); each lasts until the next start
 - `sections/*.csv` — **output**: section labels (`time,name`), one file per song
 
 ## Using it
@@ -33,8 +34,15 @@ The dataset is read from this folder:
   the playhead — its start snaps to the nearest beat and it auto-fills to the
   next section (or end of track). Name it in the inspector. Drag a section's top
   tab to move its start (snaps on release).
+- **Chords**: shown in the strip between the ruler and the waveform, coloured by
+  chord name (runs of the same chord read as one band). Click a chord block to
+  select it, then edit the name / start time in the inspector; drag a block to
+  move its start (snaps to beat on release); press **C** (or *+ Chord*) to add
+  one at the playhead; **Del** removes the selected chord.
 - **Zoom** with −/+; **Follow** auto-scrolls during playback.
-- **Save** writes `beats/<name>.txt` and `sections/<name>.csv`.
+- **Save** writes `beats/<name>.txt`, `sections/<name>.csv`, and
+  `chords/<name>.csv` (the original chord file is backed up to `.csv.orig` on
+  first edit).
 
 ## Notes
 

@@ -21,7 +21,8 @@
 // Constants & state
 // ----------------------------------------------------------------------------
 const RULER_H = 22;           // top scrub/timeline strip
-const LANE_H = 22;            // section-tab lane (below the ruler)
+const SECTION_LANE_H = 22;    // section-tab lane (below the ruler)
+const CHORD_LANE_H = 22;      // chord lane (below sections, above the waveform)
 const BEAT_HIT_PX = 5;        // click tolerance for selecting/dragging a beat
 const LOOKAHEAD = 0.12;       // metronome scheduling lookahead (s)
 const SCHED_MS = 25;          // metronome scheduler tick (ms)
@@ -33,7 +34,8 @@ const state = {
   duration: 0,
   beats: [],            // [{t}] (kept sorted)
   sections: [],         // [{time, name}] (kept sorted)
-  selected: null,       // {kind:'beat'|'section', obj}
+  chords: [],           // [{time, chord}] (kept sorted)
+  selected: null,       // {kind:'beat'|'section'|'chord', obj}
   pxPerSec: 60,
   totalW: 0,            // full timeline width in px (duration * pxPerSec)
   _vw: 0,               // viewport width (canvas css width)
@@ -160,6 +162,7 @@ async function selectSong(song) {
 
   state.beats = annRes.beats.map((t) => ({ t }));
   state.sections = annRes.sections.map((s) => ({ time: s.time, name: s.name }));
+  state.chords = (annRes.chords || []).map((c) => ({ time: c.time, chord: c.chord }));
   state.buffer = buffer;
   state.duration = state.buffer.duration;
 
@@ -186,14 +189,16 @@ function clampZoom(z) {
 
 function enableControls(on) {
   ['btn-play', 'btn-stop', 'btn-prev-beat', 'btn-next-beat',
-   'btn-prev-section', 'btn-next-section', 'btn-add-section', 'btn-add-beat',
-   'btn-delete', 'btn-zoom-in', 'btn-zoom-out', 'btn-save'].forEach((id) => ($(id).disabled = !on));
+   'btn-prev-section', 'btn-next-section', 'btn-add-section', 'btn-add-chord',
+   'btn-add-beat', 'btn-delete', 'btn-zoom-in', 'btn-zoom-out', 'btn-save'].forEach((id) => ($(id).disabled = !on));
 }
 
 // ----------------------------------------------------------------------------
 // Geometry / canvas layout
 // ----------------------------------------------------------------------------
-const bodyTop = () => RULER_H + LANE_H;
+const sectionLaneTop = () => RULER_H;
+const chordLaneTop = () => RULER_H + SECTION_LANE_H;
+const bodyTop = () => RULER_H + SECTION_LANE_H + CHORD_LANE_H;
 function tx(t) { return t * state.pxPerSec - waveScroll.scrollLeft; }       // time -> viewport x
 function xToTime(x) { return (x + waveScroll.scrollLeft) / state.pxPerSec; } // viewport x -> time
 
@@ -289,11 +294,14 @@ function renderStatic() {
   wctx.fillStyle = '#11151b';
   wctx.fillRect(0, 0, vw, RULER_H);
   wctx.fillStyle = '#0c0f14';
-  wctx.fillRect(0, RULER_H, vw, LANE_H);
+  wctx.fillRect(0, sectionLaneTop(), vw, SECTION_LANE_H);
+  wctx.fillStyle = '#0a0d12';
+  wctx.fillRect(0, chordLaneTop(), vw, CHORD_LANE_H);
 
   drawRuler(vw, scrollLeft);
 
   // --- sections (visible only) ---
+  const slTop = sectionLaneTop();
   const sorted = [...state.sections].sort((a, b) => a.time - b.time);
   sorted.forEach((sec, i) => {
     const x0 = tx(sec.time);
@@ -305,12 +313,12 @@ function renderStatic() {
     const selected = state.selected && state.selected.kind === 'section' && state.selected.obj === sec;
     // tab
     wctx.fillStyle = selected ? col : hexA(col, 0.5);
-    wctx.fillRect(x0, RULER_H, Math.max(2, x1 - x0), LANE_H);
-    // start divider
+    wctx.fillRect(x0, slTop, Math.max(2, x1 - x0), SECTION_LANE_H);
+    // start divider (full height, through the lanes and waveform)
     wctx.strokeStyle = col;
     wctx.lineWidth = selected ? 2 : 1;
     wctx.beginPath();
-    wctx.moveTo(x0 + 0.5, RULER_H);
+    wctx.moveTo(x0 + 0.5, slTop);
     wctx.lineTo(x0 + 0.5, h);
     wctx.stroke();
     // label
@@ -319,11 +327,13 @@ function renderStatic() {
     wctx.textBaseline = 'middle';
     wctx.save();
     wctx.beginPath();
-    wctx.rect(x0 + 4, RULER_H, Math.max(0, x1 - x0 - 6), LANE_H);
+    wctx.rect(x0 + 4, slTop, Math.max(0, x1 - x0 - 6), SECTION_LANE_H);
     wctx.clip();
-    wctx.fillText(sec.name || '(unnamed)', x0 + 6, RULER_H + LANE_H / 2 + 1);
+    wctx.fillText(sec.name || '(unnamed)', x0 + 6, slTop + SECTION_LANE_H / 2 + 1);
     wctx.restore();
   });
+
+  drawChords(vw);
 
   // --- waveform (read straight from the peak cache) ---
   wctx.strokeStyle = '#3a4756';
@@ -378,12 +388,99 @@ function drawRuler(vw, scrollLeft) {
     wctx.stroke();
     wctx.fillText(fmtTime(t), x + 3, 3);
   }
-  // lane / ruler separators
+  // lane separators
   wctx.strokeStyle = '#2d343d';
   wctx.beginPath();
-  wctx.moveTo(0, RULER_H + 0.5); wctx.lineTo(vw, RULER_H + 0.5);
-  wctx.moveTo(0, RULER_H + LANE_H + 0.5); wctx.lineTo(vw, RULER_H + LANE_H + 0.5);
+  for (const yy of [RULER_H, chordLaneTop(), bodyTop()]) {
+    wctx.moveTo(0, yy + 0.5); wctx.lineTo(vw, yy + 0.5);
+  }
   wctx.stroke();
+}
+
+// ----------------------------------------------------------------------------
+// Chord lane
+// ----------------------------------------------------------------------------
+function chordEnd(ch) {
+  // first chord that starts strictly after this one (sorted) -> O(log n)
+  let lo = 0, hi = state.chords.length;
+  while (lo < hi) {
+    const m = (lo + hi) >> 1;
+    if (state.chords[m].time <= ch.time) lo = m + 1; else hi = m;
+  }
+  return lo < state.chords.length ? state.chords[lo].time : state.duration;
+}
+
+// Stable hue per chord name -> runs of the same chord share a colour and read
+// as one continuous band even though each event stays individually selectable.
+function chordHue(name) {
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) % 360;
+  return h;
+}
+
+function drawChords(vw) {
+  const top = chordLaneTop();
+  const h = CHORD_LANE_H;
+  wctx.font = '11px system-ui, sans-serif';
+  wctx.textBaseline = 'middle';
+
+  const tStart = xToTime(-2);
+  let i = lowerBoundChord(tStart);
+  // back up one so a chord starting left of the viewport still paints its block
+  if (i > 0) i--;
+  let labeledFirst = false; // pin the leftmost visible run's label to the edge
+  for (; i < state.chords.length; i++) {
+    const ch = state.chords[i];
+    const x0 = tx(ch.time);
+    if (x0 > vw) break;
+    const x1 = tx(chordEnd(ch));
+    if (x1 < 0) continue;
+    const prev = i > 0 ? state.chords[i - 1] : null;
+    const isNew = !prev || prev.chord !== ch.chord;
+    const selected = state.selected && state.selected.kind === 'chord' && state.selected.obj === ch;
+    const hue = chordHue(ch.chord || '');
+
+    // block fill (same-named neighbours share colour -> look merged)
+    wctx.fillStyle = `hsla(${hue}, 55%, 50%, ${selected ? 0.6 : 0.32})`;
+    wctx.fillRect(x0, top, Math.max(0.5, x1 - x0), h);
+
+    if (selected) {
+      wctx.strokeStyle = '#fff';
+      wctx.lineWidth = 2;
+      wctx.strokeRect(x0 + 1, top + 1, Math.max(1, x1 - x0 - 2), h - 2);
+    } else if (isNew) {
+      // boundary divider only where the chord actually changes
+      wctx.strokeStyle = `hsl(${hue}, 60%, 70%)`;
+      wctx.lineWidth = 1;
+      wctx.beginPath();
+      wctx.moveTo(x0 + 0.5, top);
+      wctx.lineTo(x0 + 0.5, top + h);
+      wctx.stroke();
+    }
+
+    // label at the start of each run; also force the first visible block so a
+    // chord held across the viewport edge keeps a (left-pinned) label
+    if (ch.chord && (isNew || !labeledFirst)) {
+      const cx = Math.max(x0, 0);              // clip to the on-screen block extent
+      wctx.save();
+      wctx.beginPath();
+      wctx.rect(cx, top, Math.max(0, x1 - cx), h);
+      wctx.clip();
+      wctx.fillStyle = '#f2f5f8';
+      wctx.fillText(ch.chord, Math.max(x0 + 5, cx + 3), top + h / 2 + 1);
+      wctx.restore();
+    }
+    labeledFirst = true;
+  }
+}
+
+function lowerBoundChord(t) {
+  let lo = 0, hi = state.chords.length;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (state.chords[mid].time < t) lo = mid + 1; else hi = mid;
+  }
+  return lo;
 }
 
 function fmtTime(t) {
@@ -627,6 +724,24 @@ function addSectionAtPlayhead() {
   setTimeout(() => { $('section-name').focus(); $('section-name').select(); }, 0);
 }
 
+function addChordAtPlayhead() {
+  const raw = state.playing ? playPos() : state.currentTime;
+  const t = snapToBeat(raw);
+  const existing = state.chords.find((c) => Math.abs(c.time - t) < 1e-3);
+  if (existing) {
+    state.selected = { kind: 'chord', obj: existing };
+  } else {
+    const ch = { time: t, chord: 'N.C.' };
+    state.chords.push(ch);
+    state.chords.sort((a, b) => a.time - b.time);
+    state.selected = { kind: 'chord', obj: ch };
+    markDirty();
+  }
+  scheduleRender();
+  updateInspector();
+  setTimeout(() => { $('chord-name').focus(); $('chord-name').select(); }, 0);
+}
+
 // ----------------------------------------------------------------------------
 // Navigation: jump the playhead to the prev/next beat or section
 // ----------------------------------------------------------------------------
@@ -671,6 +786,9 @@ function deleteSelected() {
     const i = state.beats.indexOf(state.selected.obj);
     if (i >= 0) state.beats.splice(i, 1);
     if (state.playing) state.nextBeatIdx = lowerBound(playPos());
+  } else if (state.selected.kind === 'chord') {
+    const i = state.chords.indexOf(state.selected.obj);
+    if (i >= 0) state.chords.splice(i, 1);
   } else {
     const i = state.sections.indexOf(state.selected.obj);
     if (i >= 0) state.sections.splice(i, 1);
@@ -688,6 +806,7 @@ function updateInspector() {
   $('inspector-empty').classList.add('hidden');
   $('inspector-beat').classList.add('hidden');
   $('inspector-section').classList.add('hidden');
+  $('inspector-chord').classList.add('hidden');
   $('btn-delete').disabled = !state.selected;
 
   if (!state.selected) { $('inspector-empty').classList.remove('hidden'); return; }
@@ -697,6 +816,12 @@ function updateInspector() {
     const idx = state.beats.indexOf(state.selected.obj);
     $('beat-index').textContent = idx >= 0 ? `${idx + 1} / ${state.beats.length}` : '—';
     $('beat-time').value = state.selected.obj.t.toFixed(3);
+  } else if (state.selected.kind === 'chord') {
+    $('inspector-chord').classList.remove('hidden');
+    const c = state.selected.obj;
+    $('chord-name').value = c.chord;
+    $('chord-time').value = c.time.toFixed(3);
+    $('chord-end').textContent = chordEnd(c).toFixed(3) + ' s';
   } else {
     $('inspector-section').classList.remove('hidden');
     const s = state.selected.obj;
@@ -747,10 +872,37 @@ $('section-snap').addEventListener('click', () => {
 });
 $('section-delete').addEventListener('click', deleteSelected);
 
+$('chord-name').addEventListener('input', (e) => {
+  if (!state.selected || state.selected.kind !== 'chord') return;
+  state.selected.obj.chord = e.target.value;
+  markDirty();
+  scheduleRender();
+});
+$('chord-time').addEventListener('change', (e) => {
+  if (!state.selected || state.selected.kind !== 'chord') return;
+  const v = parseFloat(e.target.value);
+  if (!isNaN(v)) {
+    state.selected.obj.time = Math.max(0, Math.min(state.duration, v));
+    state.chords.sort((a, b) => a.time - b.time);
+    markDirty();
+    scheduleRender();
+    updateInspector();
+  }
+});
+$('chord-snap').addEventListener('click', () => {
+  if (!state.selected || state.selected.kind !== 'chord') return;
+  state.selected.obj.time = snapToBeat(state.selected.obj.time);
+  state.chords.sort((a, b) => a.time - b.time);
+  markDirty();
+  scheduleRender();
+  updateInspector();
+});
+$('chord-delete').addEventListener('click', deleteSelected);
+
 // ----------------------------------------------------------------------------
 // Canvas interaction (scrub / click / drag)
 // ----------------------------------------------------------------------------
-let drag = null; // {kind:'scrub'|'beat'|'section', ...}
+let drag = null; // {kind:'scrub'|'beat'|'section'|'chord', ...}
 
 waveCanvas.addEventListener('pointerdown', (e) => {
   if (!state.buffer) return;
@@ -772,7 +924,7 @@ waveCanvas.addEventListener('pointerdown', (e) => {
   }
 
   // Section lane -> select / drag a section
-  if (y < RULER_H + LANE_H) {
+  if (y < chordLaneTop()) {
     const sec = sectionAtX(x);
     if (sec) {
       state.selected = { kind: 'section', obj: sec };
@@ -782,6 +934,19 @@ waveCanvas.addEventListener('pointerdown', (e) => {
       updateInspector();
       return;
     }
+  }
+
+  // Chord lane -> select / drag a chord
+  if (y < bodyTop()) {
+    const ch = chordAtX(x);
+    if (ch) {
+      state.selected = { kind: 'chord', obj: ch };
+      drag = { kind: 'chord', obj: ch };
+      waveCanvas.setPointerCapture(e.pointerId);
+      scheduleRender();
+      updateInspector();
+    }
+    return; // clicks in the chord lane never seek
   }
 
   // Body -> beats (nearest within tolerance) else seek / shift-add
@@ -836,6 +1001,9 @@ waveCanvas.addEventListener('pointerup', () => {
   } else if (drag.kind === 'section') {
     drag.obj.time = snapToBeat(drag.obj.time);
     state.sections.sort((a, b) => a.time - b.time);
+  } else if (drag.kind === 'chord') {
+    drag.obj.time = snapToBeat(drag.obj.time);
+    state.chords.sort((a, b) => a.time - b.time);
   }
   drag = null;
   scheduleRender();
@@ -861,6 +1029,17 @@ function sectionAtX(x) {
     if (x >= tx(s.time) && x < tx(sectionEnd(s))) found = s;
   }
   return found;
+}
+
+function chordAtX(x) {
+  const t = xToTime(x);
+  let found = null;
+  // chords sorted by time -> the matching event is the last one starting <= t
+  for (let i = 0; i < state.chords.length; i++) {
+    if (state.chords[i].time <= t + 1e-9) found = state.chords[i]; else break;
+  }
+  if (found && t < chordEnd(found)) return found;
+  return null;
 }
 
 // ----------------------------------------------------------------------------
@@ -920,12 +1099,21 @@ async function save() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sections: state.sections }),
       }),
+      fetch(`/api/chords/${stem}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chords: state.chords }),
+      }),
     ]);
     state.dirty = false;
     $('btn-save').textContent = '💾 Save';
     setStatus('saved ✓');
     const song = state.songs.find((s) => s.stem === stem);
-    if (song) { song.has_sections = state.sections.length > 0; renderSongList(); }
+    if (song) {
+      song.has_sections = state.sections.length > 0;
+      song.has_chords = state.chords.length > 0;
+      renderSongList();
+    }
     setTimeout(() => setStatus(''), 1500);
   } catch (err) {
     setStatus('save failed');
@@ -949,6 +1137,7 @@ $('btn-next-beat').addEventListener('click', () => jumpBeat(1));
 $('btn-prev-section').addEventListener('click', () => jumpSection(-1));
 $('btn-next-section').addEventListener('click', () => jumpSection(1));
 $('btn-add-section').addEventListener('click', addSectionAtPlayhead);
+$('btn-add-chord').addEventListener('click', addChordAtPlayhead);
 $('btn-add-beat').addEventListener('click', () => addBeatAt(state.playing ? playPos() : state.currentTime));
 $('btn-delete').addEventListener('click', deleteSelected);
 $('btn-save').addEventListener('click', save);
@@ -960,6 +1149,7 @@ document.addEventListener('keydown', (e) => {
   else if (e.key === 'ArrowRight') { e.preventDefault(); e.shiftKey ? jumpSection(1) : jumpBeat(1); }
   else if (e.key === 'ArrowLeft') { e.preventDefault(); e.shiftKey ? jumpSection(-1) : jumpBeat(-1); }
   else if (e.key === 's' || e.key === 'S') { e.preventDefault(); addSectionAtPlayhead(); }
+  else if (e.key === 'c' || e.key === 'C') { e.preventDefault(); addChordAtPlayhead(); }
   else if (e.key === 'b' || e.key === 'B') { e.preventDefault(); addBeatAt(state.playing ? playPos() : state.currentTime); }
   else if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); deleteSelected(); }
 });

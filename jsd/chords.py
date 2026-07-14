@@ -25,6 +25,21 @@ roots = {
   "B#": 0
 }
 
+idx2root = {
+  0: "C",
+  1: "C#",
+  2: "D",
+  3: "D#",
+  4: "E",
+  5: "F",
+  6: "F#",
+  7: "G",
+  8: "G#",
+  9: "A",
+  10: "A#",
+  11: "B"
+}
+
 wjd_degrees = {
   "1": 0,
   "3b": 3,
@@ -124,7 +139,7 @@ def parse_wjd_chord(chord_str) -> tuple[Union[int, None], Union[list[int], None]
 
   # find quality
   if chord_str[len(root_str):] == "":
-    return root, None, bass, None
+    return root, [0, 4, 7], bass, None
   
   quality = None
   for i in range (1, 5):
@@ -193,3 +208,11 @@ def parse_cace_chord(chord_str) -> tuple[Union[int, None], Union[list[int], None
     raise ValueError(f"Invalid chord quality: {chord_str[len(root_str)+1:]} in chord {chord_str}")
 
   return root, quality, bass, extensions
+
+
+def transpose_wjd_chord_string(chord_string: str, semitones: int) -> str:
+  root, quality, bass, extensions = parse_wjd_chord(chord_string)
+  if root is None:
+    return "NC"
+  rest_string = chord_string[len(str(root)):]
+  return f"{idx2root[(root + semitones) % 12]}{rest_string}"

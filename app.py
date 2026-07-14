@@ -33,6 +33,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 AUDIO_DIR = os.path.join(ROOT, "audio")
 BEATS_DIR = os.path.join(ROOT, "beats")
 SECTIONS_DIR = os.path.join(ROOT, "sections")
+CHORDS_DIR = os.path.join(ROOT, "chords")
 METADATA_PATH = os.path.join(ROOT, "metadata.json")
 
 app = Flask(__name__, static_folder="static", static_url_path="/static")
@@ -44,6 +45,21 @@ app = Flask(__name__, static_folder="static", static_url_path="/static")
 def load_metadata():
     with open(METADATA_PATH, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def save_metadata(meta):
+    # One-time pristine backup before the first in-place edit of the master file.
+    backup = METADATA_PATH + ".orig"
+    if not os.path.exists(backup):
+        shutil.copy2(METADATA_PATH, backup)
+    # Write atomically (temp file + rename) so an interrupted write can't
+    # corrupt the dataset's master metadata. Match the existing 2-space,
+    # ascii-escaped formatting.
+    tmp = METADATA_PATH + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(meta, f, indent=2)
+        f.write("\n")
+    os.replace(tmp, METADATA_PATH)
 
 
 def stem_for(audio_rel_path):
@@ -118,6 +134,41 @@ def write_sections(stem, sections):
         f.write(buf.getvalue())
 
 
+def read_chords(stem):
+    path = os.path.join(CHORDS_DIR, stem + ".csv")
+    if not os.path.exists(path):
+        return []
+    chords = []
+    with open(path, "r", encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            try:
+                chords.append(
+                    {"time": float(row["time"]), "chord": row.get("chord", "")}
+                )
+            except (ValueError, KeyError, TypeError):
+                pass
+    chords.sort(key=lambda c: c["time"])
+    return chords
+
+
+def write_chords(stem, chords):
+    os.makedirs(CHORDS_DIR, exist_ok=True)
+    path = os.path.join(CHORDS_DIR, stem + ".csv")
+    # Back up the original (machine-generated) chords once before first edit.
+    backup = path + ".orig"
+    if os.path.exists(path) and not os.path.exists(backup):
+        shutil.copy2(path, backup)
+    chords = sorted(chords, key=lambda c: float(c["time"]))
+    buf = io.StringIO()
+    writer = csv.writer(buf)
+    writer.writerow(["time", "chord"])
+    for c in chords:
+        writer.writerow([f"{float(c['time']):.3f}", c.get("chord", "")])
+    with open(path, "w", encoding="utf-8", newline="") as f:
+        f.write(buf.getvalue())
+
+
 # --------------------------------------------------------------------------- #
 # Routes
 # --------------------------------------------------------------------------- #
@@ -142,6 +193,9 @@ def api_songs():
                 "has_sections": os.path.exists(
                     os.path.join(SECTIONS_DIR, stem + ".csv")
                 ),
+                "has_chords": os.path.exists(
+                    os.path.join(CHORDS_DIR, stem + ".csv")
+                ),
             }
         )
     return jsonify(out)
@@ -155,6 +209,7 @@ def api_song(stem):
             "stem": stem,
             "beats": read_beats(stem),
             "sections": read_sections(stem),
+            "chords": read_chords(stem),
         }
     )
 
@@ -173,6 +228,31 @@ def api_save_sections(stem):
     data = request.get_json(force=True)
     write_sections(stem, data.get("sections", []))
     return jsonify({"ok": True, "count": len(data.get("sections", []))})
+
+
+@app.route("/api/chords/<stem>", methods=["POST"])
+def api_save_chords(stem):
+    stem = safe_stem(stem)
+    data = request.get_json(force=True)
+    write_chords(stem, data.get("chords", []))
+    return jsonify({"ok": True, "count": len(data.get("chords", []))})
+
+
+@app.route("/api/key/<stem>", methods=["POST"])
+def api_save_key(stem):
+    stem = safe_stem(stem)
+    data = request.get_json(force=True)
+    key = (data.get("key") or "").strip()
+    meta = load_metadata()
+    for entry in meta:
+        if stem_for(entry.get("files", {}).get("audio", "")) == stem:
+            if key:
+                entry["key"] = key
+            else:
+                entry.pop("key", None)  # blank == None == absent
+            save_metadata(meta)
+            return jsonify({"ok": True, "key": key})
+    abort(404, "song not found")
 
 
 @app.route("/audio/<path:filename>")

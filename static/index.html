@@ -19,7 +19,7 @@
     <main id="editor">
       <header id="song-header">
         <div id="song-title">Select a song</div>
-        <div id="song-meta"></div>
+        <div id="song-sub" class="muted"></div>
       </header>
 
       <div id="toolbar">
@@ -34,6 +34,7 @@
         <label class="chk"><input type="checkbox" id="chk-metro" checked /> Metronome</label>
         <span class="sep"></span>
         <button id="btn-add-section" disabled title="Add section at playhead (snaps to nearest beat) — key: S">+ Section</button>
+        <button id="btn-add-chord" disabled title="Add chord at playhead (snaps to nearest beat) — key: C">+ Chord</button>
         <button id="btn-add-beat" disabled title="Add beat at playhead — key: B">+ Beat</button>
         <button id="btn-delete" disabled title="Delete selected element — key: Delete">✕ Delete</button>
         <span class="sep"></span>
@@ -58,7 +59,7 @@
 
       <section id="inspector">
         <div id="inspector-empty" class="muted">
-          Nothing selected. Click a beat line or a section label to inspect it.
+          Nothing selected. Click a beat line, a section tab, or a chord block to inspect it.
         </div>
         <div id="inspector-beat" class="hidden">
           <h2>Beat</h2>
@@ -83,15 +84,43 @@
           <div class="field"><label>End (s)</label><span id="section-end"></span></div>
           <button id="section-delete" class="danger">Delete section</button>
         </div>
+        <div id="inspector-chord" class="hidden">
+          <h2>Chord</h2>
+          <div class="field">
+            <label>Chord</label>
+            <input type="text" id="chord-name" placeholder="e.g. Cmaj7, F-7, G7b9" />
+          </div>
+          <div class="field">
+            <label>Start (s)</label>
+            <input type="number" id="chord-time" step="0.001" min="0" />
+            <button id="chord-snap" class="small">Snap to beat</button>
+          </div>
+          <div class="field"><label>End (s)</label><span id="chord-end"></span></div>
+          <button id="chord-delete" class="danger">Delete chord</button>
+        </div>
       </section>
 
       <footer id="legend" class="muted">
         <b>Keys:</b> Space play/pause · ←/→ prev/next beat · Shift+←/→ prev/next section ·
-        S add section · B add beat · Del delete selected ·
+        S add section · C add chord · B add beat · Del delete selected ·
         Drag the top ruler to scrub · Click waveform to seek · Click/drag a beat to select/move ·
-        Drag a section's label tab to move its start.
+        Drag a section tab or chord block to move its start.
       </footer>
     </main>
+
+    <!-- Right panel: song-wise information & annotations -->
+    <aside id="song-panel">
+      <h1>Song Info</h1>
+      <div id="panel-empty" class="muted">Select a song to view its details.</div>
+      <div id="panel-body" class="hidden">
+        <div class="key-field">
+          <label for="key-select">Key</label>
+          <select id="key-select" disabled></select>
+          <span id="key-status" class="muted"></span>
+        </div>
+        <dl id="panel-meta"></dl>
+      </div>
+    </aside>
   </div>
 
   <script src="/static/app.js"></script>

@@ -2,3 +2,5 @@
 .claude/
 Pipfile.lock
 **/__pycache__/
+
+beats/*
