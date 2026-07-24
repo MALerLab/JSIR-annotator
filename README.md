@@ -15,9 +15,15 @@ The dataset is read from this folder:
 
 - `metadata.json` — song list (audio/beats/chords pairing + metadata)
 - `audio/*.wav`   — recordings
-- `beats/*.txt`   — beat times, one float (seconds) per line
+- `beats/*.txt`   — one beat per line: `<time>` for a normal beat, or
+  `<time>\t1` for a downbeat. Bare-float files (original madmom output) load as
+  all-normal, so old files stay compatible.
 - `chords/*.csv`  — chord events (`time,chord`); each lasts until the next start
 - `sections/*.csv` — **output**: section labels (`time,name`), one file per song
+- `metadata.json` also stores the annotated **key** per song (`"key"` field,
+  e.g. `"D minor"`; absent = None). Edited from the right-hand Song Info panel
+  and written back in place (a one-time `metadata.json.orig` backup is made on
+  the first edit).
 
 ## Using it
 
@@ -30,6 +36,27 @@ The dataset is read from this folder:
 - **Beats**: click/drag a beat line to select & move it; **Shift+click** an
   empty spot or press **B** to add a beat at the playhead; **Del** removes the
   selected beat. Fine-tune the exact time in the inspector below.
+  - **Nudge**: with beat(s) selected, ←/→ moves them ±20 ms (Shift = ±100 ms).
+  - *Beats ×2* inserts a beat at every midpoint (fixes half-rate tracking).
+  - *Beats ÷2* keeps the **selected** beat plus every other one (select a beat
+    first — it's the anchor that decides which half survives).
+- **Multi-select beats**: **double-click-drag on the ruler** to make a loop
+  region (selects every beat inside; playback loops within it; double-click the
+  ruler again to clear), or **Shift-click** beats to build a selection. With
+  several selected you can drag the group, nudge, delete, or toggle downbeat for
+  all at once. *Fill ×4* subdivides the gap between each selected pair by adding
+  three evenly-spaced beats.
+- **Downbeats**: a beat can be flagged a downbeat (drawn amber, higher-pitched
+  metronome click). Toggle it with the checkbox in the beat inspector. Creating
+  a section re-grids downbeats from its start beat: every 4th beat becomes a
+  downbeat (4/4), clearing others in that range. *Clear ↧* wipes all downbeats
+  in the song. Downbeat flags are saved into the beat file.
+- **Navigation**: the **◀◀ / ▶▶** buttons jump the playhead by *N* bars
+  (4×N beats, 4/4 assumed); set *N* in the adjacent input (defaults to the
+  song's `num_bars` on load). *◀ Sec / Sec ▶* jump between sections.
+- **Zoom**: mouse-wheel over the waveform (anchored at the cursor), or −/+.
+  **Alt+wheel** scrolls horizontally instead of zooming.
+- **Deselect**: click empty space, press **Esc**, or the *Deselect* button.
 - **Sections**: press **S** (or *+ Section*) while playing to drop a section at
   the playhead — its start snaps to the nearest beat and it auto-fills to the
   next section (or end of track). Name it in the inspector. Drag a section's top
@@ -39,6 +66,10 @@ The dataset is read from this folder:
   select it, then edit the name / start time in the inspector; drag a block to
   move its start (snaps to beat on release); press **C** (or *+ Chord*) to add
   one at the playhead; **Del** removes the selected chord.
+- **Song Info panel** (right): the **Key** dropdown plus editable text fields
+  (Standard, Artist, Album, Instrumentation, YouTube ID, MusicBrainz ID) and the
+  integer **Number of Bars** (`num_bars`). Edits save to `metadata.json` on blur
+  (`num_bars` is stored as an int).
 - **Zoom** with −/+; **Follow** auto-scrolls during playback.
 - **Save** writes `beats/<name>.txt`, `sections/<name>.csv`, and
   `chords/<name>.csv` (the original chord file is backed up to `.csv.orig` on

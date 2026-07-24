@@ -26,17 +26,23 @@
         <button id="btn-play" disabled>▶ Play</button>
         <button id="btn-stop" disabled>■ Stop</button>
         <span class="sep"></span>
-        <button id="btn-prev-beat" disabled title="Previous beat (←)">◀ Beat</button>
-        <button id="btn-next-beat" disabled title="Next beat (→)">Beat ▶</button>
-        <button id="btn-prev-section" disabled title="Previous section (Shift+←)">◀ Sec</button>
-        <button id="btn-next-section" disabled title="Next section (Shift+→)">Sec ▶</button>
+        <button id="btn-jump-back" disabled title="Jump back N bars (4×N beats)">◀◀</button>
+        <input id="bar-jump" type="number" min="1" step="1" value="1" title="Bars to jump" />
+        <span class="tlabel">bars</span>
+        <button id="btn-jump-fwd" disabled title="Jump forward N bars (4×N beats)">▶▶</button>
+        <button id="btn-prev-section" disabled title="Previous section">◀ Sec</button>
+        <button id="btn-next-section" disabled title="Next section">Sec ▶</button>
         <span class="sep"></span>
         <label class="chk"><input type="checkbox" id="chk-metro" checked /> Metronome</label>
         <span class="sep"></span>
         <button id="btn-add-section" disabled title="Add section at playhead (snaps to nearest beat) — key: S">+ Section</button>
         <button id="btn-add-chord" disabled title="Add chord at playhead (snaps to nearest beat) — key: C">+ Chord</button>
         <button id="btn-add-beat" disabled title="Add beat at playhead — key: B">+ Beat</button>
+        <button id="btn-double-beats" disabled title="Double all beats: insert a beat at every midpoint">Beats ×2</button>
+        <button id="btn-half-beats" disabled title="Halve beats: keep the selected beat and every other one (select a beat first)">Beats ÷2</button>
+        <button id="btn-clear-downbeats" disabled title="Clear all downbeat markings in this song">Clear ↧</button>
         <button id="btn-delete" disabled title="Delete selected element — key: Delete">✕ Delete</button>
+        <button id="btn-deselect" disabled title="Deselect current element — key: Esc">Deselect</button>
         <span class="sep"></span>
         <button id="btn-zoom-out" disabled>−</button>
         <span id="zoom-label">60 px/s</span>
@@ -68,7 +74,25 @@
             <label>Time (s)</label>
             <input type="number" id="beat-time" step="0.001" min="0" />
           </div>
+          <div class="field">
+            <label>Downbeat</label>
+            <label class="chk"><input type="checkbox" id="beat-downbeat" /> mark as downbeat</label>
+          </div>
           <button id="beat-delete" class="danger">Delete beat</button>
+        </div>
+        <div id="inspector-beats" class="hidden">
+          <h2>Beats (multiple)</h2>
+          <div class="field"><label>Selected</label><span id="beats-count"></span></div>
+          <div class="field">
+            <label>Downbeat</label>
+            <label class="chk"><input type="checkbox" id="beats-downbeat" /> mark all as downbeat</label>
+          </div>
+          <div class="field">
+            <label>Fill</label>
+            <button id="beats-fill" class="small" title="Subdivide the gap between each selected pair into four">Fill ×4 (subdivide gaps)</button>
+          </div>
+          <p class="muted" style="margin:4px 0 10px; font-size:12px;">Drag any selected beat to move the group · ←/→ nudge ±20 ms (Shift ±100 ms).</p>
+          <button id="beats-delete" class="danger">Delete beats</button>
         </div>
         <div id="inspector-section" class="hidden">
           <h2>Section</h2>
@@ -101,10 +125,16 @@
       </section>
 
       <footer id="legend" class="muted">
-        <b>Keys:</b> Space play/pause · ←/→ prev/next beat · Shift+←/→ prev/next section ·
-        S add section · C add chord · B add beat · Del delete selected ·
-        Drag the top ruler to scrub · Click waveform to seek · Click/drag a beat to select/move ·
-        Drag a section tab or chord block to move its start.
+        <b>Keys:</b> Space play/pause · ←/→ nudge selected beat(s) ±20 ms (Shift ±100 ms) ·
+        A select all beats after playhead · S add section · C add chord · B add beat ·
+        Del delete selected · Esc deselect · Ctrl+Z undo ·
+        <b>◀◀/▶▶</b> jump the playhead by N bars (4×N beats) ·
+        Mouse wheel to zoom · <b>Alt+wheel</b> to scroll horizontally · Drag the ruler to scrub (drag past an edge to auto-scroll) ·
+        <b>Double-click-drag the ruler</b> for a loop region (selects the beats inside;
+        double-click elsewhere to clear) · <b>Shift-click</b> beats to multi-select ·
+        drag any selected beat to move the group · <i>Fill ×4</i> subdivides gaps between selected beats ·
+        Click waveform to seek (and deselect) ·
+        <b>Downbeats</b> are amber (toggle in the inspector, or add a section to auto-grid every 4th).
       </footer>
     </main>
 
@@ -118,7 +148,9 @@
           <select id="key-select" disabled></select>
           <span id="key-status" class="muted"></span>
         </div>
-        <dl id="panel-meta"></dl>
+        <div id="panel-fields"></div>
+        <div id="panel-yt"></div>
+        <span id="meta-status" class="muted"></span>
       </div>
     </aside>
   </div>

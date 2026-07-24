@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "*"
 "madmom " = {git = "https://github.com/CPJKU/madmom.git"}
 pandas = "*"
 dtw-python = "*"
@@ -12,6 +11,7 @@ scikit-learn = "*"
 matplotlib = "*"
 nltk = "*"
 tqdm = "*"
+flask = "*"
 
 [dev-packages]
 jupyter = "*"

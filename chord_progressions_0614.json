@@ -780,9 +780,7 @@
       "D- % % %",
       "G7 % % %",
       "C % % %",
-      "C % G7 %",
-      "NC % % %",
-      "NC % % %"
+      "C % G7 %"
     ]
   },
   {
@@ -2176,7 +2174,7 @@
     "performer": "Cannonball Adderley",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
-    "key": "D-dor",
+    "key": "D-min",
     "signature": "4/4",
     "chord_changes": [
       "D-7 % % %",

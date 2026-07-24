@@ -60,24 +60,59 @@ html, body {
 #editor { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 #song-header { padding: 12px 16px 6px; }
 #song-title { font-size: 18px; font-weight: 700; }
-#song-meta {
+#song-sub { font-size: 12px; margin-top: 2px; }
+
+/* ----- Right song-info panel ----- */
+#song-panel {
+  width: 300px;
+  min-width: 300px;
+  background: var(--panel);
+  border-left: 1px solid var(--line);
+  padding: 14px;
+  overflow-y: auto;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 14px;
-  margin-top: 4px;
-  font-size: 12px;
-  color: var(--muted);
+  flex-direction: column;
 }
-#song-meta .meta-field b { color: var(--text); font-weight: 600; }
-#song-meta .meta-yt {
-  color: var(--accent);
-  text-decoration: none;
+#song-panel h1 { font-size: 15px; margin: 2px 2px 12px; }
+.key-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  background: var(--panel2);
   border: 1px solid var(--line);
-  border-radius: 5px;
-  padding: 2px 8px;
+  border-radius: 8px;
+  margin-bottom: 16px;
 }
-#song-meta .meta-yt:hover { border-color: var(--accent); background: rgba(79,157,255,0.1); }
+.key-field label { color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; font-size: 12px; }
+#key-select {
+  width: 100%;
+  padding: 7px 9px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 14px;
+}
+#key-select:disabled { opacity: 0.5; }
+#key-status { font-size: 12px; min-height: 14px; }
+#panel-fields { margin: 0; }
+#panel-fields .pf { display: flex; flex-direction: column; gap: 3px; margin-bottom: 10px; }
+#panel-fields .pf label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); }
+#panel-fields .pf input {
+  width: 100%;
+  padding: 6px 8px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+}
+#panel-fields .pf input:focus { outline: none; border-color: var(--accent); }
+#panel-yt { margin: 4px 0 8px; }
+#panel-yt a { color: var(--accent); text-decoration: none; font-size: 13px; }
+#panel-yt a:hover { text-decoration: underline; }
+#meta-status { font-size: 12px; min-height: 14px; }
 
 #toolbar {
   display: flex;
@@ -98,6 +133,15 @@ html, body {
 #toolbar button:hover:not(:disabled) { border-color: var(--accent); }
 #toolbar button:disabled { opacity: 0.4; cursor: default; }
 #toolbar .chk { color: var(--muted); display: inline-flex; align-items: center; gap: 4px; }
+#toolbar .tlabel { color: var(--muted); font-size: 12px; margin-left: -4px; }
+#toolbar #bar-jump {
+  width: 52px;
+  padding: 5px 6px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text);
+}
 #toolbar .sep { width: 1px; height: 22px; background: var(--line); margin: 0 4px; }
 #zoom-label { color: var(--muted); min-width: 56px; text-align: center; }
 #time-readout { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--muted); }
@@ -135,6 +179,7 @@ html, body {
 #inspector h2 { font-size: 13px; margin: 0 0 8px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
 .field { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
 .field label { width: 80px; color: var(--muted); }
+.field label.chk { width: auto; color: var(--text); display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
 .field input[type="number"], .field input[type="text"] {
   background: var(--panel2);
   border: 1px solid var(--line);

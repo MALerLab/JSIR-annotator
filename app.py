@@ -18,6 +18,7 @@ import csv
 import io
 import json
 import os
+import re
 import shutil
 
 from flask import (
@@ -28,6 +29,7 @@ from flask import (
     send_file,
     send_from_directory,
 )
+
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 AUDIO_DIR = os.path.join(ROOT, "audio")
@@ -75,6 +77,9 @@ def safe_stem(stem):
 
 
 def read_beats(stem):
+    """Beat files are one beat per line: ``<time>`` for a normal beat or
+    ``<time>\t1`` for a downbeat. The bare-float form (original madmom output)
+    reads back as all-normal, so old files stay compatible."""
     path = os.path.join(BEATS_DIR, stem + ".txt")
     if not os.path.exists(path):
         return []
@@ -82,12 +87,16 @@ def read_beats(stem):
     with open(path, "r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
-            if line:
-                try:
-                    beats.append(float(line))
-                except ValueError:
-                    pass
-    beats.sort()
+            if not line:
+                continue
+            parts = re.split(r"[,\s]+", line)
+            try:
+                t = float(parts[0])
+            except (ValueError, IndexError):
+                continue
+            downbeat = len(parts) > 1 and parts[1].lower() in ("1", "true", "d", "yes")
+            beats.append({"time": t, "downbeat": downbeat})
+    beats.sort(key=lambda b: b["time"])
     return beats
 
 
@@ -97,10 +106,17 @@ def write_beats(stem, beats):
     backup = path + ".orig"
     if os.path.exists(path) and not os.path.exists(backup):
         shutil.copy2(path, backup)
-    beats = sorted(float(b) for b in beats)
+    # Accept either {"time", "downbeat"} objects or bare floats (legacy).
+    norm = []
+    for b in beats:
+        if isinstance(b, dict):
+            norm.append((float(b["time"]), bool(b.get("downbeat"))))
+        else:
+            norm.append((float(b), False))
+    norm.sort(key=lambda x: x[0])
     with open(path, "w", encoding="utf-8") as f:
-        for b in beats:
-            f.write(f"{b:.3f}\n")
+        for t, downbeat in norm:
+            f.write(f"{t:.3f}\t1\n" if downbeat else f"{t:.3f}\n")
 
 
 def read_sections(stem):
@@ -252,6 +268,40 @@ def api_save_key(stem):
                 entry.pop("key", None)  # blank == None == absent
             save_metadata(meta)
             return jsonify({"ok": True, "key": key})
+    abort(404, "song not found")
+
+
+# Fields in the Song Info panel that the UI may edit in place.
+ALLOWED_META_FIELDS = {
+    "standard", "artist", "album", "instrumentation", "musicbrainz_id", "yt_id",
+}
+# Integer-valued editable fields (stored as ints, not strings).
+ALLOWED_INT_FIELDS = {"num_bars"}
+
+
+@app.route("/api/meta/<stem>", methods=["POST"])
+def api_save_meta(stem):
+    stem = safe_stem(stem)
+    data = request.get_json(force=True)
+    fields = data.get("fields", {}) or {}
+    meta = load_metadata()
+    for entry in meta:
+        if stem_for(entry.get("files", {}).get("audio", "")) == stem:
+            for key, value in fields.items():
+                if key in ALLOWED_INT_FIELDS:
+                    raw = ("" if value is None else str(value)).strip()
+                    try:
+                        entry[key] = int(float(raw))
+                    except ValueError:
+                        entry.pop(key, None)  # blank/invalid -> remove
+                elif key in ALLOWED_META_FIELDS:
+                    raw = ("" if value is None else str(value)).strip()
+                    if raw:
+                        entry[key] = raw
+                    else:
+                        entry.pop(key, None)  # blank -> remove the field
+            save_metadata(meta)
+            return jsonify({"ok": True})
     abort(404, "song not found")
 
 
