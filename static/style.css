@@ -109,6 +109,29 @@ html, body {
   font-size: 13px;
 }
 #panel-fields .pf input:focus { outline: none; border-color: var(--accent); }
+#refresh-audio { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+#btn-refresh {
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--panel2);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+}
+#btn-refresh:hover:not(:disabled) { border-color: var(--accent); }
+#btn-refresh:disabled { opacity: 0.5; cursor: default; }
+#refresh-status { font-size: 12px; margin-top: 6px; min-height: 14px; }
+#refresh-status.err { color: var(--danger); }
+#refresh-status.busy { color: var(--accent2); }
+#refresh-status.ok { color: #7ee081; }
+
+#volume-controls { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+#volume-controls h2 { font-size: 13px; margin: 0 0 10px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
+#volume-controls .vol { margin-bottom: 12px; }
+#volume-controls .vol label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+#volume-controls .vol label span { color: var(--text); font-variant-numeric: tabular-nums; }
+#volume-controls input[type="range"] { width: 100%; accent-color: var(--accent); }
 #panel-yt { margin: 4px 0 8px; }
 #panel-yt a { color: var(--accent); text-decoration: none; font-size: 13px; }
 #panel-yt a:hover { text-decoration: underline; }
@@ -188,6 +211,28 @@ html, body {
   padding: 6px 9px;
   min-width: 220px;
 }
+/* section-name combobox */
+.combo { position: relative; display: inline-block; }
+.combo #section-name { min-width: 220px; }
+.combo-list {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  background: var(--panel2);
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  z-index: 20;
+  max-height: 220px;
+  overflow-y: auto;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+.combo-list li { padding: 6px 8px; border-radius: 4px; cursor: pointer; font-size: 13px; }
+.combo-list li:hover, .combo-list li.active { background: var(--accent); color: #0e1116; }
+
 button.danger { background: transparent; border: 1px solid var(--danger); color: var(--danger); padding: 6px 11px; border-radius: 6px; cursor: pointer; }
 button.danger:hover { background: rgba(255,93,93,0.12); }
 button.small { background: var(--panel2); border: 1px solid var(--line); color: var(--text); padding: 4px 8px; border-radius: 5px; cursor: pointer; }

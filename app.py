@@ -20,6 +20,11 @@ import json
 import os
 import re
 import shutil
+import subprocess
+import sys
+import tempfile
+import threading
+import traceback
 
 from flask import (
     Flask,
@@ -37,6 +42,15 @@ BEATS_DIR = os.path.join(ROOT, "beats")
 SECTIONS_DIR = os.path.join(ROOT, "sections")
 CHORDS_DIR = os.path.join(ROOT, "chords")
 METADATA_PATH = os.path.join(ROOT, "metadata.json")
+
+# Directory holding this interpreter's console scripts (DBNBeatTracker, etc.).
+BIN_DIR = os.path.dirname(sys.executable)
+
+
+def tool_path(name):
+    """Resolve an external tool, preferring this venv's bin dir, then PATH."""
+    p = os.path.join(BIN_DIR, name)
+    return p if os.path.exists(p) else (shutil.which(name) or name)
 
 app = Flask(__name__, static_folder="static", static_url_path="/static")
 
@@ -305,6 +319,156 @@ def api_save_meta(stem):
     abort(404, "song not found")
 
 
+# --------------------------------------------------------------------------- #
+# Refresh audio: re-crawl a song's YouTube source, re-run beat tracking, and
+# drop its (now-stale) chord/section labels. Runs in a background thread so the
+# request returns immediately; the UI polls the status endpoint.
+# --------------------------------------------------------------------------- #
+_refresh_lock = threading.Lock()
+_refresh_jobs = {}  # stem -> {"state", "step", "message", "new_stem"}
+
+
+def _set_job(stem, **kw):
+    with _refresh_lock:
+        _refresh_jobs.setdefault(stem, {}).update(kw)
+
+
+def _get_job(stem):
+    with _refresh_lock:
+        return dict(_refresh_jobs.get(stem, {}))
+
+
+def _find_entry(meta, stem):
+    for entry in meta:
+        if stem_for(entry.get("files", {}).get("audio", "")) == stem:
+            return entry
+    return None
+
+
+def _tail(*chunks, n=800):
+    text = "\n".join(c for c in chunks if c).strip()
+    return text[-n:] if text else "unknown error"
+
+
+def _commit_refresh(old_stem, new_stem):
+    """Point the entry at the new files, drop chord/section labels, and (if the
+    stem changed) remove the old audio/beats."""
+    meta = load_metadata()
+    entry = _find_entry(meta, old_stem)
+    if entry is not None:
+        files = entry.setdefault("files", {})
+        files["audio"] = f"audio/{new_stem}.wav"
+        files["beats"] = f"beats/{new_stem}.txt"
+        files["chords"] = f"chords/{new_stem}.csv"
+        if "cace_chords" in files:
+            files["cace_chords"] = f"consonance_ace_inferences/{new_stem}.lab"
+        save_metadata(meta)
+
+    # remove chord & section labels (old and new stems) — they no longer apply
+    for st in {old_stem, new_stem}:
+        for path in (
+            os.path.join(SECTIONS_DIR, st + ".csv"),
+            os.path.join(SECTIONS_DIR, st + ".csv.orig"),
+            os.path.join(CHORDS_DIR, st + ".csv"),
+            os.path.join(CHORDS_DIR, st + ".csv.orig"),
+        ):
+            if os.path.exists(path):
+                os.remove(path)
+
+    if new_stem != old_stem:
+        for path in (
+            os.path.join(AUDIO_DIR, old_stem + ".wav"),
+            os.path.join(BEATS_DIR, old_stem + ".txt"),
+            os.path.join(BEATS_DIR, old_stem + ".txt.orig"),
+        ):
+            if os.path.exists(path):
+                os.remove(path)
+
+
+def _refresh_worker(stem, yt_id, new_stem):
+    tmpdir = None
+    try:
+        tmpdir = tempfile.mkdtemp(prefix="refresh_")
+        wav_tmp = os.path.join(tmpdir, "audio.wav")
+        beats_tmp = os.path.join(tmpdir, "beats.txt")
+
+        # 1) download + convert to WAV via yt-dlp (uses ffmpeg)
+        _set_job(stem, state="running", step="download",
+                 message=f"Downloading audio for {yt_id}…")
+        url = f"https://www.youtube.com/watch?v={yt_id}"
+        dl = subprocess.run(
+            [sys.executable, "-m", "yt_dlp", "-x", "--audio-format", "wav",
+             "--no-playlist", "--force-overwrites",
+             "-o", os.path.join(tmpdir, "audio.%(ext)s"), url],
+            capture_output=True, text=True, timeout=1800,
+        )
+        if dl.returncode != 0 or not os.path.exists(wav_tmp):
+            raise RuntimeError("yt-dlp failed: " + _tail(dl.stderr, dl.stdout))
+
+        # 2) beat tracking via madmom's DBNBeatTracker
+        _set_job(stem, step="track", message="Tracking beats (madmom)…")
+        bt = subprocess.run(
+            [tool_path("DBNBeatTracker"), "single", "-o", beats_tmp, wav_tmp],
+            capture_output=True, text=True, timeout=3600,
+        )
+        if bt.returncode != 0 or not os.path.exists(beats_tmp):
+            raise RuntimeError("beat tracking failed: " + _tail(bt.stderr, bt.stdout))
+
+        # 3) commit: move files into place, update metadata, drop labels
+        _set_job(stem, step="finalize", message="Finalizing…")
+        os.makedirs(AUDIO_DIR, exist_ok=True)
+        os.makedirs(BEATS_DIR, exist_ok=True)
+        shutil.move(wav_tmp, os.path.join(AUDIO_DIR, new_stem + ".wav"))
+        shutil.move(beats_tmp, os.path.join(BEATS_DIR, new_stem + ".txt"))
+        orig = os.path.join(BEATS_DIR, new_stem + ".txt.orig")
+        if os.path.exists(orig):
+            os.remove(orig)  # stale backup of the previous beats
+        _commit_refresh(stem, new_stem)
+
+        _set_job(stem, state="done", step="done", message="Done", new_stem=new_stem)
+    except subprocess.TimeoutExpired:
+        _set_job(stem, state="error", step="error", message="timed out")
+    except Exception as exc:  # noqa: BLE001 — surface any step failure to the UI
+        traceback.print_exc()
+        _set_job(stem, state="error", step="error", message=str(exc))
+    finally:
+        if tmpdir:
+            shutil.rmtree(tmpdir, ignore_errors=True)
+
+
+@app.route("/api/refresh/<stem>", methods=["POST"])
+def api_refresh(stem):
+    stem = safe_stem(stem)
+    meta = load_metadata()
+    entry = _find_entry(meta, stem)
+    if entry is None:
+        abort(404, "song not found")
+    yt_id = (entry.get("yt_id") or "").strip()
+    if not yt_id:
+        return jsonify({"ok": False, "error": "no YouTube ID set for this song"}), 400
+    if not re.fullmatch(r"[A-Za-z0-9_-]{1,64}", yt_id):
+        return jsonify({"ok": False, "error": "YouTube ID is not a valid filename"}), 400
+    new_stem = yt_id
+    # guard against clobbering a different entry's files
+    if new_stem != stem:
+        other = _find_entry(meta, new_stem)
+        if other is not None and other is not entry:
+            return jsonify({"ok": False,
+                            "error": f"'{new_stem}' is already used by another song"}), 409
+    if _get_job(stem).get("state") == "running":
+        return jsonify({"ok": True, "already": True, "new_stem": new_stem})
+    _set_job(stem, state="running", step="start", message="Starting…", new_stem=new_stem)
+    threading.Thread(target=_refresh_worker, args=(stem, yt_id, new_stem),
+                     daemon=True).start()
+    return jsonify({"ok": True, "new_stem": new_stem})
+
+
+@app.route("/api/refresh/<stem>/status")
+def api_refresh_status(stem):
+    stem = safe_stem(stem)
+    return jsonify(_get_job(stem) or {"state": "idle"})
+
+
 @app.route("/audio/<path:filename>")
 def serve_audio(filename):
     path = os.path.join(AUDIO_DIR, filename)
@@ -315,4 +479,4 @@ def serve_audio(filename):
 
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    app.run(host="127.0.0.1", port=5000, debug=True, threaded=True)

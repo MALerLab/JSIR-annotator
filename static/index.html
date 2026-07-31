@@ -38,8 +38,8 @@
         <button id="btn-add-section" disabled title="Add section at playhead (snaps to nearest beat) — key: S">+ Section</button>
         <button id="btn-add-chord" disabled title="Add chord at playhead (snaps to nearest beat) — key: C">+ Chord</button>
         <button id="btn-add-beat" disabled title="Add beat at playhead — key: B">+ Beat</button>
-        <button id="btn-double-beats" disabled title="Double all beats: insert a beat at every midpoint">Beats ×2</button>
-        <button id="btn-half-beats" disabled title="Halve beats: keep the selected beat and every other one (select a beat first)">Beats ÷2</button>
+        <button id="btn-double-beats" disabled title="Double beats: insert a midpoint between each pair (loop region if set, else whole song)">Beats ×2</button>
+        <button id="btn-half-beats" disabled title="Halve beats: keep every other beat (loop region if set, else whole song; anchored on the selected beat)">Beats ÷2</button>
         <button id="btn-clear-downbeats" disabled title="Clear all downbeat markings in this song">Clear ↧</button>
         <button id="btn-delete" disabled title="Delete selected element — key: Delete">✕ Delete</button>
         <button id="btn-deselect" disabled title="Deselect current element — key: Esc">Deselect</button>
@@ -48,6 +48,7 @@
         <span id="zoom-label">60 px/s</span>
         <button id="btn-zoom-in" disabled>+</button>
         <label class="chk"><input type="checkbox" id="chk-follow" checked /> Follow</label>
+        <label class="chk"><input type="checkbox" id="chk-only-db" /> Downbeats only</label>
         <span class="sep"></span>
         <button id="btn-save" disabled>💾 Save</button>
         <span id="time-readout">0.000 / 0.000</span>
@@ -98,7 +99,10 @@
           <h2>Section</h2>
           <div class="field">
             <label>Name</label>
-            <input type="text" id="section-name" placeholder="e.g. saxophone solo" />
+            <div class="combo">
+              <input type="text" id="section-name" placeholder="e.g. saxophone solo" autocomplete="off" />
+              <ul id="section-presets" class="combo-list hidden"></ul>
+            </div>
           </div>
           <div class="field">
             <label>Start (s)</label>
@@ -106,6 +110,7 @@
             <button id="section-snap" class="small">Snap to beat</button>
           </div>
           <div class="field"><label>End (s)</label><span id="section-end"></span></div>
+          <div class="field"><label>Length</label><span id="section-bars"></span></div>
           <button id="section-delete" class="danger">Delete section</button>
         </div>
         <div id="inspector-chord" class="hidden">
@@ -127,7 +132,7 @@
       <footer id="legend" class="muted">
         <b>Keys:</b> Space play/pause · ←/→ nudge selected beat(s) ±20 ms (Shift ±100 ms) ·
         A select all beats after playhead · S add section · C add chord · B add beat ·
-        Del delete selected · Esc deselect · Ctrl+Z undo ·
+        D double beats · H halve beats · Del delete selected · Esc deselect · Ctrl+Z undo · Ctrl+S save ·
         <b>◀◀/▶▶</b> jump the playhead by N bars (4×N beats) ·
         Mouse wheel to zoom · <b>Alt+wheel</b> to scroll horizontally · Drag the ruler to scrub (drag past an edge to auto-scroll) ·
         <b>Double-click-drag the ruler</b> for a loop region (selects the beats inside;
@@ -151,6 +156,23 @@
         <div id="panel-fields"></div>
         <div id="panel-yt"></div>
         <span id="meta-status" class="muted"></span>
+
+        <div id="refresh-audio">
+          <button id="btn-refresh" disabled title="Re-crawl the audio from the YouTube ID, re-run beat tracking, and drop chord/section labels">↻ Refresh audio</button>
+          <div id="refresh-status" class="muted"></div>
+        </div>
+
+        <div id="volume-controls">
+          <h2>Volume</h2>
+          <div class="vol">
+            <label>Song <span id="song-vol-val">100%</span></label>
+            <input type="range" id="song-vol" min="0" max="150" step="1" value="100" />
+          </div>
+          <div class="vol">
+            <label>Metronome <span id="metro-vol-val">100%</span></label>
+            <input type="range" id="metro-vol" min="0" max="100" step="1" value="100" />
+          </div>
+        </div>
       </div>
     </aside>
   </div>

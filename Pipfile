@@ -12,6 +12,7 @@ matplotlib = "*"
 nltk = "*"
 tqdm = "*"
 flask = "*"
+yt-dlp = "*"
 
 [dev-packages]
 jupyter = "*"

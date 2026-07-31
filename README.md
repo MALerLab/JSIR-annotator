@@ -38,8 +38,11 @@ The dataset is read from this folder:
   selected beat. Fine-tune the exact time in the inspector below.
   - **Nudge**: with beat(s) selected, ←/→ moves them ±20 ms (Shift = ±100 ms).
   - *Beats ×2* inserts a beat at every midpoint (fixes half-rate tracking).
-  - *Beats ÷2* keeps the **selected** beat plus every other one (select a beat
-    first — it's the anchor that decides which half survives).
+  - *Beats ÷2* keeps the **selected** beat plus every other one (the anchor
+    decides which half survives).
+  - Both operate on the **loop region** when one is set (beats outside are left
+    untouched), otherwise on the whole song. With a loop region, ÷2 anchors on
+    the selected beat if it's inside, else the region's first beat.
 - **Multi-select beats**: **double-click-drag on the ruler** to make a loop
   region (selects every beat inside; playback loops within it; double-click the
   ruler again to clear), or **Shift-click** beats to build a selection. With
@@ -50,17 +53,28 @@ The dataset is read from this folder:
   metronome click). Toggle it with the checkbox in the beat inspector. Creating
   a section re-grids downbeats from its start beat: every 4th beat becomes a
   downbeat (4/4), clearing others in that range. *Clear ↧* wipes all downbeats
-  in the song. Downbeat flags are saved into the beat file.
+  in the song. Downbeat flags are saved into the beat file. The **Downbeats
+  only** toolbar toggle hides non-downbeat lines (visual only — data and
+  metronome clicks are unchanged); it resets to off on song load.
 - **Navigation**: the **◀◀ / ▶▶** buttons jump the playhead by *N* bars
   (4×N beats, 4/4 assumed); set *N* in the adjacent input (defaults to the
   song's `num_bars` on load). *◀ Sec / Sec ▶* jump between sections.
-- **Zoom**: mouse-wheel over the waveform (anchored at the cursor), or −/+.
-  **Alt+wheel** scrolls horizontally instead of zooming.
+- **Zoom**: mouse-wheel over the waveform (anchored at the cursor), or −/+
+  (range 4–800 px/s). **Alt+wheel** scrolls horizontally instead of zooming.
+  When zoomed out past the audio's length, the waveform ends where the audio
+  ends and the rest of the canvas is blank.
+- **Volume**: sliders at the bottom of the Song Info panel set song volume
+  (0–150%, >100% amplifies) and metronome volume (0–100%) independently; both
+  reset to 100% on song load.
 - **Deselect**: click empty space, press **Esc**, or the *Deselect* button.
 - **Sections**: press **S** (or *+ Section*) while playing to drop a section at
   the playhead — its start snaps to the nearest beat and it auto-fills to the
-  next section (or end of track). Name it in the inspector. Drag a section's top
-  tab to move its start (snaps on release).
+  next section (or end of track). Name it in the inspector — the name field is a
+  combobox with preset labels (head:horn/piano/vocal, solo:horn/piano/bass,
+  last, exchange, exclude) plus autocomplete; you can still type anything. Drag a
+  section's top tab to move its start (snaps on release). Each section's label
+  shows its length in **bars** (4/4) and stays pinned to the left edge when its
+  start scrolls off-screen.
 - **Chords**: shown in the strip between the ruler and the waveform, coloured by
   chord name (runs of the same chord read as one band). Click a chord block to
   select it, then edit the name / start time in the inspector; drag a block to
@@ -70,6 +84,16 @@ The dataset is read from this folder:
   (Standard, Artist, Album, Instrumentation, YouTube ID, MusicBrainz ID) and the
   integer **Number of Bars** (`num_bars`). Edits save to `metadata.json` on blur
   (`num_bars` is stored as an int).
+- **Refresh audio**: if a song was crawled from the wrong video, fix the
+  **YouTube ID** field then click *↻ Refresh audio*. A background job re-downloads
+  the audio (yt-dlp → WAV), re-runs beat tracking (madmom `DBNBeatTracker`),
+  writes `audio/<id>.wav` + `beats/<id>.txt`, and drops the song's now-stale
+  chord/section labels. Progress shows live in the panel; the canvas reloads when
+  done. Work happens in a temp dir and is only committed on success, so a failure
+  (bad ID, network error) leaves the existing files untouched. Requires the app
+  to run in the project venv (with `yt-dlp` + `madmom` installed). Note: yt-dlp
+  now prefers a JS runtime for YouTube — install `deno` if downloads start
+  failing.
 - **Zoom** with −/+; **Follow** auto-scrolls during playback.
 - **Save** writes `beats/<name>.txt`, `sections/<name>.csv`, and
   `chords/<name>.csv` (the original chord file is backed up to `.csv.orig` on

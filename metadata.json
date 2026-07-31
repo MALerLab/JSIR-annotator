@@ -1305,7 +1305,7 @@
       "cace_chords": "consonance_ace_inferences/Kzqvm-yXhL8.lab",
       "chords": "chords/Kzqvm-yXhL8.csv"
     },
-    "key": "C maj",
+    "key": "Db maj",
     "num_bars": 32
   },
   {
@@ -1322,7 +1322,7 @@
       "cace_chords": "consonance_ace_inferences/1eJVqsEK8s8.lab",
       "chords": "chords/1eJVqsEK8s8.csv"
     },
-    "key": "C maj",
+    "key": "Ab maj",
     "num_bars": 32
   },
   {
@@ -1339,7 +1339,7 @@
       "cace_chords": "consonance_ace_inferences/ZEHIcxHhqkg.lab",
       "chords": "chords/ZEHIcxHhqkg.csv"
     },
-    "key": "C maj",
+    "key": "G maj",
     "num_bars": 32
   },
   {
@@ -1357,7 +1357,7 @@
       "chords": "chords/Ah2r9Jzo82Y.csv"
     },
     "key": "F maj",
-    "num_bars": 33
+    "num_bars": 32
   },
   {
     "yt_id": "ENb4DJpNNfw",
@@ -1373,8 +1373,8 @@
       "cace_chords": "consonance_ace_inferences/ENb4DJpNNfw.lab",
       "chords": "chords/ENb4DJpNNfw.csv"
     },
-    "key": "F maj",
-    "num_bars": 33
+    "key": "C maj",
+    "num_bars": 32
   },
   {
     "yt_id": "BeJX2QV_5VA",
@@ -1391,7 +1391,7 @@
       "chords": "chords/BeJX2QV_5VA.csv"
     },
     "key": "F maj",
-    "num_bars": 33
+    "num_bars": 32
   },
   {
     "yt_id": "XInCrPBQM3U",
@@ -1407,8 +1407,8 @@
       "cace_chords": "consonance_ace_inferences/XInCrPBQM3U.lab",
       "chords": "chords/XInCrPBQM3U.csv"
     },
-    "key": "F maj",
-    "num_bars": 33
+    "key": "C maj",
+    "num_bars": 32
   },
   {
     "yt_id": "KQ7BUFg0e5U",
@@ -1425,7 +1425,7 @@
       "chords": "chords/KQ7BUFg0e5U.csv"
     },
     "key": "F maj",
-    "num_bars": 33
+    "num_bars": 32
   },
   {
     "yt_id": "15MYlx2PQvc",
@@ -1441,8 +1441,8 @@
       "cace_chords": "consonance_ace_inferences/15MYlx2PQvc.lab",
       "chords": "chords/15MYlx2PQvc.csv"
     },
-    "key": "F maj",
-    "num_bars": 33
+    "key": "Eb maj",
+    "num_bars": 32
   },
   {
     "yt_id": "mpSX6e4LeRw",
@@ -1459,7 +1459,7 @@
       "chords": "chords/mpSX6e4LeRw.csv"
     },
     "key": "F maj",
-    "num_bars": 33
+    "num_bars": 32
   },
   {
     "yt_id": "GirUHC7C8x0",
@@ -1476,7 +1476,7 @@
       "chords": "chords/GirUHC7C8x0.csv"
     },
     "key": "F maj",
-    "num_bars": 33
+    "num_bars": 32
   },
   {
     "yt_id": "LgaIUqH0w6c",
@@ -1781,7 +1781,7 @@
       "cace_chords": "consonance_ace_inferences/cpHhHS9o8_0.lab",
       "chords": "chords/cpHhHS9o8_0.csv"
     },
-    "key": "F maj",
+    "key": "G maj",
     "num_bars": 32
   },
   {
@@ -1938,7 +1938,7 @@
     "num_bars": 32
   },
   {
-    "yt_id": "6FmjLlBafK4",
+    "yt_id": "WoQeS0rcXyc",
     "standard": "Hot House",
     "artist": "Bud Powell",
     "album": "Bud Powell",
@@ -1946,10 +1946,10 @@
     "musicbrainz_id": "f583b40c-eaf8-406b-818d-96f3780cf677",
     "audio_length": 356.855875,
     "files": {
-      "audio": "audio/6FmjLlBafK4.wav",
-      "beats": "beats/6FmjLlBafK4.txt",
-      "cace_chords": "consonance_ace_inferences/6FmjLlBafK4.lab",
-      "chords": "chords/6FmjLlBafK4.csv"
+      "audio": "audio/WoQeS0rcXyc.wav",
+      "beats": "beats/WoQeS0rcXyc.txt",
+      "cace_chords": "consonance_ace_inferences/WoQeS0rcXyc.lab",
+      "chords": "chords/WoQeS0rcXyc.csv"
     },
     "key": "C maj",
     "num_bars": 32
@@ -2057,7 +2057,7 @@
     "num_bars": 32
   },
   {
-    "yt_id": "nwP8C2xhKBs",
+    "yt_id": "LlwUUvgx66Q",
     "standard": "I Can't Get Started",
     "artist": "Charlie Parker",
     "album": "Verve Jazz Masters 15",
@@ -2065,10 +2065,10 @@
     "musicbrainz_id": "6060d537-80bc-4c86-ad40-2204cff5ab99",
     "audio_length": 548.049,
     "files": {
-      "audio": "audio/nwP8C2xhKBs.wav",
-      "beats": "beats/nwP8C2xhKBs.txt",
-      "cace_chords": "consonance_ace_inferences/nwP8C2xhKBs.lab",
-      "chords": "chords/nwP8C2xhKBs.csv"
+      "audio": "audio/LlwUUvgx66Q.wav",
+      "beats": "beats/LlwUUvgx66Q.txt",
+      "cace_chords": "consonance_ace_inferences/LlwUUvgx66Q.lab",
+      "chords": "chords/LlwUUvgx66Q.csv"
     },
     "key": "C maj",
     "num_bars": 32
@@ -2087,7 +2087,7 @@
       "cace_chords": "consonance_ace_inferences/W3cKifJYLi8.lab",
       "chords": "chords/W3cKifJYLi8.csv"
     },
-    "key": "C maj",
+    "key": "G maj",
     "num_bars": 32
   },
   {
@@ -2104,11 +2104,11 @@
       "cace_chords": "consonance_ace_inferences/ZBCEnEk4WDI.lab",
       "chords": "chords/ZBCEnEk4WDI.csv"
     },
-    "key": "C maj",
+    "key": "Ab maj",
     "num_bars": 32
   },
   {
-    "yt_id": "dnTzxG5lT4E",
+    "yt_id": "mpgVvpsNu0I",
     "standard": "I Can't Get Started",
     "artist": "The Clifford Brown\u2013Max Roach Quintet",
     "album": "The Encyclopedia of Jazz, Part 5/5: Modern Jazz - Cool Jazz",
@@ -2116,10 +2116,10 @@
     "musicbrainz_id": "289e53d2-aafc-49e3-a785-222d3ede6d6f",
     "audio_length": 436.48,
     "files": {
-      "audio": "audio/dnTzxG5lT4E.wav",
-      "beats": "beats/dnTzxG5lT4E.txt",
-      "cace_chords": "consonance_ace_inferences/dnTzxG5lT4E.lab",
-      "chords": "chords/dnTzxG5lT4E.csv"
+      "audio": "audio/mpgVvpsNu0I.wav",
+      "beats": "beats/mpgVvpsNu0I.txt",
+      "cace_chords": "consonance_ace_inferences/mpgVvpsNu0I.lab",
+      "chords": "chords/mpgVvpsNu0I.csv"
     },
     "key": "C maj",
     "num_bars": 32
@@ -2138,7 +2138,7 @@
       "cace_chords": "consonance_ace_inferences/HbJHzPTW5Wk.lab",
       "chords": "chords/HbJHzPTW5Wk.csv"
     },
-    "key": "C maj",
+    "key": "Bb maj",
     "num_bars": 32
   },
   {
@@ -2176,7 +2176,7 @@
     "num_bars": 32
   },
   {
-    "yt_id": "oLNwQ1GFz44",
+    "yt_id": "uNT3wPcjjEQ",
     "standard": "I Got Rhythm",
     "artist": "Django Reinhardt, St\u00e9phane Grappelli",
     "album": "Swing From Paris",
@@ -2184,10 +2184,10 @@
     "musicbrainz_id": "6289717f-d861-4d38-9346-d3a62634e7bf",
     "audio_length": 116.45866666666667,
     "files": {
-      "audio": "audio/oLNwQ1GFz44.wav",
-      "beats": "beats/oLNwQ1GFz44.txt",
-      "cace_chords": "consonance_ace_inferences/oLNwQ1GFz44.lab",
-      "chords": "chords/oLNwQ1GFz44.csv"
+      "audio": "audio/uNT3wPcjjEQ.wav",
+      "beats": "beats/uNT3wPcjjEQ.txt",
+      "cace_chords": "consonance_ace_inferences/uNT3wPcjjEQ.lab",
+      "chords": "chords/uNT3wPcjjEQ.csv"
     },
     "key": "Bb maj",
     "num_bars": 32
@@ -2325,7 +2325,7 @@
       "cace_chords": "consonance_ace_inferences/lIhQrRPcCSs.lab",
       "chords": "chords/lIhQrRPcCSs.csv"
     },
-    "key": "F maj",
+    "key": "F# maj",
     "num_bars": 32
   },
   {
@@ -2346,7 +2346,7 @@
     "num_bars": 32
   },
   {
-    "yt_id": "DIaPOh_LhRs",
+    "yt_id": "jvJgi6ASs5o",
     "standard": "I Mean You",
     "artist": "Thelonious Monk, Gerry Mulligan",
     "album": "Mulligan Meets Monk",
@@ -2354,16 +2354,16 @@
     "musicbrainz_id": "9e1051a2-d193-4dbf-be3c-f8e41796d2ce",
     "audio_length": 419.67747916666667,
     "files": {
-      "audio": "audio/DIaPOh_LhRs.wav",
-      "beats": "beats/DIaPOh_LhRs.txt",
-      "cace_chords": "consonance_ace_inferences/DIaPOh_LhRs.lab",
-      "chords": "chords/DIaPOh_LhRs.csv"
+      "audio": "audio/jvJgi6ASs5o.wav",
+      "beats": "beats/jvJgi6ASs5o.txt",
+      "cace_chords": "consonance_ace_inferences/jvJgi6ASs5o.lab",
+      "chords": "chords/jvJgi6ASs5o.csv"
     },
     "key": "F maj",
     "num_bars": 32
   },
   {
-    "yt_id": "-rnayopW7ag",
+    "yt_id": "Lov30CfofmQ",
     "standard": "I Mean You",
     "artist": "Thelonious Monk",
     "album": "Genius of Modern Music, Volume One",
@@ -2371,10 +2371,10 @@
     "musicbrainz_id": "0eea4b93-fe71-49d8-86cb-5f7fc9e559ac",
     "audio_length": 407.08064583333334,
     "files": {
-      "audio": "audio/-rnayopW7ag.wav",
-      "beats": "beats/-rnayopW7ag.txt",
-      "cace_chords": "consonance_ace_inferences/-rnayopW7ag.lab",
-      "chords": "chords/-rnayopW7ag.csv"
+      "audio": "audio/Lov30CfofmQ.wav",
+      "beats": "beats/Lov30CfofmQ.txt",
+      "cace_chords": "consonance_ace_inferences/Lov30CfofmQ.lab",
+      "chords": "chords/Lov30CfofmQ.csv"
     },
     "key": "F maj",
     "num_bars": 32
@@ -2431,7 +2431,7 @@
     "num_bars": 32
   },
   {
-    "yt_id": "mvythpyPUoM",
+    "yt_id": "SD6QTTr0aJA",
     "standard": "I'll Remember April",
     "artist": "Charlie Parker Quintet",
     "album": "Complete Live at Birdland May 17, 1950",
@@ -2439,10 +2439,10 @@
     "musicbrainz_id": "4b8be031-b2f0-4581-ada7-7fb35676699e",
     "audio_length": 658.459875,
     "files": {
-      "audio": "audio/mvythpyPUoM.wav",
-      "beats": "beats/mvythpyPUoM.txt",
-      "cace_chords": "consonance_ace_inferences/mvythpyPUoM.lab",
-      "chords": "chords/mvythpyPUoM.csv"
+      "audio": "audio/SD6QTTr0aJA.wav",
+      "beats": "beats/SD6QTTr0aJA.txt",
+      "cace_chords": "consonance_ace_inferences/SD6QTTr0aJA.lab",
+      "chords": "chords/SD6QTTr0aJA.csv"
     },
     "key": "G maj",
     "num_bars": 48
@@ -2461,7 +2461,7 @@
       "cace_chords": "consonance_ace_inferences/OfQvMpihfak.lab",
       "chords": "chords/OfQvMpihfak.csv"
     },
-    "key": "G maj",
+    "key": "F maj",
     "num_bars": 48
   },
   {
@@ -2499,7 +2499,7 @@
     "num_bars": 48
   },
   {
-    "yt_id": "9umh1Y7y5fU",
+    "yt_id": "_dJnP957OzI",
     "standard": "I'll Remember April",
     "artist": "Stan Getz, Chet Baker",
     "album": "Stan Meets Chet",
@@ -2507,10 +2507,10 @@
     "musicbrainz_id": "0107c39d-527a-418c-919b-216c34c5eb85",
     "audio_length": 732.171625,
     "files": {
-      "audio": "audio/9umh1Y7y5fU.wav",
-      "beats": "beats/9umh1Y7y5fU.txt",
-      "cace_chords": "consonance_ace_inferences/9umh1Y7y5fU.lab",
-      "chords": "chords/9umh1Y7y5fU.csv"
+      "audio": "audio/_dJnP957OzI.wav",
+      "beats": "beats/_dJnP957OzI.txt",
+      "cace_chords": "consonance_ace_inferences/_dJnP957OzI.lab",
+      "chords": "chords/_dJnP957OzI.csv"
     },
     "key": "G maj",
     "num_bars": 48
@@ -2550,7 +2550,7 @@
     "num_bars": 48
   },
   {
-    "yt_id": "2MsUFTUfCkY",
+    "yt_id": "7RRxiUw6bkk",
     "standard": "Impressions",
     "artist": "John Coltrane Quartet",
     "album": "Coltrane",
@@ -2558,10 +2558,10 @@
     "musicbrainz_id": "66c1f283-4d0b-451b-a4e7-23bd4cb1fda3",
     "audio_length": 618.660875,
     "files": {
-      "audio": "audio/2MsUFTUfCkY.wav",
-      "beats": "beats/2MsUFTUfCkY.txt",
-      "cace_chords": "consonance_ace_inferences/2MsUFTUfCkY.lab",
-      "chords": "chords/2MsUFTUfCkY.csv"
+      "audio": "audio/7RRxiUw6bkk.wav",
+      "beats": "beats/7RRxiUw6bkk.txt",
+      "cace_chords": "consonance_ace_inferences/7RRxiUw6bkk.lab",
+      "chords": "chords/7RRxiUw6bkk.csv"
     },
     "key": "D min",
     "num_bars": 32
@@ -2601,7 +2601,7 @@
     "num_bars": 32
   },
   {
-    "yt_id": "FzwVeEpFjvE",
+    "yt_id": "IlKTxP7rPkY",
     "standard": "Impressions",
     "artist": "McCoy Tyner",
     "album": "Trident",
@@ -2609,10 +2609,10 @@
     "musicbrainz_id": "cbdd2d66-cd00-4f45-be0f-603a0fbbeb8f",
     "audio_length": 670.8666666666667,
     "files": {
-      "audio": "audio/FzwVeEpFjvE.wav",
-      "beats": "beats/FzwVeEpFjvE.txt",
-      "cace_chords": "consonance_ace_inferences/FzwVeEpFjvE.lab",
-      "chords": "chords/FzwVeEpFjvE.csv"
+      "audio": "audio/IlKTxP7rPkY.wav",
+      "beats": "beats/IlKTxP7rPkY.txt",
+      "cace_chords": "consonance_ace_inferences/IlKTxP7rPkY.lab",
+      "chords": "chords/IlKTxP7rPkY.csv"
     },
     "key": "D min",
     "num_bars": 32
@@ -2669,7 +2669,7 @@
     "num_bars": 32
   },
   {
-    "yt_id": "iqYXCni06KY",
+    "yt_id": "C-PF03PTL3U",
     "standard": "Impressions",
     "artist": "Pat Martino",
     "album": "Consciousness",
@@ -2677,10 +2677,10 @@
     "musicbrainz_id": "917580b5-834c-4d3a-9495-d9f0d105f4ac",
     "audio_length": 229.27383333333333,
     "files": {
-      "audio": "audio/iqYXCni06KY.wav",
-      "beats": "beats/iqYXCni06KY.txt",
-      "cace_chords": "consonance_ace_inferences/iqYXCni06KY.lab",
-      "chords": "chords/iqYXCni06KY.csv"
+      "audio": "audio/C-PF03PTL3U.wav",
+      "beats": "beats/C-PF03PTL3U.txt",
+      "cace_chords": "consonance_ace_inferences/C-PF03PTL3U.lab",
+      "chords": "chords/C-PF03PTL3U.csv"
     },
     "key": "D min",
     "num_bars": 32
@@ -2716,7 +2716,7 @@
       "cace_chords": "consonance_ace_inferences/mK43Rt8ahOY.lab",
       "chords": "chords/mK43Rt8ahOY.csv"
     },
-    "key": "F maj",
+    "key": "Eb maj",
     "num_bars": 32
   },
   {
@@ -2737,7 +2737,7 @@
     "num_bars": 32
   },
   {
-    "yt_id": "98CLnPEbCLY",
+    "yt_id": "7PkTjBycu5M",
     "standard": "Joy Spring",
     "artist": "Freddie Hubbard",
     "album": "Born to Be Blue",
@@ -2745,10 +2745,10 @@
     "musicbrainz_id": "017459d2-d6bd-4b8a-9cb6-4c7bd10bd157",
     "audio_length": 340.5903125,
     "files": {
-      "audio": "audio/98CLnPEbCLY.wav",
-      "beats": "beats/98CLnPEbCLY.txt",
-      "cace_chords": "consonance_ace_inferences/98CLnPEbCLY.lab",
-      "chords": "chords/98CLnPEbCLY.csv"
+      "audio": "audio/7PkTjBycu5M.wav",
+      "beats": "beats/7PkTjBycu5M.txt",
+      "cace_chords": "consonance_ace_inferences/7PkTjBycu5M.lab",
+      "chords": "chords/7PkTjBycu5M.csv"
     },
     "key": "F maj",
     "num_bars": 32
@@ -2835,7 +2835,7 @@
       "cace_chords": "consonance_ace_inferences/DmRkZeGFONg.lab",
       "chords": "chords/DmRkZeGFONg.csv"
     },
-    "key": "G maj",
+    "key": "Bb maj",
     "num_bars": 32
   },
   {
@@ -2852,11 +2852,11 @@
       "cace_chords": "consonance_ace_inferences/70eiPAom-Ng.lab",
       "chords": "chords/70eiPAom-Ng.csv"
     },
-    "key": "G maj",
+    "key": "Db maj",
     "num_bars": 32
   },
   {
-    "yt_id": "6dXYVhhp45U",
+    "yt_id": "NZIE5yNwt0E",
     "standard": "Just Friends",
     "artist": "Chet Baker Quartet",
     "album": "Sings and Plays With Bud Shank, Russ Freeman and Strings",
@@ -2864,16 +2864,16 @@
     "musicbrainz_id": "79c49bcd-91f8-4ea3-9954-6d93aa84e389",
     "audio_length": 293.02422916666666,
     "files": {
-      "audio": "audio/6dXYVhhp45U.wav",
-      "beats": "beats/6dXYVhhp45U.txt",
-      "cace_chords": "consonance_ace_inferences/6dXYVhhp45U.lab",
-      "chords": "chords/6dXYVhhp45U.csv"
+      "audio": "audio/NZIE5yNwt0E.wav",
+      "beats": "beats/NZIE5yNwt0E.txt",
+      "cace_chords": "consonance_ace_inferences/NZIE5yNwt0E.lab",
+      "chords": "chords/NZIE5yNwt0E.csv"
     },
     "key": "G maj",
     "num_bars": 32
   },
   {
-    "yt_id": "UFtDg4z4dV8",
+    "yt_id": "tS2uuNjPAhY",
     "standard": "Just Friends",
     "artist": "Bill Evans, Warne Marsh, Jimmy Garrison, Paul Motian",
     "album": "Live at the Half Note",
@@ -2881,16 +2881,16 @@
     "musicbrainz_id": "d6f271d0-c58e-4c08-8a0f-6fa186153a83",
     "audio_length": 477.2266666666667,
     "files": {
-      "audio": "audio/UFtDg4z4dV8.wav",
-      "beats": "beats/UFtDg4z4dV8.txt",
-      "cace_chords": "consonance_ace_inferences/UFtDg4z4dV8.lab",
-      "chords": "chords/UFtDg4z4dV8.csv"
+      "audio": "audio/tS2uuNjPAhY.wav",
+      "beats": "beats/tS2uuNjPAhY.txt",
+      "cace_chords": "consonance_ace_inferences/tS2uuNjPAhY.lab",
+      "chords": "chords/tS2uuNjPAhY.csv"
     },
-    "key": "G maj",
+    "key": "F maj",
     "num_bars": 32
   },
   {
-    "yt_id": "jhb96V5Tk6w",
+    "yt_id": "RNI18JbzFFg",
     "standard": "Just Friends",
     "artist": "Wes Montgomery, Clark Terry",
     "album": "Wes Montgomery and the Billy Taylor Trio",
@@ -2898,12 +2898,12 @@
     "musicbrainz_id": "15509dd8-fb19-41b8-9f7f-082c8db73233",
     "audio_length": 310.4130625,
     "files": {
-      "audio": "audio/jhb96V5Tk6w.wav",
-      "beats": "beats/jhb96V5Tk6w.txt",
-      "cace_chords": "consonance_ace_inferences/jhb96V5Tk6w.lab",
-      "chords": "chords/jhb96V5Tk6w.csv"
+      "audio": "audio/RNI18JbzFFg.wav",
+      "beats": "beats/RNI18JbzFFg.txt",
+      "cace_chords": "consonance_ace_inferences/RNI18JbzFFg.lab",
+      "chords": "chords/RNI18JbzFFg.csv"
     },
-    "key": "G maj",
+    "key": "Ab maj",
     "num_bars": 32
   },
   {
@@ -2944,7 +2944,7 @@
     "yt_id": "DqCM-qeS1Lo",
     "standard": "Just Friends",
     "artist": "Oscar Peterson",
-    "album": "Oscar Peterson in Russia",
+    "album": "Walking the Line",
     "instrumentation": "piano trio",
     "musicbrainz_id": "e659156d-2336-4288-ba9a-3b7ab655f4c2",
     "audio_length": 234.12439583333332,
@@ -2954,7 +2954,7 @@
       "cace_chords": "consonance_ace_inferences/DqCM-qeS1Lo.lab",
       "chords": "chords/DqCM-qeS1Lo.csv"
     },
-    "key": "G maj",
+    "key": "Bb maj",
     "num_bars": 32
   },
   {
@@ -3179,7 +3179,7 @@
     "num_bars": 40
   },
   {
-    "yt_id": "G8nHYtHOrrU",
+    "yt_id": "aHqFpwxQhDE",
     "standard": "Milestones",
     "artist": "The Buddy Rich Band",
     "album": "Very Alive at Ronnie Scott's",
@@ -3187,10 +3187,10 @@
     "musicbrainz_id": "f14708c0-644d-4307-b0ae-10d4bfbad6fe",
     "audio_length": 304.44,
     "files": {
-      "audio": "audio/G8nHYtHOrrU.wav",
-      "beats": "beats/G8nHYtHOrrU.txt",
-      "cace_chords": "consonance_ace_inferences/G8nHYtHOrrU.lab",
-      "chords": "chords/G8nHYtHOrrU.csv"
+      "audio": "audio/aHqFpwxQhDE.wav",
+      "beats": "beats/aHqFpwxQhDE.txt",
+      "cace_chords": "consonance_ace_inferences/aHqFpwxQhDE.lab",
+      "chords": "chords/aHqFpwxQhDE.csv"
     },
     "key": "F maj",
     "num_bars": 40

@@ -39,6 +39,9 @@ const state = {
   selBeats: new Set(),  // selected beat objects (source of truth for beats)
   loop: null,           // {start, end} ruler loop/selection region, or null
   undo: null,           // single-level undo snapshot (beats/sections/chords)
+  onlyDownbeats: false, // visual: show only downbeat lines on the canvas
+  songVol: 1,           // song gain (0..1.5)
+  metroVol: 1,          // metronome gain (0..1)
   pxPerSec: 60,
   totalW: 0,            // full timeline width in px (duration * pxPerSec)
   _vw: 0,               // viewport width (canvas css width)
@@ -59,6 +62,17 @@ let audioCtx = null;
 function ctx() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   return audioCtx;
+}
+
+// Master gain nodes: song audio and metronome route through their own gains so
+// their volumes are independently adjustable (song up to 1.5 = amplified).
+let songGain = null, metroGain = null;
+function ensureGraph() {
+  const c = ctx();
+  if (!songGain) { songGain = c.createGain(); songGain.connect(c.destination); }
+  if (!metroGain) { metroGain = c.createGain(); metroGain.connect(c.destination); }
+  songGain.gain.value = state.songVol;
+  metroGain.gain.value = state.metroVol;
 }
 
 const $ = (id) => document.getElementById(id);
@@ -159,6 +173,12 @@ function renderSongPanel(song) {
   // default the bar-jump amount to num_bars when available
   const nb = parseInt(song.num_bars, 10);
   $('bar-jump').value = nb > 0 ? nb : 1;
+
+  // refresh-audio available once a song is loaded (unless a job is in flight)
+  if (!refreshBusy) {
+    $('btn-refresh').disabled = false;
+    setRefreshStatus('');
+  }
 }
 
 function updateYtLink(song) {
@@ -229,6 +249,115 @@ $('key-select').addEventListener('change', async (e) => {
   }
 });
 
+// ---- volume & view controls ------------------------------------------------
+function setSongVol(pct) {
+  state.songVol = pct / 100;
+  if (songGain) songGain.gain.value = state.songVol;
+  $('song-vol').value = pct;
+  $('song-vol-val').textContent = pct + '%';
+}
+function setMetroVol(pct) {
+  state.metroVol = pct / 100;
+  if (metroGain) metroGain.gain.value = state.metroVol;
+  $('metro-vol').value = pct;
+  $('metro-vol-val').textContent = pct + '%';
+}
+// Reset per-view controls (volumes + downbeats-only) to defaults on song load.
+function resetViewControls() {
+  setSongVol(100);
+  setMetroVol(100);
+  state.onlyDownbeats = false;
+  $('chk-only-db').checked = false;
+}
+$('song-vol').addEventListener('input', (e) => setSongVol(parseInt(e.target.value, 10) || 0));
+$('metro-vol').addEventListener('input', (e) => setMetroVol(parseInt(e.target.value, 10) || 0));
+$('chk-only-db').addEventListener('change', (e) => {
+  state.onlyDownbeats = e.target.checked;
+  scheduleRender();
+});
+
+// After toggling/selecting any of these, drop focus so global keyboard
+// shortcuts (space, B/S/C, etc.) act on the app rather than the control.
+['chk-metro', 'chk-follow', 'chk-only-db', 'beat-downbeat', 'beats-downbeat', 'key-select']
+  .forEach((id) => $(id).addEventListener('change', (e) => e.target.blur()));
+
+// ---- refresh audio (re-crawl + re-track) -----------------------------------
+let refreshBusy = false;
+function setRefreshStatus(msg, cls) {
+  const el = $('refresh-status');
+  el.textContent = msg || '';
+  el.className = cls || '';
+}
+
+async function refreshAudio() {
+  if (!state.current || refreshBusy) return;
+  const song = state.current;
+  const ytId = (song.yt_id || '').trim();
+  if (!ytId) { setRefreshStatus('Set a YouTube ID first.', 'err'); return; }
+  if (!confirm(
+    `Re-crawl audio from YouTube ID "${ytId}"?\n\n` +
+    'This REPLACES the audio and beat tracking and REMOVES all chord & ' +
+    'section labels for this song. It cannot be undone.'
+  )) return;
+
+  const stem = song.stem;
+  refreshBusy = true;
+  $('btn-refresh').disabled = true;
+  setRefreshStatus('Starting…', 'busy');
+  try {
+    const res = await fetch(`/api/refresh/${stem}`, { method: 'POST' });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
+    pollRefresh(stem);
+  } catch (err) {
+    setRefreshStatus('Error: ' + err.message, 'err');
+    refreshBusy = false;
+    $('btn-refresh').disabled = false;
+  }
+}
+
+function pollRefresh(stem) {
+  fetch(`/api/refresh/${stem}/status`)
+    .then((r) => r.json())
+    .then(async (job) => {
+      if (job.state === 'running') {
+        setRefreshStatus(job.message || 'Working…', 'busy');
+        setTimeout(() => pollRefresh(stem), 1000);
+      } else if (job.state === 'done') {
+        setRefreshStatus('Done — reloading…', 'ok');
+        await reloadAfterRefresh(stem, job.new_stem || stem);
+        refreshBusy = false;
+        $('btn-refresh').disabled = !state.current;
+        setRefreshStatus('Refreshed ✓', 'ok');
+        setTimeout(() => { if (!refreshBusy) setRefreshStatus(''); }, 3000);
+      } else { // error / idle
+        setRefreshStatus('Error: ' + (job.message || 'failed'), 'err');
+        refreshBusy = false;
+        $('btn-refresh').disabled = !state.current;
+      }
+    })
+    .catch((err) => {
+      setRefreshStatus('Error: ' + err.message, 'err');
+      refreshBusy = false;
+      $('btn-refresh').disabled = !state.current;
+    });
+}
+
+async function reloadAfterRefresh(oldStem, newStem) {
+  // metadata changed (files re-keyed, labels dropped) -> refresh the list…
+  await loadSongs();
+  // …then, only if the user is still on this song, reload it with fresh audio.
+  if (!state.current || state.current.stem !== oldStem) return;
+  const song = state.songs.find((s) => s.stem === newStem)
+    || state.songs.find((s) => s.stem === oldStem);
+  if (song) {
+    state.dirty = false;
+    await selectSong(song, { bust: Date.now() });
+  }
+}
+
+$('btn-refresh').addEventListener('click', refreshAudio);
+
 function escapeHtml(s) {
   return String(s).replace(/[&<>"]/g, (c) =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])
@@ -238,7 +367,7 @@ function escapeHtml(s) {
 // ----------------------------------------------------------------------------
 // Song selection / loading
 // ----------------------------------------------------------------------------
-async function selectSong(song) {
+async function selectSong(song, opts) {
   if (state.dirty && !confirm('Discard unsaved changes?')) return;
   stopPlayback();
   state.current = song;
@@ -248,6 +377,7 @@ async function selectSong(song) {
   state.undo = null;
   state.dirty = false;
   state.currentTime = 0;
+  resetViewControls();
   renderSongList();
   setStatus('loading…');
   $('song-title').textContent = song.standard || '(untitled)';
@@ -256,7 +386,9 @@ async function selectSong(song) {
 
   let annRes, buffer;
   try {
-    const audioUrl = `/audio/${song.audio.replace(/^audio\//, '')}`;
+    // cache-bust after a refresh so the browser doesn't serve stale audio
+    const bust = opts && opts.bust ? `?v=${opts.bust}` : '';
+    const audioUrl = `/audio/${song.audio.replace(/^audio\//, '')}${bust}`;
     const [ann, audioResp] = await Promise.all([
       fetch(`/api/song/${song.stem}`).then((r) => r.json()),
       fetch(audioUrl),
@@ -298,7 +430,7 @@ function fitZoom() {
 }
 
 function clampZoom(z) {
-  return Math.max(8, Math.min(800, z));
+  return Math.max(4, Math.min(800, z));
 }
 
 function enableControls(on) {
@@ -344,7 +476,7 @@ function layoutCanvas() {
 // ----------------------------------------------------------------------------
 // Waveform peak cache (computed once per zoom level)
 // ----------------------------------------------------------------------------
-let peakMin = null, peakMax = null, peaksForW = -1, peaksForBuf = null;
+let peakMin = null, peakMax = null, peaksForPps = -1, peaksForBuf = null;
 let _mono = null, _monoFor = null;
 
 function mixToMono() {
@@ -363,9 +495,13 @@ function mixToMono() {
 }
 
 function buildPeaks() {
-  const cols = Math.max(1, Math.ceil(state.totalW));
+  // Peaks span only the AUDIO's pixel width (duration * pxPerSec), not the whole
+  // canvas. When the canvas is wider than the audio (zoomed out past fit), the
+  // render loop leaves the extra columns blank instead of stretching the wave.
+  const audioW = Math.max(1, state.duration * state.pxPerSec);
+  const cols = Math.max(1, Math.ceil(audioW));
   const data = mixToMono();
-  const spp = data.length / state.totalW;
+  const spp = data.length / audioW;
   peakMin = new Float32Array(cols);
   peakMax = new Float32Array(cols);
   for (let c = 0; c < cols; c++) {
@@ -381,13 +517,13 @@ function buildPeaks() {
     peakMin[c] = mn;
     peakMax[c] = mx;
   }
-  peaksForW = state.totalW;
+  peaksForPps = state.pxPerSec;
   peaksForBuf = state.buffer;
 }
 
 function ensurePeaks() {
   if (!state.buffer) return;
-  if (peaksForW !== state.totalW || peaksForBuf !== state.buffer) buildPeaks();
+  if (peaksForPps !== state.pxPerSec || peaksForBuf !== state.buffer) buildPeaks();
 }
 
 // ----------------------------------------------------------------------------
@@ -438,15 +574,18 @@ function renderStatic() {
     wctx.moveTo(x0 + 0.5, slTop);
     wctx.lineTo(x0 + 0.5, h);
     wctx.stroke();
-    // label
+    // label: name + length in bars, pinned to the left edge when the section's
+    // start has scrolled off-screen (so it stays readable — "sticky")
+    const label = `${sec.name || '(unnamed)'}  ·  ${fmtBars(sectionBars(sec))}`;
+    const clipL = Math.max(x0, 0);
     wctx.fillStyle = '#0e1116';
     wctx.font = '11px system-ui, sans-serif';
     wctx.textBaseline = 'middle';
     wctx.save();
     wctx.beginPath();
-    wctx.rect(x0 + 4, slTop, Math.max(0, x1 - x0 - 6), SECTION_LANE_H);
+    wctx.rect(clipL + 2, slTop, Math.max(0, x1 - clipL - 4), SECTION_LANE_H);
     wctx.clip();
-    wctx.fillText(sec.name || '(unnamed)', x0 + 6, slTop + SECTION_LANE_H / 2 + 1);
+    wctx.fillText(label, Math.max(x0 + 6, 4), slTop + SECTION_LANE_H / 2 + 1);
     wctx.restore();
   });
 
@@ -472,6 +611,8 @@ function renderStatic() {
     const x = tx(beat.t);
     if (x > vw + 2) break;
     const selected = state.selBeats.has(beat);
+    // "downbeats only" view: hide non-downbeats (selected beats still show)
+    if (state.onlyDownbeats && !beat.db && !selected) continue;
     // downbeats stand out (amber, thicker); selected always wins (red)
     if (selected) { wctx.strokeStyle = '#ff5d5d'; wctx.lineWidth = 2; }
     else if (beat.db) { wctx.strokeStyle = 'rgba(255,170,64,0.95)'; wctx.lineWidth = 2; }
@@ -648,6 +789,17 @@ function sectionEnd(sec) {
   return end;
 }
 
+// Section length in bars (4/4: 4 beats = 1 bar) = beats within the section / 4.
+function sectionBars(sec) {
+  const startIdx = lowerBound(sec.time - 1e-9);
+  const endIdx = lowerBound(sectionEnd(sec) - 1e-9);
+  return Math.max(0, endIdx - startIdx) / 4;
+}
+function fmtBars(bars) {
+  const s = Number.isInteger(bars) ? String(bars) : bars.toFixed(2).replace(/\.?0+$/, '');
+  return `${s} bar${bars === 1 ? '' : 's'}`;
+}
+
 // ----------------------------------------------------------------------------
 // Playhead overlay
 // ----------------------------------------------------------------------------
@@ -681,11 +833,12 @@ function drawPlayhead() {
 function startPlayback() {
   if (!state.buffer || state.playing) return;
   ctx().resume();
+  ensureGraph();
   let offset = state.currentTime;
   if (offset >= state.duration - 0.01) offset = 0;
   const src = ctx().createBufferSource();
   src.buffer = state.buffer;
-  src.connect(ctx().destination);
+  src.connect(songGain);
   src.onended = () => { if (state.source === src) onPlaybackEnded(); };
   state.source = src;
   state.startOffset = offset;
@@ -794,6 +947,7 @@ function scheduleClicks() {
 let clickBuffer = null;
 function scheduleClick(when, downbeat) {
   const c = ctx();
+  ensureGraph();
   if (clickBuffer) {
     const s = c.createBufferSource();
     s.buffer = clickBuffer;
@@ -801,7 +955,7 @@ function scheduleClick(when, downbeat) {
     s.playbackRate.value = downbeat ? 1.5 : 1;
     const g = c.createGain();
     g.gain.value = 0.9;
-    s.connect(g).connect(c.destination);
+    s.connect(g).connect(metroGain);
     s.start(when);
     return;
   }
@@ -812,7 +966,7 @@ function scheduleClick(when, downbeat) {
   g.gain.setValueAtTime(0.0001, when);
   g.gain.exponentialRampToValueAtTime(downbeat ? 0.75 : 0.6, when + 0.001);
   g.gain.exponentialRampToValueAtTime(0.0001, when + 0.04);
-  osc.connect(g).connect(c.destination);
+  osc.connect(g).connect(metroGain);
   osc.start(when);
   osc.stop(when + 0.05);
 }
@@ -855,48 +1009,67 @@ function addBeatAt(t) {
   updateInspector();
 }
 
-// Double every beat interval: insert a new beat at each midpoint. Original beat
-// objects are preserved so any current selection stays valid. O(n), done here
-// in the browser (the array is already in memory — no backend round-trip).
+// True when beat `b` falls in the active loop region (or always, if no region).
+function inLoopRegion(b) {
+  return !state.loop || (b.t >= state.loop.start - 1e-9 && b.t <= state.loop.end + 1e-9);
+}
+
+// Double the beat density: insert a midpoint between each consecutive pair. With
+// a loop region selected, only pairs entirely inside it are doubled; otherwise
+// the whole song. Original beat objects are preserved.
 function doubleBeats() {
-  if (state.beats.length < 2) return;
+  const region = state.beats.filter(inLoopRegion);
+  if (region.length < 2) return;
   pushUndo();
   const out = [];
   for (let i = 0; i < state.beats.length; i++) {
     out.push(state.beats[i]);
-    if (i < state.beats.length - 1) {
-      out.push({ t: (state.beats[i].t + state.beats[i + 1].t) / 2, db: false });
+    const a = state.beats[i], b = state.beats[i + 1];
+    if (b && inLoopRegion(a) && inLoopRegion(b)) {
+      out.push({ t: (a.t + b.t) / 2, db: false });
     }
   }
   state.beats = out;
+  if (state.loop) selectBeatsInRange(state.loop.start, state.loop.end);
   if (state.playing) state.nextBeatIdx = lowerBound(playPos());
   markDirty();
   scheduleRender();
   updateInspector();
-  setStatus(`doubled → ${state.beats.length} beats`);
+  setStatus(`${state.loop ? 'doubled region' : 'doubled'} → ${state.beats.length} beats`);
   setTimeout(() => setStatus(''), 1500);
 }
 
-// Halve the beats: keep the selected (anchor) beat and every other beat aligned
-// to it, deleting the rest. Requires a beat selection so we know which half to
-// keep. O(n).
+// Halve the beats: keep an anchor beat and every other beat aligned to it,
+// deleting the rest. With a loop region, this is confined to the region (beats
+// outside are untouched); otherwise the whole song. The anchor is the selected
+// beat (or, inside a region, the region's first beat if nothing suitable is
+// selected).
 function halveBeats() {
-  if (!state.selected || state.selected.kind !== 'beat') {
-    setStatus('select a beat first to anchor halving');
-    setTimeout(() => setStatus(''), 2000);
-    return;
+  const region = state.beats.filter(inLoopRegion);
+  if (region.length < 2) return;
+  let anchor = (state.selected && state.selected.kind === 'beat' && inLoopRegion(state.selected.obj))
+    ? state.selected.obj : null;
+  if (!anchor) {
+    if (state.loop) anchor = region[0];
+    else {
+      setStatus('select a beat first to anchor halving');
+      setTimeout(() => setStatus(''), 2000);
+      return;
+    }
   }
-  const anchorIdx = state.beats.indexOf(state.selected.obj);
-  if (anchorIdx < 0) return;
+  const anchorPos = region.indexOf(anchor);
+  if (anchorPos < 0) return;
+  // within the region keep every other beat (anchor stays); keep all outside
+  const keep = new Set(region.filter((_, i) => ((i - anchorPos) % 2) === 0));
   pushUndo();
-  // keep beats whose index has the same parity as the anchor (anchor stays)
-  state.beats = state.beats.filter((_, idx) => ((idx - anchorIdx) % 2) === 0);
-  reconcileSelection();
+  state.beats = state.beats.filter((b) => !inLoopRegion(b) || keep.has(b));
+  if (state.loop) selectBeatsInRange(state.loop.start, state.loop.end);
+  else reconcileSelection();
   if (state.playing) state.nextBeatIdx = lowerBound(playPos());
   markDirty();
   scheduleRender();
   updateInspector();
-  setStatus(`halved → ${state.beats.length} beats`);
+  setStatus(`${state.loop ? 'halved region' : 'halved'} → ${state.beats.length} beats`);
   setTimeout(() => setStatus(''), 1500);
 }
 
@@ -1179,7 +1352,8 @@ function updateInspector() {
   $('btn-delete').disabled = !hasSel;
   $('btn-deselect').disabled = !hasSel;
   // halving needs a beat anchor (single-anchor operation)
-  $('btn-half-beats').disabled = !(state.buffer && state.selected && state.selected.kind === 'beat');
+  // halving needs a beat anchor, or a loop region (which auto-anchors)
+  $('btn-half-beats').disabled = !(state.buffer && ((state.selected && state.selected.kind === 'beat') || state.loop));
 
   if (nBeats > 1) {
     // multi-beat group inspector
@@ -1211,9 +1385,11 @@ function updateInspector() {
   } else {
     $('inspector-section').classList.remove('hidden');
     const s = state.selected.obj;
-    $('section-name').value = s.name;
+    // don't stomp what the user is actively typing in the name combobox
+    if (document.activeElement !== $('section-name')) $('section-name').value = s.name;
     $('section-time').value = s.time.toFixed(3);
     $('section-end').textContent = sectionEnd(s).toFixed(3) + ' s';
+    $('section-bars').textContent = fmtBars(sectionBars(s));
   }
 }
 
@@ -1243,11 +1419,73 @@ $('beats-downbeat').addEventListener('change', (e) => setDownbeatForSelection(e.
 $('beats-fill').addEventListener('click', fillSelectedBeats);
 $('beats-delete').addEventListener('click', deleteSelected);
 
+// --- section-name combobox (preset dropdown + autocomplete) ----------------
+const SECTION_PRESETS = [
+  'head:horn', 'head:piano', 'head:vocal',
+  'solo:horn', 'solo:piano', 'solo:bass',
+  'last', 'exchange', 'exclude',
+];
+let presetActive = -1; // highlighted index in the open dropdown
+
+function applySectionName(val) {
+  if (!state.selected || state.selected.kind !== 'section') return;
+  $('section-name').value = val;
+  state.selected.obj.name = val;
+  markDirty();
+  scheduleRender();
+}
+function showSectionPresets() {
+  const q = $('section-name').value.toLowerCase();
+  const items = SECTION_PRESETS.filter((p) => p.toLowerCase().includes(q));
+  const ul = $('section-presets');
+  presetActive = -1;
+  if (!items.length) { ul.classList.add('hidden'); ul.innerHTML = ''; return; }
+  ul.innerHTML = items.map((p) => `<li>${escapeHtml(p)}</li>`).join('');
+  ul.classList.remove('hidden');
+}
+function hideSectionPresets() {
+  $('section-presets').classList.add('hidden');
+  presetActive = -1;
+}
+function highlightPreset(delta) {
+  const lis = $('section-presets').querySelectorAll('li');
+  if (!lis.length) return;
+  presetActive = (presetActive + delta + lis.length) % lis.length;
+  lis.forEach((li, i) => li.classList.toggle('active', i === presetActive));
+}
+
 $('section-name').addEventListener('input', (e) => {
   if (!state.selected || state.selected.kind !== 'section') return;
   state.selected.obj.name = e.target.value;
   markDirty();
   scheduleRender();
+  showSectionPresets();
+});
+$('section-name').addEventListener('focus', showSectionPresets);
+$('section-name').addEventListener('mousedown', () => setTimeout(showSectionPresets, 0));
+$('section-name').addEventListener('keydown', (e) => {
+  const open = !$('section-presets').classList.contains('hidden');
+  if (e.key === 'ArrowDown') { e.preventDefault(); if (!open) showSectionPresets(); else highlightPreset(1); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); highlightPreset(-1); }
+  else if (e.key === 'Enter') {
+    e.preventDefault();
+    const lis = $('section-presets').querySelectorAll('li');
+    if (open && presetActive >= 0 && lis[presetActive]) applySectionName(lis[presetActive].textContent);
+    hideSectionPresets();
+    e.target.blur(); // hand focus back so shortcuts work
+  } else if (e.key === 'Escape') {
+    hideSectionPresets();
+  }
+});
+$('section-name').addEventListener('blur', () => setTimeout(hideSectionPresets, 150));
+// mousedown fires before the input's blur, so the click always registers
+$('section-presets').addEventListener('mousedown', (e) => {
+  const li = e.target.closest('li');
+  if (!li) return;
+  e.preventDefault();
+  applySectionName(li.textContent);
+  hideSectionPresets();
+  $('section-name').blur();
 });
 $('section-time').addEventListener('change', (e) => {
   if (!state.selected || state.selected.kind !== 'section') return;
@@ -1681,9 +1919,10 @@ $('btn-save').addEventListener('click', save);
 document.addEventListener('keydown', (e) => {
   if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
   if (!state.current) return;
-  // Ctrl/Cmd combos (undo); ignore other modified keys so browser shortcuts work
+  // Ctrl/Cmd combos (undo, save); ignore others so browser shortcuts work
   if (e.ctrlKey || e.metaKey) {
     if (e.key === 'z' || e.key === 'Z') { e.preventDefault(); undo(); }
+    else if (e.key === 's' || e.key === 'S') { e.preventDefault(); save(); }
     return;
   }
   if (e.code === 'Space') { e.preventDefault(); togglePlay(); }
@@ -1694,6 +1933,8 @@ document.addEventListener('keydown', (e) => {
   else if (e.key === 's' || e.key === 'S') { e.preventDefault(); addSectionAtPlayhead(); }
   else if (e.key === 'c' || e.key === 'C') { e.preventDefault(); addChordAtPlayhead(); }
   else if (e.key === 'b' || e.key === 'B') { e.preventDefault(); addBeatAt(state.playing ? playPos() : state.currentTime); }
+  else if (e.key === 'd' || e.key === 'D') { e.preventDefault(); doubleBeats(); }
+  else if (e.key === 'h' || e.key === 'H') { e.preventDefault(); halveBeats(); }
   else if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); deleteSelected(); }
   else if (e.key === 'Escape') { e.preventDefault(); clearSelection(); }
 });
