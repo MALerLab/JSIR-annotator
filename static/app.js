@@ -1421,9 +1421,9 @@ $('beats-delete').addEventListener('click', deleteSelected);
 
 // --- section-name combobox (preset dropdown + autocomplete) ----------------
 const SECTION_PRESETS = [
-  'head:horn', 'head:piano', 'head:vocal',
-  'solo:horn', 'solo:piano', 'solo:bass',
-  'last', 'exchange', 'exclude',
+  'head:horn', 'head:piano', 'head:vocal', 'head:guitar',
+  'solo:horn', 'solo:piano', 'solo:bass', 'solo:guitar',
+  'last', 'exchange', 'exclude', 'outro'
 ];
 let presetActive = -1; // highlighted index in the open dropdown
 

@@ -3230,20 +3230,20 @@
     "num_bars": 40
   },
   {
-    "yt_id": "UOEIQKczRPY",
+    "yt_id": "ni9Cp9mOOOg",
     "standard": "My Funny Valentine",
     "artist": "Chet Baker",
-    "album": "Complete 1952 Fantasy & Pacific Jazz Sessions",
+    "album": "Chet Baker Sings",
     "instrumentation": "vocal with quartet",
     "musicbrainz_id": "5d4fa45c-b979-4142-be7a-f98acf2ddf12",
     "audio_length": 597.600375,
     "files": {
-      "audio": "audio/UOEIQKczRPY.wav",
-      "beats": "beats/UOEIQKczRPY.txt",
-      "cace_chords": "consonance_ace_inferences/UOEIQKczRPY.lab",
-      "chords": "chords/UOEIQKczRPY.csv"
+      "audio": "audio/ni9Cp9mOOOg.wav",
+      "beats": "beats/ni9Cp9mOOOg.txt",
+      "cace_chords": "consonance_ace_inferences/ni9Cp9mOOOg.lab",
+      "chords": "chords/ni9Cp9mOOOg.csv"
     },
-    "key": "F min",
+    "key": "C min",
     "num_bars": 36
   },
   {
@@ -3260,7 +3260,7 @@
       "cace_chords": "consonance_ace_inferences/-3lY1BwwmLM.lab",
       "chords": "chords/-3lY1BwwmLM.csv"
     },
-    "key": "F min",
+    "key": "C min",
     "num_bars": 36
   },
   {
@@ -3277,7 +3277,7 @@
       "cace_chords": "consonance_ace_inferences/A-Vfj-yeSP8.lab",
       "chords": "chords/A-Vfj-yeSP8.csv"
     },
-    "key": "F min",
+    "key": "C min",
     "num_bars": 36
   },
   {
@@ -3294,7 +3294,7 @@
       "cace_chords": "consonance_ace_inferences/unf2AbrdXh0.lab",
       "chords": "chords/unf2AbrdXh0.csv"
     },
-    "key": "F min",
+    "key": "B min",
     "num_bars": 36
   },
   {
@@ -3471,7 +3471,7 @@
     "yt_id": "xGVdAlxlp18",
     "standard": "On Green Dolphin Street",
     "artist": "Miles Davis",
-    "album": "Jazz Track",
+    "album": "Kind of Blue",
     "instrumentation": "sextet",
     "musicbrainz_id": "2d72ac9e-1300-4106-986d-6080b9e61a83",
     "audio_length": 589.8449166666667,
@@ -3515,7 +3515,7 @@
       "cace_chords": "consonance_ace_inferences/VUAbqDaHbdY.lab",
       "chords": "chords/VUAbqDaHbdY.csv"
     },
-    "key": "Eb maj",
+    "key": "C maj",
     "num_bars": 32
   },
   {
@@ -3549,7 +3549,7 @@
       "cace_chords": "consonance_ace_inferences/0ywmZb7qw7A.lab",
       "chords": "chords/0ywmZb7qw7A.csv"
     },
-    "key": "Eb maj",
+    "key": "C maj",
     "num_bars": 32
   },
   {
@@ -3570,7 +3570,7 @@
     "num_bars": 32
   },
   {
-    "yt_id": "CsgonzDgtRY",
+    "yt_id": "7tsrI0Ce3GE",
     "standard": "On Green Dolphin Street",
     "artist": "Oscar Peterson Trio",
     "album": "The Sound Of The Trio",
@@ -3578,12 +3578,12 @@
     "musicbrainz_id": "940fa118-e00a-4b6d-bbdd-5a60fcb94553",
     "audio_length": 382.4566041666667,
     "files": {
-      "audio": "audio/CsgonzDgtRY.wav",
-      "beats": "beats/CsgonzDgtRY.txt",
-      "cace_chords": "consonance_ace_inferences/CsgonzDgtRY.lab",
-      "chords": "chords/CsgonzDgtRY.csv"
+      "audio": "audio/7tsrI0Ce3GE.wav",
+      "beats": "beats/7tsrI0Ce3GE.txt",
+      "cace_chords": "consonance_ace_inferences/7tsrI0Ce3GE.lab",
+      "chords": "chords/7tsrI0Ce3GE.csv"
     },
-    "key": "Eb maj",
+    "key": "C maj",
     "num_bars": 32
   },
   {
@@ -3592,7 +3592,6 @@
     "artist": "Sarah Vaughan",
     "album": "Sarah\u2019s Blues",
     "instrumentation": "vocal",
-    "musicbrainz_id": "118508af-86cb-47d2-807e-2d445dd0a4a7",
     "audio_length": 331.8015625,
     "files": {
       "audio": "audio/iVjQiXz3FZE.wav",
@@ -3601,7 +3600,8 @@
       "chords": "chords/iVjQiXz3FZE.csv"
     },
     "key": "Eb maj",
-    "num_bars": 32
+    "num_bars": 32,
+    "musicbrainz_id": "118508af-86cb-47d2-807e-2d445dd0a4a7"
   },
   {
     "yt_id": "vXeeSJ28Tko",
