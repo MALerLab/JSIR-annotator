@@ -40,8 +40,10 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 AUDIO_DIR = os.path.join(ROOT, "audio")
 BEATS_DIR = os.path.join(ROOT, "beats")
 SECTIONS_DIR = os.path.join(ROOT, "sections")
+STRUCTURE_DIR = os.path.join(ROOT, "structure")
 CHORDS_DIR = os.path.join(ROOT, "chords")
 METADATA_PATH = os.path.join(ROOT, "metadata.json")
+LEADSHEET_PATH = os.path.join(ROOT, "lead_sheet_chords.json")
 
 # Directory holding this interpreter's console scripts (DBNBeatTracker, etc.).
 BIN_DIR = os.path.dirname(sys.executable)
@@ -61,6 +63,24 @@ app = Flask(__name__, static_folder="static", static_url_path="/static")
 def load_metadata():
     with open(METADATA_PATH, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def load_leadsheets():
+    """Index the lead-sheet chord progressions by (lower-cased) title. The
+    'performer' value is ignored; the first entry per title wins."""
+    if not os.path.exists(LEADSHEET_PATH):
+        return {}
+    with open(LEADSHEET_PATH, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    by_title = {}
+    for entry in data:
+        title = (entry.get("title") or "").strip().lower()
+        if title and title not in by_title:
+            by_title[title] = entry
+    return by_title
+
+
+LEADSHEETS = load_leadsheets()
 
 
 def save_metadata(meta):
@@ -164,6 +184,40 @@ def write_sections(stem, sections):
         f.write(buf.getvalue())
 
 
+def _read_events(path):
+    if not os.path.exists(path):
+        return None
+    events = []
+    with open(path, "r", encoding="utf-8", newline="") as f:
+        for row in csv.DictReader(f):
+            try:
+                events.append({"time": float(row["time"]), "name": row.get("name", "")})
+            except (ValueError, KeyError, TypeError):
+                pass
+    events.sort(key=lambda e: e["time"])
+    return events
+
+
+def read_structure(stem):
+    """Structure events (same `time,name` shape as sections). Falls back to the
+    section annotations when this song has no structure file yet."""
+    events = _read_events(os.path.join(STRUCTURE_DIR, stem + ".csv"))
+    return events if events is not None else read_sections(stem)
+
+
+def write_structure(stem, structure):
+    os.makedirs(STRUCTURE_DIR, exist_ok=True)
+    path = os.path.join(STRUCTURE_DIR, stem + ".csv")
+    structure = sorted(structure, key=lambda s: float(s["time"]))
+    buf = io.StringIO()
+    writer = csv.writer(buf)
+    writer.writerow(["time", "name"])
+    for s in structure:
+        writer.writerow([f"{float(s['time']):.3f}", s.get("name", "")])
+    with open(path, "w", encoding="utf-8", newline="") as f:
+        f.write(buf.getvalue())
+
+
 def read_chords(stem):
     path = os.path.join(CHORDS_DIR, stem + ".csv")
     if not os.path.exists(path):
@@ -239,7 +293,31 @@ def api_song(stem):
             "stem": stem,
             "beats": read_beats(stem),
             "sections": read_sections(stem),
+            "structure": read_structure(stem),
             "chords": read_chords(stem),
+        }
+    )
+
+
+@app.route("/api/leadsheet")
+def api_leadsheet():
+    """Look up a standard's lead-sheet progression by title (case-insensitive,
+    performer ignored)."""
+    title = (request.args.get("title") or "").strip().lower()
+    entry = LEADSHEETS.get(title)
+    if entry is None:
+        return jsonify({"found": False})
+    changes = entry.get("chord_changes") or []
+    coda = entry.get("coda")
+    return jsonify(
+        {
+            "found": True,
+            "title": entry.get("title"),
+            "key": entry.get("key"),
+            "signature": entry.get("signature"),
+            "chord_changes": changes,
+            "coda": coda if coda else None,
+            "num_bars": len(changes),
         }
     )
 
@@ -258,6 +336,14 @@ def api_save_sections(stem):
     data = request.get_json(force=True)
     write_sections(stem, data.get("sections", []))
     return jsonify({"ok": True, "count": len(data.get("sections", []))})
+
+
+@app.route("/api/structure/<stem>", methods=["POST"])
+def api_save_structure(stem):
+    stem = safe_stem(stem)
+    data = request.get_json(force=True)
+    write_structure(stem, data.get("structure", []))
+    return jsonify({"ok": True, "count": len(data.get("structure", []))})
 
 
 @app.route("/api/chords/<stem>", methods=["POST"])
@@ -364,11 +450,12 @@ def _commit_refresh(old_stem, new_stem):
             files["cace_chords"] = f"consonance_ace_inferences/{new_stem}.lab"
         save_metadata(meta)
 
-    # remove chord & section labels (old and new stems) — they no longer apply
+    # remove chord/section/structure labels (old and new stems) — they no longer apply
     for st in {old_stem, new_stem}:
         for path in (
             os.path.join(SECTIONS_DIR, st + ".csv"),
             os.path.join(SECTIONS_DIR, st + ".csv.orig"),
+            os.path.join(STRUCTURE_DIR, st + ".csv"),
             os.path.join(CHORDS_DIR, st + ".csv"),
             os.path.join(CHORDS_DIR, st + ".csv.orig"),
         ):
@@ -398,7 +485,7 @@ def _refresh_worker(stem, yt_id, new_stem):
         url = f"https://www.youtube.com/watch?v={yt_id}"
         dl = subprocess.run(
             [sys.executable, "-m", "yt_dlp", "-x", "--audio-format", "wav",
-             "--no-playlist", "--force-overwrites",
+             "--no-playlist", "--force-overwrites", "--extractor-args", "youtube:player_client=android",
              "-o", os.path.join(tmpdir, "audio.%(ext)s"), url],
             capture_output=True, text=True, timeout=1800,
         )

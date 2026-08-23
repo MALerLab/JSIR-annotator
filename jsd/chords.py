@@ -16,9 +16,9 @@ roots = {
   "F#": 6,
   "G": 7,
   "Gb": 6,
-  "G#": 7,
+  "G#": 8,
   "A": 9,
-  "Ab": 7,
+  "Ab": 8,
   "A#": 10,
   "B": 11,
   "Bb": 10,
@@ -216,3 +216,71 @@ def transpose_wjd_chord_string(chord_string: str, semitones: int) -> str:
     return "NC"
   rest_string = chord_string[len(str(root)):]
   return f"{idx2root[(root + semitones) % 12]}{rest_string}"
+
+
+# --------------------------------------------------------------------------- #
+# Key comparison + transposition (added for chord-progression insertion)
+#
+# The original transpose_wjd_chord_string above slices with len(str(root)) --
+# the length of the *integer* pitch class -- so it mangles two-char roots such
+# as "Ab"/"Db" (whose pitch class is a single digit) and leaves slash-chord
+# basses untransposed. The functions below fix both and add key handling.
+# --------------------------------------------------------------------------- #
+def _root_prefix(s: str):
+  """Return (root_str, pitch_class) for the longest root-note prefix of `s`,
+  else (None, None)."""
+  for i in (2, 1):
+    if len(s) >= i and s[:i] in roots:
+      return s[:i], roots[s[:i]]
+  return None, None
+
+
+def transpose_wjd_chord(chord_string: str, semitones: int) -> str:
+  """Transpose a WJD chord string, preserving quality/extensions and
+  transposing the bass of slash chords. '%' (hold) and no-chord pass through."""
+  if chord_string in ("%", "NC", "N", "", None):
+    return chord_string
+  main, _, bass = chord_string.partition("/")
+  rstr, rpc = _root_prefix(main)
+  if rstr is None:
+    return chord_string  # unparseable -> leave untouched
+  out = idx2root[(rpc + semitones) % 12] + main[len(rstr):]
+  if bass:
+    bstr, bpc = _root_prefix(bass)
+    out += "/" + (idx2root[(bpc + semitones) % 12] + bass[len(bstr):] if bstr else bass)
+  return out
+
+
+def parse_key(key_str):
+  """Parse a key label into (pitch_class, mode). Accepts lead-sheet form
+  ('Ab-maj', 'C-min') and spoken form ('D major', 'F minor'). mode is
+  'maj'/'min'; pitch_class is 0-11 (or None if unknown)."""
+  if not key_str:
+    return None, None
+  s = str(key_str).strip()
+  if "-" in s:
+    root_part, mode_part = s.split("-", 1)
+  else:
+    parts = s.split()
+    root_part, mode_part = parts[0], (parts[1] if len(parts) > 1 else "")
+  pc = roots.get(root_part.strip())
+  mode = "min" if mode_part.strip().lower().startswith("min") else "maj"
+  return pc, mode
+
+
+def semitones_between(from_key, to_key):
+  """Semitones to shift chords written in `from_key` so they sound in `to_key`
+  (tonic pitch-class difference, 0-11). None if either key is unknown."""
+  a, _ = parse_key(from_key)
+  b, _ = parse_key(to_key)
+  if a is None or b is None:
+    return None
+  return (b - a) % 12
+
+
+def transpose_progression(changes, semitones):
+  """Transpose a list of bar strings (space-separated beat tokens)."""
+  return [
+    " ".join(transpose_wjd_chord(tok, semitones) for tok in bar.split())
+    for bar in changes
+  ]

@@ -20,11 +20,59 @@
 // ----------------------------------------------------------------------------
 // Constants & state
 // ----------------------------------------------------------------------------
-const RULER_H = 22;           // top scrub/timeline strip
-const SECTION_LANE_H = 22;    // section-tab lane (below the ruler)
-const CHORD_LANE_H = 22;      // chord lane (below sections, above the waveform)
+const RULER_H = 33;           // top scrub/timeline strip (1.5x)
+const STRUCTURE_LANE_H = 33;  // structure-event lane (below the ruler)
+const SECTION_LANE_H = 33;    // section-tab lane (below structure)
+const CHORD_LANE_H = 33;      // chord lane (below sections, above the waveform)
+const LANE_LABEL_W = 66;      // left gutter for the sticky lane labels
 const BEAT_HIT_PX = 5;        // click tolerance for selecting/dragging a beat
 const LOOKAHEAD = 0.12;       // metronome scheduling lookahead (s)
+
+// Note-name <-> pitch-class maps for chord transposition (mirrors jsd/chords.py,
+// with the Ab/G# = 8 fix). Used to transpose lead-sheet progressions into the
+// recording's key.
+const CHORD_ROOTS = {
+  C: 0, Cb: 11, 'C#': 1, D: 2, Db: 1, 'D#': 3, E: 4, Eb: 3, 'E#': 5,
+  F: 5, Fb: 4, 'F#': 6, G: 7, Gb: 6, 'G#': 8, A: 9, Ab: 8, 'A#': 10,
+  B: 11, Bb: 10, 'B#': 0,
+};
+const IDX2ROOT = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+
+function rootPrefix(s) {
+  if (s.length >= 2 && Object.prototype.hasOwnProperty.call(CHORD_ROOTS, s.slice(0, 2))) {
+    return [s.slice(0, 2), CHORD_ROOTS[s.slice(0, 2)]];
+  }
+  if (s.length >= 1 && Object.prototype.hasOwnProperty.call(CHORD_ROOTS, s.slice(0, 1))) {
+    return [s.slice(0, 1), CHORD_ROOTS[s.slice(0, 1)]];
+  }
+  return [null, null];
+}
+
+// Transpose a WJD chord token by `semitones`, preserving quality/extensions and
+// transposing the bass of slash chords. '%'/no-chord/unparseable pass through.
+function transposeChordToken(tok, semitones) {
+  if (!tok || tok === '%' || tok === 'NC' || tok === 'N') return tok;
+  const slash = tok.indexOf('/');
+  const main = slash >= 0 ? tok.slice(0, slash) : tok;
+  const bass = slash >= 0 ? tok.slice(slash + 1) : null;
+  const [rstr, rpc] = rootPrefix(main);
+  if (rstr === null) return tok;
+  let out = IDX2ROOT[((rpc + semitones) % 12 + 12) % 12] + main.slice(rstr.length);
+  if (bass !== null) {
+    const [bstr, bpc] = rootPrefix(bass);
+    out += '/' + (bstr !== null
+      ? IDX2ROOT[((bpc + semitones) % 12 + 12) % 12] + bass.slice(bstr.length)
+      : bass);
+  }
+  return out;
+}
+
+function keyToPc(k) {
+  if (!k) return null;
+  const s = String(k);
+  let root = (s.includes('-') ? s.split('-')[0] : s.split(' ')[0]).trim();
+  return Object.prototype.hasOwnProperty.call(CHORD_ROOTS, root) ? CHORD_ROOTS[root] : null;
+}
 const SCHED_MS = 25;          // metronome scheduler tick (ms)
 
 const state = {
@@ -34,14 +82,18 @@ const state = {
   duration: 0,
   beats: [],            // [{t, db}] (kept sorted)
   sections: [],         // [{time, name}] (kept sorted)
+  structure: [],        // [{time, name}] (kept sorted) — like sections, own lane
   chords: [],           // [{time, chord}] (kept sorted)
   selected: null,       // {kind:'section'|'chord', obj} OR {kind:'beat', obj:<anchor>}
   selBeats: new Set(),  // selected beat objects (source of truth for beats)
+  selEvents: new Set(), // selected section/structure/chord objects (multi-select)
   loop: null,           // {start, end} ruler loop/selection region, or null
   undo: null,           // single-level undo snapshot (beats/sections/chords)
   onlyDownbeats: false, // visual: show only downbeat lines on the canvas
+  leadsheet: null,      // lead-sheet entry for the current title (or {found:false})
   songVol: 1,           // song gain (0..1.5)
   metroVol: 1,          // metronome gain (0..1)
+  beatOpacity: 1,       // opacity of beat lines (0..1); persists across songs
   pxPerSec: 60,
   totalW: 0,            // full timeline width in px (duration * pxPerSec)
   _vw: 0,               // viewport width (canvas css width)
@@ -179,16 +231,49 @@ function renderSongPanel(song) {
     $('btn-refresh').disabled = false;
     setRefreshStatus('');
   }
+  renderLeadsheetInfo();
 }
 
 function updateYtLink(song) {
-  const el = $('panel-yt');
+  const links = [];
   if (song.yt_id) {
     const url = `https://www.youtube.com/watch?v=${encodeURIComponent(song.yt_id)}`;
-    el.innerHTML = `<a href="${url}" target="_blank" rel="noopener">▶ Open on YouTube</a>`;
-  } else {
-    el.innerHTML = '';
+    links.push(`<a href="${url}" target="_blank" rel="noopener">▶ Open on YouTube</a>`);
   }
+  if (song.musicbrainz_id) {
+    const url = `https://musicbrainz.org/recording/${encodeURIComponent(song.musicbrainz_id)}`;
+    links.push(`<a href="${url}" target="_blank" rel="noopener">♪ Open in MusicBrainz</a>`);
+  }
+  $('panel-yt').innerHTML = links.map((l) => `<div>${l}</div>`).join('');
+}
+
+// Fetch the lead-sheet progression for this song's title and show availability.
+async function fetchLeadsheet(song) {
+  const title = song.standard || '';
+  let result = { found: false };
+  if (title) {
+    try {
+      const r = await fetch(`/api/leadsheet?title=${encodeURIComponent(title)}`);
+      const d = await r.json();
+      if (d && d.found) result = d;
+    } catch (e) { /* leave not-found */ }
+  }
+  if (state.current !== song) return; // user moved on
+  state.leadsheet = result;
+  renderLeadsheetInfo();
+  updateInspector();
+}
+
+function renderLeadsheetInfo() {
+  const el = $('leadsheet-info');
+  const ls = state.leadsheet;
+  if (ls === null) { el.innerHTML = '<span class="muted">Lead sheet: …</span>'; return; }
+  if (!ls.found) { el.innerHTML = '<span class="muted">Lead sheet: none for this title</span>'; return; }
+  const bits = [(ls.chord_changes && ls.chord_changes.length) ? 'chords available' : 'no chords'];
+  if (ls.coda && ls.coda.length) bits.push('coda available');
+  el.innerHTML =
+    `<div>Lead sheet: <b>${escapeHtml(ls.key || '—')}</b></div>` +
+    `<div class="ls-avail">${escapeHtml(bits.join(' · '))}</div>`;
 }
 
 // Save one edited info field to metadata.json and reflect it everywhere.
@@ -203,7 +288,7 @@ async function saveMetaField(field, rawValue) {
   if (field === 'artist' || field === 'album') {
     $('song-sub').textContent = [song.artist, song.album].filter(Boolean).join(' · ');
   }
-  if (field === 'yt_id') updateYtLink(song);
+  if (field === 'yt_id' || field === 'musicbrainz_id') updateYtLink(song);
   renderSongList();
   $('meta-status').textContent = 'saving…';
   try {
@@ -262,7 +347,15 @@ function setMetroVol(pct) {
   $('metro-vol').value = pct;
   $('metro-vol-val').textContent = pct + '%';
 }
+// Beat-line opacity — persists across songs (not reset on load).
+function setBeatOpacity(pct) {
+  state.beatOpacity = pct / 100;
+  $('beat-opacity').value = pct;
+  $('beat-opacity-val').textContent = pct + '%';
+  scheduleRender();
+}
 // Reset per-view controls (volumes + downbeats-only) to defaults on song load.
+// NOTE: beat opacity intentionally persists across songs.
 function resetViewControls() {
   setSongVol(100);
   setMetroVol(100);
@@ -271,6 +364,7 @@ function resetViewControls() {
 }
 $('song-vol').addEventListener('input', (e) => setSongVol(parseInt(e.target.value, 10) || 0));
 $('metro-vol').addEventListener('input', (e) => setMetroVol(parseInt(e.target.value, 10) || 0));
+$('beat-opacity').addEventListener('input', (e) => setBeatOpacity(parseInt(e.target.value, 10) || 0));
 $('chk-only-db').addEventListener('change', (e) => {
   state.onlyDownbeats = e.target.checked;
   scheduleRender();
@@ -373,12 +467,16 @@ async function selectSong(song, opts) {
   state.current = song;
   state.selected = null;
   state.selBeats = new Set();
+  state.selEvents = new Set();
+  state.structure = [];
   state.loop = null;
   state.undo = null;
+  state.leadsheet = null;
   state.dirty = false;
   state.currentTime = 0;
   resetViewControls();
   renderSongList();
+  fetchLeadsheet(song); // async; updates the panel + inspector when it resolves
   setStatus('loading…');
   $('song-title').textContent = song.standard || '(untitled)';
   $('song-sub').textContent = [song.artist, song.album].filter(Boolean).join(' · ');
@@ -408,6 +506,7 @@ async function selectSong(song, opts) {
 
   state.beats = annRes.beats.map((b) => ({ t: b.time, db: !!b.downbeat }));
   state.sections = annRes.sections.map((s) => ({ time: s.time, name: s.name }));
+  state.structure = (annRes.structure || []).map((s) => ({ time: s.time, name: s.name }));
   state.chords = (annRes.chords || []).map((c) => ({ time: c.time, chord: c.chord }));
   state.buffer = buffer;
   state.duration = state.buffer.duration;
@@ -435,9 +534,9 @@ function clampZoom(z) {
 
 function enableControls(on) {
   ['btn-play', 'btn-stop', 'btn-jump-back', 'btn-jump-fwd',
-   'btn-prev-section', 'btn-next-section', 'btn-add-section', 'btn-add-chord',
-   'btn-add-beat', 'btn-double-beats', 'btn-clear-downbeats', 'btn-delete',
-   'btn-zoom-in', 'btn-zoom-out', 'btn-save'].forEach((id) => ($(id).disabled = !on));
+   'btn-prev-section', 'btn-next-section', 'btn-add-structure', 'btn-copy-structure',
+   'btn-add-section', 'btn-add-chord', 'btn-add-beat', 'btn-double-beats',
+   'btn-clear-downbeats', 'btn-delete', 'btn-zoom-in', 'btn-zoom-out', 'btn-save'].forEach((id) => ($(id).disabled = !on));
   // half-beats / deselect depend on the current selection (see updateInspector)
   if (!on) { $('btn-half-beats').disabled = true; $('btn-deselect').disabled = true; }
 }
@@ -445,9 +544,10 @@ function enableControls(on) {
 // ----------------------------------------------------------------------------
 // Geometry / canvas layout
 // ----------------------------------------------------------------------------
-const sectionLaneTop = () => RULER_H;
-const chordLaneTop = () => RULER_H + SECTION_LANE_H;
-const bodyTop = () => RULER_H + SECTION_LANE_H + CHORD_LANE_H;
+const structureLaneTop = () => RULER_H;
+const sectionLaneTop = () => RULER_H + STRUCTURE_LANE_H;
+const chordLaneTop = () => RULER_H + STRUCTURE_LANE_H + SECTION_LANE_H;
+const bodyTop = () => RULER_H + STRUCTURE_LANE_H + SECTION_LANE_H + CHORD_LANE_H;
 function tx(t) { return t * state.pxPerSec - waveScroll.scrollLeft; }       // time -> viewport x
 function xToTime(x) { return (x + waveScroll.scrollLeft) / state.pxPerSec; } // viewport x -> time
 
@@ -530,6 +630,7 @@ function ensurePeaks() {
 // Static render (ruler + sections + waveform + beats) — viewport only
 // ----------------------------------------------------------------------------
 const SECTION_PALETTE = ['#4f9dff', '#ffb454', '#7ee081', '#ff7eb6', '#b78bff', '#56d4d4'];
+const STRUCTURE_PALETTE = ['#ff7eb6', '#7ee081', '#4f9dff', '#ffb454', '#56d4d4', '#b78bff'];
 
 function renderStatic() {
   if (!state.buffer) return;
@@ -546,6 +647,8 @@ function renderStatic() {
   wctx.fillRect(0, 0, vw, h);
   wctx.fillStyle = '#11151b';
   wctx.fillRect(0, 0, vw, RULER_H);
+  wctx.fillStyle = '#0d1017';
+  wctx.fillRect(0, structureLaneTop(), vw, STRUCTURE_LANE_H);
   wctx.fillStyle = '#0c0f14';
   wctx.fillRect(0, sectionLaneTop(), vw, SECTION_LANE_H);
   wctx.fillStyle = '#0a0d12';
@@ -553,42 +656,8 @@ function renderStatic() {
 
   drawRuler(vw, scrollLeft);
 
-  // --- sections (visible only) ---
-  const slTop = sectionLaneTop();
-  const sorted = [...state.sections].sort((a, b) => a.time - b.time);
-  sorted.forEach((sec, i) => {
-    const x0 = tx(sec.time);
-    const x1 = tx(sectionEnd(sec));
-    if (x1 < 0 || x0 > vw) return;
-    const col = SECTION_PALETTE[i % SECTION_PALETTE.length];
-    wctx.fillStyle = hexA(col, 0.13);
-    wctx.fillRect(x0, bt, x1 - x0, bodyH);
-    const selected = state.selected && state.selected.kind === 'section' && state.selected.obj === sec;
-    // tab
-    wctx.fillStyle = selected ? col : hexA(col, 0.5);
-    wctx.fillRect(x0, slTop, Math.max(2, x1 - x0), SECTION_LANE_H);
-    // start divider (full height, through the lanes and waveform)
-    wctx.strokeStyle = col;
-    wctx.lineWidth = selected ? 2 : 1;
-    wctx.beginPath();
-    wctx.moveTo(x0 + 0.5, slTop);
-    wctx.lineTo(x0 + 0.5, h);
-    wctx.stroke();
-    // label: name + length in bars, pinned to the left edge when the section's
-    // start has scrolled off-screen (so it stays readable — "sticky")
-    const label = `${sec.name || '(unnamed)'}  ·  ${fmtBars(sectionBars(sec))}`;
-    const clipL = Math.max(x0, 0);
-    wctx.fillStyle = '#0e1116';
-    wctx.font = '11px system-ui, sans-serif';
-    wctx.textBaseline = 'middle';
-    wctx.save();
-    wctx.beginPath();
-    wctx.rect(clipL + 2, slTop, Math.max(0, x1 - clipL - 4), SECTION_LANE_H);
-    wctx.clip();
-    wctx.fillText(label, Math.max(x0 + 6, 4), slTop + SECTION_LANE_H / 2 + 1);
-    wctx.restore();
-  });
-
+  drawEventLane(state.structure, structureLaneTop(), STRUCTURE_LANE_H, 'structure', STRUCTURE_PALETTE);
+  drawEventLane(state.sections, sectionLaneTop(), SECTION_LANE_H, 'section', SECTION_PALETTE);
   drawChords(vw);
 
   // --- waveform (read straight from the peak cache) ---
@@ -606,6 +675,7 @@ function renderStatic() {
   // --- beats (binary-search the visible window, then draw) ---
   const tStart = xToTime(-2);
   let i = lowerBound(tStart);
+  wctx.globalAlpha = state.beatOpacity; // user-adjustable beat-line opacity
   for (; i < state.beats.length; i++) {
     const beat = state.beats[i];
     const x = tx(beat.t);
@@ -622,8 +692,71 @@ function renderStatic() {
     wctx.lineTo(x + 0.5, h);
     wctx.stroke();
   }
+  wctx.globalAlpha = 1;
 
   drawLoop(vw, h);
+  drawLaneLabels(); // sticky lane headers, drawn on top of everything
+}
+
+// Draw one event lane (structure or sections): translucent body fill, coloured
+// tab in the lane, full-height start divider, and a name+length label pinned to
+// the right of the lane-label gutter when the start scrolls off-screen.
+function drawEventLane(events, laneTop, laneH, kind, palette) {
+  const vw = state._vw, h = state._h, bt = bodyTop(), bodyH = h - bt;
+  const sorted = [...events].sort((a, b) => a.time - b.time);
+  sorted.forEach((ev, i) => {
+    const x0 = tx(ev.time);
+    const x1 = tx(eventEnd(events, ev));
+    if (x1 < 0 || x0 > vw) return;
+    const col = palette[i % palette.length];
+    wctx.fillStyle = hexA(col, 0.13);
+    wctx.fillRect(x0, bt, x1 - x0, bodyH);
+    const selected = state.selEvents.has(ev);
+    wctx.fillStyle = selected ? col : hexA(col, 0.5);
+    wctx.fillRect(x0, laneTop, Math.max(2, x1 - x0), laneH);
+    wctx.strokeStyle = col;
+    wctx.lineWidth = selected ? 2 : 1;
+    wctx.beginPath();
+    wctx.moveTo(x0 + 0.5, laneTop);
+    wctx.lineTo(x0 + 0.5, h);
+    wctx.stroke();
+    // label pinned after the lane-label gutter (kept clear of lane headers)
+    const label = `${ev.name || '(unnamed)'}  ·  ${fmtBars(eventBars(events, ev))}`;
+    const clipL = Math.max(x0, LANE_LABEL_W);
+    wctx.fillStyle = '#0e1116';
+    wctx.font = '11px system-ui, sans-serif';
+    wctx.textBaseline = 'middle';
+    wctx.save();
+    wctx.beginPath();
+    wctx.rect(clipL + 2, laneTop, Math.max(0, x1 - clipL - 4), laneH);
+    wctx.clip();
+    wctx.fillText(label, Math.max(x0 + 6, LANE_LABEL_W + 4), laneTop + laneH / 2 + 1);
+    wctx.restore();
+  });
+}
+
+// Sticky left-edge headers for the three timeline lanes.
+function drawLaneLabels() {
+  const vw = state._vw;
+  const lanes = [
+    ['Structure', structureLaneTop(), STRUCTURE_LANE_H],
+    ['Sections', sectionLaneTop(), SECTION_LANE_H],
+    ['Chords', chordLaneTop(), CHORD_LANE_H],
+  ];
+  wctx.font = '10px system-ui, sans-serif';
+  wctx.textBaseline = 'middle';
+  for (const [text, top, laneH] of lanes) {
+    wctx.fillStyle = '#0b0e13';                       // opaque chip over the gutter
+    wctx.fillRect(0, top, LANE_LABEL_W, laneH);
+    wctx.strokeStyle = '#2d343d';
+    wctx.lineWidth = 1;
+    wctx.beginPath();
+    wctx.moveTo(LANE_LABEL_W + 0.5, top);
+    wctx.lineTo(LANE_LABEL_W + 0.5, top + laneH);
+    wctx.stroke();
+    wctx.fillStyle = '#8b96a3';
+    wctx.fillText(text, 7, top + laneH / 2 + 1);
+  }
 }
 
 // Loop / multi-select region: translucent band across the height + solid
@@ -673,7 +806,7 @@ function drawRuler(vw, scrollLeft) {
   // lane separators
   wctx.strokeStyle = '#2d343d';
   wctx.beginPath();
-  for (const yy of [RULER_H, chordLaneTop(), bodyTop()]) {
+  for (const yy of [RULER_H, sectionLaneTop(), chordLaneTop(), bodyTop()]) {
     wctx.moveTo(0, yy + 0.5); wctx.lineTo(vw, yy + 0.5);
   }
   wctx.stroke();
@@ -719,7 +852,7 @@ function drawChords(vw) {
     if (x1 < 0) continue;
     const prev = i > 0 ? state.chords[i - 1] : null;
     const isNew = !prev || prev.chord !== ch.chord;
-    const selected = state.selected && state.selected.kind === 'chord' && state.selected.obj === ch;
+    const selected = state.selEvents.has(ch);
     const hue = chordHue(ch.chord || '');
 
     // block fill (same-named neighbours share colour -> look merged)
@@ -743,7 +876,7 @@ function drawChords(vw) {
     // label at the start of each run; also force the first visible block so a
     // chord held across the viewport edge keeps a (left-pinned) label
     if (ch.chord && (isNew || !labeledFirst)) {
-      const cx = Math.max(x0, 0);              // clip to the on-screen block extent
+      const cx = Math.max(x0, LANE_LABEL_W);   // keep clear of the "Chords" gutter
       wctx.save();
       wctx.beginPath();
       wctx.rect(cx, top, Math.max(0, x1 - cx), h);
@@ -781,23 +914,108 @@ function hexA(hex, a) {
   return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
 }
 
-function sectionEnd(sec) {
+// An event runs until the next one in its own list, or the end of the track.
+function eventEnd(list, ev) {
   let end = state.duration;
-  for (const s of state.sections) {
-    if (s.time > sec.time && s.time < end) end = s.time;
-  }
+  for (const s of list) if (s.time > ev.time && s.time < end) end = s.time;
   return end;
 }
-
-// Section length in bars (4/4: 4 beats = 1 bar) = beats within the section / 4.
-function sectionBars(sec) {
-  const startIdx = lowerBound(sec.time - 1e-9);
-  const endIdx = lowerBound(sectionEnd(sec) - 1e-9);
+// Event length in bars (4/4: 4 beats = 1 bar) = beats within the event / 4.
+function eventBars(list, ev) {
+  const startIdx = lowerBound(ev.time - 1e-9);
+  const endIdx = lowerBound(eventEnd(list, ev) - 1e-9);
   return Math.max(0, endIdx - startIdx) / 4;
 }
+function sectionEnd(sec) { return eventEnd(state.sections, sec); }
+function sectionBars(sec) { return eventBars(state.sections, sec); }
 function fmtBars(bars) {
   const s = Number.isInteger(bars) ? String(bars) : bars.toFixed(2).replace(/\.?0+$/, '');
   return `${s} bar${bars === 1 ? '' : 's'}`;
+}
+
+// ----------------------------------------------------------------------------
+// Chord-progression insertion (from lead_sheet_chords.json)
+// ----------------------------------------------------------------------------
+// Flatten bar strings ("F-7 % % %") into a per-beat token list.
+function flattenChanges(changes) {
+  const out = [];
+  for (const bar of changes || []) {
+    for (const t of String(bar).trim().split(/\s+/)) if (t) out.push(t);
+  }
+  return out;
+}
+// Walk back from `idx` (looping) to the last real chord token — the chord that
+// is sounding at a beat that maps to a '%' hold.
+function resolveHeldToken(prog, idx) {
+  for (let k = 0; k < prog.length; k++) {
+    const j = ((idx - k) % prog.length + prog.length) % prog.length;
+    if (prog[j] !== '%') return prog[j];
+  }
+  return null;
+}
+function sectionBeatsIn(sec) {
+  const start = sec.time, end = sectionEnd(sec);
+  return state.beats
+    .filter((b) => b.t >= start - 1e-9 && b.t < end - 1e-9)
+    .sort((a, b) => a.t - b.t);
+}
+// Semitone shift to transpose lead-sheet chords into the recording's key.
+function insertSemitones() {
+  if (!$('ins-transpose').checked) return 0;
+  const rec = keyToPc(state.current && state.current.key);
+  const ls = state.leadsheet ? keyToPc(state.leadsheet.key) : null;
+  if (rec === null || ls === null) return 0; // can't compare -> no transpose
+  return ((rec - ls) % 12 + 12) % 12;
+}
+// Map progression beats onto the section's beats (looping), starting at
+// progression index `startOffset`, overwriting existing chords in the region.
+function insertProgression(sec, prog, startOffset) {
+  if (!prog.length) return;
+  const secBeats = sectionBeatsIn(sec);
+  if (!secBeats.length) { flashStatus('no beats in this section'); return; }
+  const semis = insertSemitones();
+  const start = sec.time, end = sectionEnd(sec);
+  pushUndo();
+  // overwrite existing chord events whose start falls in the section region
+  state.chords = state.chords.filter((c) => !(c.time >= start - 1e-9 && c.time < end - 1e-9));
+  let count = 0;
+  for (let i = 0; i < secBeats.length; i++) {
+    const idx = ((startOffset + i) % prog.length + prog.length) % prog.length;
+    let tok = prog[idx];
+    if (i === 0 && tok === '%') tok = resolveHeldToken(prog, idx); // establish the held chord
+    if (!tok || tok === '%') continue;
+    const name = (tok === 'NC' || tok === 'N') ? 'N.C.'
+      : (semis ? transposeChordToken(tok, semis) : tok);
+    state.chords.push({ time: secBeats[i].t, chord: name });
+    count++;
+  }
+  state.chords.sort((a, b) => a.time - b.time);
+  markDirty();
+  scheduleRender();
+  updateInspector();
+  flashStatus(`inserted ${count} chords${semis ? ` (transposed +${semis})` : ''}`);
+}
+function flashStatus(msg) { setStatus(msg); setTimeout(() => setStatus(''), 2000); }
+
+function currentSection() {
+  return (state.selected && state.selected.kind === 'section') ? state.selected.obj : null;
+}
+function insertChords() {
+  const s = currentSection(), ls = state.leadsheet;
+  if (!s || !ls || !ls.found) return;
+  insertProgression(s, flattenChanges(ls.chord_changes), 0);
+}
+function insertLast() {
+  const s = currentSection(), ls = state.leadsheet;
+  if (!s || !ls || !ls.found) return;
+  const prog = flattenChanges(ls.chord_changes);
+  const off = prog.length - sectionBeatsIn(s).length; // back-align to the end
+  insertProgression(s, prog, off);
+}
+function insertCoda() {
+  const s = currentSection(), ls = state.leadsheet;
+  if (!s || !ls || !ls.coda || !ls.coda.length) return;
+  insertProgression(s, flattenChanges(ls.coda), 0);
 }
 
 // ----------------------------------------------------------------------------
@@ -1131,8 +1349,34 @@ function selectBeatsAfterPlayhead() {
   setStatus(`selected ${arr.length} beats`);
   setTimeout(() => setStatus(''), 1200);
 }
-function selectSectionObj(s) { state.selBeats = new Set(); state.selected = { kind: 'section', obj: s }; }
-function selectChordObj(c) { state.selBeats = new Set(); state.selected = { kind: 'chord', obj: c }; }
+// Section/structure/chord selection lives in state.selEvents (a Set); state.selected
+// mirrors the anchor (last object) so single-event editing keeps working.
+function eventListFor(kind) {
+  return kind === 'section' ? state.sections : kind === 'structure' ? state.structure : state.chords;
+}
+function setEventSelection(kind, arr) {
+  state.selBeats = new Set();
+  state.selEvents = new Set(arr);
+  state.selected = arr.length ? { kind, obj: arr[arr.length - 1] } : null;
+}
+function selectSectionObj(s) { setEventSelection('section', [s]); }
+function selectStructureObj(s) { setEventSelection('structure', [s]); }
+function selectChordObj(c) { setEventSelection('chord', [c]); }
+// A-select: with an event selected, select all of that kind at/after the
+// earliest currently-selected one (inclusive).
+function selectEventsAfter(kind) {
+  const list = eventListFor(kind);
+  let t0 = Infinity;
+  for (const e of state.selEvents) t0 = Math.min(t0, e.time);
+  if (!isFinite(t0) && state.selected) t0 = state.selected.obj.time;
+  if (!isFinite(t0)) return;
+  const arr = list.filter((e) => e.time >= t0 - 1e-9).sort((a, b) => a.time - b.time);
+  setEventSelection(kind, arr);
+  scheduleRender();
+  updateInspector();
+  setStatus(`selected ${arr.length} ${kind}${arr.length === 1 ? '' : (kind === 'structure' ? '' : 's')}`);
+  setTimeout(() => setStatus(''), 1200);
+}
 
 // Drop from the selection any beat objects no longer present (after halve /
 // delete / fill rebuild state.beats).
@@ -1147,8 +1391,9 @@ function reconcileSelection() {
 }
 
 function clearSelection() {
-  if (!state.selected && !state.selBeats.size) return;
+  if (!state.selected && !state.selBeats.size && !state.selEvents.size) return;
   state.selBeats = new Set();
+  state.selEvents = new Set();
   state.selected = null;
   scheduleRender();
   updateInspector();
@@ -1161,6 +1406,7 @@ function snapshotState() {
   return {
     beats: state.beats.map((b) => ({ t: b.t, db: b.db })),
     sections: state.sections.map((s) => ({ time: s.time, name: s.name })),
+    structure: state.structure.map((s) => ({ time: s.time, name: s.name })),
     chords: state.chords.map((c) => ({ time: c.time, chord: c.chord })),
   };
 }
@@ -1168,8 +1414,10 @@ function pushUndo() { state.undo = snapshotState(); }
 function restoreSnapshot(snap) {
   state.beats = snap.beats.map((b) => ({ t: b.t, db: b.db }));
   state.sections = snap.sections.map((s) => ({ time: s.time, name: s.name }));
+  state.structure = (snap.structure || []).map((s) => ({ time: s.time, name: s.name }));
   state.chords = snap.chords.map((c) => ({ time: c.time, chord: c.chord }));
   state.selBeats = new Set();
+  state.selEvents = new Set();
   state.selected = null;
   if (state.playing) state.nextBeatIdx = lowerBound(playPos());
   markDirty();
@@ -1246,8 +1494,46 @@ function addSectionAtPlayhead() {
     applyDownbeatGrid(t);
     markDirty();
   }
+  state.selEvents = new Set([state.selected.obj]);
   scheduleRender();
   updateInspector();
+}
+
+// Like addSectionAtPlayhead, but for the structure lane (no downbeat re-grid).
+function addStructureAtPlayhead() {
+  const raw = state.playing ? playPos() : state.currentTime;
+  const t = snapToBeat(raw);
+  state.selBeats = new Set();
+  const existing = state.structure.find((s) => Math.abs(s.time - t) < 1e-3);
+  if (existing) {
+    state.selected = { kind: 'structure', obj: existing };
+  } else {
+    pushUndo();
+    const ev = { time: t, name: `structure ${state.structure.length + 1}` };
+    state.structure.push(ev);
+    state.structure.sort((a, b) => a.time - b.time);
+    state.selected = { kind: 'structure', obj: ev };
+    markDirty();
+  }
+  state.selEvents = new Set([state.selected.obj]);
+  scheduleRender();
+  updateInspector();
+}
+
+// Copy every section (name + position) into the structure lane, making the two
+// timelines identical. (Ctrl+T)
+function copySectionsToStructure() {
+  if (!state.current) return;
+  pushUndo();
+  state.structure = state.sections.map((s) => ({ time: s.time, name: s.name }));
+  state.selBeats = new Set();
+  state.selEvents = new Set();
+  state.selected = null;
+  markDirty();
+  scheduleRender();
+  updateInspector();
+  setStatus(`copied ${state.structure.length} sections → structure`);
+  setTimeout(() => setStatus(''), 1500);
 }
 
 function addChordAtPlayhead() {
@@ -1265,6 +1551,7 @@ function addChordAtPlayhead() {
     state.selected = { kind: 'chord', obj: ch };
     markDirty();
   }
+  state.selEvents = new Set([state.selected.obj]);
   scheduleRender();
   updateInspector();
   setTimeout(() => { $('chord-name').focus(); $('chord-name').select(); }, 0);
@@ -1320,15 +1607,14 @@ function deleteSelected() {
     state.selBeats = new Set();
     state.selected = null;
     if (state.playing) state.nextBeatIdx = lowerBound(playPos());
-  } else if (state.selected && state.selected.kind === 'chord') {
+  } else if (state.selEvents.size && state.selected) {
     pushUndo();
-    const i = state.chords.indexOf(state.selected.obj);
-    if (i >= 0) state.chords.splice(i, 1);
-    state.selected = null;
-  } else if (state.selected && state.selected.kind === 'section') {
-    pushUndo();
-    const i = state.sections.indexOf(state.selected.obj);
-    if (i >= 0) state.sections.splice(i, 1);
+    const kind = state.selected.kind;
+    const del = state.selEvents;
+    if (kind === 'section') state.sections = state.sections.filter((s) => !del.has(s));
+    else if (kind === 'structure') state.structure = state.structure.filter((s) => !del.has(s));
+    else if (kind === 'chord') state.chords = state.chords.filter((c) => !del.has(c));
+    state.selEvents = new Set();
     state.selected = null;
   } else {
     return;
@@ -1345,9 +1631,12 @@ function updateInspector() {
   $('inspector-empty').classList.add('hidden');
   $('inspector-beat').classList.add('hidden');
   $('inspector-beats').classList.add('hidden');
+  $('inspector-multi').classList.add('hidden');
   $('inspector-section').classList.add('hidden');
+  $('inspector-structure').classList.add('hidden');
   $('inspector-chord').classList.add('hidden');
   const nBeats = state.selBeats.size;
+  const nEvents = state.selEvents.size;
   const hasSel = !!state.selected || nBeats > 0;
   $('btn-delete').disabled = !hasSel;
   $('btn-deselect').disabled = !hasSel;
@@ -1368,6 +1657,16 @@ function updateInspector() {
     return;
   }
 
+  if (nEvents > 1 && state.selected) {
+    // multi section/structure/chord group inspector
+    const kind = state.selected.kind;
+    const noun = kind === 'structure' ? 'structure events' : (kind + 's');
+    $('inspector-multi').classList.remove('hidden');
+    $('multi-title').textContent = kind.charAt(0).toUpperCase() + kind.slice(1) + ' (multiple)';
+    $('multi-count').textContent = `${nEvents} ${noun}`;
+    return;
+  }
+
   if (!state.selected) { $('inspector-empty').classList.remove('hidden'); return; }
 
   if (state.selected.kind === 'beat') {
@@ -1382,6 +1681,13 @@ function updateInspector() {
     $('chord-name').value = c.chord;
     $('chord-time').value = c.time.toFixed(3);
     $('chord-end').textContent = chordEnd(c).toFixed(3) + ' s';
+  } else if (state.selected.kind === 'structure') {
+    $('inspector-structure').classList.remove('hidden');
+    const s = state.selected.obj;
+    if (document.activeElement !== $('structure-name')) $('structure-name').value = s.name;
+    $('structure-time').value = s.time.toFixed(3);
+    $('structure-end').textContent = eventEnd(state.structure, s).toFixed(3) + ' s';
+    $('structure-bars').textContent = fmtBars(eventBars(state.structure, s));
   } else {
     $('inspector-section').classList.remove('hidden');
     const s = state.selected.obj;
@@ -1390,6 +1696,16 @@ function updateInspector() {
     $('section-time').value = s.time.toFixed(3);
     $('section-end').textContent = sectionEnd(s).toFixed(3) + ' s';
     $('section-bars').textContent = fmtBars(sectionBars(s));
+
+    // chord-insertion button availability
+    const ls = state.leadsheet;
+    const hasChanges = !!(ls && ls.found && ls.chord_changes && ls.chord_changes.length);
+    const progLen = hasChanges ? flattenChanges(ls.chord_changes).length : 0;
+    const secBeats = sectionBeatsIn(s).length;
+    $('ins-chords').disabled = !(hasChanges && secBeats > 0);
+    // "Insert last" only when the section is shorter than the lead sheet
+    $('ins-last').disabled = !(hasChanges && secBeats > 0 && secBeats < progLen);
+    $('ins-coda').disabled = !(ls && ls.found && ls.coda && ls.coda.length && secBeats > 0);
   }
 }
 
@@ -1418,75 +1734,73 @@ $('beat-delete').addEventListener('click', deleteSelected);
 $('beats-downbeat').addEventListener('change', (e) => setDownbeatForSelection(e.target.checked));
 $('beats-fill').addEventListener('click', fillSelectedBeats);
 $('beats-delete').addEventListener('click', deleteSelected);
+$('multi-delete').addEventListener('click', deleteSelected);
 
-// --- section-name combobox (preset dropdown + autocomplete) ----------------
+// --- name combobox factory (preset dropdown + autocomplete) ----------------
+// Shared by the section and structure name fields.
 const SECTION_PRESETS = [
   'head:horn', 'head:piano', 'head:vocal', 'head:guitar',
   'solo:horn', 'solo:piano', 'solo:bass', 'solo:guitar',
   'last', 'exchange', 'exclude', 'outro'
 ];
-let presetActive = -1; // highlighted index in the open dropdown
 
-function applySectionName(val) {
-  if (!state.selected || state.selected.kind !== 'section') return;
-  $('section-name').value = val;
-  state.selected.obj.name = val;
-  markDirty();
-  scheduleRender();
-}
-function showSectionPresets() {
-  const q = $('section-name').value.toLowerCase();
-  const items = SECTION_PRESETS.filter((p) => p.toLowerCase().includes(q));
-  const ul = $('section-presets');
-  presetActive = -1;
-  if (!items.length) { ul.classList.add('hidden'); ul.innerHTML = ''; return; }
-  ul.innerHTML = items.map((p) => `<li>${escapeHtml(p)}</li>`).join('');
-  ul.classList.remove('hidden');
-}
-function hideSectionPresets() {
-  $('section-presets').classList.add('hidden');
-  presetActive = -1;
-}
-function highlightPreset(delta) {
-  const lis = $('section-presets').querySelectorAll('li');
-  if (!lis.length) return;
-  presetActive = (presetActive + delta + lis.length) % lis.length;
-  lis.forEach((li, i) => li.classList.toggle('active', i === presetActive));
-}
-
-$('section-name').addEventListener('input', (e) => {
-  if (!state.selected || state.selected.kind !== 'section') return;
-  state.selected.obj.name = e.target.value;
-  markDirty();
-  scheduleRender();
-  showSectionPresets();
-});
-$('section-name').addEventListener('focus', showSectionPresets);
-$('section-name').addEventListener('mousedown', () => setTimeout(showSectionPresets, 0));
-$('section-name').addEventListener('keydown', (e) => {
-  const open = !$('section-presets').classList.contains('hidden');
-  if (e.key === 'ArrowDown') { e.preventDefault(); if (!open) showSectionPresets(); else highlightPreset(1); }
-  else if (e.key === 'ArrowUp') { e.preventDefault(); highlightPreset(-1); }
-  else if (e.key === 'Enter') {
-    e.preventDefault();
-    const lis = $('section-presets').querySelectorAll('li');
-    if (open && presetActive >= 0 && lis[presetActive]) applySectionName(lis[presetActive].textContent);
-    hideSectionPresets();
-    e.target.blur(); // hand focus back so shortcuts work
-  } else if (e.key === 'Escape') {
-    hideSectionPresets();
+function setupNameCombo(inputId, listId, kind) {
+  const input = $(inputId), list = $(listId);
+  let active = -1;
+  const getObj = () =>
+    (state.selected && state.selected.kind === kind) ? state.selected.obj : null;
+  const setName = (val) => {
+    const o = getObj();
+    if (!o) return;
+    o.name = val;
+    markDirty();
+    scheduleRender();
+  };
+  function show() {
+    const q = input.value.toLowerCase();
+    const items = SECTION_PRESETS.filter((p) => p.toLowerCase().includes(q));
+    active = -1;
+    if (!items.length) { list.classList.add('hidden'); list.innerHTML = ''; return; }
+    list.innerHTML = items.map((p) => `<li>${escapeHtml(p)}</li>`).join('');
+    list.classList.remove('hidden');
   }
-});
-$('section-name').addEventListener('blur', () => setTimeout(hideSectionPresets, 150));
-// mousedown fires before the input's blur, so the click always registers
-$('section-presets').addEventListener('mousedown', (e) => {
-  const li = e.target.closest('li');
-  if (!li) return;
-  e.preventDefault();
-  applySectionName(li.textContent);
-  hideSectionPresets();
-  $('section-name').blur();
-});
+  function hide() { list.classList.add('hidden'); active = -1; }
+  function highlight(delta) {
+    const lis = list.querySelectorAll('li');
+    if (!lis.length) return;
+    active = (active + delta + lis.length) % lis.length;
+    lis.forEach((li, i) => li.classList.toggle('active', i === active));
+  }
+  function apply(val) { input.value = val; setName(val); }
+
+  input.addEventListener('input', () => { setName(input.value); show(); });
+  input.addEventListener('focus', show);
+  input.addEventListener('mousedown', () => setTimeout(show, 0));
+  input.addEventListener('keydown', (e) => {
+    const open = !list.classList.contains('hidden');
+    if (e.key === 'ArrowDown') { e.preventDefault(); open ? highlight(1) : show(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); highlight(-1); }
+    else if (e.key === 'Enter') {
+      e.preventDefault();
+      const lis = list.querySelectorAll('li');
+      if (open && active >= 0 && lis[active]) apply(lis[active].textContent);
+      hide();
+      input.blur(); // hand focus back so shortcuts work
+    } else if (e.key === 'Escape') { hide(); }
+  });
+  input.addEventListener('blur', () => setTimeout(hide, 150));
+  // mousedown fires before the input's blur, so the click always registers
+  list.addEventListener('mousedown', (e) => {
+    const li = e.target.closest('li');
+    if (!li) return;
+    e.preventDefault();
+    apply(li.textContent);
+    hide();
+    input.blur();
+  });
+}
+setupNameCombo('section-name', 'section-presets', 'section');
+setupNameCombo('structure-name', 'structure-presets', 'structure');
 $('section-time').addEventListener('change', (e) => {
   if (!state.selected || state.selected.kind !== 'section') return;
   const v = parseFloat(e.target.value);
@@ -1509,6 +1823,33 @@ $('section-snap').addEventListener('click', () => {
   updateInspector();
 });
 $('section-delete').addEventListener('click', deleteSelected);
+$('ins-chords').addEventListener('click', insertChords);
+$('ins-last').addEventListener('click', insertLast);
+$('ins-coda').addEventListener('click', insertCoda);
+$('ins-transpose').addEventListener('change', (e) => e.target.blur());
+
+$('structure-time').addEventListener('change', (e) => {
+  if (!state.selected || state.selected.kind !== 'structure') return;
+  const v = parseFloat(e.target.value);
+  if (!isNaN(v)) {
+    pushUndo();
+    state.selected.obj.time = Math.max(0, Math.min(state.duration, v));
+    state.structure.sort((a, b) => a.time - b.time);
+    markDirty();
+    scheduleRender();
+    updateInspector();
+  }
+});
+$('structure-snap').addEventListener('click', () => {
+  if (!state.selected || state.selected.kind !== 'structure') return;
+  pushUndo();
+  state.selected.obj.time = snapToBeat(state.selected.obj.time);
+  state.structure.sort((a, b) => a.time - b.time);
+  markDirty();
+  scheduleRender();
+  updateInspector();
+});
+$('structure-delete').addEventListener('click', deleteSelected);
 
 $('chord-name').addEventListener('input', (e) => {
   if (!state.selected || state.selected.kind !== 'chord') return;
@@ -1572,9 +1913,24 @@ waveCanvas.addEventListener('pointerdown', (e) => {
     return;
   }
 
+  // Structure lane -> select / drag a structure event, else deselect
+  if (y < sectionLaneTop()) {
+    const ev = eventAtX(state.structure, x);
+    if (ev) {
+      selectStructureObj(ev);
+      drag = { kind: 'structure', obj: ev };
+      waveCanvas.setPointerCapture(e.pointerId);
+      scheduleRender();
+      updateInspector();
+    } else {
+      clearSelection();
+    }
+    return;
+  }
+
   // Section lane -> select / drag a section, else deselect
   if (y < chordLaneTop()) {
-    const sec = sectionAtX(x);
+    const sec = eventAtX(state.sections, x);
     if (sec) {
       selectSectionObj(sec);
       drag = { kind: 'section', obj: sec };
@@ -1737,6 +2093,9 @@ waveCanvas.addEventListener('pointerup', () => {
   } else if (drag.kind === 'section') {
     drag.obj.time = snapToBeat(drag.obj.time);
     state.sections.sort((a, b) => a.time - b.time);
+  } else if (drag.kind === 'structure') {
+    drag.obj.time = snapToBeat(drag.obj.time);
+    state.structure.sort((a, b) => a.time - b.time);
   } else if (drag.kind === 'chord') {
     drag.obj.time = snapToBeat(drag.obj.time);
     state.chords.sort((a, b) => a.time - b.time);
@@ -1759,10 +2118,10 @@ function beatNear(x) {
   return best;
 }
 
-function sectionAtX(x) {
+function eventAtX(list, x) {
   let found = null;
-  for (const s of state.sections) {
-    if (x >= tx(s.time) && x < tx(sectionEnd(s))) found = s;
+  for (const s of list) {
+    if (x >= tx(s.time) && x < tx(eventEnd(list, s))) found = s;
   }
   return found;
 }
@@ -1866,6 +2225,11 @@ async function save() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sections: state.sections }),
       }),
+      fetch(`/api/structure/${stem}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ structure: state.structure }),
+      }),
       fetch(`/api/chords/${stem}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1903,6 +2267,8 @@ $('btn-jump-back').addEventListener('click', () => jumpBars(-1));
 $('btn-jump-fwd').addEventListener('click', () => jumpBars(1));
 $('btn-prev-section').addEventListener('click', () => jumpSection(-1));
 $('btn-next-section').addEventListener('click', () => jumpSection(1));
+$('btn-add-structure').addEventListener('click', addStructureAtPlayhead);
+$('btn-copy-structure').addEventListener('click', copySectionsToStructure);
 $('btn-add-section').addEventListener('click', addSectionAtPlayhead);
 $('btn-add-chord').addEventListener('click', addChordAtPlayhead);
 $('btn-add-beat').addEventListener('click', () => addBeatAt(state.playing ? playPos() : state.currentTime));
@@ -1925,12 +2291,30 @@ document.addEventListener('keydown', (e) => {
     else if (e.key === 's' || e.key === 'S') { e.preventDefault(); save(); }
     return;
   }
+  // Alt combos (insert chords for the selected section)
+  if (e.altKey) {
+    if (e.code === 'KeyC') {
+      e.preventDefault();
+      if (state.selected && state.selected.kind === 'section') insertChords();
+    }
+    return;
+  }
   if (e.code === 'Space') { e.preventDefault(); togglePlay(); }
   // arrows nudge the selected beat(s): ±20ms, or ±100ms with Shift
   else if (e.key === 'ArrowRight') { e.preventDefault(); nudgeSelectedBeats(e.shiftKey ? 0.1 : 0.02); }
   else if (e.key === 'ArrowLeft') { e.preventDefault(); nudgeSelectedBeats(e.shiftKey ? -0.1 : -0.02); }
-  else if (e.key === 'a' || e.key === 'A') { e.preventDefault(); selectBeatsAfterPlayhead(); }
+  // A: with an event selected -> select all following of that kind; else beats
+  else if (e.key === 'a' || e.key === 'A') {
+    e.preventDefault();
+    if (state.selected && ['section', 'structure', 'chord'].includes(state.selected.kind)) {
+      selectEventsAfter(state.selected.kind);
+    } else {
+      selectBeatsAfterPlayhead();
+    }
+  }
   else if (e.key === 's' || e.key === 'S') { e.preventDefault(); addSectionAtPlayhead(); }
+  else if (e.key === 't' || e.key === 'T') { e.preventDefault(); addStructureAtPlayhead(); }
+  else if (e.key === 'r' || e.key === 'R') { e.preventDefault(); copySectionsToStructure(); }
   else if (e.key === 'c' || e.key === 'C') { e.preventDefault(); addChordAtPlayhead(); }
   else if (e.key === 'b' || e.key === 'B') { e.preventDefault(); addBeatAt(state.playing ? playPos() : state.currentTime); }
   else if (e.key === 'd' || e.key === 'D') { e.preventDefault(); doubleBeats(); }

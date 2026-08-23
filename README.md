@@ -65,7 +65,8 @@ The dataset is read from this folder:
   ends and the rest of the canvas is blank.
 - **Volume**: sliders at the bottom of the Song Info panel set song volume
   (0–150%, >100% amplifies) and metronome volume (0–100%) independently; both
-  reset to 100% on song load.
+  reset to 100% on song load. A **Beat opacity** slider (0–100%) fades the beat
+  lines and, unlike the volumes, **persists** across song loads.
 - **Deselect**: click empty space, press **Esc**, or the *Deselect* button.
 - **Sections**: press **S** (or *+ Section*) while playing to drop a section at
   the playhead — its start snaps to the nearest beat and it auto-fills to the
@@ -75,15 +76,42 @@ The dataset is read from this folder:
   section's top tab to move its start (snaps on release). Each section's label
   shows its length in **bars** (4/4) and stays pinned to the left edge when its
   start scrolls off-screen.
+- **Structure**: a second event lane (above Sections) that behaves exactly like
+  sections (add with **T** or *+ Structure*, name/move/delete, bars length) but
+  has no chord-insertion. Stored separately in `structure/<name>.csv` (same
+  `time,name` format); a song with no structure file yet falls back to a copy of
+  its sections until you edit and save. **R** (or the *Sec→Struct* toolbar
+  button) copies all sections into the structure lane at once.
+- **Multi-select events**: with a section, structure, or chord selected, press
+  **A** to select all following events of that kind (the anchor included). The
+  multi panel lets you delete them together. (**A** with a beat selected or
+  nothing selected still selects all beats after the playhead.)
+- **Lane headers**: the timeline shows sticky left-edge labels — **Structure**,
+  **Sections**, **Chords** — that stay put as you scroll; event names are kept
+  clear of them.
 - **Chords**: shown in the strip between the ruler and the waveform, coloured by
   chord name (runs of the same chord read as one band). Click a chord block to
   select it, then edit the name / start time in the inspector; drag a block to
   move its start (snaps to beat on release); press **C** (or *+ Chord*) to add
   one at the playhead; **Del** removes the selected chord.
+- **Chord-progression insertion**: canonical progressions live in
+  `lead_sheet_chords.json` (looked up by title, performer ignored). When a song
+  loads, the Song Info panel shows the lead-sheet key and whether *chords* /
+  *coda* are available. With a **section selected**, the section inspector offers:
+  *Insert chords* (fills the section from the top of the progression, looping to
+  fill — also **Alt+C** while the section is selected), *Insert last* (back-aligns so the section's last bar matches the
+  progression's last bar — only enabled when the section is shorter than the lead
+  sheet), and *Insert coda* (fills with the coda progression — only when one
+  exists). Each maps progression beats onto the section's beats (`%` = held
+  chord, no new event) and overwrites existing chords in the section's span. If
+  the recording's key differs from the lead sheet's, chords are **transposed** to
+  the recording key (toggle with the *transpose* checkbox, default on). See
+  `jsd/chords.py` for the transposition/key-comparison helpers.
 - **Song Info panel** (right): the **Key** dropdown plus editable text fields
   (Standard, Artist, Album, Instrumentation, YouTube ID, MusicBrainz ID) and the
   integer **Number of Bars** (`num_bars`). Edits save to `metadata.json` on blur
-  (`num_bars` is stored as an int).
+  (`num_bars` is stored as an int). Links to *Open on YouTube* and *Open in
+  MusicBrainz* (from `musicbrainz_id`) appear below the fields.
 - **Refresh audio**: if a song was crawled from the wrong video, fix the
   **YouTube ID** field then click *↻ Refresh audio*. A background job re-downloads
   the audio (yt-dlp → WAV), re-runs beat tracking (madmom `DBNBeatTracker`),

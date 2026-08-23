@@ -96,6 +96,12 @@ html, body {
 }
 #key-select:disabled { opacity: 0.5; }
 #key-status { font-size: 12px; min-height: 14px; }
+#leadsheet-info { font-size: 11px; margin-top: 6px; line-height: 1.5; }
+#leadsheet-info b { color: var(--text); }
+#leadsheet-info .ls-avail { color: #7ee081; }
+/* section chord-insertion controls */
+#chord-insert { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 12px; }
+#chord-insert button:disabled { opacity: 0.4; cursor: default; }
 #panel-fields { margin: 0; }
 #panel-fields .pf { display: flex; flex-direction: column; gap: 3px; margin-bottom: 10px; }
 #panel-fields .pf label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); }
@@ -133,6 +139,7 @@ html, body {
 #volume-controls .vol label span { color: var(--text); font-variant-numeric: tabular-nums; }
 #volume-controls input[type="range"] { width: 100%; accent-color: var(--accent); }
 #panel-yt { margin: 4px 0 8px; }
+#panel-yt div { margin: 2px 0; }
 #panel-yt a { color: var(--accent); text-decoration: none; font-size: 13px; }
 #panel-yt a:hover { text-decoration: underline; }
 #meta-status { font-size: 12px; min-height: 14px; }

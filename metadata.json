@@ -3604,7 +3604,7 @@
     "musicbrainz_id": "118508af-86cb-47d2-807e-2d445dd0a4a7"
   },
   {
-    "yt_id": "vXeeSJ28Tko",
+    "yt_id": "OKQcgu8dbuw",
     "standard": "Ornithology",
     "artist": "Charlie Parker",
     "album": "From Swing to Bebop: 'round Midnight",
@@ -3612,10 +3612,10 @@
     "musicbrainz_id": "49be0da9-2abc-482f-86f0-7d0899c7cd90",
     "audio_length": 153.76254166666666,
     "files": {
-      "audio": "audio/vXeeSJ28Tko.wav",
-      "beats": "beats/vXeeSJ28Tko.txt",
-      "cace_chords": "consonance_ace_inferences/vXeeSJ28Tko.lab",
-      "chords": "chords/vXeeSJ28Tko.csv"
+      "audio": "audio/OKQcgu8dbuw.wav",
+      "beats": "beats/OKQcgu8dbuw.txt",
+      "cace_chords": "consonance_ace_inferences/OKQcgu8dbuw.lab",
+      "chords": "chords/OKQcgu8dbuw.csv"
     },
     "key": "G maj",
     "num_bars": 32
@@ -3638,7 +3638,7 @@
     "num_bars": 32
   },
   {
-    "yt_id": "60XWQcU7b9c",
+    "yt_id": "D2gf6ps0ksM",
     "standard": "Ornithology",
     "artist": "Bud Powell Trio",
     "album": "The Best of Bud Powell 1944-62, Vol. 1",
@@ -3646,10 +3646,10 @@
     "musicbrainz_id": "eb5dbfb4-92ad-44f2-83a5-3b1c8d778c3b",
     "audio_length": 178.12,
     "files": {
-      "audio": "audio/60XWQcU7b9c.wav",
-      "beats": "beats/60XWQcU7b9c.txt",
-      "cace_chords": "consonance_ace_inferences/60XWQcU7b9c.lab",
-      "chords": "chords/60XWQcU7b9c.csv"
+      "audio": "audio/D2gf6ps0ksM.wav",
+      "beats": "beats/D2gf6ps0ksM.txt",
+      "cace_chords": "consonance_ace_inferences/D2gf6ps0ksM.lab",
+      "chords": "chords/D2gf6ps0ksM.csv"
     },
     "key": "G maj",
     "num_bars": 32
@@ -3706,7 +3706,7 @@
     "num_bars": 32
   },
   {
-    "yt_id": "t-w-i24HJ5U",
+    "yt_id": "c6S1TjkhRug",
     "standard": "Ornithology",
     "artist": "Oscar Peterson, Joe Pass, Niels-Henning \u00d8rsted Pedersen",
     "album": "The Paris Concert",
@@ -3714,10 +3714,10 @@
     "musicbrainz_id": "1c1eb27c-b27a-4f6c-b051-6a99b97edf96",
     "audio_length": 307.3625416666667,
     "files": {
-      "audio": "audio/t-w-i24HJ5U.wav",
-      "beats": "beats/t-w-i24HJ5U.txt",
-      "cace_chords": "consonance_ace_inferences/t-w-i24HJ5U.lab",
-      "chords": "chords/t-w-i24HJ5U.csv"
+      "audio": "audio/c6S1TjkhRug.wav",
+      "beats": "beats/c6S1TjkhRug.txt",
+      "cace_chords": "consonance_ace_inferences/c6S1TjkhRug.lab",
+      "chords": "chords/c6S1TjkhRug.csv"
     },
     "key": "G maj",
     "num_bars": 32
