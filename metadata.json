@@ -3740,35 +3740,35 @@
     "num_bars": 32
   },
   {
-    "yt_id": "4M9-7ErYxkg",
+    "yt_id": "npVIPKXLAC8",
     "standard": "Perdido",
     "artist": "Duke Ellington & His Orchestra",
-    "album": "Take the \"A\" Train (The Legendary Blanton-Webster Transcriptions)",
+    "album": "Greatest Hits",
     "instrumentation": "big band",
-    "musicbrainz_id": "4a1fa6a7-4fd6-4ac6-bf75-a7a910850549",
+    "musicbrainz_id": "94262fba-7a34-4816-baac-fc952233c024",
     "audio_length": 509.6666666666667,
     "files": {
-      "audio": "audio/4M9-7ErYxkg.wav",
-      "beats": "beats/4M9-7ErYxkg.txt",
-      "cace_chords": "consonance_ace_inferences/4M9-7ErYxkg.lab",
-      "chords": "chords/4M9-7ErYxkg.csv"
+      "audio": "audio/npVIPKXLAC8.wav",
+      "beats": "beats/npVIPKXLAC8.txt",
+      "cace_chords": "consonance_ace_inferences/npVIPKXLAC8.lab",
+      "chords": "chords/npVIPKXLAC8.csv"
     },
     "key": "Bb maj",
     "num_bars": 32
   },
   {
-    "yt_id": "_kkKfRNgxtc",
+    "yt_id": "G8rBr7tL8Vw",
     "standard": "Perdido",
-    "artist": "Ella Fitzgerald with JATP All-Stars",
-    "album": "The Complete Jazz at the Philharmonic on Verve 1944-1949",
+    "artist": "Charlie Parker, Dizzy Gillespie, Bud Powell, Charles Mingus, Max Roach",
+    "album": "Hot House: The Complete Jazz At Massey Hall Recordings (Live At Massey Hall / 1953)",
     "instrumentation": "vocal with all-star jam",
-    "musicbrainz_id": "32d17232-a9bd-40b1-be4d-f9d5456819b9",
+    "musicbrainz_id": "631012a5-04b4-4feb-9519-81941fb1adf5",
     "audio_length": 514.0665833333334,
     "files": {
-      "audio": "audio/_kkKfRNgxtc.wav",
-      "beats": "beats/_kkKfRNgxtc.txt",
-      "cace_chords": "consonance_ace_inferences/_kkKfRNgxtc.lab",
-      "chords": "chords/_kkKfRNgxtc.csv"
+      "audio": "audio/G8rBr7tL8Vw.wav",
+      "beats": "beats/G8rBr7tL8Vw.txt",
+      "cace_chords": "consonance_ace_inferences/G8rBr7tL8Vw.lab",
+      "chords": "chords/G8rBr7tL8Vw.csv"
     },
     "key": "Bb maj",
     "num_bars": 32
@@ -3825,18 +3825,18 @@
     "num_bars": 32
   },
   {
-    "yt_id": "Vi2WQkiAw-U",
+    "yt_id": "bJwtlvt_q2Y",
     "standard": "Perdido",
-    "artist": "Sarah Vaughan with Count Basie and His Orchestra",
-    "album": "Count Basie and the Stars of Birdland on Tour! Topeka, Kansas, 1955",
+    "artist": "Sarah Vaughan",
+    "album": "Lover Man",
     "instrumentation": "vocal with big band",
-    "musicbrainz_id": "14a82ed1-b80b-4c8f-8733-94fa0c2af2aa",
+    "musicbrainz_id": "d68ace60-a0d4-429c-baf1-a3139a7d7bbe",
     "audio_length": 144.7648125,
     "files": {
-      "audio": "audio/Vi2WQkiAw-U.wav",
-      "beats": "beats/Vi2WQkiAw-U.txt",
-      "cace_chords": "consonance_ace_inferences/Vi2WQkiAw-U.lab",
-      "chords": "chords/Vi2WQkiAw-U.csv"
+      "audio": "audio/bJwtlvt_q2Y.wav",
+      "beats": "beats/bJwtlvt_q2Y.txt",
+      "cace_chords": "consonance_ace_inferences/bJwtlvt_q2Y.lab",
+      "chords": "chords/bJwtlvt_q2Y.csv"
     },
     "key": "Bb maj",
     "num_bars": 32
@@ -3876,7 +3876,7 @@
     "num_bars": 32
   },
   {
-    "yt_id": "zqNTltOGh5c",
+    "yt_id": "giUJOe5gqYQ",
     "standard": "So What",
     "artist": "Miles Davis Sextet",
     "album": "Unissued at Birdland 1952-59",
@@ -3884,10 +3884,10 @@
     "musicbrainz_id": "64f37547-b059-4f54-9b4b-e749f73288cf",
     "audio_length": 546.5513125,
     "files": {
-      "audio": "audio/zqNTltOGh5c.wav",
-      "beats": "beats/zqNTltOGh5c.txt",
-      "cace_chords": "consonance_ace_inferences/zqNTltOGh5c.lab",
-      "chords": "chords/zqNTltOGh5c.csv"
+      "audio": "audio/giUJOe5gqYQ.wav",
+      "beats": "beats/giUJOe5gqYQ.txt",
+      "cace_chords": "consonance_ace_inferences/giUJOe5gqYQ.lab",
+      "chords": "chords/giUJOe5gqYQ.csv"
     },
     "key": "D min",
     "num_bars": 32
@@ -3915,7 +3915,7 @@
     "artist": "Eddie Jefferson",
     "album": "Hipper Than Thou",
     "instrumentation": "vocal with quintet",
-    "musicbrainz_id": "6e75f9ca-dae4-4077-a135-f377a1549f41",
+    "musicbrainz_id": "a561ddc6-4d13-4b1d-bcde-bdff396cd9f5",
     "audio_length": 265.4,
     "files": {
       "audio": "audio/gVVRCi7Jvfg.wav",
@@ -3923,7 +3923,7 @@
       "cace_chords": "consonance_ace_inferences/gVVRCi7Jvfg.lab",
       "chords": "chords/gVVRCi7Jvfg.csv"
     },
-    "key": "D min",
+    "key": "C min",
     "num_bars": 32
   },
   {
@@ -3940,11 +3940,11 @@
       "cace_chords": "consonance_ace_inferences/T9k9eFl-mgU.lab",
       "chords": "chords/T9k9eFl-mgU.csv"
     },
-    "key": "D min",
+    "key": "C min",
     "num_bars": 32
   },
   {
-    "yt_id": "p-j5sq7COrA",
+    "yt_id": "xR0G92riAw4",
     "standard": "So What",
     "artist": "Dexter Gordon Quartet",
     "album": "Stable Mable",
@@ -3952,10 +3952,10 @@
     "musicbrainz_id": "9bdc0845-e070-487f-b3f4-aa3c1e75637c",
     "audio_length": 171.36327083333333,
     "files": {
-      "audio": "audio/p-j5sq7COrA.wav",
-      "beats": "beats/p-j5sq7COrA.txt",
-      "cace_chords": "consonance_ace_inferences/p-j5sq7COrA.lab",
-      "chords": "chords/p-j5sq7COrA.csv"
+      "audio": "audio/xR0G92riAw4.wav",
+      "beats": "beats/xR0G92riAw4.txt",
+      "cace_chords": "consonance_ace_inferences/xR0G92riAw4.lab",
+      "chords": "chords/xR0G92riAw4.csv"
     },
     "key": "D min",
     "num_bars": 32
@@ -3978,7 +3978,7 @@
     "num_bars": 32
   },
   {
-    "yt_id": "NwE47msMpiY",
+    "yt_id": "Anq7GKJkvw0",
     "standard": "So What",
     "artist": "Michel Petrucciani, Steve Gadd, Anthony Jackson",
     "album": "Trio in Tokyo",
@@ -3986,50 +3986,50 @@
     "musicbrainz_id": "018963d2-0dd6-46b2-9b30-a246f45e1149",
     "audio_length": 298.4576875,
     "files": {
-      "audio": "audio/NwE47msMpiY.wav",
-      "beats": "beats/NwE47msMpiY.txt",
-      "cace_chords": "consonance_ace_inferences/NwE47msMpiY.lab",
-      "chords": "chords/NwE47msMpiY.csv"
+      "audio": "audio/Anq7GKJkvw0.wav",
+      "beats": "beats/Anq7GKJkvw0.txt",
+      "cace_chords": "consonance_ace_inferences/Anq7GKJkvw0.lab",
+      "chords": "chords/Anq7GKJkvw0.csv"
     },
     "key": "D min",
     "num_bars": 32
   },
   {
-    "yt_id": "ylXk1LBvIqU",
+    "yt_id": "rgBQHf_IUMY",
     "standard": "So What",
-    "artist": "John Coltrane",
-    "album": "Inspiration in Sax",
-    "instrumentation": "saxophone quartet",
+    "artist": "J.J. Johnson",
+    "album": "J.J.!",
+    "instrumentation": "big band with woodwinds",
     "musicbrainz_id": "2c209654-d0de-48ee-ba7c-e3b2e9a3edf0",
     "audio_length": 563.5715208333334,
     "files": {
-      "audio": "audio/ylXk1LBvIqU.wav",
-      "beats": "beats/ylXk1LBvIqU.txt",
-      "cace_chords": "consonance_ace_inferences/ylXk1LBvIqU.lab",
-      "chords": "chords/ylXk1LBvIqU.csv"
+      "audio": "audio/rgBQHf_IUMY.wav",
+      "beats": "beats/rgBQHf_IUMY.txt",
+      "cace_chords": "consonance_ace_inferences/rgBQHf_IUMY.lab",
+      "chords": "chords/rgBQHf_IUMY.csv"
     },
     "key": "D min",
     "num_bars": 32
   },
   {
-    "yt_id": "brqxEdwsTQs",
+    "yt_id": "IRBxSrtwbuc",
     "standard": "Sophisticated Lady",
     "artist": "Duke Ellington and His Orchestra",
-    "album": "Memorial",
+    "album": "Masterpieces by Ellington",
     "instrumentation": "big band",
-    "musicbrainz_id": "ae08c3aa-e2f8-4123-aa77-aea4da134896",
+    "musicbrainz_id": "5c076f55-34cf-4b72-9ef4-1ec07f62d54a",
     "audio_length": 226.76608333333334,
     "files": {
-      "audio": "audio/brqxEdwsTQs.wav",
-      "beats": "beats/brqxEdwsTQs.txt",
-      "cace_chords": "consonance_ace_inferences/brqxEdwsTQs.lab",
-      "chords": "chords/brqxEdwsTQs.csv"
+      "audio": "audio/IRBxSrtwbuc.wav",
+      "beats": "beats/IRBxSrtwbuc.txt",
+      "cace_chords": "consonance_ace_inferences/IRBxSrtwbuc.lab",
+      "chords": "chords/IRBxSrtwbuc.csv"
     },
     "key": "Ab maj",
-    "num_bars": 49
+    "num_bars": 32
   },
   {
-    "yt_id": "mZ4JbzrnJbE",
+    "yt_id": "wnFDsiA9qOo",
     "standard": "Sophisticated Lady",
     "artist": "Art Tatum",
     "album": "Piano Starts Here",
@@ -4037,12 +4037,12 @@
     "musicbrainz_id": "c8449d08-54d0-4193-bd42-df84b2dcaa40",
     "audio_length": 217.4084375,
     "files": {
-      "audio": "audio/mZ4JbzrnJbE.wav",
-      "beats": "beats/mZ4JbzrnJbE.txt",
-      "cace_chords": "consonance_ace_inferences/mZ4JbzrnJbE.lab",
-      "chords": "chords/mZ4JbzrnJbE.csv"
+      "audio": "audio/wnFDsiA9qOo.wav",
+      "beats": "beats/wnFDsiA9qOo.txt",
+      "cace_chords": "consonance_ace_inferences/wnFDsiA9qOo.lab",
+      "chords": "chords/wnFDsiA9qOo.csv"
     },
-    "key": "Ab maj",
+    "key": "Eb maj",
     "num_bars": 49
   },
   {
@@ -4067,7 +4067,7 @@
     "standard": "Sophisticated Lady",
     "artist": "Thelonious Monk",
     "album": "Thelonious Monk Plays Duke Ellington",
-    "instrumentation": "solo piano",
+    "instrumentation": "piano trio",
     "musicbrainz_id": "4a7f48c2-35f8-48be-ad12-813fe6855e9f",
     "audio_length": 268.2646875,
     "files": {
@@ -4084,7 +4084,7 @@
     "standard": "Sophisticated Lady",
     "artist": "Ella Fitzgerald",
     "album": "Ella Fitzgerald Sings the Duke Ellington Song Book",
-    "instrumentation": "vocal with orchestra",
+    "instrumentation": "vocal with sextet",
     "musicbrainz_id": "ad8e3250-274c-42c6-af11-e6abc47472bb",
     "audio_length": 322.1072291666667,
     "files": {
@@ -4093,7 +4093,7 @@
       "cace_chords": "consonance_ace_inferences/7I35VWEVPKg.lab",
       "chords": "chords/7I35VWEVPKg.csv"
     },
-    "key": "Ab maj",
+    "key": "C maj",
     "num_bars": 49
   },
   {
@@ -4131,18 +4131,18 @@
     "num_bars": 49
   },
   {
-    "yt_id": "fdakJqKPRDE",
+    "yt_id": "iStOzl51cbw",
     "standard": "St. Thomas",
     "artist": "Sonny Rollins",
     "album": "Trio in Stockholm 1959 - St Thomas",
     "instrumentation": "saxophone quartet",
-    "musicbrainz_id": "c9cfbe3a-36d2-48ba-9ffb-e9a24aca01d0",
+    "musicbrainz_id": "ff391677-cb31-40f3-a91a-b8fd388e3ee2",
     "audio_length": 407.475375,
     "files": {
-      "audio": "audio/fdakJqKPRDE.wav",
-      "beats": "beats/fdakJqKPRDE.txt",
-      "cace_chords": "consonance_ace_inferences/fdakJqKPRDE.lab",
-      "chords": "chords/fdakJqKPRDE.csv"
+      "audio": "audio/iStOzl51cbw.wav",
+      "beats": "beats/iStOzl51cbw.txt",
+      "cace_chords": "consonance_ace_inferences/iStOzl51cbw.lab",
+      "chords": "chords/iStOzl51cbw.csv"
     },
     "key": "C maj",
     "num_bars": 16
@@ -4178,7 +4178,7 @@
       "cace_chords": "consonance_ace_inferences/VXOCGTfELMI.lab",
       "chords": "chords/VXOCGTfELMI.csv"
     },
-    "key": "C maj",
+    "key": "F maj",
     "num_bars": 16
   },
   {
@@ -4233,7 +4233,7 @@
     "num_bars": 16
   },
   {
-    "yt_id": "PLcSYNpswrw",
+    "yt_id": "7urSakUCi50",
     "standard": "St. Thomas",
     "artist": "Jimmy Smith",
     "album": "Daybreak",
@@ -4241,12 +4241,12 @@
     "musicbrainz_id": "f2039a32-5e70-4477-bbf1-de993ddfb9ee",
     "audio_length": 346.63910416666664,
     "files": {
-      "audio": "audio/PLcSYNpswrw.wav",
-      "beats": "beats/PLcSYNpswrw.txt",
-      "cace_chords": "consonance_ace_inferences/PLcSYNpswrw.lab",
-      "chords": "chords/PLcSYNpswrw.csv"
+      "audio": "audio/7urSakUCi50.wav",
+      "beats": "beats/7urSakUCi50.txt",
+      "cace_chords": "consonance_ace_inferences/7urSakUCi50.lab",
+      "chords": "chords/7urSakUCi50.csv"
     },
-    "key": "C maj",
+    "key": "F maj",
     "num_bars": 16
   },
   {
@@ -4267,18 +4267,18 @@
     "num_bars": 16
   },
   {
-    "yt_id": "nasZ5s8sBV4",
+    "yt_id": "xxtSiKF6cU0",
     "standard": "Star Eyes",
     "artist": "Charlie Parker",
     "album": "Bird At St. Nick's, Volume 2",
     "instrumentation": "alto saxophone with rhythm section",
-    "musicbrainz_id": "51ac7f58-3b57-4fe5-b016-d4a5c4b3a9eb",
+    "musicbrainz_id": "4e89cf17-85ab-4891-abdd-3ae06da28e00",
     "audio_length": 366.74758333333335,
     "files": {
-      "audio": "audio/nasZ5s8sBV4.wav",
-      "beats": "beats/nasZ5s8sBV4.txt",
-      "cace_chords": "consonance_ace_inferences/nasZ5s8sBV4.lab",
-      "chords": "chords/nasZ5s8sBV4.csv"
+      "audio": "audio/xxtSiKF6cU0.wav",
+      "beats": "beats/xxtSiKF6cU0.txt",
+      "cace_chords": "consonance_ace_inferences/xxtSiKF6cU0.lab",
+      "chords": "chords/xxtSiKF6cU0.csv"
     },
     "key": "Eb maj",
     "num_bars": 36
@@ -4335,7 +4335,7 @@
     "num_bars": 36
   },
   {
-    "yt_id": "fHeZqIveMXw",
+    "yt_id": "-to3mvkxVlk",
     "standard": "Star Eyes",
     "artist": "Phineas Newborn Trio",
     "album": "Piano Portraits By Phineas Newborn",
@@ -4343,10 +4343,10 @@
     "musicbrainz_id": "9598e799-992c-40b6-a92f-8183df77bc4d",
     "audio_length": 214.94666666666666,
     "files": {
-      "audio": "audio/fHeZqIveMXw.wav",
-      "beats": "beats/fHeZqIveMXw.txt",
-      "cace_chords": "consonance_ace_inferences/fHeZqIveMXw.lab",
-      "chords": "chords/fHeZqIveMXw.csv"
+      "audio": "audio/-to3mvkxVlk.wav",
+      "beats": "beats/-to3mvkxVlk.txt",
+      "cace_chords": "consonance_ace_inferences/-to3mvkxVlk.lab",
+      "chords": "chords/-to3mvkxVlk.csv"
     },
     "key": "Eb maj",
     "num_bars": 36
@@ -4354,10 +4354,10 @@
   {
     "yt_id": "1ib0xmqTYhE",
     "standard": "Star Eyes",
-    "artist": "Bill Evans, Warne Marsh",
-    "album": "Live at the Half Note",
-    "instrumentation": "quintet (two reeds, piano trio)",
-    "musicbrainz_id": "17bda434-8197-4e73-9878-36d2d865bc6f",
+    "artist": "Lennie Tristano, Lee Konitz, Wayne Marsh",
+    "album": "The Complete Atlantic Recordings of Lennie Tristano, Lee Konitz & Warne Marsh",
+    "instrumentation": "quartet",
+    "musicbrainz_id": "0028179a-f1ba-4ffc-8655-941e82c9c430",
     "audio_length": 323.88,
     "files": {
       "audio": "audio/1ib0xmqTYhE.wav",
@@ -4365,7 +4365,7 @@
       "cace_chords": "consonance_ace_inferences/1ib0xmqTYhE.lab",
       "chords": "chords/1ib0xmqTYhE.csv"
     },
-    "key": "Eb maj",
+    "key": "Bb maj",
     "num_bars": 36
   },
   {
@@ -4382,7 +4382,7 @@
       "cace_chords": "consonance_ace_inferences/_BmpW2enTcg.lab",
       "chords": "chords/_BmpW2enTcg.csv"
     },
-    "key": "Eb maj",
+    "key": "A maj",
     "num_bars": 36
   },
   {
