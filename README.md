@@ -19,7 +19,8 @@ The dataset is read from this folder:
   `<time>\t1` for a downbeat. Bare-float files (original madmom output) load as
   all-normal, so old files stay compatible.
 - `chords/*.csv`  — chord events (`time,chord`); each lasts until the next start
-- `sections/*.csv` — **output**: section labels (`time,name`), one file per song
+- `sections/*.csv` — **output**: section labels (`time,name,beats_per_measure`),
+  one file per song (`beats_per_measure` blank = use the song's time signature)
 - `metadata.json` also stores the annotated **key** per song (`"key"` field,
   e.g. `"D minor"`; absent = None). Edited from the right-hand Song Info panel
   and written back in place (a one-time `metadata.json.orig` backup is made on
@@ -47,18 +48,19 @@ The dataset is read from this folder:
   region (selects every beat inside; playback loops within it; double-click the
   ruler again to clear), or **Shift-click** beats to build a selection. With
   several selected you can drag the group, nudge, delete, or toggle downbeat for
-  all at once. *Fill ×4* subdivides the gap between each selected pair by adding
-  three evenly-spaced beats.
+  all at once (**Ctrl+D** toggles downbeat for the selection). *Fill ×4* (or the
+  **2 / 3 / 4** keys) subdivides the gap between each selected pair into 2, 3, or
+  4 evenly-spaced parts.
 - **Downbeats**: a beat can be flagged a downbeat (drawn amber, higher-pitched
   metronome click). Toggle it with the checkbox in the beat inspector. Creating
-  a section re-grids downbeats from its start beat: every 4th beat becomes a
-  downbeat (4/4), clearing others in that range. *Clear ↧* wipes all downbeats
+  a section re-grids downbeats from its start beat: every Nth beat (N = the
+  section's beats/measure) becomes a downbeat, clearing others. *Clear ↧* wipes all downbeats
   in the song. Downbeat flags are saved into the beat file. The **Downbeats
   only** toolbar toggle hides non-downbeat lines (visual only — data and
   metronome clicks are unchanged); it resets to off on song load.
-- **Navigation**: the **◀◀ / ▶▶** buttons jump the playhead by *N* bars
-  (4×N beats, 4/4 assumed); set *N* in the adjacent input (defaults to the
-  song's `num_bars` on load). *◀ Sec / Sec ▶* jump between sections.
+- **Navigation**: the **◀◀ / ▶▶** buttons (or **Q / E**) jump the playhead by
+  *N* bars; set *N* in the adjacent input (defaults to the song's `num_bars` on
+  load). *◀ Sec / Sec ▶* — or **J / K** — jump between sections.
 - **Zoom**: mouse-wheel over the waveform (anchored at the cursor), or −/+
   (range 4–800 px/s). **Alt+wheel** scrolls horizontally instead of zooming.
   When zoomed out past the audio's length, the waveform ends where the audio
@@ -74,8 +76,14 @@ The dataset is read from this folder:
   combobox with preset labels (head:horn/piano/vocal, solo:horn/piano/bass,
   last, exchange, exclude) plus autocomplete; you can still type anything. Drag a
   section's top tab to move its start (snaps on release). Each section's label
-  shows its length in **bars** (4/4) and stays pinned to the left edge when its
-  start scrolls off-screen.
+  shows its length in **bars** and stays pinned to the left edge when its start
+  scrolls off-screen. A section has a **beats/measure** value (defaults to the
+  numerator of the song's time signature, editable per section) that drives its
+  bar count, its downbeat grid, and chord insertion; *Insert downbeats* re-grids
+  downbeats for the section's span only. When beats/measure differs from the
+  lead sheet's bar length (e.g. a 3-beat section against 4/4 bars), chord
+  insertion fits each bar's distinct chords into the measure (3-beat: 1 chord→
+  beat 1, 2→beats 1&3, 3→each beat, 4→first three).
 - **Structure**: a second event lane (above Sections) that behaves exactly like
   sections (add with **T** or *+ Structure*, name/move/delete, bars length) but
   has no chord-insertion. Stored separately in `structure/<name>.csv` (same
@@ -108,10 +116,11 @@ The dataset is read from this folder:
   the recording key (toggle with the *transpose* checkbox, default on). See
   `jsd/chords.py` for the transposition/key-comparison helpers.
 - **Song Info panel** (right): the **Key** dropdown plus editable text fields
-  (Standard, Artist, Album, Instrumentation, YouTube ID, MusicBrainz ID) and the
-  integer **Number of Bars** (`num_bars`). Edits save to `metadata.json` on blur
-  (`num_bars` is stored as an int). Links to *Open on YouTube* and *Open in
-  MusicBrainz* (from `musicbrainz_id`) appear below the fields.
+  (Standard, Artist, Album, Instrumentation, Tempo Class, Rhythm Feel, Time
+  Signature, YouTube ID, MusicBrainz ID) and the integer **Number of Bars**
+  (`num_bars`). Edits save to `metadata.json` on blur (`num_bars` is an int).
+  `tempo_class`/`rhythm_feel`/`time_signature` were seeded from the lead sheets.
+  Links to *Open on YouTube* and *Open in MusicBrainz* appear below the fields.
 - **Refresh audio**: if a song was crawled from the wrong video, fix the
   **YouTube ID** field then click *↻ Refresh audio*. A background job re-downloads
   the audio (yt-dlp → WAV), re-runs beat tracking (madmom `DBNBeatTracker`),

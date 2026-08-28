@@ -162,9 +162,12 @@ def read_sections(stem):
         reader = csv.DictReader(f)
         for row in reader:
             try:
-                sections.append(
-                    {"time": float(row["time"]), "name": row.get("name", "")}
-                )
+                sec = {"time": float(row["time"]), "name": row.get("name", "")}
+                # optional per-section beats-per-measure override (blank = default)
+                bpm = (row.get("beats_per_measure") or "").strip()
+                if bpm:
+                    sec["beats_per_measure"] = int(float(bpm))
+                sections.append(sec)
             except (ValueError, KeyError, TypeError):
                 pass
     sections.sort(key=lambda s: s["time"])
@@ -177,9 +180,11 @@ def write_sections(stem, sections):
     sections = sorted(sections, key=lambda s: float(s["time"]))
     buf = io.StringIO()
     writer = csv.writer(buf)
-    writer.writerow(["time", "name"])
+    writer.writerow(["time", "name", "beats_per_measure"])
     for s in sections:
-        writer.writerow([f"{float(s['time']):.3f}", s.get("name", "")])
+        bpm = s.get("beats_per_measure")
+        writer.writerow([f"{float(s['time']):.3f}", s.get("name", ""),
+                         "" if bpm in (None, "") else int(bpm)])
     with open(path, "w", encoding="utf-8", newline="") as f:
         f.write(buf.getvalue())
 
@@ -374,6 +379,7 @@ def api_save_key(stem):
 # Fields in the Song Info panel that the UI may edit in place.
 ALLOWED_META_FIELDS = {
     "standard", "artist", "album", "instrumentation", "musicbrainz_id", "yt_id",
+    "tempo_class", "rhythm_feel", "time_signature",
 }
 # Integer-valued editable fields (stored as ints, not strings).
 ALLOWED_INT_FIELDS = {"num_bars"}

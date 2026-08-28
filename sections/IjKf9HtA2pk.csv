@@ -1,2 +1,7 @@
-time,name
-37.690,head:horn
+time,name,beats_per_measure
+0.210,intro,
+37.690,head:horn,
+95.500,solo:horn,3
+146.000,solo:piano,
+203.970,head:horn,
+259.724,outro,

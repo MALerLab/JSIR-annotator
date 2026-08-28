@@ -119,6 +119,11 @@
           <div class="field"><label>End (s)</label><span id="section-end"></span></div>
           <div class="field"><label>Length</label><span id="section-bars"></span></div>
           <div class="field">
+            <label>Beats/measure</label>
+            <input type="number" id="section-bpm" step="1" min="1" />
+            <button id="section-downbeats" class="small" title="Set downbeats within this section (every N beats)">Insert downbeats</button>
+          </div>
+          <div class="field">
             <label>Chords</label>
             <label class="chk"><input type="checkbox" id="ins-transpose" checked /> transpose to recording key</label>
           </div>
@@ -167,9 +172,11 @@
         <b>Keys:</b> Space play/pause · ←/→ nudge selected beat(s) ±20 ms (Shift ±100 ms) ·
         A select all beats after playhead (or, with an event selected, all following events of that kind) ·
         T add structure · S add section · C add chord · B add beat · R copy sections→structure ·
-        D double beats · H halve beats · Del delete selected · Esc deselect ·
-        Ctrl+Z undo · Ctrl+S save · Alt+C insert chords (selected section) ·
-        <b>◀◀/▶▶</b> jump the playhead by N bars (4×N beats) ·
+        D double beats · H halve beats · 2/3/4 subdivide gaps between selected beats ·
+        Del delete selected · Esc deselect ·
+        Q/E jump back/forward N bars · J/K prev/next section ·
+        Ctrl+Z undo · Ctrl+S save · Ctrl+D toggle downbeat (selected beats) · Alt+C insert chords (selected section) ·
+        <b>◀◀/▶▶</b> jump the playhead by N bars ·
         Mouse wheel to zoom · <b>Alt+wheel</b> to scroll horizontally · Drag the ruler to scrub (drag past an edge to auto-scroll) ·
         <b>Double-click-drag the ruler</b> for a loop region (selects the beats inside;
         double-click elsewhere to clear) · <b>Shift-click</b> beats to multi-select ·

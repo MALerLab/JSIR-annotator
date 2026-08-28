@@ -208,6 +208,9 @@ function renderSongPanel(song) {
     ['album', 'Album', 'text'],
     ['instrumentation', 'Instrumentation', 'text'],
     ['num_bars', 'Number of Bars', 'number'],
+    ['tempo_class', 'Tempo Class', 'text'],
+    ['rhythm_feel', 'Rhythm Feel', 'text'],
+    ['time_signature', 'Time Signature', 'text'],
     ['yt_id', 'YouTube ID', 'text'],
     ['musicbrainz_id', 'MusicBrainz ID', 'text'],
   ];
@@ -289,6 +292,8 @@ async function saveMetaField(field, rawValue) {
     $('song-sub').textContent = [song.artist, song.album].filter(Boolean).join(' · ');
   }
   if (field === 'yt_id' || field === 'musicbrainz_id') updateYtLink(song);
+  // time signature changes the default beats-per-measure -> refresh lane/lengths
+  if (field === 'time_signature') { scheduleRender(); updateInspector(); }
   renderSongList();
   $('meta-status').textContent = 'saving…';
   try {
@@ -505,7 +510,7 @@ async function selectSong(song, opts) {
   if (state.current !== song) return; // a newer selection won the race
 
   state.beats = annRes.beats.map((b) => ({ t: b.time, db: !!b.downbeat }));
-  state.sections = annRes.sections.map((s) => ({ time: s.time, name: s.name }));
+  state.sections = annRes.sections.map((s) => ({ time: s.time, name: s.name, bpm: s.beats_per_measure }));
   state.structure = (annRes.structure || []).map((s) => ({ time: s.time, name: s.name }));
   state.chords = (annRes.chords || []).map((c) => ({ time: c.time, chord: c.chord }));
   state.buffer = buffer;
@@ -656,8 +661,8 @@ function renderStatic() {
 
   drawRuler(vw, scrollLeft);
 
-  drawEventLane(state.structure, structureLaneTop(), STRUCTURE_LANE_H, 'structure', STRUCTURE_PALETTE);
-  drawEventLane(state.sections, sectionLaneTop(), SECTION_LANE_H, 'section', SECTION_PALETTE);
+  drawEventLane(state.structure, structureLaneTop(), STRUCTURE_LANE_H, 'structure', STRUCTURE_PALETTE, structureBars);
+  drawEventLane(state.sections, sectionLaneTop(), SECTION_LANE_H, 'section', SECTION_PALETTE, sectionBars);
   drawChords(vw);
 
   // --- waveform (read straight from the peak cache) ---
@@ -701,7 +706,7 @@ function renderStatic() {
 // Draw one event lane (structure or sections): translucent body fill, coloured
 // tab in the lane, full-height start divider, and a name+length label pinned to
 // the right of the lane-label gutter when the start scrolls off-screen.
-function drawEventLane(events, laneTop, laneH, kind, palette) {
+function drawEventLane(events, laneTop, laneH, kind, palette, barsFn) {
   const vw = state._vw, h = state._h, bt = bodyTop(), bodyH = h - bt;
   const sorted = [...events].sort((a, b) => a.time - b.time);
   sorted.forEach((ev, i) => {
@@ -721,7 +726,7 @@ function drawEventLane(events, laneTop, laneH, kind, palette) {
     wctx.lineTo(x0 + 0.5, h);
     wctx.stroke();
     // label pinned after the lane-label gutter (kept clear of lane headers)
-    const label = `${ev.name || '(unnamed)'}  ·  ${fmtBars(eventBars(events, ev))}`;
+    const label = `${ev.name || '(unnamed)'}  ·  ${fmtBars(barsFn(ev))}`;
     const clipL = Math.max(x0, LANE_LABEL_W);
     wctx.fillStyle = '#0e1116';
     wctx.font = '11px system-ui, sans-serif';
@@ -920,14 +925,26 @@ function eventEnd(list, ev) {
   for (const s of list) if (s.time > ev.time && s.time < end) end = s.time;
   return end;
 }
-// Event length in bars (4/4: 4 beats = 1 bar) = beats within the event / 4.
-function eventBars(list, ev) {
+// The song's default beats-per-measure = numerator of its time signature (4/4→4).
+function songBeatsPerMeasure() {
+  const ts = state.current && state.current.time_signature;
+  const n = ts ? parseInt(String(ts).split('/')[0], 10) : NaN;
+  return (n && n > 0) ? n : 4;
+}
+// A section's beats-per-measure = its explicit override, else the song default.
+function sectionBeatsPerMeasure(sec) {
+  return (sec && sec.bpm > 0) ? sec.bpm : songBeatsPerMeasure();
+}
+// Event length in bars = beats within the event / beats-per-measure.
+function eventBars(list, ev, bpm) {
   const startIdx = lowerBound(ev.time - 1e-9);
   const endIdx = lowerBound(eventEnd(list, ev) - 1e-9);
-  return Math.max(0, endIdx - startIdx) / 4;
+  return Math.max(0, endIdx - startIdx) / (bpm > 0 ? bpm : 4);
 }
 function sectionEnd(sec) { return eventEnd(state.sections, sec); }
-function sectionBars(sec) { return eventBars(state.sections, sec); }
+function sectionBars(sec) { return eventBars(state.sections, sec, sectionBeatsPerMeasure(sec)); }
+// structure has no per-event bpm — it uses the song default.
+function structureBars(ev) { return eventBars(state.structure, ev, songBeatsPerMeasure()); }
 function fmtBars(bars) {
   const s = Number.isInteger(bars) ? String(bars) : bars.toFixed(2).replace(/\.?0+$/, '');
   return `${s} bar${bars === 1 ? '' : 's'}`;
@@ -943,6 +960,29 @@ function flattenChanges(changes) {
     for (const t of String(bar).trim().split(/\s+/)) if (t) out.push(t);
   }
   return out;
+}
+// Number of beat tokens per bar in a progression (from the first bar).
+function barTokenCount(bars) {
+  return (bars && bars.length) ? String(bars[0]).trim().split(/\s+/).length : 4;
+}
+// Distinct consecutive (non-%) chords in a bar: "G-7 % C7 %" -> ["G-7","C7"].
+function distinctChordsInBar(bar) {
+  const out = [];
+  for (const tok of String(bar).trim().split(/\s+/)) {
+    if (!tok || tok === '%') continue;
+    if (out.length && out[out.length - 1] === tok) continue; // collapse repeats
+    out.push(tok);
+  }
+  return out;
+}
+// Beat positions (0-indexed) for `c` chords within a `bpm`-beat measure.
+// bpm=3: 1->[0], 2->[0,2], 3->[0,1,2], 4->[0,1,2] (first three).
+function placeInMeasure(c, bpm) {
+  if (c <= 0) return [];
+  if (c >= bpm) return Array.from({ length: bpm }, (_, k) => k);
+  const pos = [];
+  for (let k = 0; k < c; k++) pos.push(Math.round((k * bpm) / c));
+  return pos;
 }
 // Walk back from `idx` (looping) to the last real chord token — the chord that
 // is sounding at a beat that maps to a '%' hold.
@@ -995,27 +1035,77 @@ function insertProgression(sec, prog, startOffset) {
   updateInspector();
   flashStatus(`inserted ${count} chords${semis ? ` (transposed +${semis})` : ''}`);
 }
+
+// Measure-based insertion, used when the section's beats-per-measure differs
+// from the progression's beats-per-bar (e.g. a 3-beat section against 4/4 bars).
+// For each section measure, the matching progression bar's distinct chords are
+// fitted into the measure's beats via placeInMeasure(). `startBarOffset` is the
+// progression bar index that the section's first measure maps to.
+function insertProgressionMeasures(sec, bars, startBarOffset) {
+  if (!bars.length) return;
+  const secBeats = sectionBeatsIn(sec);
+  if (!secBeats.length) { flashStatus('no beats in this section'); return; }
+  const bpm = sectionBeatsPerMeasure(sec);
+  const semis = insertSemitones();
+  const start = sec.time, end = sectionEnd(sec);
+  pushUndo();
+  state.chords = state.chords.filter((c) => !(c.time >= start - 1e-9 && c.time < end - 1e-9));
+  let count = 0;
+  const numMeasures = Math.ceil(secBeats.length / bpm);
+  for (let m = 0; m < numMeasures; m++) {
+    const mBeats = secBeats.slice(m * bpm, (m + 1) * bpm);
+    const barIdx = ((startBarOffset + m) % bars.length + bars.length) % bars.length;
+    const chords = distinctChordsInBar(bars[barIdx]);
+    const positions = placeInMeasure(chords.length, bpm);
+    for (let k = 0; k < positions.length && k < chords.length; k++) {
+      const pos = positions[k];
+      if (pos >= mBeats.length) continue;
+      const tok = chords[k];
+      const name = (tok === 'NC' || tok === 'N') ? 'N.C.'
+        : (semis ? transposeChordToken(tok, semis) : tok);
+      state.chords.push({ time: mBeats[pos].t, chord: name });
+      count++;
+    }
+  }
+  state.chords.sort((a, b) => a.time - b.time);
+  markDirty();
+  scheduleRender();
+  updateInspector();
+  flashStatus(`inserted ${count} chords${semis ? ` (transposed +${semis})` : ''}`);
+}
 function flashStatus(msg) { setStatus(msg); setTimeout(() => setStatus(''), 2000); }
 
 function currentSection() {
   return (state.selected && state.selected.kind === 'section') ? state.selected.obj : null;
 }
+// Choose beat-level (aligned) vs measure-based (count rule) insertion by comparing
+// the section's beats-per-measure to the progression's beats-per-bar.
 function insertChords() {
   const s = currentSection(), ls = state.leadsheet;
   if (!s || !ls || !ls.found) return;
-  insertProgression(s, flattenChanges(ls.chord_changes), 0);
+  const bars = ls.chord_changes;
+  if (sectionBeatsPerMeasure(s) === barTokenCount(bars)) insertProgression(s, flattenChanges(bars), 0);
+  else insertProgressionMeasures(s, bars, 0);
 }
 function insertLast() {
   const s = currentSection(), ls = state.leadsheet;
   if (!s || !ls || !ls.found) return;
-  const prog = flattenChanges(ls.chord_changes);
-  const off = prog.length - sectionBeatsIn(s).length; // back-align to the end
-  insertProgression(s, prog, off);
+  const bars = ls.chord_changes;
+  const bpm = sectionBeatsPerMeasure(s);
+  if (bpm === barTokenCount(bars)) {
+    const prog = flattenChanges(bars);
+    insertProgression(s, prog, prog.length - sectionBeatsIn(s).length); // beat-level back-align
+  } else {
+    const numMeasures = Math.ceil(sectionBeatsIn(s).length / bpm);
+    insertProgressionMeasures(s, bars, bars.length - numMeasures); // measure-level back-align
+  }
 }
 function insertCoda() {
   const s = currentSection(), ls = state.leadsheet;
   if (!s || !ls || !ls.coda || !ls.coda.length) return;
-  insertProgression(s, flattenChanges(ls.coda), 0);
+  const bars = ls.coda;
+  if (sectionBeatsPerMeasure(s) === barTokenCount(bars)) insertProgression(s, flattenChanges(bars), 0);
+  else insertProgressionMeasures(s, bars, 0);
 }
 
 // ----------------------------------------------------------------------------
@@ -1291,19 +1381,22 @@ function halveBeats() {
   setTimeout(() => setStatus(''), 1500);
 }
 
-// Re-grid downbeats (assuming 4/4) for every beat at or after `startTime`:
-// the beat at startTime becomes a downbeat, then every 4th beat after it, and
-// all other beats in that range are forced to non-downbeat. Beats before
-// startTime are left untouched. Used when a section is created.
-function applyDownbeatGrid(startTime) {
+// Re-grid downbeats for every beat in [startTime, endTime): the beat nearest
+// startTime becomes a downbeat, then every `bpm`-th beat after it; all other
+// beats in that range are forced off. Beats outside the range are untouched.
+// endTime defaults to the end of the track (used when a section is created).
+function applyDownbeatGrid(startTime, bpm, endTime) {
   if (!state.beats.length) return;
+  bpm = bpm > 0 ? bpm : 4;
+  endTime = endTime == null ? Infinity : endTime;
   let startIdx = 0, bd = Infinity;
   for (let i = 0; i < state.beats.length; i++) {
     const d = Math.abs(state.beats[i].t - startTime);
     if (d < bd) { bd = d; startIdx = i; }
   }
   for (let i = startIdx; i < state.beats.length; i++) {
-    state.beats[i].db = ((i - startIdx) % 4) === 0;
+    if (state.beats[i].t >= endTime - 1e-9) break;
+    state.beats[i].db = ((i - startIdx) % bpm) === 0;
   }
 }
 
@@ -1405,7 +1498,7 @@ function clearSelection() {
 function snapshotState() {
   return {
     beats: state.beats.map((b) => ({ t: b.t, db: b.db })),
-    sections: state.sections.map((s) => ({ time: s.time, name: s.name })),
+    sections: state.sections.map((s) => ({ time: s.time, name: s.name, bpm: s.bpm })),
     structure: state.structure.map((s) => ({ time: s.time, name: s.name })),
     chords: state.chords.map((c) => ({ time: c.time, chord: c.chord })),
   };
@@ -1413,7 +1506,7 @@ function snapshotState() {
 function pushUndo() { state.undo = snapshotState(); }
 function restoreSnapshot(snap) {
   state.beats = snap.beats.map((b) => ({ t: b.t, db: b.db }));
-  state.sections = snap.sections.map((s) => ({ time: s.time, name: s.name }));
+  state.sections = snap.sections.map((s) => ({ time: s.time, name: s.name, bpm: s.bpm }));
   state.structure = (snap.structure || []).map((s) => ({ time: s.time, name: s.name }));
   state.chords = snap.chords.map((c) => ({ time: c.time, chord: c.chord }));
   state.selBeats = new Set();
@@ -1445,7 +1538,10 @@ function nudgeSelectedBeats(deltaSec) {
 
 // Fill: between each consecutive pair of selected beats, insert 3 evenly-spaced
 // beats (subdividing the gap into four).
-function fillSelectedBeats() {
+// Subdivide the gap between each consecutive pair of selected beats into `parts`
+// (default 4) by inserting `parts - 1` evenly-spaced beats.
+function fillSelectedBeats(parts) {
+  parts = parts > 1 ? parts : 4;
   const sel = [...state.selBeats].sort((a, b) => a.t - b.t);
   if (sel.length < 2) {
     setStatus('select 2+ beats to fill');
@@ -1456,7 +1552,7 @@ function fillSelectedBeats() {
   const additions = [];
   for (let i = 0; i < sel.length - 1; i++) {
     const a = sel[i].t, b = sel[i + 1].t;
-    for (let k = 1; k <= 3; k++) additions.push({ t: a + (b - a) * (k / 4), db: false });
+    for (let k = 1; k < parts; k++) additions.push({ t: a + (b - a) * (k / parts), db: false });
   }
   state.beats.push(...additions);
   resortBeats();
@@ -1464,8 +1560,20 @@ function fillSelectedBeats() {
   markDirty();
   scheduleRender();
   updateInspector();
-  setStatus(`filled → +${additions.length} beats`);
+  setStatus(`filled ÷${parts} → +${additions.length} beats`);
   setTimeout(() => setStatus(''), 1500);
+}
+
+// Ctrl+D: toggle downbeat for the selected beats as a group (all-on if any are
+// off, else all-off).
+function toggleDownbeatSelection() {
+  if (!state.selBeats.size) return;
+  pushUndo();
+  const allDb = [...state.selBeats].every((b) => b.db);
+  for (const b of state.selBeats) b.db = !allDb;
+  markDirty();
+  scheduleRender();
+  updateInspector();
 }
 
 function setDownbeatForSelection(on) {
@@ -1490,8 +1598,8 @@ function addSectionAtPlayhead() {
     state.sections.push(sec);
     state.sections.sort((a, b) => a.time - b.time);
     state.selected = { kind: 'section', obj: sec };
-    // from this section's start, re-grid downbeats every 4th beat (4/4)
-    applyDownbeatGrid(t);
+    // from this section's start, re-grid downbeats every N beats (N = its bpm)
+    applyDownbeatGrid(t, sectionBeatsPerMeasure(sec));
     markDirty();
   }
   state.selEvents = new Set([state.selected.obj]);
@@ -1533,6 +1641,20 @@ function copySectionsToStructure() {
   scheduleRender();
   updateInspector();
   setStatus(`copied ${state.structure.length} sections → structure`);
+  setTimeout(() => setStatus(''), 1500);
+}
+
+// Re-grid downbeats within the selected section only (every N beats, N = its bpm).
+function insertSectionDownbeats() {
+  const s = currentSection();
+  if (!s) return;
+  pushUndo();
+  applyDownbeatGrid(s.time, sectionBeatsPerMeasure(s), sectionEnd(s));
+  if (state.playing) state.nextBeatIdx = lowerBound(playPos());
+  markDirty();
+  scheduleRender();
+  updateInspector();
+  setStatus('inserted downbeats for section');
   setTimeout(() => setStatus(''), 1500);
 }
 
@@ -1687,7 +1809,7 @@ function updateInspector() {
     if (document.activeElement !== $('structure-name')) $('structure-name').value = s.name;
     $('structure-time').value = s.time.toFixed(3);
     $('structure-end').textContent = eventEnd(state.structure, s).toFixed(3) + ' s';
-    $('structure-bars').textContent = fmtBars(eventBars(state.structure, s));
+    $('structure-bars').textContent = fmtBars(structureBars(s));
   } else {
     $('inspector-section').classList.remove('hidden');
     const s = state.selected.obj;
@@ -1696,15 +1818,18 @@ function updateInspector() {
     $('section-time').value = s.time.toFixed(3);
     $('section-end').textContent = sectionEnd(s).toFixed(3) + ' s';
     $('section-bars').textContent = fmtBars(sectionBars(s));
+    if (document.activeElement !== $('section-bpm')) $('section-bpm').value = sectionBeatsPerMeasure(s);
 
     // chord-insertion button availability
     const ls = state.leadsheet;
+    const bpm = sectionBeatsPerMeasure(s);
     const hasChanges = !!(ls && ls.found && ls.chord_changes && ls.chord_changes.length);
-    const progLen = hasChanges ? flattenChanges(ls.chord_changes).length : 0;
+    const numBars = hasChanges ? ls.chord_changes.length : 0;
     const secBeats = sectionBeatsIn(s).length;
+    const secMeasures = Math.ceil(secBeats / bpm);
     $('ins-chords').disabled = !(hasChanges && secBeats > 0);
     // "Insert last" only when the section is shorter than the lead sheet
-    $('ins-last').disabled = !(hasChanges && secBeats > 0 && secBeats < progLen);
+    $('ins-last').disabled = !(hasChanges && secBeats > 0 && secMeasures < numBars);
     $('ins-coda').disabled = !(ls && ls.found && ls.coda && ls.coda.length && secBeats > 0);
   }
 }
@@ -1732,7 +1857,7 @@ $('beat-downbeat').addEventListener('change', (e) => {
 $('beat-delete').addEventListener('click', deleteSelected);
 
 $('beats-downbeat').addEventListener('change', (e) => setDownbeatForSelection(e.target.checked));
-$('beats-fill').addEventListener('click', fillSelectedBeats);
+$('beats-fill').addEventListener('click', () => fillSelectedBeats(4));
 $('beats-delete').addEventListener('click', deleteSelected);
 $('multi-delete').addEventListener('click', deleteSelected);
 
@@ -1823,6 +1948,16 @@ $('section-snap').addEventListener('click', () => {
   updateInspector();
 });
 $('section-delete').addEventListener('click', deleteSelected);
+$('section-bpm').addEventListener('change', (e) => {
+  if (!state.selected || state.selected.kind !== 'section') return;
+  const v = parseInt(e.target.value, 10);
+  pushUndo();
+  state.selected.obj.bpm = (v > 0) ? v : undefined; // blank/invalid -> song default
+  markDirty();
+  scheduleRender();
+  updateInspector();
+});
+$('section-downbeats').addEventListener('click', insertSectionDownbeats);
 $('ins-chords').addEventListener('click', insertChords);
 $('ins-last').addEventListener('click', insertLast);
 $('ins-coda').addEventListener('click', insertCoda);
@@ -2223,7 +2358,7 @@ async function save() {
       fetch(`/api/sections/${stem}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sections: state.sections }),
+        body: JSON.stringify({ sections: state.sections.map((s) => ({ time: s.time, name: s.name, beats_per_measure: s.bpm })) }),
       }),
       fetch(`/api/structure/${stem}`, {
         method: 'POST',
@@ -2285,10 +2420,11 @@ $('btn-save').addEventListener('click', save);
 document.addEventListener('keydown', (e) => {
   if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
   if (!state.current) return;
-  // Ctrl/Cmd combos (undo, save); ignore others so browser shortcuts work
+  // Ctrl/Cmd combos (undo, save, toggle downbeat); ignore others
   if (e.ctrlKey || e.metaKey) {
     if (e.key === 'z' || e.key === 'Z') { e.preventDefault(); undo(); }
     else if (e.key === 's' || e.key === 'S') { e.preventDefault(); save(); }
+    else if (e.code === 'KeyD') { e.preventDefault(); toggleDownbeatSelection(); }
     return;
   }
   // Alt combos (insert chords for the selected section)
@@ -2319,6 +2455,15 @@ document.addEventListener('keydown', (e) => {
   else if (e.key === 'b' || e.key === 'B') { e.preventDefault(); addBeatAt(state.playing ? playPos() : state.currentTime); }
   else if (e.key === 'd' || e.key === 'D') { e.preventDefault(); doubleBeats(); }
   else if (e.key === 'h' || e.key === 'H') { e.preventDefault(); halveBeats(); }
+  // Q/E jump backward/forward N bars; J/K jump to prev/next section
+  else if (e.key === 'q' || e.key === 'Q') { e.preventDefault(); jumpBars(-1); }
+  else if (e.key === 'e' || e.key === 'E') { e.preventDefault(); jumpBars(1); }
+  else if (e.key === 'j' || e.key === 'J') { e.preventDefault(); jumpSection(-1); }
+  else if (e.key === 'k' || e.key === 'K') { e.preventDefault(); jumpSection(1); }
+  // 2/3/4 subdivide the gaps between selected beats into 2/3/4 parts
+  else if (e.key === '2') { e.preventDefault(); fillSelectedBeats(2); }
+  else if (e.key === '3') { e.preventDefault(); fillSelectedBeats(3); }
+  else if (e.key === '4') { e.preventDefault(); fillSelectedBeats(4); }
   else if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); deleteSelected(); }
   else if (e.key === 'Escape') { e.preventDefault(); clearSelection(); }
 });
