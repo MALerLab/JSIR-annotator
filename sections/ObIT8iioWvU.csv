@@ -1,0 +1,7 @@
+time,name,beats_per_measure
+0.830,head:guitar,
+37.520,solo:piano,
+75.270,solo:guitar,
+114.320,"exchange:piano,guitar",
+133.670,head:piano,
+171.040,exclude,

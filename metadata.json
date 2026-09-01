@@ -4754,7 +4754,7 @@
       "chords": "chords/wnFDsiA9qOo.csv"
     },
     "key": "Eb maj",
-    "num_bars": 49,
+    "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
@@ -4774,7 +4774,7 @@
       "chords": "chords/YELrIZ-UeRM.csv"
     },
     "key": "Ab maj",
-    "num_bars": 49,
+    "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
@@ -4794,7 +4794,7 @@
       "chords": "chords/2ucYnej_kIE.csv"
     },
     "key": "Ab maj",
-    "num_bars": 49,
+    "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
@@ -4814,7 +4814,7 @@
       "chords": "chords/7I35VWEVPKg.csv"
     },
     "key": "C maj",
-    "num_bars": 49,
+    "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
@@ -4834,7 +4834,7 @@
       "chords": "chords/TR15zGel-Uo.csv"
     },
     "key": "Ab maj",
-    "num_bars": 49,
+    "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
@@ -4854,7 +4854,7 @@
       "chords": "chords/7028JbvwuNs.csv"
     },
     "key": "Ab maj",
-    "num_bars": 49,
+    "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
@@ -5193,25 +5193,25 @@
       "cace_chords": "consonance_ace_inferences/THflqYOqm3A.lab",
       "chords": "chords/THflqYOqm3A.csv"
     },
-    "key": "G min",
+    "key": "Bb min",
     "num_bars": 16,
     "tempo_class": "MEDIUM SLOW",
     "rhythm_feel": "TWOBEAT",
     "time_signature": "4/4"
   },
   {
-    "yt_id": "1pzYfHIKVqQ",
+    "yt_id": "PUKXB-tYpV4",
     "standard": "Summertime",
     "artist": "Charlie Parker with Strings",
-    "album": "The Definite Charlie Parker, Vol. 1",
+    "album": "April in Paris",
     "instrumentation": "alto sax with strings",
-    "musicbrainz_id": "ed64bcf9-78a2-4d51-8988-d18260aa77d8",
+    "musicbrainz_id": "1913a45b-3357-4e94-814f-e43200b8d280",
     "audio_length": 176.309125,
     "files": {
-      "audio": "audio/1pzYfHIKVqQ.wav",
-      "beats": "beats/1pzYfHIKVqQ.txt",
-      "cace_chords": "consonance_ace_inferences/1pzYfHIKVqQ.lab",
-      "chords": "chords/1pzYfHIKVqQ.csv"
+      "audio": "audio/PUKXB-tYpV4.wav",
+      "beats": "beats/PUKXB-tYpV4.txt",
+      "cace_chords": "consonance_ace_inferences/PUKXB-tYpV4.lab",
+      "chords": "chords/PUKXB-tYpV4.csv"
     },
     "key": "G min",
     "num_bars": 16,
@@ -5220,7 +5220,7 @@
     "time_signature": "4/4"
   },
   {
-    "yt_id": "oQMMIlG7qoI",
+    "yt_id": "EPj22GjTUzw",
     "standard": "Summertime",
     "artist": "Miles Davis",
     "album": "Porgy and Bess",
@@ -5228,15 +5228,15 @@
     "musicbrainz_id": "3dc72e57-93b3-4c15-9a02-cd5f1ae066ba",
     "audio_length": 199.52908333333335,
     "files": {
-      "audio": "audio/oQMMIlG7qoI.wav",
-      "beats": "beats/oQMMIlG7qoI.txt",
-      "cace_chords": "consonance_ace_inferences/oQMMIlG7qoI.lab",
-      "chords": "chords/oQMMIlG7qoI.csv"
+      "audio": "audio/EPj22GjTUzw.wav",
+      "beats": "beats/EPj22GjTUzw.txt",
+      "cace_chords": "consonance_ace_inferences/EPj22GjTUzw.lab",
+      "chords": "chords/EPj22GjTUzw.csv"
     },
-    "key": "G min",
+    "key": "Bb min",
     "num_bars": 16,
-    "tempo_class": "MEDIUM SLOW",
-    "rhythm_feel": "TWOBEAT",
+    "tempo_class": "MEDIUM",
+    "rhythm_feel": "SWING",
     "time_signature": "4/4"
   },
   {
@@ -5280,23 +5280,23 @@
     "time_signature": "4/4"
   },
   {
-    "yt_id": "BYsals4Z1gU",
+    "yt_id": "fE5oaM4C0e4",
     "standard": "Summertime",
-    "artist": "Sarah Vaughan",
-    "album": "History of Jazz 1948\u20131955",
-    "instrumentation": "vocal with orchestra",
-    "musicbrainz_id": "514c44b2-d375-47ff-a93d-5a7913164d6c",
+    "artist": "Sarah Vaughan, Studio Rio",
+    "album": "Studio Rio Presents: The Brazil Connection",
+    "instrumentation": "vocal with band",
+    "musicbrainz_id": "2d6ba412-cddd-4e7f-8023-48949a59c263",
     "audio_length": 200.2140625,
     "files": {
-      "audio": "audio/BYsals4Z1gU.wav",
-      "beats": "beats/BYsals4Z1gU.txt",
-      "cace_chords": "consonance_ace_inferences/BYsals4Z1gU.lab",
-      "chords": "chords/BYsals4Z1gU.csv"
+      "audio": "audio/fE5oaM4C0e4.wav",
+      "beats": "beats/fE5oaM4C0e4.txt",
+      "cace_chords": "consonance_ace_inferences/fE5oaM4C0e4.lab",
+      "chords": "chords/fE5oaM4C0e4.csv"
     },
-    "key": "G min",
+    "key": "Bb min",
     "num_bars": 16,
-    "tempo_class": "MEDIUM SLOW",
-    "rhythm_feel": "TWOBEAT",
+    "tempo_class": "MEDIUM",
+    "rhythm_feel": "BOSSA",
     "time_signature": "4/4"
   },
   {
@@ -5336,18 +5336,18 @@
     "key": "G maj"
   },
   {
-    "yt_id": "3xpcBx1Gm-c",
+    "yt_id": "5aTZMSyUB14",
     "standard": "There Will Never Be Another You",
     "artist": "Chet Baker",
-    "album": "Californian Jam Sessions",
+    "album": "Chet Baker Sings",
     "instrumentation": "trumpet quartet",
-    "musicbrainz_id": "d660239f-6f47-4758-9925-863c4b77b585",
+    "musicbrainz_id": "7fc44a17-f353-481a-96f0-066552f7e8ed",
     "audio_length": 181.01116666666667,
     "files": {
-      "audio": "audio/3xpcBx1Gm-c.wav",
-      "beats": "beats/3xpcBx1Gm-c.txt",
-      "cace_chords": "consonance_ace_inferences/3xpcBx1Gm-c.lab",
-      "chords": "chords/3xpcBx1Gm-c.csv"
+      "audio": "audio/5aTZMSyUB14.wav",
+      "beats": "beats/5aTZMSyUB14.txt",
+      "cace_chords": "consonance_ace_inferences/5aTZMSyUB14.lab",
+      "chords": "chords/5aTZMSyUB14.csv"
     },
     "key": "Eb maj",
     "num_bars": 32,
@@ -5376,18 +5376,18 @@
     "time_signature": "4/4"
   },
   {
-    "yt_id": "D3IGe2m--7U",
+    "yt_id": "mwPal21e_Vg",
     "standard": "There Will Never Be Another You",
     "artist": "Dexter Gordon",
     "album": "Come Rain or Come Shine",
     "instrumentation": "tenor saxophone quartet",
-    "musicbrainz_id": "bc1791a3-d9cf-4401-b84d-05f6e2f36947",
+    "musicbrainz_id": "f714c1b7-0c10-460e-8e57-9f9b39a01f8c",
     "audio_length": 747.5626666666667,
     "files": {
-      "audio": "audio/D3IGe2m--7U.wav",
-      "beats": "beats/D3IGe2m--7U.txt",
-      "cace_chords": "consonance_ace_inferences/D3IGe2m--7U.lab",
-      "chords": "chords/D3IGe2m--7U.csv"
+      "audio": "audio/mwPal21e_Vg.wav",
+      "beats": "beats/mwPal21e_Vg.txt",
+      "cace_chords": "consonance_ace_inferences/mwPal21e_Vg.lab",
+      "chords": "chords/mwPal21e_Vg.csv"
     },
     "key": "Eb maj",
     "num_bars": 32,
@@ -5411,27 +5411,27 @@
     },
     "key": "Eb maj",
     "num_bars": 32,
-    "tempo_class": "MEDIUM UP",
+    "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
   },
   {
-    "yt_id": "dYVQa4vHDOE",
+    "yt_id": "9at3l_mt1X4",
     "standard": "There Will Never Be Another You",
     "artist": "Sarah Vaughan",
-    "album": "Live at the 1971 Monterey Jazz Festival",
-    "instrumentation": "vocal with orchestra",
-    "musicbrainz_id": "cdfde67b-5ea8-4fd5-8d68-d45bc5c374ee",
+    "album": "Live in Japan",
+    "instrumentation": "vocal with quartet",
+    "musicbrainz_id": "114f38c4-d1f1-4b1c-8168-ce3a54b4ca1e",
     "audio_length": 114.69497916666667,
     "files": {
-      "audio": "audio/dYVQa4vHDOE.wav",
-      "beats": "beats/dYVQa4vHDOE.txt",
-      "cace_chords": "consonance_ace_inferences/dYVQa4vHDOE.lab",
-      "chords": "chords/dYVQa4vHDOE.csv"
+      "audio": "audio/9at3l_mt1X4.wav",
+      "beats": "beats/9at3l_mt1X4.txt",
+      "cace_chords": "consonance_ace_inferences/9at3l_mt1X4.lab",
+      "chords": "chords/9at3l_mt1X4.csv"
     },
-    "key": "Eb maj",
+    "key": "C maj",
     "num_bars": 32,
-    "tempo_class": "MEDIUM UP",
+    "tempo_class": "UP",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
   },
@@ -5459,9 +5459,9 @@
     "yt_id": "BWBhiLzvX8Y",
     "standard": "There Will Never Be Another You",
     "artist": "Art Pepper",
-    "album": "Everything Happens To Me: 1959 - Live At The Cellar",
+    "album": "One September Afternoon",
     "instrumentation": "alto saxophone quartet",
-    "musicbrainz_id": "b9b86dc0-0fb1-4ab2-b3ff-4b1e1464feaa",
+    "musicbrainz_id": "6ef77598-1693-4538-af9e-09396dee2a1b",
     "audio_length": 369.9626666666667,
     "files": {
       "audio": "audio/BWBhiLzvX8Y.wav",
@@ -5476,18 +5476,18 @@
     "time_signature": "4/4"
   },
   {
-    "yt_id": "EJ8iAGoWB9g",
+    "yt_id": "2HBYEuso6Yc",
     "standard": "There Will Never Be Another You",
     "artist": "Hank Mobley",
     "album": "The Jazz Message of Hank Mobley",
     "instrumentation": "tenor saxophone quartet",
-    "musicbrainz_id": "43c67cbe-dddf-4f4f-b25f-355cca60e7c6",
+    "musicbrainz_id": "4f429242-d483-4928-8012-9050d09cb224",
     "audio_length": 349.3906666666667,
     "files": {
-      "audio": "audio/EJ8iAGoWB9g.wav",
-      "beats": "beats/EJ8iAGoWB9g.txt",
-      "cace_chords": "consonance_ace_inferences/EJ8iAGoWB9g.lab",
-      "chords": "chords/EJ8iAGoWB9g.csv"
+      "audio": "audio/2HBYEuso6Yc.wav",
+      "beats": "beats/2HBYEuso6Yc.txt",
+      "cace_chords": "consonance_ace_inferences/2HBYEuso6Yc.lab",
+      "chords": "chords/2HBYEuso6Yc.csv"
     },
     "key": "Eb maj",
     "num_bars": 32,
@@ -5510,7 +5510,7 @@
       "chords": "chords/pvR-x98O9xA.csv"
     },
     "key": "C maj",
-    "num_bars": 15,
+    "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
@@ -5530,7 +5530,7 @@
       "chords": "chords/ya09fvuRAr8.csv"
     },
     "key": "C maj",
-    "num_bars": 15,
+    "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
@@ -5550,7 +5550,7 @@
       "chords": "chords/yAB2dL6dGXo.csv"
     },
     "key": "C maj",
-    "num_bars": 15,
+    "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
@@ -5570,13 +5570,13 @@
       "chords": "chords/Pu-0vBaZmc0.csv"
     },
     "key": "C maj",
-    "num_bars": 15,
+    "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
   },
   {
-    "yt_id": "YDZ8wM6mFzc",
+    "yt_id": "M5hxANN2xQc",
     "standard": "What's New",
     "artist": "Art Pepper",
     "album": "Art Pepper & Sonny Redd",
@@ -5590,7 +5590,7 @@
       "chords": "chords/YDZ8wM6mFzc.csv"
     },
     "key": "C maj",
-    "num_bars": 15,
+    "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
@@ -5599,9 +5599,9 @@
     "yt_id": "IhcRb7GfE74",
     "standard": "What's New",
     "artist": "Coleman Hawkins",
-    "album": "Cool Groove",
+    "album": "Coleman Hawkins",
     "instrumentation": "tenor saxophone with ensemble",
-    "musicbrainz_id": "243277f0-a4bc-42cf-a009-26db9e5fd65c",
+    "musicbrainz_id": "2c21e9ab-8d32-4c3f-abd4-fd98762f83de",
     "audio_length": 351.18135416666667,
     "files": {
       "audio": "audio/IhcRb7GfE74.wav",
@@ -5610,7 +5610,7 @@
       "chords": "chords/IhcRb7GfE74.csv"
     },
     "key": "C maj",
-    "num_bars": 15,
+    "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
@@ -5630,7 +5630,7 @@
       "chords": "chords/vaBzEzbQ_rs.csv"
     },
     "key": "C maj",
-    "num_bars": 15,
+    "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
@@ -5650,7 +5650,7 @@
       "chords": "chords/SsXprfyx99w.csv"
     },
     "key": "C maj",
-    "num_bars": 15,
+    "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
