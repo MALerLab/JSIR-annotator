@@ -5516,27 +5516,27 @@
     "time_signature": "4/4"
   },
   {
-    "yt_id": "ya09fvuRAr8",
+    "yt_id": "e7Z2wlBWmnU",
     "standard": "What's New",
     "artist": "Billie Holiday",
-    "album": "Fantastic",
-    "instrumentation": "vocal with orchestra",
-    "musicbrainz_id": "3f556026-4cfb-459f-bda9-074c017fa066",
+    "album": "Lady in Satin",
+    "instrumentation": "vocal with quartet",
+    "musicbrainz_id": "265bff50-186d-478a-95bf-fd6922977c8b",
     "audio_length": 10117.015520833333,
     "files": {
-      "audio": "audio/ya09fvuRAr8.wav",
-      "beats": "beats/ya09fvuRAr8.txt",
-      "cace_chords": "consonance_ace_inferences/ya09fvuRAr8.lab",
-      "chords": "chords/ya09fvuRAr8.csv"
+      "audio": "audio/e7Z2wlBWmnU.wav",
+      "beats": "beats/e7Z2wlBWmnU.txt",
+      "cace_chords": "consonance_ace_inferences/e7Z2wlBWmnU.lab",
+      "chords": "chords/e7Z2wlBWmnU.csv"
     },
-    "key": "C maj",
+    "key": "Eb maj",
     "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
   },
   {
-    "yt_id": "yAB2dL6dGXo",
+    "yt_id": "SA64eS8eTEw",
     "standard": "What's New",
     "artist": "Frank Sinatra",
     "album": "Frank Sinatra Sings for Only the Lonely",
@@ -5544,12 +5544,12 @@
     "musicbrainz_id": "3b5a3996-75c0-45d9-abde-cd7e3e4c655d",
     "audio_length": 315.03675,
     "files": {
-      "audio": "audio/yAB2dL6dGXo.wav",
-      "beats": "beats/yAB2dL6dGXo.txt",
-      "cace_chords": "consonance_ace_inferences/yAB2dL6dGXo.lab",
-      "chords": "chords/yAB2dL6dGXo.csv"
+      "audio": "audio/SA64eS8eTEw.wav",
+      "beats": "beats/SA64eS8eTEw.txt",
+      "cace_chords": "consonance_ace_inferences/SA64eS8eTEw.lab",
+      "chords": "chords/SA64eS8eTEw.csv"
     },
-    "key": "C maj",
+    "key": "A maj",
     "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
@@ -5584,10 +5584,10 @@
     "musicbrainz_id": "4ea5c4cc-74d5-4988-a93f-81ca00e3c4a3",
     "audio_length": 243.712,
     "files": {
-      "audio": "audio/YDZ8wM6mFzc.wav",
-      "beats": "beats/YDZ8wM6mFzc.txt",
-      "cace_chords": "consonance_ace_inferences/YDZ8wM6mFzc.lab",
-      "chords": "chords/YDZ8wM6mFzc.csv"
+      "audio": "audio/M5hxANN2xQc.wav",
+      "beats": "beats/M5hxANN2xQc.txt",
+      "cace_chords": "consonance_ace_inferences/M5hxANN2xQc.lab",
+      "chords": "chords/M5hxANN2xQc.csv"
     },
     "key": "C maj",
     "num_bars": 32,
@@ -5620,7 +5620,7 @@
     "standard": "What's New",
     "artist": "Bill Evans",
     "album": "What's New",
-    "instrumentation": "piano trio with flute",
+    "instrumentation": "flute with piano trio",
     "musicbrainz_id": "69284b6d-2f9a-481b-a4c4-fa9d8ac31b4f",
     "audio_length": 293.6976041666667,
     "files": {
@@ -5631,17 +5631,17 @@
     },
     "key": "C maj",
     "num_bars": 32,
-    "tempo_class": "SLOW",
+    "tempo_class": "MEDIUM",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
   },
   {
     "yt_id": "SsXprfyx99w",
     "standard": "What's New",
-    "artist": "John Coltrane",
-    "album": "1960 Duesseldorf",
+    "artist": "John Coltrane Quartet",
+    "album": "Ballads",
     "instrumentation": "saxophone quartet",
-    "musicbrainz_id": "8ecf02d7-58c5-43d6-a59a-51d69bd760d2",
+    "musicbrainz_id": "37282c42-4221-40e2-89ce-a28ff8602f67",
     "audio_length": 223.65333333333334,
     "files": {
       "audio": "audio/SsXprfyx99w.wav",
@@ -5711,7 +5711,7 @@
     },
     "key": "C maj",
     "num_bars": 32,
-    "tempo_class": "UP",
+    "tempo_class": "MEDIUM",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
   },
@@ -5758,10 +5758,10 @@
   {
     "yt_id": "5VAeSXMYi7A",
     "standard": "Yardbird Suite",
-    "artist": "Phil Woods",
-    "album": "International Jam Sessions",
+    "artist": "Phil Woods & The Los Angeles Jazz Orchestra",
+    "album": "Unheard Herd",
     "instrumentation": "alto saxophone quartet",
-    "musicbrainz_id": "7796649a-a7e7-4d37-aa72-33c02d55bff1",
+    "musicbrainz_id": "ab55e68f-1ab8-4490-b3c9-f856c38e2be8",
     "audio_length": 436.5466666666667,
     "files": {
       "audio": "audio/5VAeSXMYi7A.wav",
@@ -5769,7 +5769,7 @@
       "cace_chords": "consonance_ace_inferences/5VAeSXMYi7A.lab",
       "chords": "chords/5VAeSXMYi7A.csv"
     },
-    "key": "C maj",
+    "key": "Eb maj",
     "num_bars": 32,
     "tempo_class": "UP",
     "rhythm_feel": "SWING",
@@ -5800,7 +5800,7 @@
     "standard": "Yardbird Suite",
     "artist": "Roy Hargrove, Christian McBride, Stephen Scott",
     "album": "Parker's Mood",
-    "instrumentation": "trumpet trio",
+    "instrumentation": "trumpet and piano duo",
     "musicbrainz_id": "e0b92f66-df7a-4c5d-8b4c-2a95c1984114",
     "audio_length": 234.76535416666667,
     "files": {
@@ -5816,38 +5816,38 @@
     "time_signature": "4/4"
   },
   {
-    "yt_id": "kZJp8DEmAxQ",
+    "yt_id": "unb4hSlpIS4",
     "standard": "Yesterdays",
     "artist": "Billie Holiday",
-    "album": "Jazz Line",
-    "instrumentation": "vocal with orchestra",
-    "musicbrainz_id": "cb9141fe-d692-4e98-9f21-b0bc6ee434a1",
+    "album": "Billie Holiday",
+    "instrumentation": "vocal with trio",
+    "musicbrainz_id": "6e396b8b-617e-456f-b3e9-92110450c1bb",
     "audio_length": 202.63185416666667,
     "files": {
-      "audio": "audio/kZJp8DEmAxQ.wav",
-      "beats": "beats/kZJp8DEmAxQ.txt",
-      "cace_chords": "consonance_ace_inferences/kZJp8DEmAxQ.lab",
-      "chords": "chords/kZJp8DEmAxQ.csv"
+      "audio": "audio/unb4hSlpIS4.wav",
+      "beats": "beats/unb4hSlpIS4.txt",
+      "cace_chords": "consonance_ace_inferences/unb4hSlpIS4.lab",
+      "chords": "chords/unb4hSlpIS4.csv"
     },
-    "key": "D min",
+    "key": "F min",
     "num_bars": 16,
     "tempo_class": "MEDIUM",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
   },
   {
-    "yt_id": "MjcxO27rqUo",
+    "yt_id": "yaIV9wHvdMM",
     "standard": "Yesterdays",
-    "artist": "Coleman Hawkins",
-    "album": "Portrait",
+    "artist": "Coleman Hawkins and His Orchestra",
+    "album": "Rainbow Mist",
     "instrumentation": "tenor saxophone with orchestra",
-    "musicbrainz_id": "9bba1330-3ec4-46c9-8e97-f26fd50e5b48",
+    "musicbrainz_id": "5189ab2d-14ed-4314-8fa1-816c66c8ea2a",
     "audio_length": 240.05952083333332,
     "files": {
-      "audio": "audio/MjcxO27rqUo.wav",
-      "beats": "beats/MjcxO27rqUo.txt",
-      "cace_chords": "consonance_ace_inferences/MjcxO27rqUo.lab",
-      "chords": "chords/MjcxO27rqUo.csv"
+      "audio": "audio/yaIV9wHvdMM.wav",
+      "beats": "beats/yaIV9wHvdMM.txt",
+      "cace_chords": "consonance_ace_inferences/yaIV9wHvdMM.lab",
+      "chords": "chords/yaIV9wHvdMM.csv"
     },
     "key": "D min",
     "num_bars": 16,
@@ -5856,18 +5856,18 @@
     "time_signature": "4/4"
   },
   {
-    "yt_id": "D9Cs_zb4q14",
+    "yt_id": "oaOUzHAD6Qg",
     "standard": "Yesterdays",
     "artist": "Art Tatum",
-    "album": "The Chronological Classics: Art Tatum 1945-1947",
-    "instrumentation": "solo piano",
-    "musicbrainz_id": "f320cb9c-e26f-44c3-8fd2-ff43df4d7b4b",
+    "album": "Hawk in Germany",
+    "instrumentation": "saxophone quartet",
+    "musicbrainz_id": "f1f12c37-23bc-4d3f-a182-673b5c981aaf",
     "audio_length": 120.17489583333334,
     "files": {
-      "audio": "audio/D9Cs_zb4q14.wav",
-      "beats": "beats/D9Cs_zb4q14.txt",
-      "cace_chords": "consonance_ace_inferences/D9Cs_zb4q14.lab",
-      "chords": "chords/D9Cs_zb4q14.csv"
+      "audio": "audio/oaOUzHAD6Qg.wav",
+      "beats": "beats/oaOUzHAD6Qg.txt",
+      "cace_chords": "consonance_ace_inferences/oaOUzHAD6Qg.lab",
+      "chords": "chords/oaOUzHAD6Qg.csv"
     },
     "key": "D min",
     "num_bars": 16,
@@ -5876,32 +5876,32 @@
     "time_signature": "4/4"
   },
   {
-    "yt_id": "MPfQt4EsHPk",
+    "yt_id": "CHHXuo1ZDn4",
     "standard": "Yesterdays",
     "artist": "Erroll Garner Trio",
-    "album": "The Chronological Classics: Erroll Garner 1949",
-    "instrumentation": "piano trio",
-    "musicbrainz_id": "6424457b-6cbd-46d6-9581-b5dedb062cf1",
+    "album": "Magician",
+    "instrumentation": "band with piano",
+    "musicbrainz_id": "cd1676ea-71d0-4f32-ac24-9ac15e11a0bf",
     "audio_length": 445.0917083333333,
     "files": {
-      "audio": "audio/MPfQt4EsHPk.wav",
-      "beats": "beats/MPfQt4EsHPk.txt",
-      "cace_chords": "consonance_ace_inferences/MPfQt4EsHPk.lab",
-      "chords": "chords/MPfQt4EsHPk.csv"
+      "audio": "audio/CHHXuo1ZDn4.wav",
+      "beats": "beats/CHHXuo1ZDn4.txt",
+      "cace_chords": "consonance_ace_inferences/CHHXuo1ZDn4.lab",
+      "chords": "chords/CHHXuo1ZDn4.csv"
     },
-    "key": "D min",
+    "key": "C min",
     "num_bars": 16,
     "tempo_class": "MEDIUM",
-    "rhythm_feel": "SWING",
+    "rhythm_feel": "LATIN",
     "time_signature": "4/4"
   },
   {
     "yt_id": "DxofXh6FwyY",
     "standard": "Yesterdays",
-    "artist": "Charlie Parker, Dizzy Gillespie and His Orchestra",
-    "album": "The Unheard Charlie Parker: Bird Seed, Volume One",
-    "instrumentation": "bebop quintet/orchestra",
-    "musicbrainz_id": "20e6edea-7256-4ef0-927a-44bc144bfb20",
+    "artist": "Dizzy Gillespie",
+    "album": "Dizzy in Greece",
+    "instrumentation": "big band",
+    "musicbrainz_id": "16a28be1-dc52-4d98-b1a7-1392c6bf0878",
     "audio_length": 223.01333333333332,
     "files": {
       "audio": "audio/DxofXh6FwyY.wav",
@@ -5936,7 +5936,7 @@
     "time_signature": "4/4"
   },
   {
-    "yt_id": "EnAu6Us8g7k",
+    "yt_id": "lhioIjOmSVc",
     "standard": "Yesterdays",
     "artist": "Clifford Brown",
     "album": "With Strings",
@@ -5944,34 +5944,34 @@
     "musicbrainz_id": "573531ea-6792-4f30-8663-3cd01674714f",
     "audio_length": 183.08935416666668,
     "files": {
-      "audio": "audio/EnAu6Us8g7k.wav",
-      "beats": "beats/EnAu6Us8g7k.txt",
-      "cace_chords": "consonance_ace_inferences/EnAu6Us8g7k.lab",
-      "chords": "chords/EnAu6Us8g7k.csv"
+      "audio": "audio/lhioIjOmSVc.wav",
+      "beats": "beats/lhioIjOmSVc.txt",
+      "cace_chords": "consonance_ace_inferences/lhioIjOmSVc.lab",
+      "chords": "chords/lhioIjOmSVc.csv"
     },
     "key": "D min",
     "num_bars": 16,
-    "tempo_class": "MEDIUM",
+    "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
   },
   {
-    "yt_id": "GM5Xb4uVKS8",
+    "yt_id": "iRQXT4oBFts",
     "standard": "Yesterdays",
     "artist": "Carmen McRae",
-    "album": "Torchy",
+    "album": "Carmen McRae Sings Lover Man and Other Billie Holiday Classics",
     "instrumentation": "vocal with trio",
-    "musicbrainz_id": "430c2720-894e-47c8-b90f-96508a20bbc8",
+    "musicbrainz_id": "00fcf2a1-7327-44d3-b5ce-f9f229591c33",
     "audio_length": 233.69725,
     "files": {
-      "audio": "audio/GM5Xb4uVKS8.wav",
-      "beats": "beats/GM5Xb4uVKS8.txt",
-      "cace_chords": "consonance_ace_inferences/GM5Xb4uVKS8.lab",
-      "chords": "chords/GM5Xb4uVKS8.csv"
+      "audio": "audio/iRQXT4oBFts.wav",
+      "beats": "beats/iRQXT4oBFts.txt",
+      "cace_chords": "consonance_ace_inferences/iRQXT4oBFts.lab",
+      "chords": "chords/iRQXT4oBFts.csv"
     },
-    "key": "D min",
+    "key": "F# min",
     "num_bars": 16,
-    "tempo_class": "MEDIUM",
+    "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
     "time_signature": "4/4"
   }
