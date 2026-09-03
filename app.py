@@ -43,7 +43,7 @@ SECTIONS_DIR = os.path.join(ROOT, "sections")
 STRUCTURE_DIR = os.path.join(ROOT, "structure")
 CHORDS_DIR = os.path.join(ROOT, "chords")
 METADATA_PATH = os.path.join(ROOT, "metadata.json")
-LEADSHEET_PATH = os.path.join(ROOT, "lead_sheet_chords.json")
+LEADSHEET_PATH = os.path.join(ROOT, "lead_sheets.json")
 
 # Directory holding this interpreter's console scripts (DBNBeatTracker, etc.).
 BIN_DIR = os.path.dirname(sys.executable)
