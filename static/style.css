@@ -19,8 +19,156 @@ html, body {
   color: var(--text);
   font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 }
+body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
-#app { display: flex; height: 100vh; overflow: hidden; }
+/* ----- Tab bar ----- */
+#tabbar {
+  display: flex;
+  gap: 2px;
+  background: #0b0e13;
+  border-bottom: 1px solid var(--line);
+  padding: 6px 10px 0;
+  flex: none;
+}
+#tabbar .tab {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid transparent;
+  border-bottom: none;
+  padding: 7px 22px;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+#tabbar .tab:hover { color: var(--text); }
+#tabbar .tab.active {
+  background: var(--bg);
+  color: var(--text);
+  border-color: var(--line);
+  position: relative;
+  top: 1px;
+}
+
+#app { display: flex; flex: 1; min-height: 0; overflow: hidden; }
+
+/* ----- Library tab ----- */
+#library { display: flex; flex: 1; min-height: 0; overflow: hidden; }
+.lib-col {
+  width: 300px;
+  min-width: 300px;
+  background: var(--panel);
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+}
+.lib-col-head { display: flex; align-items: center; justify-content: space-between; margin: 2px 2px 10px; }
+.lib-col-head h1 { font-size: 15px; margin: 0; }
+.lib-col input[type="text"] {
+  width: 100%;
+  padding: 7px 9px;
+  margin-bottom: 8px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text);
+}
+.lib-list { list-style: none; margin: 0; padding: 0; overflow-y: auto; flex: 1; }
+.lib-list li {
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 3px;
+  border: 1px solid transparent;
+}
+.lib-list li:hover { background: var(--panel2); }
+.lib-list li.active { background: var(--panel2); border-color: var(--accent); }
+.lib-list li .t { font-weight: 600; }
+.lib-list li .a { color: var(--muted); font-size: 12px; }
+#lib-inspector { flex: 1; min-width: 0; overflow-y: auto; padding: 16px 20px; }
+#lib-inspector h1 { font-size: 17px; margin: 0 0 14px; }
+#lib-inspector h2 { font-size: 12px; margin: 18px 0 8px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
+.stats .row { padding: 9px 0; border-bottom: 1px solid var(--line); display: flex; }
+.stats dt { color: var(--muted); width: 200px; }
+.stats dd { margin: 0; font-weight: 600; }
+#lib-inspector .pf { display: flex; flex-direction: column; gap: 3px; margin-bottom: 10px; max-width: 420px; }
+#lib-inspector .pf label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); }
+#lib-inspector .pf input {
+  padding: 6px 8px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+}
+#lib-inspector .pf input:focus { outline: none; border-color: var(--accent); }
+#lib-inspector .key-field { max-width: 420px; margin-bottom: 12px; }
+#lib-inspector .key-field select {
+  width: 100%;
+  padding: 7px 9px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text);
+}
+#lib-song-links { margin: 8px 0; }
+#lib-song-links a { color: var(--accent); text-decoration: none; font-size: 13px; display: block; margin: 2px 0; }
+#lib-song-links a:hover { text-decoration: underline; }
+#lib-refresh { max-width: 420px; margin: 12px 0; }
+#lib-refresh button { width: 100%; padding: 8px 10px; background: var(--panel2); color: var(--text); border: 1px solid var(--line); border-radius: 6px; cursor: pointer; }
+#lib-refresh button:hover:not(:disabled) { border-color: var(--accent); }
+#lib-refresh button:disabled { opacity: 0.5; cursor: default; }
+#lib-refresh-status { font-size: 12px; margin-top: 4px; min-height: 14px; }
+.lib-actions { margin-top: 18px; display: flex; align-items: center; gap: 10px; }
+
+/* chord-grid editor */
+.chord-grid { margin: 4px 0 8px; }
+.cg-row { display: flex; gap: 4px; align-items: center; margin-bottom: 4px; }
+.cg-num { width: 26px; text-align: right; color: var(--muted); font-size: 11px; flex: none; }
+.cg-cell {
+  width: 82px;
+  text-align: center;
+  padding: 6px 4px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--text);
+  font-size: 12px;
+}
+.cg-cell:focus { outline: none; border-color: var(--accent); background: #101722; }
+.cg-del {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 6px;
+}
+.cg-del:hover { color: var(--danger); }
+
+/* completion toggle */
+.complete-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 11px 10px;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  background: rgba(126, 224, 129, 0.14);
+  color: #7ee081;
+  border: 1px solid #7ee081;
+}
+.complete-btn:hover:not(:disabled) { background: rgba(126, 224, 129, 0.24); }
+.complete-btn.is-complete {
+  background: rgba(255, 93, 93, 0.12);
+  color: var(--danger);
+  border-color: var(--danger);
+}
+.complete-btn.is-complete:hover:not(:disabled) { background: rgba(255, 93, 93, 0.22); }
+.complete-btn:disabled { opacity: 0.4; cursor: default; }
+#lib-btn-complete { max-width: 420px; }
 
 /* ----- Sidebar ----- */
 #sidebar {
@@ -54,7 +202,7 @@ html, body {
 #song-list li.active { background: var(--panel2); border-color: var(--accent); }
 #song-list li .t { font-weight: 600; }
 #song-list li .a { color: var(--muted); font-size: 12px; }
-#song-list li .dot { color: var(--accent2); font-size: 11px; margin-left: 4px; }
+#song-list li .dot, .lib-list li .dot { color: #7ee081; font-size: 11px; margin-left: 4px; }
 
 /* ----- Editor ----- */
 #editor { flex: 1; display: flex; flex-direction: column; min-width: 0; }
@@ -246,4 +394,4 @@ button.small { background: var(--panel2); border: 1px solid var(--line); color: 
 
 #legend { padding: 8px 16px; border-top: 1px solid var(--line); font-size: 12px; }
 .muted { color: var(--muted); }
-.hidden { display: none; }
+.hidden { display: none !important; }

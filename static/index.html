@@ -7,7 +7,83 @@
   <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-  <div id="app">
+  <!-- Top tab bar -->
+  <nav id="tabbar">
+    <button id="tab-library" class="tab active">Library</button>
+    <button id="tab-edit" class="tab">Edit</button>
+  </nav>
+
+  <!-- ======================= LIBRARY TAB ======================= -->
+  <div id="library">
+    <aside class="lib-col">
+      <div class="lib-col-head">
+        <h1>Lead Sheets</h1>
+        <button id="lib-add-ls" class="small" title="Add a new standard">+ New</button>
+      </div>
+      <input id="lib-ls-filter" type="text" placeholder="Filter…" autocomplete="off" />
+      <ul id="lib-ls-list" class="lib-list"></ul>
+    </aside>
+
+    <aside class="lib-col">
+      <div class="lib-col-head">
+        <h1>Songs</h1>
+        <button id="lib-add-song" class="small" title="Add a new song by YouTube ID">+ Add</button>
+      </div>
+      <input id="lib-song-filter" type="text" placeholder="Filter…" autocomplete="off" />
+      <ul id="lib-song-list" class="lib-list"></ul>
+    </aside>
+
+    <section id="lib-inspector">
+      <!-- nothing selected: dataset stats -->
+      <div id="lib-stats">
+        <h1>Dataset</h1>
+        <dl id="stats-list" class="stats"></dl>
+      </div>
+
+      <!-- lead sheet selected -->
+      <div id="lib-ls-info" class="hidden">
+        <h1>Lead Sheet Info</h1>
+        <div id="ls-fields"></div>
+        <div class="pf">
+          <label>Chords per measure</label>
+          <input type="number" id="ls-cpm" min="1" step="1" />
+        </div>
+        <h2>Chord changes</h2>
+        <div id="ls-grid" class="chord-grid"></div>
+        <h2>Coda</h2>
+        <button id="ls-add-coda" class="small">Add coda</button>
+        <div id="ls-coda-grid" class="chord-grid hidden"></div>
+        <button id="ls-del-coda" class="small hidden">Remove coda</button>
+        <div class="lib-actions">
+          <button id="ls-delete" class="danger">Delete lead sheet</button>
+          <span id="ls-status" class="muted"></span>
+        </div>
+      </div>
+
+      <!-- song selected -->
+      <div id="lib-song-info" class="hidden">
+        <h1>Song Info</h1>
+        <div class="key-field">
+          <label for="lib-key-select">Key</label>
+          <select id="lib-key-select"></select>
+        </div>
+        <div id="lib-song-fields"></div>
+        <div id="lib-song-links"></div>
+        <div id="lib-refresh">
+          <button id="lib-btn-refresh" title="Re-crawl audio from the YouTube ID, re-run beat tracking, drop labels">↻ Refresh audio</button>
+          <div id="lib-refresh-status" class="muted"></div>
+        </div>
+        <button id="lib-btn-complete" class="complete-btn">Mark as complete</button>
+        <div class="lib-actions">
+          <button id="lib-song-delete" class="danger">Delete song</button>
+          <span id="lib-song-status" class="muted"></span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================= EDIT TAB ======================= -->
+  <div id="app" class="hidden">
     <!-- Sidebar: song list -->
     <aside id="sidebar">
       <h1>Songs</h1>
@@ -204,6 +280,7 @@
         <div id="refresh-audio">
           <button id="btn-refresh" disabled title="Re-crawl the audio from the YouTube ID, re-run beat tracking, and drop chord/section labels">↻ Refresh audio</button>
           <div id="refresh-status" class="muted"></div>
+          <button id="btn-complete" class="complete-btn" disabled>Mark as complete</button>
         </div>
 
         <div id="volume-controls">

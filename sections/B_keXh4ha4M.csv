@@ -1,3 +1,5 @@
-time,name
-49.770,section 1
-166.720,section 2
+time,name,beats_per_measure
+0.000,intro,
+49.770,head:horn,
+166.720,solo:horn,
+249.830,head:horn,

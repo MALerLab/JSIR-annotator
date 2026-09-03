@@ -1,4 +1,9 @@
-time,name
-10.380,section 1
-50.900,section 2
-414.360,section 3
+time,name,beats_per_measure
+0.380,section 4,
+10.420,head:horn,
+50.900,solo:horn,
+173.350,solo:piano,
+295.260,solo:bass,
+335.160,"trade:horn,drum",
+414.360,head:horn,
+454.872,outro,

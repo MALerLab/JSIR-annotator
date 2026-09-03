@@ -1,5 +1,7 @@
-time,name
-10.880,section 1
-97.810,section 2
-182.070,section 3
-202.620,section 4
+time,name,beats_per_measure
+0.000,intro,
+10.880,head:vocal,
+97.810,head:vocal,
+182.070,solo:horn,
+202.620,head:vocal,
+218.990,outro,

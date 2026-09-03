@@ -1,4 +1,11 @@
-time,name
-4.600,section 1
-27.625,section 2
-257.560,section 3
+time,name,beats_per_measure
+0.700,intro,
+4.600,head:horn,
+27.625,solo:guitar,
+61.110,solo:horn,
+94.345,solo:horn,
+127.180,solo:horn,
+160.030,solo:vibraphone,
+194.550,solo:piano,
+225.300,"trade:guitar,drum,horn,vibraphone",
+257.560,solo:horn,

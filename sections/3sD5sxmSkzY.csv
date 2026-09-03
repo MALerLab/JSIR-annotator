@@ -1,5 +1,9 @@
-time,name
-55.792,section 2
-87.260,section 1
-210.420,section 3
-360.725,exclude
+time,name,beats_per_measure
+39.315,intro,
+55.831,head:horn,
+87.260,solo:horn,
+210.420,solo:horn,
+360.725,solo:piano,
+477.395,solo:drum,
+505.838,head:horn,
+521.093,exclude,

@@ -1,4 +1,8 @@
 time,name
-14.860,section 1
-93.700,section 2
-317.000,section 3
+0.380,intro
+14.860,head:piano
+93.700,solo:piano
+175.420,solo:bass
+256.790,solo:piano
+317.000,head:piano
+336.970,outro

@@ -11,9 +11,18 @@ python app.py
 # open http://127.0.0.1:5000
 ```
 
+The app has two tabs: **Library** (default — organize standards & songs, edit
+lead-sheet chords and high-level metadata, crawl new audio, track completion)
+and **Edit** (the waveform/beat/section/chord annotation editor).
+
 The dataset is read from this folder:
 
-- `metadata.json` — song list (audio/beats/chords pairing + metadata)
+- `lead_sheets.json` — the jazz standards: title, key, signature, tempo/feel,
+  `chords_per_measure`, `chord_changes` (one string per measure), optional
+  `coda`. Fully editable from the Library tab (saved in real time; a one-time
+  `.orig` backup is made on first edit).
+- `metadata.json` — song list (audio/beats/chords pairing + metadata), incl.
+  the boolean `completed` status per song
 - `audio/*.wav`   — recordings
 - `beats/*.txt`   — one beat per line: `<time>` for a normal beat, or
   `<time>\t1` for a downbeat. Bare-float files (original madmom output) load as
@@ -26,7 +35,29 @@ The dataset is read from this folder:
   and written back in place (a one-time `metadata.json.orig` backup is made on
   the first edit).
 
-## Using it
+## Library tab
+
+- **Lead Sheets** and **Songs** lists side by side; selecting a lead sheet
+  filters the Songs list to that standard (matched case-insensitively between
+  the lead sheet `title` and the song `standard`). *+ New* adds a standard;
+  *+ Add* adds a song by YouTube ID (which becomes its file-name stem — fill in
+  its fields, then *Refresh audio* to crawl it). Lead sheets and songs can be
+  deleted (song deletion removes only the metadata entry; files stay on disk).
+- **Inspector** (right): with nothing selected it shows dataset **stats**
+  (lead-sheet/song counts, completion, total & completed audio duration).
+  Selecting a lead sheet opens the **Lead Sheet Info** editor: metadata fields,
+  a **chords-per-measure** value (lowering it confirms, then cuts the trailing
+  slots of every measure), and a spreadsheet-style **chord grid** — one row per
+  measure, one cell per beat slot; empty cells revert to `%`; Tab moves along
+  the row, Enter jumps to the next measure's first cell (creating a new measure
+  at the end); everything saves to `lead_sheets.json` in real time. A **coda**
+  grid can be added/removed. Selecting a song opens **Song Info** (same fields
+  as the Edit tab, plus links, Refresh audio, and the completion toggle).
+- **Completion**: each song has a `completed` flag. The green **Mark as
+  complete** / red **Mark as incomplete** button (in both tabs' Song Info)
+  toggles it; completed songs show a green dot in every songs list.
+
+## Edit tab
 
 - Pick a song in the left sidebar. The waveform loads with green beat lines
   overlaid; saved sections (if any) appear as translucent rectangles with a

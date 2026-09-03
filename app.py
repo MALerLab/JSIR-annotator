@@ -65,22 +65,36 @@ def load_metadata():
         return json.load(f)
 
 
-def load_leadsheets():
-    """Index the lead-sheet chord progressions by (lower-cased) title. The
-    'performer' value is ignored; the first entry per title wins."""
+def load_leadsheets_list():
+    """The lead sheets file is editable from the Library tab, so it is always
+    loaded fresh (never cached)."""
     if not os.path.exists(LEADSHEET_PATH):
-        return {}
+        return []
     with open(LEADSHEET_PATH, "r", encoding="utf-8") as f:
-        data = json.load(f)
-    by_title = {}
-    for entry in data:
-        title = (entry.get("title") or "").strip().lower()
-        if title and title not in by_title:
-            by_title[title] = entry
-    return by_title
+        return json.load(f)
 
 
-LEADSHEETS = load_leadsheets()
+def save_leadsheets_list(data):
+    # One-time pristine backup before the first in-place edit.
+    backup = LEADSHEET_PATH + ".orig"
+    if os.path.exists(LEADSHEET_PATH) and not os.path.exists(backup):
+        shutil.copy2(LEADSHEET_PATH, backup)
+    tmp = LEADSHEET_PATH + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+        f.write("\n")
+    os.replace(tmp, LEADSHEET_PATH)
+
+
+def find_leadsheet_by_title(title):
+    """First entry whose (lower-cased) title matches; performer is ignored."""
+    title = (title or "").strip().lower()
+    if not title:
+        return None
+    for entry in load_leadsheets_list():
+        if (entry.get("title") or "").strip().lower() == title:
+            return entry
+    return None
 
 
 def save_metadata(meta):
@@ -307,9 +321,8 @@ def api_song(stem):
 @app.route("/api/leadsheet")
 def api_leadsheet():
     """Look up a standard's lead-sheet progression by title (case-insensitive,
-    performer ignored)."""
-    title = (request.args.get("title") or "").strip().lower()
-    entry = LEADSHEETS.get(title)
+    performer ignored). Used by the Edit tab's chord insertion."""
+    entry = find_leadsheet_by_title(request.args.get("title"))
     if entry is None:
         return jsonify({"found": False})
     changes = entry.get("chord_changes") or []
@@ -320,11 +333,81 @@ def api_leadsheet():
             "title": entry.get("title"),
             "key": entry.get("key"),
             "signature": entry.get("signature"),
+            "chords_per_measure": entry.get("chords_per_measure"),
             "chord_changes": changes,
             "coda": coda if coda else None,
             "num_bars": len(changes),
         }
     )
+
+
+# --------------------------------------------------------------------------- #
+# Library: lead-sheet CRUD
+# --------------------------------------------------------------------------- #
+LS_EDITABLE_TEXT = {"title", "key", "signature", "tempoclass", "rhythmfeel"}
+
+
+@app.route("/api/leadsheets")
+def api_leadsheets_list():
+    data = load_leadsheets_list()
+    return jsonify([{**e, "index": i} for i, e in enumerate(data)])
+
+
+@app.route("/api/leadsheets", methods=["POST"])
+def api_leadsheets_create():
+    payload = request.get_json(force=True) or {}
+    title = (payload.get("title") or "").strip()
+    if not title:
+        return jsonify({"ok": False, "error": "title is required"}), 400
+    data = load_leadsheets_list()
+    entry = {
+        "title": title,
+        "signature": "4/4",
+        "chords_per_measure": 4,
+        "chord_changes": ["% % % %"],
+    }
+    data.append(entry)
+    save_leadsheets_list(data)
+    return jsonify({"ok": True, "index": len(data) - 1})
+
+
+@app.route("/api/leadsheets/<int:idx>", methods=["POST"])
+def api_leadsheets_update(idx):
+    payload = request.get_json(force=True) or {}
+    fields = payload.get("fields", {}) or {}
+    data = load_leadsheets_list()
+    if not (0 <= idx < len(data)):
+        abort(404, "lead sheet not found")
+    entry = data[idx]
+    for key, value in fields.items():
+        if key in LS_EDITABLE_TEXT:
+            value = ("" if value is None else str(value)).strip()
+            if value:
+                entry[key] = value
+            else:
+                entry.pop(key, None)
+        elif key == "chords_per_measure":
+            try:
+                entry[key] = max(1, int(value))
+            except (TypeError, ValueError):
+                entry.pop(key, None)
+        elif key in ("chord_changes", "coda"):
+            if value is None:
+                entry.pop(key, None)  # used to remove an unwanted coda
+            elif isinstance(value, list):
+                entry[key] = [str(x) for x in value]
+    save_leadsheets_list(data)
+    return jsonify({"ok": True})
+
+
+@app.route("/api/leadsheets/<int:idx>", methods=["DELETE"])
+def api_leadsheets_delete(idx):
+    data = load_leadsheets_list()
+    if not (0 <= idx < len(data)):
+        abort(404, "lead sheet not found")
+    removed = data.pop(idx)
+    save_leadsheets_list(data)
+    return jsonify({"ok": True, "removed": removed.get("title")})
 
 
 @app.route("/api/beats/<stem>", methods=["POST"])
@@ -383,6 +466,8 @@ ALLOWED_META_FIELDS = {
 }
 # Integer-valued editable fields (stored as ints, not strings).
 ALLOWED_INT_FIELDS = {"num_bars"}
+# Boolean-valued editable fields.
+ALLOWED_BOOL_FIELDS = {"completed"}
 
 
 @app.route("/api/meta/<stem>", methods=["POST"])
@@ -394,7 +479,9 @@ def api_save_meta(stem):
     for entry in meta:
         if stem_for(entry.get("files", {}).get("audio", "")) == stem:
             for key, value in fields.items():
-                if key in ALLOWED_INT_FIELDS:
+                if key in ALLOWED_BOOL_FIELDS:
+                    entry[key] = bool(value)
+                elif key in ALLOWED_INT_FIELDS:
                     raw = ("" if value is None else str(value)).strip()
                     try:
                         entry[key] = int(float(raw))
@@ -409,6 +496,44 @@ def api_save_meta(stem):
             save_metadata(meta)
             return jsonify({"ok": True})
     abort(404, "song not found")
+
+
+@app.route("/api/songs/new", methods=["POST"])
+def api_songs_new():
+    """Create a new song entry keyed by its YouTube ID (which becomes the audio
+    filename stem). The audio/beats are crawled afterwards via /api/refresh."""
+    payload = request.get_json(force=True) or {}
+    yt_id = (payload.get("yt_id") or "").strip()
+    if not re.fullmatch(r"[A-Za-z0-9_-]{1,64}", yt_id):
+        return jsonify({"ok": False, "error": "invalid YouTube ID"}), 400
+    meta = load_metadata()
+    if _find_entry(meta, yt_id) is not None:
+        return jsonify({"ok": False, "error": f"'{yt_id}' already exists"}), 409
+    entry = {
+        "yt_id": yt_id,
+        "completed": False,
+        "files": {"audio": f"audio/{yt_id}.wav", "beats": f"beats/{yt_id}.txt"},
+    }
+    standard = (payload.get("standard") or "").strip()
+    if standard:
+        entry["standard"] = standard
+    meta.append(entry)
+    save_metadata(meta)
+    return jsonify({"ok": True, "stem": yt_id})
+
+
+@app.route("/api/song/<stem>", methods=["DELETE"])
+def api_song_delete(stem):
+    """Remove a song's metadata entry. Its files (audio/beats/annotations) are
+    intentionally left on disk."""
+    stem = safe_stem(stem)
+    meta = load_metadata()
+    entry = _find_entry(meta, stem)
+    if entry is None:
+        abort(404, "song not found")
+    meta.remove(entry)
+    save_metadata(meta)
+    return jsonify({"ok": True})
 
 
 # --------------------------------------------------------------------------- #

@@ -1,4 +1,7 @@
-time,name
-73.575,section 1
-102.835,section 2
-349.560,section 3
+time,name,beats_per_measure
+0.000,exclude,
+73.575,head:piano,
+102.835,solo:bass,
+159.665,solo:piano,
+296.270,exclude,
+349.560,head:piano,

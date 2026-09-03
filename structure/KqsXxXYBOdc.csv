@@ -1,3 +1,7 @@
 time,name
-11.968,section 1
-56.480,section 2
+0.000,intro
+11.968,solo:piano
+56.480,solo:guitar
+141.740,solo:piano
+226.690,"trade:guitar,piano"
+373.130,head:piano
