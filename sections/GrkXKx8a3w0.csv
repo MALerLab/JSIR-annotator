@@ -1,4 +1,4 @@
-time,name
-2.280,head:horn
-43.830,solo:horn
-125.230,"exchange:horn,guitar"
+time,name,beats_per_measure
+2.280,head:horn,
+43.830,solo:horn,
+125.230,"trade:horn,guitar",

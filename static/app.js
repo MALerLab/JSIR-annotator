@@ -1921,9 +1921,10 @@ $('multi-delete').addEventListener('click', deleteSelected);
 // --- name combobox factory (preset dropdown + autocomplete) ----------------
 // Shared by the section and structure name fields.
 const SECTION_PRESETS = [
+  'intro',
   'head:horn', 'head:piano', 'head:vocal', 'head:guitar',
-  'solo:horn', 'solo:piano', 'solo:bass', 'solo:guitar',
-  'last', 'exchange', 'exclude', 'outro'
+  'solo:horn', 'solo:piano', 'solo:bass', 'solo:guitar', 'solo:drum',
+  'last', 'trade', 'exclude', 'interlude', 'outro'
 ];
 
 function setupNameCombo(inputId, listId, kind) {

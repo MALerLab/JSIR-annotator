@@ -1,3 +1,3 @@
-time,name
-17.670,head:vocal
-145.280,exclude
+time,name,beats_per_measure
+1.950,intro,
+17.670,head:vocal,

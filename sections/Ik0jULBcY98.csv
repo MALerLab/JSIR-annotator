@@ -1,4 +1,5 @@
-time,name
-24.380,head
-99.640,piano
-138.400,last
+time,name,beats_per_measure
+0.290,intro,
+24.380,head:vocal,
+99.640,solo:piano,
+138.400,head:vocal,

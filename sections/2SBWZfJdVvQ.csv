@@ -1,0 +1,9 @@
+time,name,beats_per_measure
+1.080,intro,
+5.850,head:clarinet,
+43.060,solo:clarinet,
+61.830,solo:piano,
+71.170,solo:clarinet,
+80.530,solo:guitar,
+99.390,solo:vibraphone,
+118.290,solo:clarinet,

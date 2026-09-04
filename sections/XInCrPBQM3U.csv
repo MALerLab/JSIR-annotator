@@ -1,3 +1,6 @@
-time,name
-14.340,head:vocal
-142.930,exclude
+time,name,beats_per_measure
+0.150,intro,
+14.340,head:vocal,
+142.930,solo:piano,
+206.600,head:vocal,
+239.160,exclude,

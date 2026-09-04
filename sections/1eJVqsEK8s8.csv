@@ -1,4 +1,5 @@
-time,name
-2.040,head
-71.490,vocal
-140.980,"piano,horn"
+time,name,beats_per_measure
+2.040,head:horn,
+71.490,head:vocal,
+140.980,solo:piano,
+192.760,solo:horn,

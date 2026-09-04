@@ -1,7 +1,8 @@
-time,name
-31.985,head:guitar
-58.615,exclude
-113.050,solo:guitar
-191.780,solo:piano
-244.365,exclude
-296.070,head:guitar
+time,name,beats_per_measure
+0.683,intro,
+31.985,head:guitar,
+58.615,solo:bass,
+113.050,solo:guitar,
+191.780,solo:piano,
+244.365,exclude,
+296.070,head:guitar,

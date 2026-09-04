@@ -3646,7 +3646,7 @@
       "cace_chords": "consonance_ace_inferences/KQ7BUFg0e5U.lab",
       "chords": "chords/KQ7BUFg0e5U.csv"
     },
-    "key": "F maj",
+    "key": "D maj",
     "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
@@ -4594,18 +4594,18 @@
     "completed": false
   },
   {
-    "yt_id": "rmRqpsmRxK4",
+    "yt_id": "2SBWZfJdVvQ",
     "standard": "Honeysuckle Rose",
     "artist": "Benny Goodman Trio",
-    "album": "The Chronological Classics: Benny Goodman and His Orchestra 1949-1951",
+    "album": "Slipped Disc",
     "instrumentation": "piano trio with clarinet",
-    "musicbrainz_id": "23bc48a5-f92e-470d-bbcf-838f65eb9e30",
+    "musicbrainz_id": "7148853b-73ba-4db4-806b-ef48ed25e40e",
     "audio_length": 1035.8654166666668,
     "files": {
-      "audio": "audio/rmRqpsmRxK4.wav",
-      "beats": "beats/rmRqpsmRxK4.txt",
-      "cace_chords": "consonance_ace_inferences/rmRqpsmRxK4.lab",
-      "chords": "chords/rmRqpsmRxK4.csv"
+      "audio": "audio/2SBWZfJdVvQ.wav",
+      "beats": "beats/2SBWZfJdVvQ.txt",
+      "cace_chords": "consonance_ace_inferences/2SBWZfJdVvQ.lab",
+      "chords": "chords/2SBWZfJdVvQ.csv"
     },
     "key": "F maj",
     "num_bars": 32,
@@ -4649,7 +4649,7 @@
       "cace_chords": "consonance_ace_inferences/GyBjDsgo2Y0.lab",
       "chords": "chords/GyBjDsgo2Y0.csv"
     },
-    "key": "F maj",
+    "key": "Db maj",
     "num_bars": 32,
     "tempo_class": "UP",
     "rhythm_feel": "SWING",
@@ -4659,10 +4659,10 @@
   {
     "yt_id": "uFUE4FpqLSU",
     "standard": "Honeysuckle Rose",
-    "artist": "Django Reinhardt, Duke Ellington & His Orchestra",
-    "album": "The Great Chicago Concerts",
-    "instrumentation": "guitar with big band",
-    "musicbrainz_id": "a3aecc49-e036-43be-9b55-5e42184590cf",
+    "artist": "Django Reinhardt, St\u00e9phane Grappelli",
+    "album": "Souvenirs",
+    "instrumentation": "quintet with guitar and violin",
+    "musicbrainz_id": "eff6cb69-4b6a-4293-8f42-441c64eb5e66",
     "audio_length": 180.04754166666666,
     "files": {
       "audio": "audio/uFUE4FpqLSU.wav",
@@ -4722,10 +4722,10 @@
   {
     "yt_id": "vlj5qx0zvDU",
     "standard": "Honeysuckle Rose",
-    "artist": "Louis Armstrong & His All-Stars",
-    "album": "Satchmo at Pasadena",
+    "artist": "Louis Armstrong",
+    "album": "The Essential Louis Armstrong",
     "instrumentation": "trumpet/vocal with combo",
-    "musicbrainz_id": "7a61b8fd-0b07-4569-bc0f-30b6a27c5f16",
+    "musicbrainz_id": "9eccb20a-8aa2-4164-b396-de4cb970b8d1",
     "audio_length": 173.16,
     "files": {
       "audio": "audio/vlj5qx0zvDU.wav",
@@ -4828,9 +4828,9 @@
     "yt_id": "7TUtN-YMC4A",
     "standard": "Hot House",
     "artist": "Dizzy Gillespie & Charlie Parker",
-    "album": "Salt Peanuts / Hot House",
+    "album": "Town Hall, New York City, June 22, 1945",
     "instrumentation": "quintet",
-    "musicbrainz_id": "36098d99-6a64-437c-b2b9-73d5368dc5c2",
+    "musicbrainz_id": "52780e43-d007-4707-acaa-e0efd568c8e4",
     "audio_length": 434.2247708333333,
     "files": {
       "audio": "audio/7TUtN-YMC4A.wav",

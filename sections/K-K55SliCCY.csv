@@ -1,5 +1,7 @@
-time,name
-6.230,last
-24.655,horn
-214.700,exclude
-371.760,head
+time,name,beats_per_measure
+0.200,intro,
+6.230,head:horn,
+24.655,solo:horn,
+214.700,"trade:horn,drum",
+325.330,solo:bass,
+371.760,head:horn,
