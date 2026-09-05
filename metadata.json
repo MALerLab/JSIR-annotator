@@ -4906,7 +4906,7 @@
     "tempo_class": "MEDIUM UP",
     "rhythm_feel": "SWING",
     "time_signature": "4/4",
-    "completed": true
+    "completed": false
   },
   {
     "yt_id": "acuR014vnwg",
@@ -5515,18 +5515,18 @@
     "completed": false
   },
   {
-    "yt_id": "M-cej-5dkc0",
+    "yt_id": "1PL0eRMh9AM",
     "standard": "I Got Rhythm",
     "artist": "Louis Armstrong",
-    "album": "V.S.O.P. Vol. 7/8",
+    "album": "Stardust",
     "instrumentation": "vocal with big band",
     "musicbrainz_id": "94c10302-3a04-44a1-8fbd-73e8a9884828",
     "audio_length": 217.45489583333332,
     "files": {
-      "audio": "audio/M-cej-5dkc0.wav",
-      "beats": "beats/M-cej-5dkc0.txt",
-      "cace_chords": "consonance_ace_inferences/M-cej-5dkc0.lab",
-      "chords": "chords/M-cej-5dkc0.csv"
+      "audio": "audio/1PL0eRMh9AM.wav",
+      "beats": "beats/1PL0eRMh9AM.txt",
+      "cace_chords": "consonance_ace_inferences/1PL0eRMh9AM.lab",
+      "chords": "chords/1PL0eRMh9AM.csv"
     },
     "key": "Bb maj",
     "num_bars": 32,
@@ -5892,9 +5892,9 @@
     "yt_id": "49eIefljgxE",
     "standard": "I Mean You",
     "artist": "McCoy Tyner",
-    "album": "Supertrios",
-    "instrumentation": "piano trio",
-    "musicbrainz_id": "7e085053-52c0-40b1-ae6a-6f9bed6bf34f",
+    "album": "Infinity",
+    "instrumentation": "quartet",
+    "musicbrainz_id": "9c67ec3e-9297-4d64-b9fc-70f71395e162",
     "audio_length": 439.1241875,
     "files": {
       "audio": "audio/49eIefljgxE.wav",
@@ -5946,7 +5946,7 @@
     },
     "key": "F# maj",
     "num_bars": 32,
-    "tempo_class": "UP",
+    "tempo_class": "MEDIUM UP",
     "rhythm_feel": "SWING",
     "time_signature": "4/4",
     "completed": true

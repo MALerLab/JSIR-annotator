@@ -1,4 +1,5 @@
-time,name
-9.760,head:vocal
-87.160,solo:horn
-126.970,last:vocal
+time,name,beats_per_measure
+0.430,intro,
+9.760,head:vocal,
+87.160,solo:horn,
+126.970,last:vocal,

@@ -1,9 +1,8 @@
-time,name
-13.000,head:horn
-43.435,exclude
-47.815,solo:horn
-138.425,solo:piano
-228.085,solo:horn
-288.680,exchange
-318.395,head:horn
-348.810,exclude
+time,name,beats_per_measure
+0.435,intro,
+13.000,head:horn,
+47.815,solo:horn,
+138.425,solo:piano,
+228.085,solo:horn,
+288.680,"trade:horn,drum",
+318.395,head:horn,

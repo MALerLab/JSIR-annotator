@@ -1,3 +1,5 @@
-time,name
-13.900,head:piano
-127.180,section 2
+time,name,beats_per_measure
+0.000,intro,
+13.900,head:piano,
+127.180,solo:piano,
+157.500,head:piano,

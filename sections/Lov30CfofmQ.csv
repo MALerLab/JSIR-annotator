@@ -1,6 +1,6 @@
-time,name
-6.800,"head:piano,vibraphone"
-52.620,exclude
-59.080,solo:vibraphone
-106.300,"head:piano,vibraphone"
-152.430,exclude
+time,name,beats_per_measure
+0.840,intro,
+6.800,"head:piano,vibraphone",
+59.080,solo:vibraphone,
+82.520,solo:piano,
+106.300,"head:piano,vibraphone",

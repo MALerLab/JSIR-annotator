@@ -1,8 +1,8 @@
-time,name
-7.560,head:horn
-58.350,exclude
-65.560,solo:horn
-168.075,solo:piano
-270.690,solo:horn
-371.580,exclude
-418.770,head:horn
+time,name,beats_per_measure
+0.460,intro,
+7.560,exclude,
+65.560,solo:horn,
+168.075,solo:piano,
+270.690,solo:horn,
+371.580,solo:drum,
+418.770,exclude,
