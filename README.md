@@ -50,7 +50,10 @@ The dataset is read from this folder:
   slots of every measure), and a spreadsheet-style **chord grid** — one row per
   measure, one cell per beat slot; empty cells revert to `%`; Tab moves along
   the row, Enter jumps to the next measure's first cell (creating a new measure
-  at the end); everything saves to `lead_sheets.json` in real time. A **coda**
+  at the end); everything saves to `lead_sheets.json` in real time. Saved edits
+  are pushed straight into the Edit tab's working copy (and it re-reads the lead
+  sheet whenever you switch back), so chord insertion always uses the latest
+  progression. A **coda**
   grid can be added/removed. Selecting a song opens **Song Info** (same fields
   as the Edit tab, plus links, Refresh audio, and the completion toggle).
 - **Completion**: each song has a `completed` flag. The green **Mark as
@@ -125,9 +128,11 @@ The dataset is read from this folder:
   **A** to select all following events of that kind (the anchor included). The
   multi panel lets you delete them together. (**A** with a beat selected or
   nothing selected still selects all beats after the playhead.)
-- **Lane headers**: the timeline shows sticky left-edge labels — **Structure**,
-  **Sections**, **Chords** — that stay put as you scroll; event names are kept
-  clear of them.
+- **Lane headers**: the canvas keeps a reserved left gutter labelling each lane
+  — **Structure**, **Sections**, **Chords**, **Audio**. The timeline starts to
+  the right of it, so the headers never cover events or the waveform. The
+  waveform itself is drawn last (over the section/structure tints and the beat
+  lines) in near-white so it stays readable.
 - **Chords**: shown in the strip between the ruler and the waveform, coloured by
   chord name (runs of the same chord read as one band). Click a chord block to
   select it, then edit the name / start time in the inspector; drag a block to

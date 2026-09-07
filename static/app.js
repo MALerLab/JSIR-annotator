@@ -324,6 +324,13 @@ async function fetchLeadsheet(song) {
   updateInspector();
 }
 
+// Re-pull the lead sheet for the song currently open in the Edit tab. Called
+// whenever the Library edits lead-sheet data (or the song's `standard`), so the
+// editor's chord-insertion always uses the freshly saved progression.
+function syncEditLeadsheet() {
+  if (state.current) fetchLeadsheet(state.current);
+}
+
 function renderLeadsheetInfo() {
   const el = $('leadsheet-info');
   const ls = state.leadsheet;
@@ -585,8 +592,8 @@ async function selectSong(song, opts) {
 }
 
 function fitZoom() {
-  const vw = waveScroll.clientWidth || 800;
-  state.pxPerSec = clampZoom(vw / Math.max(1, state.duration));
+  const vw = (waveScroll.clientWidth || 800) - LANE_LABEL_W;  // minus the label gutter
+  state.pxPerSec = clampZoom(Math.max(1, vw) / Math.max(1, state.duration));
   $('zoom-label').textContent = Math.round(state.pxPerSec) + ' px/s';
 }
 
@@ -610,13 +617,15 @@ const structureLaneTop = () => RULER_H;
 const sectionLaneTop = () => RULER_H + STRUCTURE_LANE_H;
 const chordLaneTop = () => RULER_H + STRUCTURE_LANE_H + SECTION_LANE_H;
 const bodyTop = () => RULER_H + STRUCTURE_LANE_H + SECTION_LANE_H + CHORD_LANE_H;
-function tx(t) { return t * state.pxPerSec - waveScroll.scrollLeft; }       // time -> viewport x
-function xToTime(x) { return (x + waveScroll.scrollLeft) / state.pxPerSec; } // viewport x -> time
+// The left LANE_LABEL_W px are a reserved gutter for the lane headers: the
+// timeline starts there, so nothing is ever drawn underneath the labels.
+function tx(t) { return LANE_LABEL_W + t * state.pxPerSec - waveScroll.scrollLeft; }
+function xToTime(x) { return (x - LANE_LABEL_W + waveScroll.scrollLeft) / state.pxPerSec; }
 
 function layoutCanvas() {
   const h = waveScroll.clientHeight;
   const vw = waveScroll.clientWidth;
-  state.totalW = Math.max(vw, Math.round(state.duration * state.pxPerSec));
+  state.totalW = Math.max(vw, Math.round(state.duration * state.pxPerSec) + LANE_LABEL_W);
   state._vw = vw;
   state._h = h;
 
@@ -716,26 +725,21 @@ function renderStatic() {
   wctx.fillStyle = '#0a0d12';
   wctx.fillRect(0, chordLaneTop(), vw, CHORD_LANE_H);
 
+  // Everything except the lane headers is clipped to the right of the gutter,
+  // so the headers never cover timeline content.
+  wctx.save();
+  wctx.beginPath();
+  wctx.rect(LANE_LABEL_W, 0, Math.max(0, vw - LANE_LABEL_W), h);
+  wctx.clip();
+
   drawRuler(vw, scrollLeft);
 
   drawEventLane(state.structure, structureLaneTop(), STRUCTURE_LANE_H, 'structure', STRUCTURE_PALETTE, structureBars);
   drawEventLane(state.sections, sectionLaneTop(), SECTION_LANE_H, 'section', SECTION_PALETTE, sectionBars);
   drawChords(vw);
 
-  // --- waveform (read straight from the peak cache) ---
-  wctx.strokeStyle = '#3a4756';
-  wctx.beginPath();
-  const base = Math.floor(scrollLeft);
-  for (let x = 0; x < vw; x++) {
-    const col = base + x;
-    if (col < 0 || col >= peakMin.length) continue;
-    wctx.moveTo(x + 0.5, mid + peakMin[col] * (bodyH / 2) * 0.95);
-    wctx.lineTo(x + 0.5, mid + peakMax[col] * (bodyH / 2) * 0.95);
-  }
-  wctx.stroke();
-
   // --- beats (binary-search the visible window, then draw) ---
-  const tStart = xToTime(-2);
+  const tStart = xToTime(LANE_LABEL_W - 2);
   let i = lowerBound(tStart);
   wctx.globalAlpha = state.beatOpacity; // user-adjustable beat-line opacity
   for (; i < state.beats.length; i++) {
@@ -756,8 +760,23 @@ function renderStatic() {
   }
   wctx.globalAlpha = 1;
 
+  // --- waveform (read straight from the peak cache) ---
+  // Drawn LAST so the audio stays fully readable over the section / structure
+  // tints and the beat lines.
+  wctx.strokeStyle = '#eef3f8';
+  wctx.beginPath();
+  const base = Math.floor(scrollLeft) - LANE_LABEL_W;
+  for (let x = LANE_LABEL_W; x < vw; x++) {
+    const col = base + x;
+    if (col < 0 || col >= peakMin.length) continue;
+    wctx.moveTo(x + 0.5, mid + peakMin[col] * (bodyH / 2) * 0.95);
+    wctx.lineTo(x + 0.5, mid + peakMax[col] * (bodyH / 2) * 0.95);
+  }
+  wctx.stroke();
+
   drawLoop(vw, h);
-  drawLaneLabels(); // sticky lane headers, drawn on top of everything
+  wctx.restore();
+  drawLaneLabels(); // sticky lane headers in the reserved left gutter
 }
 
 // Draw one event lane (structure or sections): translucent body fill, coloured
@@ -771,7 +790,7 @@ function drawEventLane(events, laneTop, laneH, kind, palette, barsFn) {
     const x1 = tx(eventEnd(events, ev));
     if (x1 < 0 || x0 > vw) return;
     const col = palette[i % palette.length];
-    wctx.fillStyle = hexA(col, 0.13);
+    wctx.fillStyle = hexA(col, 0.065);   // faint body tint (kept light so the wave reads)
     wctx.fillRect(x0, bt, x1 - x0, bodyH);
     const selected = state.selEvents.has(ev);
     wctx.fillStyle = selected ? col : hexA(col, 0.5);
@@ -797,24 +816,32 @@ function drawEventLane(events, laneTop, laneH, kind, palette, barsFn) {
   });
 }
 
-// Sticky left-edge headers for the three timeline lanes.
+// Left-edge headers for the timeline lanes. They live in a reserved gutter
+// (the timeline itself starts at LANE_LABEL_W), so they cover no content.
 function drawLaneLabels() {
-  const vw = state._vw;
+  const h = state._h;
   const lanes = [
     ['Structure', structureLaneTop(), STRUCTURE_LANE_H],
     ['Sections', sectionLaneTop(), SECTION_LANE_H],
     ['Chords', chordLaneTop(), CHORD_LANE_H],
+    ['Audio', bodyTop(), CHORD_LANE_H],
   ];
+  // one continuous gutter column down the whole canvas
+  wctx.fillStyle = '#0b0e13';
+  wctx.fillRect(0, 0, LANE_LABEL_W, h);
+  wctx.strokeStyle = '#2d343d';
+  wctx.lineWidth = 1;
+  wctx.beginPath();
+  wctx.moveTo(LANE_LABEL_W + 0.5, 0);
+  wctx.lineTo(LANE_LABEL_W + 0.5, h);
+  wctx.stroke();
   wctx.font = '10px system-ui, sans-serif';
   wctx.textBaseline = 'middle';
   for (const [text, top, laneH] of lanes) {
-    wctx.fillStyle = '#0b0e13';                       // opaque chip over the gutter
-    wctx.fillRect(0, top, LANE_LABEL_W, laneH);
     wctx.strokeStyle = '#2d343d';
-    wctx.lineWidth = 1;
     wctx.beginPath();
-    wctx.moveTo(LANE_LABEL_W + 0.5, top);
-    wctx.lineTo(LANE_LABEL_W + 0.5, top + laneH);
+    wctx.moveTo(0, top + 0.5);
+    wctx.lineTo(LANE_LABEL_W, top + 0.5);
     wctx.stroke();
     wctx.fillStyle = '#8b96a3';
     wctx.fillText(text, 7, top + laneH / 2 + 1);
@@ -1177,7 +1204,7 @@ function drawPlayhead() {
   const vw = state._vw, h = state._h;
   octx.clearRect(0, 0, vw, h);
   const x = tx(state.playing ? playPos() : state.currentTime);
-  if (x < -1 || x > vw + 1) return;
+  if (x < LANE_LABEL_W || x > vw + 1) return;  // hidden behind the lane gutter
   octx.strokeStyle = '#ffffff';
   octx.lineWidth = 1.5;
   octx.beginPath();
@@ -1271,8 +1298,8 @@ function loop() {
 
 function followPlayhead() {
   const x = tx(playPos());
-  if (x < 60 || x > state._vw - 60) {
-    const target = playPos() * state.pxPerSec - state._vw * 0.5;
+  if (x < LANE_LABEL_W + 60 || x > state._vw - 60) {
+    const target = playPos() * state.pxPerSec + LANE_LABEL_W - state._vw * 0.5;
     waveScroll.scrollLeft = Math.max(0, Math.min(state.totalW - state._vw, target));
   }
 }
@@ -2084,6 +2111,7 @@ waveCanvas.addEventListener('pointerdown', (e) => {
   const rect = waveCanvas.getBoundingClientRect();
   const x = e.clientX - rect.left;
   const y = e.clientY - rect.top;
+  if (x < LANE_LABEL_W) return;   // reserved lane-label gutter
   const t = xToTime(x);
 
   // Top ruler -> scrub, or double-click(+drag) -> loop region / multi-select
@@ -2198,7 +2226,7 @@ const EDGE_ZONE = 48;     // px from each edge that triggers auto-scroll
 const EDGE_MAX_PX = 24;   // max scroll step per frame
 let edgeRAF = null;
 function computeEdgeVel(x) {
-  if (x < EDGE_ZONE) return -Math.min(1, (EDGE_ZONE - x) / EDGE_ZONE) * EDGE_MAX_PX;
+  if (x < LANE_LABEL_W + EDGE_ZONE) return -Math.min(1, (LANE_LABEL_W + EDGE_ZONE - x) / EDGE_ZONE) * EDGE_MAX_PX;
   if (x > state._vw - EDGE_ZONE) return Math.min(1, (x - (state._vw - EDGE_ZONE)) / EDGE_ZONE) * EDGE_MAX_PX;
   return 0;
 }
@@ -2233,7 +2261,8 @@ waveCanvas.addEventListener('pointermove', (e) => {
   const y = e.clientY - rect.top;
 
   if (!drag) {
-    waveCanvas.style.cursor = y < RULER_H ? 'ew-resize' : 'crosshair';
+    waveCanvas.style.cursor =
+      x < LANE_LABEL_W ? 'default' : (y < RULER_H ? 'ew-resize' : 'crosshair');
     return;
   }
   drag.lastX = x;
@@ -2362,7 +2391,7 @@ function setZoom(z, anchorX) {
   state.pxPerSec = clampZoom(z);
   $('zoom-label').textContent = Math.round(state.pxPerSec) + ' px/s';
   layoutCanvas();
-  const target = anchorTime * state.pxPerSec - ax;
+  const target = anchorTime * state.pxPerSec + LANE_LABEL_W - ax;
   waveScroll.scrollLeft = Math.max(0, Math.min(state.totalW - state._vw, target));
   renderStatic();
   drawPlayhead();
@@ -2559,6 +2588,9 @@ function setTab(name) {
   if (name === 'edit' && state.buffer) {
     // dimensions may be stale after being hidden / window resizes
     layoutCanvas(); renderStatic(); drawPlayhead();
+    // pick up metadata / lead-sheet edits made on the Library side
+    if (state.current) renderSongPanel(state.current);
+    syncEditLeadsheet();
   }
   if (name === 'library') renderLibrary();
 }
@@ -2720,6 +2752,7 @@ async function saveLsFields(fields) {
       body: JSON.stringify({ fields }),
     });
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    syncEditLeadsheet();   // keep the Edit tab's working copy in step
     $('ls-status').textContent = 'saved ✓';
     setTimeout(() => { if ($('ls-status').textContent === 'saved ✓') $('ls-status').textContent = ''; }, 1200);
     return true;
@@ -2887,6 +2920,7 @@ $('lib-add-ls').addEventListener('click', async () => {
     lib.selectedLs = d.index;
     lib.selectedSong = null;
     renderLibrary();
+    syncEditLeadsheet();
   } catch (err) { alert('Could not create lead sheet: ' + err.message); }
 });
 $('ls-delete').addEventListener('click', async () => {
@@ -2899,6 +2933,7 @@ $('ls-delete').addEventListener('click', async () => {
     lib.selectedLs = null;
     await loadLeadsheets();
     renderLibrary();
+    syncEditLeadsheet();
   } catch (err) { alert('Delete failed: ' + err.message); }
 });
 
@@ -2962,7 +2997,7 @@ $('lib-song-fields').addEventListener('change', (ev) => {
   s[field] = value;
   if (state.current && state.current.stem === s.stem && state.current !== s) state.current[field] = value;
   postMetaFields(s.stem, { [field]: value }, $('lib-song-status'));
-  if (field === 'standard') renderLibLists();
+  if (field === 'standard') { renderLibLists(); syncEditLeadsheet(); }
   if (field === 'yt_id' || field === 'musicbrainz_id') updateLibSongLinks(s);
 });
 $('lib-key-select').addEventListener('change', (ev) => {
