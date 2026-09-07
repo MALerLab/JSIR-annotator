@@ -1,4 +1,5 @@
-time,name
-12.380,head:vocal
-112.420,exclude
-120.010,exclude
+time,name,beats_per_measure
+0.260,intro,
+12.380,head:vocal,
+112.420,exclude,
+120.010,exclude,
