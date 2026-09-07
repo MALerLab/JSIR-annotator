@@ -1,6 +1,6 @@
-time,name
-0.310,head:piano
-28.990,solo:piano
-169.120,exclude
-253.245,head:piano
-281.095,exclude
+time,name,beats_per_measure
+0.310,head:piano,
+28.990,solo:piano,
+169.120,exclude,
+229.470,solo:bass,
+253.245,head:piano,

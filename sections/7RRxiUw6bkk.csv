@@ -1,5 +1,4 @@
-time,name
-0.345,head:horn
-30.138,solo:horn
-343.810,head:horn
-372.180,section 4
+time,name,beats_per_measure
+0.345,head:horn,
+30.138,solo:horn,
+343.810,head:horn,
