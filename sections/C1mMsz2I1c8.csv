@@ -1,0 +1,8 @@
+time,name,beats_per_measure
+0.449,intro,
+9.560,head:piano,
+47.350,exclude,
+122.879,solo:piano,
+271.570,"solo:piano,bass",
+308.406,head:piano,
+344.058,exclude,

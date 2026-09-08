@@ -102,14 +102,14 @@
     "tempo_class": "UP",
     "rhythm_feel": "SWING",
     "time_signature": "4/4",
-    "completed": false
+    "completed": true
   },
   {
     "yt_id": "v7PU7e6ZJe4",
     "standard": "Airegin",
-    "artist": "Sonny Rollins",
-    "album": "Great Jazz Giants: Smooth Jazz, Volume 2",
-    "instrumentation": "tenor saxophone with rhythm section",
+    "artist": "Miles Davis",
+    "album": "Bag's Groove",
+    "instrumentation": "quintet",
     "musicbrainz_id": "b67b49b1-455b-4296-9042-afd5ce71e989",
     "audio_length": 298.56,
     "files": {
@@ -869,20 +869,27 @@
     "completed": false
   },
   {
-    "yt_id": "799HOVP4Ymo",
+    "yt_id": "C1mMsz2I1c8",
     "standard": "Autumn Leaves",
     "artist": "Bill Evans Trio",
-    "album": "I'd Love to Turn You On: Classical and Avant-Garde Music That Inspired the Counter-Culture",
+    "album": "Portrait in Jazz",
     "instrumentation": "piano trio",
-    "musicbrainz_id": "3c7b3f36-953f-4698-b8d1-dc8596217d7f",
+    "musicbrainz_id": "b52d3a65-109c-4153-9852-a847e0813ff6",
     "audio_length": 323.2266666666667,
     "files": {
-      "audio": "audio/799HOVP4Ymo.wav"
+      "audio": "audio/C1mMsz2I1c8.wav",
+      "beats": "beats/C1mMsz2I1c8.txt",
+      "chords": "chords/C1mMsz2I1c8.csv"
     },
-    "completed": false
+    "completed": true,
+    "tempo_class": "UP",
+    "rhythm_feel": "SWING",
+    "time_signature": "4/4",
+    "num_bars": 32,
+    "key": "G min"
   },
   {
-    "yt_id": "tguu4m38U78",
+    "yt_id": "CpB7-8SGlJ0",
     "standard": "Autumn Leaves",
     "artist": "Cannonball Adderley",
     "album": "Somethin\u2019 Else",
@@ -890,35 +897,54 @@
     "musicbrainz_id": "69c7f51f-10bf-44b1-a319-3c1fb60f538d",
     "audio_length": 662.03575,
     "files": {
-      "audio": "audio/tguu4m38U78.wav"
+      "audio": "audio/CpB7-8SGlJ0.wav",
+      "beats": "beats/CpB7-8SGlJ0.txt",
+      "chords": "chords/CpB7-8SGlJ0.csv"
     },
-    "completed": false
+    "completed": true,
+    "num_bars": 32,
+    "tempo_class": "MEDIUM",
+    "rhythm_feel": "SWING",
+    "time_signature": "4/4",
+    "key": "G min"
   },
   {
     "yt_id": "zTVlrOk9a8M",
     "standard": "Autumn Leaves",
     "artist": "Chet Baker",
-    "album": "Feeling Swing - Cool Jazz",
+    "album": "This Is Jazz 2",
     "instrumentation": "vocal/trumpet with combo",
-    "musicbrainz_id": "baf0c05f-7637-4ed8-be1d-2c97a15b174d",
+    "musicbrainz_id": "f13ce0a3-b6fd-4099-97d3-d6 63c71e78a1",
     "audio_length": 422.3333333333333,
     "files": {
       "audio": "audio/zTVlrOk9a8M.wav"
     },
-    "completed": false
+    "completed": true,
+    "num_bars": 32,
+    "key": "F min",
+    "tempo_class": "UP",
+    "rhythm_feel": "SWING",
+    "time_signature": "4/4"
   },
   {
-    "yt_id": "LJXW5eRSYQw",
+    "yt_id": "zXBOyYDWtg0",
     "standard": "Autumn Leaves",
     "artist": "Erroll Garner",
-    "album": "The Encyclopedia of Jazz, Part 5/5: Modern Jazz - Cool Jazz",
+    "album": "Concert by the Sea",
     "instrumentation": "piano trio",
-    "musicbrainz_id": "2c614aa6-556f-480c-a06f-e17386b55e8e",
+    "musicbrainz_id": "132aa7e0-54ec-4fcc-97c9-20a1c4f5735d",
     "audio_length": 403.620875,
     "files": {
-      "audio": "audio/LJXW5eRSYQw.wav"
+      "audio": "audio/zXBOyYDWtg0.wav",
+      "beats": "beats/zXBOyYDWtg0.txt",
+      "chords": "chords/zXBOyYDWtg0.csv"
     },
-    "completed": false
+    "completed": true,
+    "num_bars": 32,
+    "key": "Eb min",
+    "tempo_class": "SLOW",
+    "rhythm_feel": "SWING",
+    "time_signature": "4/4"
   },
   {
     "yt_id": "Z1_rFvM1G0Y",
@@ -937,83 +963,106 @@
     "yt_id": "YVedK1VUfLM",
     "standard": "Autumn Leaves",
     "artist": "Nat King Cole",
-    "album": "Sings for Two in Love",
+    "album": "Nat King Cole",
     "instrumentation": "vocal with orchestra",
     "musicbrainz_id": "13989e39-bb3b-4ae0-9804-34fb9a1bf9b7",
     "audio_length": 159.84,
     "files": {
       "audio": "audio/YVedK1VUfLM.wav"
     },
-    "completed": false
+    "completed": true,
+    "num_bars": 32,
+    "key": "D min",
+    "tempo_class": "SLOW",
+    "rhythm_feel": "SWING",
+    "time_signature": "4/4"
   },
   {
     "yt_id": "YmqmdX9oCqo",
     "standard": "Autumn Leaves",
     "artist": "Oscar Peterson Trio",
-    "album": "At Baker\u2019s Keyboard Lounge: The Complete Recordings",
+    "album": "Live at CBC Studios",
     "instrumentation": "piano trio",
-    "musicbrainz_id": "7cb14257-f325-4e6a-87dc-5e1b926a5be9",
+    "musicbrainz_id": "a4f08b6b-17ee-4157-bc52-78b890b60201",
     "audio_length": 202.50666666666666,
     "files": {
       "audio": "audio/YmqmdX9oCqo.wav"
     },
-    "completed": false
+    "completed": true,
+    "num_bars": 32,
+    "key": "F min",
+    "tempo_class": "UP",
+    "rhythm_feel": "SWING",
+    "time_signature": "4/4"
   },
   {
-    "yt_id": "xJaVtn0LASY",
-    "standard": "Bags Groove",
-    "artist": "Jim Hall, Bill Frisell",
-    "album": "Hemispheres",
-    "instrumentation": "guitar duo",
-    "musicbrainz_id": "1355ceda-a4c8-46ed-9b57-0bd862f36c6b",
+    "yt_id": "SyNVoUozNPE",
+    "standard": "Bags' Groove",
+    "artist": "Jim Hall, Ron Carter",
+    "album": "Introduction to Jazz Guitar",
+    "instrumentation": "guitar and bass duo",
+    "musicbrainz_id": "a8fcbe3d-c28c-4b1b-b8df-6327943a339d",
     "audio_length": 265.58985416666667,
     "files": {
-      "audio": "audio/xJaVtn0LASY.wav"
+      "audio": "audio/SyNVoUozNPE.wav",
+      "beats": "beats/SyNVoUozNPE.txt",
+      "chords": "chords/SyNVoUozNPE.csv"
     },
-    "completed": false
+    "completed": true,
+    "num_bars": 12,
+    "key": "G maj"
   },
   {
     "yt_id": "MiMLOc9h0RM",
-    "standard": "Bags Groove",
+    "standard": "Bags' Groove",
     "artist": "Kenny Burrell",
-    "album": "32 Live",
+    "album": "12-15-78",
     "instrumentation": "guitar quartet",
-    "musicbrainz_id": "8315cd55-a7bb-4558-9410-eacb2cc26182",
+    "musicbrainz_id": "2a74578a-63ad-4ebb-a5cf-7803ed5389d4",
     "audio_length": 230.69333333333333,
     "files": {
       "audio": "audio/MiMLOc9h0RM.wav"
     },
-    "completed": false
+    "completed": true,
+    "key": "G maj"
   },
   {
     "yt_id": "N7FHwhEKWsM",
-    "standard": "Bags Groove",
+    "standard": "Bags' Groove",
     "artist": "Miles Davis",
-    "album": "The Encyclopedia of Jazz, Part 5/5: Modern Jazz - Cool Jazz",
+    "album": "Bags' Groove",
     "instrumentation": "quintet",
-    "musicbrainz_id": "4769c1a9-196a-4853-be9e-74da2a805d14",
+    "musicbrainz_id": "ef91ff3f-5824-4394-a395-b581d2ab96c0",
     "audio_length": 677.7333333333333,
     "files": {
       "audio": "audio/N7FHwhEKWsM.wav"
     },
-    "completed": false
+    "completed": true,
+    "num_bars": 12,
+    "tempo_class": "MEDIUM",
+    "time_signature": "4/4",
+    "rhythm_feel": "SWING"
   },
   {
-    "yt_id": "vyTS7uzVM6A",
-    "standard": "Bags Groove",
+    "yt_id": "Q0FgtYzjkoo",
+    "standard": "Bags' Groove",
     "artist": "Milt Jackson",
-    "album": "Wizard of the Vibes",
+    "album": "Milt Jackson With John Lewis, Percy Heath, Kenny Clarke, Lou Donaldson and the Thelonious Monk Quintet",
     "instrumentation": "quintet",
-    "musicbrainz_id": "c30717f8-9c15-4af7-afc8-7f7ef723aa8b",
+    "musicbrainz_id": "6b533b84-b5d1-46d0-9ab9-447b8cae24a0",
     "audio_length": 180.0243125,
     "files": {
       "audio": "audio/vyTS7uzVM6A.wav"
     },
-    "completed": false
+    "completed": false,
+    "num_bars": 16,
+    "tempo_class": "MEDIUM UP",
+    "rhythm_feel": "SWING",
+    "time_signature": "4/4"
   },
   {
     "yt_id": "Vsdtve9LKFE",
-    "standard": "Bags Groove",
+    "standard": "Bags' Groove",
     "artist": "Oscar Peterson Trio",
     "album": "Night Train",
     "instrumentation": "piano trio",
@@ -1026,7 +1075,7 @@
   },
   {
     "yt_id": "T6kuksmJX3w",
-    "standard": "Bags Groove",
+    "standard": "Bags' Groove",
     "artist": "Sonny Clark",
     "album": "Oakland 1955",
     "instrumentation": "quintet",
@@ -1039,7 +1088,7 @@
   },
   {
     "yt_id": "78h5ppC6KYQ",
-    "standard": "Bags Groove",
+    "standard": "Bags' Groove",
     "artist": "The Modern Jazz Quartet",
     "album": "The Modern Jazz Quartet",
     "instrumentation": "piano quartet (vibes/piano/bass/drums)",
@@ -1914,7 +1963,7 @@
     "album": "That\u2019s Entertainment! The Ultimate Anthology of M\u2010G\u2010M Musicals",
     "instrumentation": "vocal with orchestra",
     "musicbrainz_id": "07a9de4c-6490-4da7-b5ae-b5d4f5d51218",
-    "audio_length": 145.89097916666665,
+    "audio_length": 145.8909791666666,
     "files": {
       "audio": "audio/X03uSwM07_A.wav"
     },
@@ -2184,7 +2233,7 @@
       "chords": "chords/TTXYkPYUhEI.csv"
     },
     "key": "C maj",
-    "num_bars": 64,
+    "num_bars": 6,
     "tempo_class": "UP",
     "rhythm_feel": "SWING",
     "time_signature": "4/4",
@@ -4345,7 +4394,7 @@
     "album": "Salt Peanuts",
     "instrumentation": "saxophone ensemble",
     "musicbrainz_id": "97d2d6de-934e-4d0d-aa65-86dea856cec0",
-    "audio_length": 313.61333333333334,
+    "audio_length": 313.6133333333333,
     "files": {
       "audio": "audio/3lqk626OGZk.wav"
     },
@@ -7609,7 +7658,7 @@
     "album": "In Paris Festival International De Jazz - May, 1949",
     "instrumentation": "quintet",
     "musicbrainz_id": "5c3698f8-4e21-47a2-a4bf-831a302af63d",
-    "audio_length": 299.7039375,
+    "audio_length": 299.703937,
     "files": {
       "audio": "audio/uCFhd9Vt9fc.wav"
     },
@@ -9300,7 +9349,7 @@
     "album": "Blue Moon",
     "instrumentation": "vocal with combo",
     "musicbrainz_id": "9a26a943-726c-4d00-b5b8-e5c436066777",
-    "audio_length": 435.00264583333336,
+    "audio_length": 4435.002645833333,
     "files": {
       "audio": "audio/4as30GSYIxo.wav"
     },

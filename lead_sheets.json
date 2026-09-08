@@ -231,7 +231,7 @@
     ]
   },
   {
-    "title": "Bag's Groove",
+    "title": "Bags' Groove",
     "performer": "Milt Jackson",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
@@ -245,7 +245,7 @@
       "Bb7 % % %",
       "Bb7 % % %",
       "F7 % % %",
-      "F7 % % %",
+      "A-7 % D7 %",
       "G-7 % % %",
       "C7 % % %",
       "F7 % % %",
@@ -2893,6 +2893,56 @@
       "A7 % % %",
       "Dj7 % % %",
       "Dj7 % % %"
+    ]
+  },
+  {
+    "title": "Autumn Leaves",
+    "signature": "4/4",
+    "chords_per_measure": 4,
+    "chord_changes": [
+      "A-7 % % %",
+      "D7 % % %",
+      "Gj7 % % %",
+      "Cj7 % % %",
+      "F#m7b5 % % %",
+      "B7 % % %",
+      "E- % % %",
+      "E- % % %",
+      "A-7 % % %",
+      "D7 % % %",
+      "Gj7 % % %",
+      "Cj7 % % %",
+      "F#m7b5 % % %",
+      "B7 % % %",
+      "E- % % %",
+      "E- % % %",
+      "F#m7b5 % % %",
+      "B79b % % %",
+      "E- % % %",
+      "E- % % %",
+      "A-7 % % %",
+      "D7 % % %",
+      "Gj7 % % %",
+      "Gj7 % % %",
+      "F#m7b5 % % %",
+      "B79b % % %",
+      "E-7 % % %",
+      "E-7 % % %",
+      "F#m7b5 % % %",
+      "B79b % % %",
+      "E- % % %",
+      "E- % % %"
+    ],
+    "key": "E-min",
+    "tempoclass": "MEDIUM",
+    "rhythmfeel": "SWING",
+    "coda": [
+      "E-7 % A7 %",
+      "D-7 % G7 %",
+      "F#m7b5 % % %",
+      "B79b % % %",
+      "E- % % %",
+      "E- % % %"
     ]
   }
 ]
