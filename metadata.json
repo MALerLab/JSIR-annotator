@@ -10263,7 +10263,7 @@
     "tempo_class": "UP",
     "rhythm_feel": "SWING",
     "time_signature": "4/4",
-    "completed": true
+    "completed": false
   },
   {
     "yt_id": "fRlrUj2e_Mc",
@@ -15270,7 +15270,7 @@
     "tempo_class": "MEDIUM UP",
     "rhythm_feel": "SWING",
     "time_signature": "4/4",
-    "completed": true
+    "completed": false
   },
   {
     "yt_id": "ObIT8iioWvU",
@@ -16257,7 +16257,7 @@
     "standard": "Yardbird Suite",
     "artist": "Phil Woods & The Los Angeles Jazz Orchestra",
     "album": "Unheard Herd",
-    "instrumentation": "alto saxophone quartet",
+    "instrumentation": "big band",
     "musicbrainz_id": "ab55e68f-1ab8-4490-b3c9-f856c38e2be8",
     "audio_length": 436.5466666666667,
     "files": {
@@ -16460,7 +16460,7 @@
     "tempo_class": "MEDIUM",
     "rhythm_feel": "SWING",
     "time_signature": "4/4",
-    "completed": true
+    "completed": false
   },
   {
     "yt_id": "DxofXh6FwyY",

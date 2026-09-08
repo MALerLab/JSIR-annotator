@@ -1572,6 +1572,7 @@ function clearSelection() {
   state.selBeats = new Set();
   state.selEvents = new Set();
   state.selected = null;
+  chordAnchor = null;
   scheduleRender();
   updateInspector();
 }
@@ -1761,6 +1762,90 @@ function addChordAtPlayhead() {
   scheduleRender();
   updateInspector();
   setTimeout(() => { $('chord-name').focus(); $('chord-name').select(); }, 0);
+}
+
+// ---- chord multi-select / clipboard ----------------------------------------
+let chordAnchor = null;     // fixed anchor for shift-click range selection
+let chordClipboard = null;  // [{off, chord}] — off = beat distance from the first
+
+// Shift-click on a chord: select every chord between the anchor and the click.
+function selectChordRange(to) {
+  const anchor =
+    (chordAnchor && state.chords.includes(chordAnchor)) ? chordAnchor
+    : (state.selected && state.selected.kind === 'chord') ? state.selected.obj : null;
+  if (!anchor) { chordAnchor = to; selectChordObj(to); return; }
+  chordAnchor = anchor;
+  const lo = Math.min(anchor.time, to.time), hi = Math.max(anchor.time, to.time);
+  const arr = state.chords
+    .filter((c) => c.time >= lo - 1e-9 && c.time <= hi + 1e-9)
+    .sort((a, b) => a.time - b.time);
+  state.selBeats = new Set();
+  state.selEvents = new Set(arr);
+  state.selected = { kind: 'chord', obj: to };   // inspector follows the click
+}
+
+// Ctrl+C: remember the selected chords as BEAT offsets from the first one, so a
+// paste can re-align them onto whatever beats follow the target.
+function copyChords() {
+  if (!state.selected || state.selected.kind !== 'chord' || !state.selEvents.size) return false;
+  if (!state.beats.length) return false;
+  const arr = [...state.selEvents].sort((a, b) => a.time - b.time);
+  const i0 = nearestBeatIndex(arr[0].time);
+  chordClipboard = arr.map((c) => ({ off: nearestBeatIndex(c.time) - i0, chord: c.chord }));
+  setStatus(`copied ${arr.length} chord${arr.length === 1 ? '' : 's'}`);
+  setTimeout(() => setStatus(''), 1200);
+  return true;
+}
+
+// Ctrl+V: write the clipboard starting at the beat nearest the playhead, keeping
+// the original beat spacing and overwriting any chords already in that span.
+function pasteChords() {
+  if (!chordClipboard || !chordClipboard.length || !state.beats.length) return false;
+  const start = nearestBeatIndex(curPos());
+  if (start < 0) return false;
+  const byIdx = new Map();                        // collisions: last one wins
+  for (const item of chordClipboard) {
+    const idx = start + item.off;
+    if (idx < 0 || idx >= state.beats.length) continue;   // ran past the track
+    byIdx.set(idx, item.chord);
+  }
+  const placed = [...byIdx.keys()].sort((a, b) => a - b)
+    .map((idx) => ({ time: state.beats[idx].t, chord: byIdx.get(idx) }));
+  if (!placed.length) {
+    setStatus('nothing to paste (past the last beat)');
+    setTimeout(() => setStatus(''), 1500);
+    return false;
+  }
+  pushUndo();
+  const t0 = placed[0].time, t1 = placed[placed.length - 1].time;
+  state.chords = state.chords.filter((c) => c.time < t0 - 1e-9 || c.time > t1 + 1e-9);
+  state.chords.push(...placed);
+  state.chords.sort((a, b) => a.time - b.time);
+  setEventSelection('chord', placed);
+  chordAnchor = placed[0];
+  markDirty();
+  scheduleRender();
+  updateInspector();
+  setStatus(`pasted ${placed.length} chord${placed.length === 1 ? '' : 's'}`);
+  setTimeout(() => setStatus(''), 1200);
+  return true;
+}
+
+// Tab / Shift+Tab in the chord-name box: step to the next / previous chord in
+// time and select its name so it can be retyped straight away.
+function stepChordSelection(dir) {
+  if (!state.selected || state.selected.kind !== 'chord') return false;
+  const sorted = [...state.chords].sort((a, b) => a.time - b.time);
+  const next = sorted[sorted.indexOf(state.selected.obj) + dir];
+  if (!next) return false;
+  chordAnchor = next;
+  selectChordObj(next);
+  scheduleRender();
+  updateInspector();
+  const inp = $('chord-name');
+  inp.focus();
+  inp.select();
+  return true;
 }
 
 // ----------------------------------------------------------------------------
@@ -2077,6 +2162,12 @@ $('chord-name').addEventListener('input', (e) => {
   markDirty();
   scheduleRender();
 });
+// Tab walks the chord lane: next chord in time (Shift+Tab = previous), with its
+// name pre-selected so a whole progression can be typed without the mouse.
+$('chord-name').addEventListener('keydown', (e) => {
+  if (e.key !== 'Tab' || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (stepChordSelection(e.shiftKey ? -1 : 1)) e.preventDefault();
+});
 $('chord-time').addEventListener('change', (e) => {
   if (!state.selected || state.selected.kind !== 'chord') return;
   const v = parseFloat(e.target.value);
@@ -2168,9 +2259,14 @@ waveCanvas.addEventListener('pointerdown', (e) => {
   if (y < bodyTop()) {
     const ch = chordAtX(x);
     if (ch) {
-      selectChordObj(ch);
-      drag = { kind: 'chord', obj: ch };
-      waveCanvas.setPointerCapture(e.pointerId);
+      if (e.shiftKey) {
+        selectChordRange(ch);          // range-select, no drag
+      } else {
+        chordAnchor = ch;
+        selectChordObj(ch);
+        drag = { kind: 'chord', obj: ch };
+        waveCanvas.setPointerCapture(e.pointerId);
+      }
       scheduleRender();
       updateInspector();
     } else {
@@ -2513,6 +2609,9 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'z' || e.key === 'Z') { e.preventDefault(); undo(); }
     else if (e.key === 's' || e.key === 'S') { e.preventDefault(); save(); }
     else if (e.code === 'KeyD') { e.preventDefault(); toggleDownbeatSelection(); }
+    // copy / paste chord events (falls through to the browser when unused)
+    else if (e.key === 'c' || e.key === 'C') { if (copyChords()) e.preventDefault(); }
+    else if (e.key === 'v' || e.key === 'V') { if (pasteChords()) e.preventDefault(); }
     return;
   }
   // Alt combos (insert chords for the selected section)

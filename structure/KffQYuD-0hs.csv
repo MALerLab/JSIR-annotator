@@ -1,13 +1,8 @@
 time,name
 0.310,intro
 12.240,head:piano
-57.490,coda:head:piano
 66.420,solo:piano
-254.730,coda:solo:piano
 263.720,solo:bass
-357.030,coda:solo:bass
 365.920,solo:drum
-409.420,coda:solo:drum
 418.250,head:piano
-463.560,coda:head:piano
 469.830,outro

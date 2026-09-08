@@ -1,3 +1,4 @@
 time,name,beats_per_measure
 0.580,intro,
-10.190,section 2,
+10.190,head:horn,
+48.360,solo:horn,

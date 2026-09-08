@@ -138,6 +138,15 @@ The dataset is read from this folder:
   select it, then edit the name / start time in the inspector; drag a block to
   move its start (snaps to beat on release); press **C** (or *+ Chord*) to add
   one at the playhead; **Del** removes the selected chord.
+  - **Shift-click** another chord to select the whole **range** between it and
+    the current one (**A** still selects every chord from here on).
+  - **Ctrl+C / Ctrl+V** copy and paste the selected chords. The copy stores each
+    chord as a *beat offset* from the first one, so the paste lands on the beat
+    nearest the playhead and re-aligns the rest onto the following beats —
+    whatever chords already sit in that span are overwritten.
+  - **Tab** in the chord-name box jumps to the next chord in time and selects its
+    name (**Shift+Tab** for the previous one), so a progression can be typed
+    straight through without the mouse.
 - **Chord-progression insertion**: canonical progressions live in
   `lead_sheet_chords.json` (looked up by title, performer ignored). When a song
   loads, the Song Info panel shows the lead-sheet key and whether *chords* /

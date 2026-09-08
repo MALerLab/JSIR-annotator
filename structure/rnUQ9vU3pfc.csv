@@ -3,8 +3,8 @@ time,name
 69.010,solo:horn
 181.960,solo:horn
 295.140,solo:piano
-351.040,"exchange:horn,drum"
+351.040,"trade:horn,drum"
 460.500,head:horn
-485.970,interlude
+485.970,solo:drum
 497.900,head:horn
 515.670,outro

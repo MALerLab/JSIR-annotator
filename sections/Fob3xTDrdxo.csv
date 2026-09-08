@@ -1,4 +1,4 @@
-time,name
-0.259,head:guitar
-30.015,solo:guitar
-116.020,exclude
+time,name,beats_per_measure
+0.259,head:guitar,
+30.015,solo:guitar,
+116.020,exclude,
