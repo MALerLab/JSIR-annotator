@@ -45,6 +45,10 @@
         <h1>Lead Sheet Info</h1>
         <div id="ls-fields"></div>
         <div class="pf">
+          <label>MusicBrainz work</label>
+          <div id="ls-mb" class="mb-link"></div>
+        </div>
+        <div class="pf">
           <label>Chords per measure</label>
           <input type="number" id="ls-cpm" min="1" step="1" />
         </div>
@@ -77,6 +81,80 @@
         <div class="lib-actions">
           <button id="lib-song-delete" class="danger">Delete song</button>
           <span id="lib-song-status" class="muted"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Collection pane: MusicBrainz search / Curation / Crawling ============ -->
+    <section id="lib-collect">
+      <div id="col-empty" class="muted">
+        <h1>Collection</h1>
+        <p>Select a <b>lead sheet</b> to look its work up on MusicBrainz and curate
+        recordings into the dataset, or a <b>song</b> to find and crawl its YouTube audio.</p>
+      </div>
+
+      <!-- lead sheet selected: steps 1 + 2 -->
+      <div id="col-ls" class="hidden">
+        <div class="col-steps">
+          <button class="step active" data-step="work">① MusicBrainz work</button>
+          <button class="step" data-step="curate">② Curate recordings</button>
+        </div>
+
+        <div id="col-work">
+          <div class="col-search">
+            <input id="mb-q" type="text" placeholder="Work title…" autocomplete="off" />
+            <button id="mb-search">Search</button>
+          </div>
+          <div class="hint muted">Plain text matches the work title. MusicBrainz query syntax
+            works too, e.g. <code>artist:Rollins AND work:Airegin</code>.</div>
+          <div id="mb-linked" class="col-note"></div>
+          <div id="mb-status" class="muted col-status"></div>
+          <div id="mb-works" class="mb-works"></div>
+          <button id="mb-more" class="small hidden">Load more works</button>
+        </div>
+
+        <div id="col-curate" class="hidden">
+          <div id="cur-head" class="col-note"></div>
+          <div class="col-search">
+            <input id="cur-filter" type="text" placeholder="Filter artist / album / year…" autocomplete="off" />
+            <select id="cur-sort" title="Sort">
+              <option value="releases">Appearances ↓</option>
+              <option value="date">Date ↑</option>
+              <option value="artist">Artist A→Z</option>
+              <option value="length">Length ↑</option>
+            </select>
+          </div>
+          <div id="cur-status" class="muted col-status"></div>
+          <div id="cur-list" class="rec-list"></div>
+          <div class="col-actions">
+            <button id="cur-add" class="primary" disabled>Add selected (0)</button>
+            <button id="cur-clear" class="small">Clear</button>
+            <span id="cur-add-status" class="muted"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- song selected: step 3 -->
+      <div id="col-song" class="hidden">
+        <div class="col-steps"><span class="step active">③ Crawl audio</span></div>
+        <div id="yt-current" class="col-note"></div>
+        <div id="yt-preview" class="yt-preview hidden">
+          <iframe id="yt-frame" title="YouTube preview" allow="autoplay; encrypted-media"
+                  allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <div class="yt-preview-bar">
+            <span id="yt-preview-title" class="muted"></span>
+            <button id="yt-use" class="primary">Use this video</button>
+          </div>
+        </div>
+        <div class="col-search">
+          <input id="yt-q" type="text" placeholder="Search YouTube…" autocomplete="off" />
+          <button id="yt-search">Search</button>
+        </div>
+        <div id="yt-status" class="muted col-status"></div>
+        <div id="yt-results" class="yt-results"></div>
+        <div class="col-actions">
+          <button id="yt-crawl" class="primary">⬇ Crawl audio</button>
+          <span id="yt-crawl-status" class="muted"></span>
         </div>
       </div>
     </section>

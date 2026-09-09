@@ -22,7 +22,12 @@ The dataset is read from this folder:
   `coda`. Fully editable from the Library tab (saved in real time; a one-time
   `.orig` backup is made on first edit).
 - `metadata.json` — song list (audio/beats/chords pairing + metadata), incl.
-  the boolean `completed` status per song
+  the boolean `completed` status per song and a stable uuid4 `id` per song
+  (assigned once by the app; songs added from MusicBrainz have no audio or
+  `yt_id` yet, so the file stem cannot serve as identity)
+- `cache/` — disposable working data for the Library's collection steps
+  (MusicBrainz recording lists for linked works, in-flight crawl downloads).
+  Safe to delete at any time; it is git-ignored and swept at start-up.
 - `audio/*.wav`   — recordings
 - `beats/*.txt`   — one beat per line: `<time>` for a normal beat, or
   `<time>\t1` for a downbeat. Bare-float files (original madmom output) load as
@@ -58,7 +63,42 @@ The dataset is read from this folder:
   as the Edit tab, plus links, Refresh audio, and the completion toggle).
 - **Completion**: each song has a `completed` flag. The green **Mark as
   complete** / red **Mark as incomplete** button (in both tabs' Song Info)
-  toggles it; completed songs show a green dot in every songs list.
+  toggles it; completed songs show a green dot in every songs list. Songs that
+  have been added but not crawled yet carry a *no audio* tag and are dimmed /
+  unselectable in the Edit tab.
+
+### Collection pane (right-most column)
+
+The three data-collection steps of the original `js-dataset-crawler` pipeline,
+done by hand instead of by composer filter + LLM. The pane follows the current
+selection.
+
+1. **MusicBrainz work** (lead sheet selected) — search MusicBrainz works with an
+   editable query (defaults to the title; plain text matches the work title,
+   MusicBrainz/Lucene syntax such as `artist:Rollins` is passed through).
+   Results list title, composer/lyricist, disambiguation and the **number of
+   recordings**, sorted by that number. Click a work to expand its recordings
+   (artist · album, date, length, appearances) and **Link** it: the work id is
+   stored on the lead sheet as `musicbrainz_id` and its composer(s) as
+   `composer` (both shown/editable in Lead Sheet Info; *Unlink* removes the
+   link). Requests are throttled to MusicBrainz's 1 req/s and retried when it
+   answers "server busy".
+2. **Curate recordings** (lead sheet selected, work linked) — every recording of
+   the linked work with artist, album (earliest dated release), date, length and
+   **appearances** (how many releases it is on — a good notability signal), with
+   filter and sort. Recordings already in the dataset are marked (clicking one
+   jumps to that song). Tick recordings and **Add selected**: each becomes a
+   song with `standard`, `artist`, `album`, `musicbrainz_id` (recording id), and
+   inherits `key`, `num_bars` (= number of chord-change lines), `tempo_class`,
+   `rhythm_feel`, `time_signature` from the lead sheet. The recording list is
+   cached under `cache/mb/<work>.json` while the work stays linked (*Refetch*
+   forces a reload).
+3. **Crawl audio** (song selected) — search YouTube via yt-dlp (default query
+   "{artist} {standard}"), preview a result in the embedded player, **Use this
+   video** to store its `yt_id`, then **Crawl audio** to download the WAV and
+   run beat tracking (same pipeline as *Refresh audio*; downloads are staged in
+   `cache/crawl/` and moved into `audio/` + `beats/` only on success). The step
+   also works for existing songs to swap their video.
 
 ## Edit tab
 
@@ -169,10 +209,11 @@ The dataset is read from this folder:
 - **Refresh audio**: if a song was crawled from the wrong video, fix the
   **YouTube ID** field then click *↻ Refresh audio*. A background job re-downloads
   the audio (yt-dlp → WAV), re-runs beat tracking (madmom `DBNBeatTracker`),
-  writes `audio/<id>.wav` + `beats/<id>.txt`, and drops the song's now-stale
-  chord/section labels. Progress shows live in the panel; the canvas reloads when
-  done. Work happens in a temp dir and is only committed on success, so a failure
-  (bad ID, network error) leaves the existing files untouched. Requires the app
+  writes `audio/<id>.wav` + `beats/<id>.txt` (and updates `audio_length`), and
+  drops the song's now-stale chord/section labels. Progress shows live in the
+  panel; the canvas reloads when done. Work happens in `cache/crawl/` and is only
+  committed on success, so a failure (bad ID, network error) leaves the existing
+  files untouched. Requires the app
   to run in the project venv (with `yt-dlp` + `madmom` installed). Note: yt-dlp
   now prefers a JS runtime for YouTube — install `deno` if downloads start
   failing.

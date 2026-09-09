@@ -156,13 +156,21 @@ function renderSongList() {
     )
     .forEach((s) => {
       const li = document.createElement('li');
-      if (state.current && state.current.stem === s.stem) li.classList.add('active');
+      if (state.current && state.current.id === s.id) li.classList.add('active');
       const sub = [s.artist, s.instrumentation].filter(Boolean).join(' · ');
       li.innerHTML =
         `<div class="t">${escapeHtml(s.standard || '(untitled)')}` +
         (s.completed ? '<span class="dot" title="completed">●</span>' : '') +
+        (s.has_audio ? '' : '<span class="tag">no audio</span>') +
         `</div><div class="a">${escapeHtml(sub)}</div>`;
-      li.onclick = () => selectSong(s);
+      if (!s.has_audio) {
+        // added by curation but not crawled yet -> nothing to edit
+        li.classList.add('noaudio');
+        li.title = 'No audio yet — crawl this song in the Library tab';
+        li.onclick = () => { setStatus('no audio yet — crawl this song in the Library tab'); setTimeout(() => setStatus(''), 2500); };
+      } else {
+        li.onclick = () => selectSong(s);
+      }
       ul.appendChild(li);
     });
 }
@@ -252,19 +260,19 @@ async function toggleCompleted(song) {
   if (!song) return;
   const nv = !song.completed;
   song.completed = nv; // optimistic
-  const listed = state.songs.find((x) => x.stem === song.stem);
+  const listed = state.songs.find((x) => x.id === song.id);
   if (listed) listed.completed = nv;
-  if (state.current && state.current.stem === song.stem) {
+  if (state.current && state.current.id === song.id) {
     state.current.completed = nv;
     updateCompleteButton($('btn-complete'), state.current);
   }
   renderSongList();
   if (lib.tab === 'library') renderLibrary();
-  const ok = await postMetaFields(song.stem, { completed: nv }, null);
+  const ok = await postMetaFields(song.id, { completed: nv }, null);
   if (!ok) { // revert on failure
     song.completed = !nv;
     if (listed) listed.completed = !nv;
-    if (state.current && state.current.stem === song.stem) {
+    if (state.current && state.current.id === song.id) {
       state.current.completed = !nv;
       updateCompleteButton($('btn-complete'), state.current);
     }
@@ -272,22 +280,25 @@ async function toggleCompleted(song) {
     if (lib.tab === 'library') renderLibrary();
   }
 }
-async function postMetaFields(stem, fields, statusEl) {
+async function postMetaFields(songId, fields, statusEl) {
   if (statusEl) statusEl.textContent = 'saving…';
   try {
-    const r = await fetch(`/api/meta/${stem}`, {
+    const r = await fetch(`/api/meta/${songId}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ fields }),
     });
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    if (!r.ok) {
+      const d = await r.json().catch(() => ({}));
+      throw new Error(d.error || `HTTP ${r.status}`);
+    }
     if (statusEl) {
       statusEl.textContent = 'saved ✓';
       setTimeout(() => { if (statusEl.textContent === 'saved ✓') statusEl.textContent = ''; }, 1200);
     }
     return true;
   } catch (err) {
-    if (statusEl) statusEl.textContent = 'save failed';
+    if (statusEl) statusEl.textContent = 'save failed: ' + err.message;
     console.error(err);
     return false;
   }
@@ -349,7 +360,7 @@ async function saveMetaField(field, rawValue) {
   const value = rawValue.trim();
   const song = state.current;
   song[field] = value;
-  const listed = state.songs.find((s) => s.stem === song.stem);
+  const listed = state.songs.find((s) => s.id === song.id);
   if (listed) listed[field] = value;
   if (field === 'standard') $('song-title').textContent = value || '(untitled)';
   if (field === 'artist' || field === 'album') {
@@ -361,12 +372,15 @@ async function saveMetaField(field, rawValue) {
   renderSongList();
   $('meta-status').textContent = 'saving…';
   try {
-    const res = await fetch(`/api/meta/${song.stem}`, {
+    const res = await fetch(`/api/meta/${song.id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ fields: { [field]: value } }),
     });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    if (!res.ok) {
+      const d = await res.json().catch(() => ({}));
+      throw new Error(d.error || `HTTP ${res.status}`);
+    }
     $('meta-status').textContent = 'saved ✓';
     setTimeout(() => { $('meta-status').textContent = ''; }, 1500);
   } catch (err) {
@@ -386,14 +400,14 @@ $('key-select').addEventListener('change', async (e) => {
   const song = state.current;
   $('key-status').textContent = 'saving…';
   try {
-    const res = await fetch(`/api/key/${song.stem}`, {
+    const res = await fetch(`/api/key/${song.id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ key }),
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     song.key = key;                       // keep in-memory list in sync
-    const listed = state.songs.find((s) => s.stem === song.stem);
+    const listed = state.songs.find((s) => s.id === song.id);
     if (listed) listed.key = key;
     $('key-status').textContent = 'saved ✓';
     setTimeout(() => { $('key-status').textContent = ''; }, 1500);
@@ -463,15 +477,15 @@ async function refreshAudio() {
     'section labels for this song. It cannot be undone.'
   )) return;
 
-  const stem = song.stem;
+  const id = song.id;
   refreshBusy = true;
   $('btn-refresh').disabled = true;
   setRefreshStatus('Starting…', 'busy');
   try {
-    const res = await fetch(`/api/refresh/${stem}`, { method: 'POST' });
+    const res = await fetch(`/api/refresh/${id}`, { method: 'POST' });
     const data = await res.json().catch(() => ({}));
     if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
-    pollRefresh(stem);
+    pollRefresh(id);
   } catch (err) {
     setRefreshStatus('Error: ' + err.message, 'err');
     refreshBusy = false;
@@ -479,16 +493,16 @@ async function refreshAudio() {
   }
 }
 
-function pollRefresh(stem) {
-  fetch(`/api/refresh/${stem}/status`)
+function pollRefresh(id) {
+  fetch(`/api/refresh/${id}/status`)
     .then((r) => r.json())
     .then(async (job) => {
       if (job.state === 'running') {
         setRefreshStatus(job.message || 'Working…', 'busy');
-        setTimeout(() => pollRefresh(stem), 1000);
+        setTimeout(() => pollRefresh(id), 1000);
       } else if (job.state === 'done') {
         setRefreshStatus('Done — reloading…', 'ok');
-        await reloadAfterRefresh(stem, job.new_stem || stem);
+        await reloadAfterRefresh(id);
         refreshBusy = false;
         $('btn-refresh').disabled = !state.current;
         setRefreshStatus('Refreshed ✓', 'ok');
@@ -506,13 +520,12 @@ function pollRefresh(stem) {
     });
 }
 
-async function reloadAfterRefresh(oldStem, newStem) {
+async function reloadAfterRefresh(id) {
   // metadata changed (files re-keyed, labels dropped) -> refresh the list…
   await loadSongs();
   // …then, only if the user is still on this song, reload it with fresh audio.
-  if (!state.current || state.current.stem !== oldStem) return;
-  const song = state.songs.find((s) => s.stem === newStem)
-    || state.songs.find((s) => s.stem === oldStem);
+  if (!state.current || state.current.id !== id) return;
+  const song = state.songs.find((s) => s.id === id);
   if (song) {
     state.dirty = false;
     await selectSong(song, { bust: Date.now() });
@@ -2557,7 +2570,7 @@ async function save() {
     state.dirty = false;
     $('btn-save').textContent = '💾 Save';
     setStatus('saved ✓');
-    const song = state.songs.find((s) => s.stem === stem);
+    const song = state.songs.find((s) => s.id === state.current.id);
     if (song) {
       song.has_sections = state.sections.length > 0;
       song.has_chords = state.chords.length > 0;
@@ -2673,7 +2686,7 @@ const lib = {
   tab: 'library',       // 'library' | 'edit'
   leadsheets: [],       // [{...entry, index}]
   selectedLs: null,     // lead-sheet index, or null
-  selectedSong: null,   // song stem, or null
+  selectedSong: null,   // song id, or null
   refreshBusy: false,
 };
 
@@ -2710,7 +2723,7 @@ function currentLs() {
     ? lib.leadsheets.find((x) => x.index === lib.selectedLs) || null : null;
 }
 function currentLibSong() {
-  return state.songs.find((s) => s.stem === lib.selectedSong) || null;
+  return state.songs.find((s) => s.id === lib.selectedSong) || null;
 }
 function lsCpm(e) {
   if (e.chords_per_measure > 0) return e.chords_per_measure;
@@ -2724,7 +2737,7 @@ function fmtDur(secs) {
 }
 function keyOptionsHtml(sel) {
   let h = `<option value=""${!sel ? ' selected' : ''}>None</option>`;
-  for (const [mode, label] of [['major', 'Major'], ['minor', 'Minor']]) {
+  for (const [mode, label] of [['maj', 'Major'], ['min', 'Minor']]) {
     h += `<optgroup label="${label}">`;
     for (const r of KEY_ROOTS) {
       const v = `${r} ${mode}`;
@@ -2775,13 +2788,14 @@ function renderLibLists() {
       [s.standard, s.artist, s.album].filter(Boolean).join(' ').toLowerCase().includes(sq))
     .forEach((s) => {
       const li = document.createElement('li');
-      if (lib.selectedSong === s.stem) li.classList.add('active');
+      if (lib.selectedSong === s.id) li.classList.add('active');
       li.innerHTML =
         `<div class="t">${escapeHtml(s.standard || '(untitled)')}` +
         (s.completed ? '<span class="dot" title="completed">●</span>' : '') +
+        (s.has_audio ? '' : '<span class="tag">no audio</span>') +
         `</div><div class="a">${escapeHtml(s.artist || '')}</div>`;
       li.onclick = () => {
-        lib.selectedSong = (lib.selectedSong === s.stem) ? null : s.stem;
+        lib.selectedSong = (lib.selectedSong === s.id) ? null : s.id;
         renderLibrary();
       };
       su.appendChild(li);
@@ -2799,6 +2813,7 @@ function renderLibInspector() {
   if (song) renderLibSongInfo(song);
   else if (ls) renderLsInfo(ls);
   else renderLibStats();
+  renderCollection();   // the right-hand collection pane follows the selection
 }
 
 function renderLibStats() {
@@ -2819,6 +2834,7 @@ function renderLibStats() {
 // ---- lead sheet inspector --------------------------------------------------
 const LS_FIELDS = [
   ['title', 'Title'],
+  ['composer', 'Composer'],
   ['key', 'Key'],
   ['signature', 'Time Signature'],
   ['tempoclass', 'Tempo Class'],
@@ -2831,6 +2847,7 @@ function renderLsInfo(e) {
     `<div class="pf"><label>${label}</label>` +
     `<input type="text" data-lsfield="${k}" value="${escapeHtml(String(e[k] == null ? '' : e[k]))}" /></div>`
   ).join('');
+  renderLsMbLink(e);
   $('ls-cpm').value = lsCpm(e);
   renderChordGrid($('ls-grid'), e.chord_changes || [], lsCpm(e), 'chord_changes');
   const hasCoda = Array.isArray(e.coda);
@@ -3051,17 +3068,17 @@ $('lib-add-song').addEventListener('click', async () => {
     const d = await r.json();
     if (!r.ok || !d.ok) throw new Error(d.error || `HTTP ${r.status}`);
     await loadSongs();
-    lib.selectedSong = d.stem;
+    lib.selectedSong = d.id;
     renderLibrary();
   } catch (err) { alert('Could not add song: ' + err.message); }
 });
 $('lib-song-delete').addEventListener('click', async () => {
   const s = currentLibSong();
   if (!s) return;
-  if (!confirm(`Delete song "${s.standard || s.stem}" from the library?\n` +
+  if (!confirm(`Delete song "${s.standard || s.stem || s.id}" from the library?\n` +
     'Only the metadata entry is removed — its files stay on disk.')) return;
   try {
-    const r = await fetch(`/api/song/${s.stem}`, { method: 'DELETE' });
+    const r = await fetch(`/api/song/${s.id}`, { method: 'DELETE' });
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
     lib.selectedSong = null;
     await loadSongs();
@@ -3076,7 +3093,7 @@ function renderLibSongInfo(s) {
   $('lib-song-fields').innerHTML = songFieldsHtml(s, 'data-libfield');
   updateLibSongLinks(s);
   updateCompleteButton($('lib-btn-complete'), s);
-  $('lib-btn-refresh').disabled = lib.refreshBusy;
+  setCrawlButtons();
 }
 function updateLibSongLinks(s) {
   const links = [];
@@ -3094,17 +3111,21 @@ $('lib-song-fields').addEventListener('change', (ev) => {
   if (!inp || !s) return;
   const field = inp.dataset.libfield, value = inp.value.trim();
   s[field] = value;
-  if (state.current && state.current.stem === s.stem && state.current !== s) state.current[field] = value;
-  postMetaFields(s.stem, { [field]: value }, $('lib-song-status'));
+  if (state.current && state.current.id === s.id && state.current !== s) state.current[field] = value;
+  postMetaFields(s.id, { [field]: value }, $('lib-song-status')).then((ok) => {
+    // rejected (e.g. duplicate YouTube ID) -> resync from the server
+    if (!ok) loadSongs().then(renderLibrary);
+  });
   if (field === 'standard') { renderLibLists(); syncEditLeadsheet(); }
   if (field === 'yt_id' || field === 'musicbrainz_id') updateLibSongLinks(s);
+  if (field === 'yt_id') renderCollection();
 });
 $('lib-key-select').addEventListener('change', (ev) => {
   const s = currentLibSong();
   if (!s) return;
   s.key = ev.target.value;
-  if (state.current && state.current.stem === s.stem && state.current !== s) state.current.key = s.key;
-  fetch(`/api/key/${s.stem}`, {
+  if (state.current && state.current.id === s.id && state.current !== s) state.current.key = s.key;
+  fetch(`/api/key/${s.id}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ key: s.key }),
@@ -3114,49 +3135,59 @@ $('lib-key-select').addEventListener('change', (ev) => {
 $('lib-btn-complete').addEventListener('click', () => toggleCompleted(currentLibSong()));
 
 // ---- library refresh audio -------------------------------------------------
-$('lib-btn-refresh').addEventListener('click', async () => {
+// Crawl / re-crawl a song's audio from the Library (Song Info "Refresh audio"
+// and step ③ "Crawl audio" share this). Status is mirrored to both places.
+function setCrawlStatus(text) {
+  $('lib-refresh-status').textContent = text;
+  $('yt-crawl-status').textContent = text;
+}
+function setCrawlButtons() {
   const s = currentLibSong();
+  $('lib-btn-refresh').disabled = lib.refreshBusy || !s;
+  $('yt-crawl').disabled = lib.refreshBusy || !s || !(s.yt_id || '').trim();
+}
+async function startLibCrawl(s) {
   if (!s || lib.refreshBusy) return;
   const ytId = (s.yt_id || '').trim();
-  if (!ytId) { $('lib-refresh-status').textContent = 'Set a YouTube ID first.'; return; }
-  if (!confirm(`Re-crawl audio from YouTube ID "${ytId}"?\n\n` +
+  if (!ytId) { setCrawlStatus('Set a YouTube ID first.'); return; }
+  if (s.has_audio && !confirm(`Re-crawl audio from YouTube ID "${ytId}"?\n\n` +
     'This REPLACES the audio and beat tracking and REMOVES all chord, section ' +
     'and structure labels for this song.')) return;
   lib.refreshBusy = true;
-  $('lib-btn-refresh').disabled = true;
-  $('lib-refresh-status').textContent = 'Starting…';
+  setCrawlButtons();
+  setCrawlStatus('Starting…');
   try {
-    const r = await fetch(`/api/refresh/${s.stem}`, { method: 'POST' });
+    const r = await fetch(`/api/refresh/${s.id}`, { method: 'POST' });
     const d = await r.json().catch(() => ({}));
     if (!r.ok || !d.ok) throw new Error(d.error || `HTTP ${r.status}`);
-    pollLibRefresh(s.stem);
+    pollLibRefresh(s.id);
   } catch (err) {
-    $('lib-refresh-status').textContent = 'Error: ' + err.message;
+    setCrawlStatus('Error: ' + err.message);
     lib.refreshBusy = false;
-    $('lib-btn-refresh').disabled = false;
+    setCrawlButtons();
   }
-});
-function pollLibRefresh(stem) {
-  fetch(`/api/refresh/${stem}/status`).then((r) => r.json()).then(async (job) => {
+}
+$('lib-btn-refresh').addEventListener('click', () => startLibCrawl(currentLibSong()));
+function pollLibRefresh(id) {
+  fetch(`/api/refresh/${id}/status`).then((r) => r.json()).then(async (job) => {
     if (job.state === 'running') {
-      $('lib-refresh-status').textContent = job.message || 'Working…';
-      setTimeout(() => pollLibRefresh(stem), 1000);
+      setCrawlStatus(job.message || 'Working…');
+      setTimeout(() => pollLibRefresh(id), 1000);
     } else if (job.state === 'done') {
-      $('lib-refresh-status').textContent = 'Refreshed ✓';
       lib.refreshBusy = false;
-      const newStem = job.new_stem || stem;
       await loadSongs();
-      if (lib.selectedSong === stem) lib.selectedSong = newStem;
       renderLibrary();
+      setCrawlStatus('Crawled ✓');
+      setCrawlButtons();
     } else {
-      $('lib-refresh-status').textContent = 'Error: ' + (job.message || 'failed');
+      setCrawlStatus('Error: ' + (job.message || 'failed'));
       lib.refreshBusy = false;
-      $('lib-btn-refresh').disabled = false;
+      setCrawlButtons();
     }
   }).catch((err) => {
-    $('lib-refresh-status').textContent = 'Error: ' + err.message;
+    setCrawlStatus('Error: ' + err.message);
     lib.refreshBusy = false;
-    $('lib-btn-refresh').disabled = false;
+    setCrawlButtons();
   });
 }
 
@@ -3169,3 +3200,526 @@ setTab('library');
   await Promise.all([loadSongs(), loadLeadsheets()]);
   renderLibrary();
 })();
+
+// ============================================================================
+// COLLECTION PANE — ① MusicBrainz work · ② curate recordings · ③ crawl audio
+// ============================================================================
+const col = {
+  step: 'work',           // 'work' | 'curate' (lead-sheet steps)
+  lsIndex: null,          // lead sheet the work/curation state belongs to
+  works: [], worksCount: 0, worksBusy: false,
+  openWork: null,         // work expanded in step ①
+  recs: {},               // work id -> {state, message, error, work, recordings, fetched_at, shown}
+  curSel: new Set(),      // recording ids ticked in step ②
+  songId: null,           // song the YouTube state belongs to
+  yt: { results: [], preview: null, busy: false },
+};
+const sleepMs = (ms) => new Promise((r) => setTimeout(r, ms));
+
+function setColStatus(id, text, isErr) {
+  const el = $(id);
+  el.textContent = text || '';
+  el.classList.toggle('err', !!isErr);
+}
+function fmtLen(ms) {
+  if (!ms) return '—';
+  const s = Math.round(ms / 1000);
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+}
+function fmtFetched(ts) {
+  if (!ts) return '';
+  const d = new Date(ts * 1000);
+  return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+// recording mbid -> song already in the dataset
+function datasetByMbid() {
+  const m = new Map();
+  for (const s of state.songs) if (s.musicbrainz_id) m.set(s.musicbrainz_id, s);
+  return m;
+}
+// Lead-sheet key ("Ab-maj") -> song key vocabulary ("Ab maj"), enharmonics folded.
+const ENHARMONIC = { 'C#': 'Db', 'D#': 'Eb', Gb: 'F#', 'G#': 'Ab', 'A#': 'Bb' };
+function lsKeyToSongKey(k) {
+  const m = /^([A-G][b#]?)[\s-]*(maj|min)/i.exec((k || '').trim());
+  if (!m) return '';
+  const root = ENHARMONIC[m[1]] || m[1];
+  return KEY_ROOTS.includes(root) ? `${root} ${m[2].toLowerCase()}` : '';
+}
+function inheritedFromLs(ls) {
+  const out = {};
+  const key = lsKeyToSongKey(ls.key);
+  if (key) out.key = key;
+  if (Array.isArray(ls.chord_changes) && ls.chord_changes.length) out.num_bars = ls.chord_changes.length;
+  if (ls.tempoclass) out.tempo_class = ls.tempoclass;
+  if (ls.rhythmfeel) out.rhythm_feel = ls.rhythmfeel;
+  if (ls.signature) out.time_signature = ls.signature;
+  return out;
+}
+
+// ---- pane switching ----------------------------------------------------------
+function renderCollection() {
+  const song = currentLibSong(), ls = currentLs();
+  $('col-empty').classList.toggle('hidden', !!(song || ls));
+  $('col-ls').classList.toggle('hidden', !(ls && !song));
+  $('col-song').classList.toggle('hidden', !song);
+  if (song) {
+    if (col.songId !== song.id) resetYt(song);
+    renderYt(song);
+  } else if (ls) {
+    if (col.lsIndex !== ls.index) resetWorkState(ls);
+    renderLsSteps(ls);
+  }
+}
+function resetWorkState(ls) {
+  col.lsIndex = ls.index;
+  col.works = []; col.worksCount = 0; col.openWork = null;
+  col.curSel = new Set();
+  col.step = ls.musicbrainz_id ? 'curate' : 'work';   // linked -> straight to curation
+  $('mb-q').value = ls.title || '';
+  $('mb-works').innerHTML = '';
+  $('cur-filter').value = '';
+  setColStatus('mb-status', '');
+  setColStatus('cur-status', '');
+  $('cur-add-status').textContent = '';
+}
+function renderLsSteps(ls) {
+  const linked = !!ls.musicbrainz_id;
+  document.querySelectorAll('#col-ls .col-steps .step').forEach((b) => {
+    b.classList.toggle('active', b.dataset.step === col.step);
+    b.classList.toggle('done', b.dataset.step === 'work' && linked);
+  });
+  $('col-work').classList.toggle('hidden', col.step !== 'work');
+  $('col-curate').classList.toggle('hidden', col.step !== 'curate');
+  if (col.step === 'work') renderWorks(ls); else renderCurate(ls);
+}
+document.querySelectorAll('#col-ls .col-steps .step').forEach((b) => {
+  b.addEventListener('click', () => {
+    col.step = b.dataset.step;
+    const ls = currentLs();
+    if (ls) renderLsSteps(ls);
+  });
+});
+// re-render whichever lead-sheet step is showing (after async fetches)
+function rerenderLsStep() {
+  const ls = currentLs();
+  if (ls && !currentLibSong() && lib.tab === 'library') renderLsSteps(ls);
+}
+
+// ---- ① work search -----------------------------------------------------------
+async function searchWorks(more) {
+  const ls = currentLs();
+  if (!ls || col.worksBusy) return;
+  const q = $('mb-q').value.trim();
+  if (!q) return;
+  const offset = more ? col.works.length : 0;
+  if (!more) { col.works = []; col.worksCount = 0; col.openWork = null; renderWorks(ls); }
+  col.worksBusy = true;
+  $('mb-search').disabled = true;
+  setColStatus('mb-status', 'Searching MusicBrainz…');
+  try {
+    const r = await fetch(`/api/mb/works?q=${encodeURIComponent(q)}&offset=${offset}&limit=25`);
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.ok) throw new Error(d.error || `HTTP ${r.status}`);
+    if (currentLs() !== ls) return;               // user moved on
+    col.works = more ? col.works.concat(d.works) : d.works;
+    col.worksCount = d.count || col.works.length;
+    col.works.sort((a, b) => b.recording_count - a.recording_count || (b.score || 0) - (a.score || 0));
+    setColStatus('mb-status', col.works.length
+      ? `${col.works.length} of ${col.worksCount} works · sorted by number of recordings`
+      : 'No works found — try a shorter title or MusicBrainz query syntax.');
+  } catch (err) {
+    setColStatus('mb-status', 'Error: ' + err.message, true);
+  } finally {
+    col.worksBusy = false;
+    $('mb-search').disabled = false;
+    if (currentLs() === ls) renderWorks(ls);
+  }
+}
+$('mb-search').addEventListener('click', () => searchWorks(false));
+$('mb-q').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); searchWorks(false); } });
+$('mb-more').addEventListener('click', () => searchWorks(true));
+
+function workLinkLabel(w, ls) {
+  return ls.musicbrainz_id === w.id ? 'Linked to this lead sheet ✓' : `Link to “${ls.title || 'this lead sheet'}”`;
+}
+function renderWorks(ls) {
+  const linked = ls.musicbrainz_id || '';
+  $('mb-linked').innerHTML = linked
+    ? `Linked work: <a href="https://musicbrainz.org/work/${encodeURIComponent(linked)}" target="_blank" rel="noopener">${escapeHtml(linked)}</a>` +
+      `<span class="muted"> — its recordings are listed in step ②.</span>` +
+      `<button class="small" data-act="unlink">Unlink</button>`
+    : '';
+  $('mb-more').classList.toggle('hidden', !(col.works.length && col.works.length < col.worksCount));
+  const box = $('mb-works');
+  box.innerHTML = '';
+  for (const w of col.works) {
+    const div = document.createElement('div');
+    div.className = 'work' + (w.id === col.openWork ? ' open' : '') + (w.id === linked ? ' linked' : '');
+    div.dataset.wid = w.id;
+    const who = [...(w.composers || []), ...(w.lyricists || []).map((l) => `${l} (lyrics)`)].join(', ') || 'composer unknown';
+    const sub = [who, w.disambiguation, w.type].filter(Boolean).join(' · ');
+    div.innerHTML =
+      `<div class="work-head"><span class="t">${escapeHtml(w.title || '(untitled)')}</span>` +
+      (w.id === linked ? '<span class="badge">linked</span>' : '') +
+      `<span class="n">${w.recording_count} recording${w.recording_count === 1 ? '' : 's'}</span></div>` +
+      `<div class="work-sub">${escapeHtml(sub)}</div>`;
+    if (w.id === col.openWork) {
+      const body = document.createElement('div');
+      body.className = 'work-body';
+      body.innerHTML = workBodyHtml(w, ls);
+      div.appendChild(body);
+    }
+    box.appendChild(div);
+  }
+}
+function workBodyHtml(w, ls) {
+  const st = col.recs[w.id];
+  let h = `<div class="col-actions"><button class="primary" data-act="link" ${ls.musicbrainz_id === w.id ? 'disabled' : ''}>${escapeHtml(workLinkLabel(w, ls))}</button>` +
+    `<a class="muted" href="https://musicbrainz.org/work/${encodeURIComponent(w.id)}" target="_blank" rel="noopener">open on MusicBrainz ↗</a></div>`;
+  if (!st || st.state === 'idle' || st.state === 'running') {
+    h += `<div class="muted col-status">${escapeHtml((st && st.message) || 'Loading recordings…')}</div>`;
+  } else if (st.state === 'error') {
+    h += `<div class="col-status err">Error: ${escapeHtml(st.error || 'failed')}</div><button class="small" data-act="retry">Retry</button>`;
+  } else {
+    const rows = st.recordings.slice(0, st.shown);
+    h += recHeaderHtml(false) + rows.map((r) => recRowHtml(r, { check: false, inSong: null })).join('');
+    if (st.recordings.length > st.shown) {
+      h += `<button class="small more" data-act="more">Show more (${st.recordings.length - st.shown} left)</button>`;
+    }
+  }
+  return h;
+}
+$('mb-works').addEventListener('click', (ev) => {
+  const ls = currentLs();
+  if (!ls) return;
+  const workEl = ev.target.closest('.work');
+  if (!workEl) return;
+  const w = col.works.find((x) => x.id === workEl.dataset.wid);
+  if (!w) return;
+  const act = ev.target.closest('[data-act]');
+  if (act) {
+    ev.stopPropagation();
+    if (act.dataset.act === 'link') linkWork(w);
+    else if (act.dataset.act === 'more') { col.recs[w.id].shown += 25; renderWorks(ls); }
+    else if (act.dataset.act === 'retry') ensureRecordings(w.id, true);
+    return;
+  }
+  if (ev.target.closest('a')) return;               // plain links
+  if (ev.target.closest('.work-body')) return;       // rows inside the expansion
+  col.openWork = (col.openWork === w.id) ? null : w.id;
+  if (col.openWork) ensureRecordings(w.id, false);
+  renderWorks(ls);
+});
+$('mb-linked').addEventListener('click', (ev) => {
+  if (ev.target.closest('[data-act="unlink"]')) unlinkWork();
+});
+
+// Fetch (or poll for) the recordings of a work; results live in col.recs.
+async function ensureRecordings(workId, refresh) {
+  const st = col.recs[workId] || (col.recs[workId] = { state: 'idle', shown: 25 });
+  if (st.state === 'running') return;
+  if (st.state === 'done' && !refresh) return;
+  st.state = 'running'; st.message = 'Starting…'; st.error = null;
+  rerenderLsStep();
+  try {
+    let r = await fetch(`/api/mb/work/${workId}/recordings${refresh ? '?refresh=1' : ''}`);
+    let d = await r.json().catch(() => ({}));
+    while (r.ok && d.ok && d.state === 'running') {
+      st.message = d.message || 'Fetching…';
+      rerenderLsStep();
+      await sleepMs(1200);
+      r = await fetch(`/api/mb/work/${workId}/recordings`);
+      d = await r.json().catch(() => ({}));
+    }
+    if (!r.ok || !d.ok) throw new Error(d.error || `HTTP ${r.status}`);
+    st.state = 'done';
+    st.work = d.work; st.recordings = d.recordings || []; st.fetched_at = d.fetched_at;
+  } catch (err) {
+    st.state = 'error'; st.error = err.message;
+  }
+  rerenderLsStep();
+}
+
+async function linkWork(w) {
+  const ls = currentLs();
+  if (!ls) return;
+  const fields = { musicbrainz_id: w.id };
+  const composer = (w.composers || []).join(', ');
+  if (composer) fields.composer = composer;      // the linked work is authoritative
+  for (const [k, v] of Object.entries(fields)) { if (v) ls[k] = v; else delete ls[k]; }
+  const ok = await saveLsFields(fields);
+  if (!ok) return;
+  col.step = 'curate';
+  col.curSel = new Set();
+  renderLsInfo(ls);
+  renderLibLists();
+  renderLsSteps(ls);
+  ensureRecordings(w.id, false);
+}
+async function unlinkWork() {
+  const ls = currentLs();
+  if (!ls || !ls.musicbrainz_id) return;
+  if (!confirm(`Unlink MusicBrainz work ${ls.musicbrainz_id} from “${ls.title}”?\nIts cached recording list is discarded.`)) return;
+  const old = ls.musicbrainz_id;
+  delete ls.musicbrainz_id;
+  const ok = await saveLsFields({ musicbrainz_id: '' });
+  if (!ok) { ls.musicbrainz_id = old; return; }
+  delete col.recs[old];
+  col.step = 'work';
+  col.curSel = new Set();
+  renderLsInfo(ls);
+  renderLsSteps(ls);
+}
+function renderLsMbLink(e) {
+  const el = $('ls-mb');
+  if (e.musicbrainz_id) {
+    el.innerHTML =
+      `<a href="https://musicbrainz.org/work/${encodeURIComponent(e.musicbrainz_id)}" target="_blank" rel="noopener">${escapeHtml(e.musicbrainz_id)}</a>` +
+      '<button class="small" id="ls-unlink">Unlink</button>';
+  } else {
+    el.innerHTML = '<span class="muted">not linked — use step ① in the Collection pane</span>';
+  }
+}
+$('ls-mb').addEventListener('click', (ev) => { if (ev.target.closest('#ls-unlink')) unlinkWork(); });
+
+// ---- recording rows (shared) -------------------------------------------------
+function recHeaderHtml(check) {
+  return `<div class="rec head${check ? '' : ' nocheck'}">${check ? '<span></span>' : ''}` +
+    '<span>Artist · album</span><span>Date</span><span>Length</span><span class="r">Appear.</span></div>';
+}
+function recRowHtml(r, opts) {
+  const inSong = opts.inSong;
+  const cls = ['rec', opts.check ? '' : 'nocheck', opts.sel ? 'sel' : '', inSong ? 'in' : ''].filter(Boolean).join(' ');
+  const alb = r.album || (r.title && r.title !== (opts.workTitle || '') ? r.title : '') || '';
+  return `<div class="${cls}" data-rid="${escapeHtml(r.id)}" title="${escapeHtml(r.title || '')}">` +
+    (opts.check ? `<input type="checkbox" ${opts.sel ? 'checked' : ''} ${inSong ? 'disabled' : ''} />` : '') +
+    `<div class="who"><div class="a">${escapeHtml(r.artist || 'Unknown')}</div>` +
+    `<div class="al">${escapeHtml(alb)}${inSong ? ' <span class="in-tag">✓ in dataset</span>' : ''}</div></div>` +
+    `<div class="d">${escapeHtml(r.date || '—')}</div>` +
+    `<div class="l">${fmtLen(r.length_ms)}</div>` +
+    `<div class="r"><b>${r.releases || 0}</b></div></div>`;
+}
+
+// ---- ② curation --------------------------------------------------------------
+const CUR_SORTERS = {
+  releases: (a, b) => (b.releases || 0) - (a.releases || 0) || (a.date || '9999').localeCompare(b.date || '9999'),
+  date: (a, b) => (a.date || '9999').localeCompare(b.date || '9999'),
+  artist: (a, b) => (a.artist || '').localeCompare(b.artist || ''),
+  length: (a, b) => (a.length_ms || 1e12) - (b.length_ms || 1e12),
+};
+function renderCurate(ls) {
+  const wid = ls.musicbrainz_id;
+  const head = $('cur-head'), list = $('cur-list');
+  if (!wid) {
+    head.innerHTML = 'No MusicBrainz work is linked to this lead sheet yet. ' +
+      '<button class="small" data-act="gowork">Go to step ①</button>';
+    list.innerHTML = '';
+    setColStatus('cur-status', '');
+    updateCurAdd(ls);
+    return;
+  }
+  const st = col.recs[wid];
+  if (!st || st.state === 'idle') { ensureRecordings(wid, false); return; }   // re-renders when done
+  const w = st.work || {};
+  head.innerHTML =
+    `<b>${escapeHtml(w.title || 'work')}</b>` +
+    (w.composers && w.composers.length ? ` <span class="muted">· ${escapeHtml(w.composers.join(', '))}</span>` : '') +
+    (st.recordings ? ` <span class="muted">· ${st.recordings.length} recordings</span>` : '') +
+    (st.fetched_at ? ` <span class="muted">· fetched ${escapeHtml(fmtFetched(st.fetched_at))}</span>` : '') +
+    ` <a href="https://musicbrainz.org/work/${encodeURIComponent(wid)}" target="_blank" rel="noopener">↗</a>` +
+    `<button class="small" data-act="refetch" ${st.state === 'running' ? 'disabled' : ''}>↻ Refetch</button>`;
+  if (st.state === 'running') {
+    setColStatus('cur-status', st.message || 'Fetching…');
+    list.innerHTML = '';
+    updateCurAdd(ls);
+    return;
+  }
+  if (st.state === 'error') {
+    setColStatus('cur-status', 'Error: ' + (st.error || 'failed'), true);
+    list.innerHTML = '<button class="small" data-act="retry">Retry</button>';
+    updateCurAdd(ls);
+    return;
+  }
+  // drop stale ticks, then filter + sort
+  for (const id of [...col.curSel]) if (!st.recordings.some((r) => r.id === id)) col.curSel.delete(id);
+  const q = $('cur-filter').value.trim().toLowerCase();
+  const sorter = CUR_SORTERS[$('cur-sort').value] || CUR_SORTERS.releases;
+  const inDs = datasetByMbid();
+  const rows = st.recordings
+    .filter((r) => !q || [r.artist, r.album, r.date, r.title].filter(Boolean).join(' ').toLowerCase().includes(q))
+    .sort(sorter);
+  const already = st.recordings.filter((r) => inDs.has(r.id)).length;
+  setColStatus('cur-status',
+    `${rows.length}${q ? ` of ${st.recordings.length}` : ''} recordings · ${already} already in the dataset · ` +
+    'tick the ones to add; “Appear.” = number of releases the recording appears on');
+  list.innerHTML = recHeaderHtml(true) +
+    rows.map((r) => recRowHtml(r, { check: true, sel: col.curSel.has(r.id), inSong: inDs.get(r.id), workTitle: w.title })).join('');
+  updateCurAdd(ls);
+}
+function updateCurAdd(ls) {
+  const n = col.curSel.size;
+  $('cur-add').textContent = `Add selected (${n})`;
+  $('cur-add').disabled = !n || !ls || !ls.musicbrainz_id;
+}
+$('cur-head').addEventListener('click', (ev) => {
+  const act = ev.target.closest('[data-act]');
+  const ls = currentLs();
+  if (!act || !ls) return;
+  if (act.dataset.act === 'gowork') { col.step = 'work'; renderLsSteps(ls); }
+  else if (act.dataset.act === 'refetch') ensureRecordings(ls.musicbrainz_id, true);
+});
+$('cur-list').addEventListener('click', (ev) => {
+  const ls = currentLs();
+  if (!ls) return;
+  const act = ev.target.closest('[data-act="retry"]');
+  if (act) { ensureRecordings(ls.musicbrainz_id, true); return; }
+  const row = ev.target.closest('.rec[data-rid]');
+  if (!row) return;
+  const rid = row.dataset.rid;
+  const inSong = datasetByMbid().get(rid);
+  if (inSong) {                     // already in the dataset -> jump to that song
+    lib.selectedSong = inSong.id;
+    renderLibrary();
+    return;
+  }
+  if (col.curSel.has(rid)) col.curSel.delete(rid); else col.curSel.add(rid);
+  renderCurate(ls);
+});
+$('cur-filter').addEventListener('input', () => { const ls = currentLs(); if (ls) renderCurate(ls); });
+$('cur-sort').addEventListener('change', () => { const ls = currentLs(); if (ls) renderCurate(ls); });
+$('cur-clear').addEventListener('click', () => { col.curSel = new Set(); const ls = currentLs(); if (ls) renderCurate(ls); });
+
+$('cur-add').addEventListener('click', async () => {
+  const ls = currentLs();
+  const st = ls && col.recs[ls.musicbrainz_id];
+  if (!st || st.state !== 'done' || !col.curSel.size) return;
+  const picks = st.recordings.filter((r) => col.curSel.has(r.id));
+  $('cur-add').disabled = true;
+  const inherited = inheritedFromLs(ls);
+  let added = 0;
+  const skipped = [];
+  for (const r of picks) {
+    $('cur-add-status').textContent = `adding ${added + skipped.length + 1} / ${picks.length}…`;
+    try {
+      const resp = await fetch('/api/songs/new', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          standard: ls.title || '', artist: r.artist || '', album: r.album || '',
+          musicbrainz_id: r.id, ...inherited,
+        }),
+      });
+      const d = await resp.json().catch(() => ({}));
+      if (!resp.ok || !d.ok) throw new Error(d.error || `HTTP ${resp.status}`);
+      added++;
+    } catch (err) {
+      skipped.push(`${r.artist}: ${err.message}`);
+    }
+  }
+  col.curSel = new Set();
+  await loadSongs();
+  $('cur-add-status').textContent =
+    `added ${added} song${added === 1 ? '' : 's'}` + (skipped.length ? ` · ${skipped.length} skipped (see console)` : '');
+  if (skipped.length) console.warn('curation: skipped', skipped);
+  renderLibrary();     // songs list (filtered by this standard) + this pane
+});
+
+// ---- ③ YouTube search / preview / crawl -----------------------------------------
+function resetYt(song) {
+  col.songId = song.id;
+  col.yt = { results: [], preview: null, busy: false };
+  $('yt-q').value = [song.artist, song.standard].filter(Boolean).join(' ');
+  $('yt-results').innerHTML = '';
+  $('yt-frame').src = 'about:blank';
+  setColStatus('yt-status', '');
+  $('yt-crawl-status').textContent = lib.refreshBusy ? $('lib-refresh-status').textContent : '';
+}
+function renderYt(song) {
+  const yt = (song.yt_id || '').trim();
+  $('yt-current').innerHTML = yt
+    ? `Current video: <a href="https://www.youtube.com/watch?v=${encodeURIComponent(yt)}" target="_blank" rel="noopener">${escapeHtml(yt)}</a>` +
+      `<span class="muted"> · ${song.has_audio ? `audio crawled (${escapeHtml(fmtDur(song.audio_length))})` : 'audio not crawled yet'}</span>` +
+      `<button class="small" data-act="preview-current">Preview</button>`
+    : 'No video assigned yet — search below, preview a result, then <b>Use this video</b>.';
+  // results
+  const box = $('yt-results');
+  box.innerHTML = col.yt.results.map((v) =>
+    `<div class="vid${col.yt.preview && col.yt.preview.id === v.id ? ' sel' : ''}${v.id === yt ? ' current' : ''}" data-vid="${escapeHtml(v.id)}">` +
+    `<img src="${escapeHtml(v.thumbnail)}" alt="" loading="lazy" />` +
+    `<div><div class="t">${escapeHtml(v.title)}</div><div class="c">${escapeHtml(v.channel)}${v.id === yt ? ' · <span class="in-tag">current</span>' : ''}</div></div>` +
+    `<div class="dur">${v.duration ? fmtLen(v.duration * 1000) : ''}</div></div>`
+  ).join('');
+  // preview
+  const pv = col.yt.preview;
+  $('yt-preview').classList.toggle('hidden', !pv);
+  if (pv) {
+    const src = `https://www.youtube.com/embed/${encodeURIComponent(pv.id)}`;
+    if (!$('yt-frame').src.startsWith(src)) $('yt-frame').src = src;
+    $('yt-preview-title').textContent = pv.title || pv.id;
+    $('yt-use').disabled = pv.id === yt;
+    $('yt-use').textContent = pv.id === yt ? 'Current video ✓' : 'Use this video';
+  }
+  $('yt-crawl').textContent = song.has_audio ? '↻ Re-crawl audio' : '⬇ Crawl audio';
+  setCrawlButtons();
+}
+async function searchYt() {
+  const song = currentLibSong();
+  if (!song || col.yt.busy) return;
+  const q = $('yt-q').value.trim();
+  if (!q) return;
+  col.yt.busy = true;
+  $('yt-search').disabled = true;
+  setColStatus('yt-status', 'Searching YouTube (yt-dlp)…');
+  try {
+    const r = await fetch(`/api/yt/search?q=${encodeURIComponent(q)}&n=12`);
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.ok) throw new Error(d.error || `HTTP ${r.status}`);
+    if (currentLibSong() !== song) return;
+    col.yt.results = d.results || [];
+    setColStatus('yt-status', col.yt.results.length
+      ? `${col.yt.results.length} results · click one to preview it`
+      : 'No results.');
+  } catch (err) {
+    setColStatus('yt-status', 'Error: ' + err.message, true);
+  } finally {
+    col.yt.busy = false;
+    $('yt-search').disabled = false;
+    const s = currentLibSong();
+    if (s) renderYt(s);
+  }
+}
+$('yt-search').addEventListener('click', searchYt);
+$('yt-q').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); searchYt(); } });
+$('yt-results').addEventListener('click', (ev) => {
+  const row = ev.target.closest('.vid[data-vid]');
+  const song = currentLibSong();
+  if (!row || !song) return;
+  const v = col.yt.results.find((x) => x.id === row.dataset.vid);
+  col.yt.preview = v ? { id: v.id, title: v.title } : { id: row.dataset.vid, title: '' };
+  renderYt(song);
+});
+$('yt-current').addEventListener('click', (ev) => {
+  const song = currentLibSong();
+  if (!song || !ev.target.closest('[data-act="preview-current"]')) return;
+  col.yt.preview = { id: song.yt_id, title: `current video · ${song.yt_id}` };
+  renderYt(song);
+});
+$('yt-use').addEventListener('click', async () => {
+  const song = currentLibSong();
+  const pv = col.yt.preview;
+  if (!song || !pv || pv.id === song.yt_id) return;
+  const old = song.yt_id;
+  song.yt_id = pv.id;
+  if (state.current && state.current.id === song.id && state.current !== song) state.current.yt_id = pv.id;
+  const ok = await postMetaFields(song.id, { yt_id: pv.id }, $('lib-song-status'));
+  if (!ok) {   // e.g. that video already belongs to another song
+    song.yt_id = old;
+    if (state.current && state.current.id === song.id && state.current !== song) state.current.yt_id = old;
+    setColStatus('yt-status', $('lib-song-status').textContent, true);
+  } else {
+    setColStatus('yt-status', `Video ${pv.id} assigned — now crawl the audio.`);
+  }
+  renderLibSongInfo(song);
+  renderYt(song);
+});
+$('yt-crawl').addEventListener('click', () => startLibCrawl(currentLibSong()));
