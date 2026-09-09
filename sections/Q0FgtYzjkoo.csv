@@ -1,0 +1,7 @@
+time,name,beats_per_measure
+1.080,head:vibraphone,
+35.530,solo:vibraphone,
+68.570,solo:horn,
+101.680,solo:piano,
+134.410,exclude,
+148.050,head:vibraphone,
