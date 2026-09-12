@@ -7,7 +7,7 @@ time,name,beats_per_measure
 94.570,solo:horn,
 133.110,exclude,
 139.610,solo:horn,
-145.990,section 10,
+145.990,exclude,
 152.560,solo:horn,
 159.040,exclude,
 206.000,head:horn,

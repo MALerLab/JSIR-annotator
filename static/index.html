@@ -228,6 +228,7 @@
         <button id="btn-zoom-in" disabled>+</button>
         <label class="chk"><input type="checkbox" id="chk-follow" checked /> Follow</label>
         <label class="chk"><input type="checkbox" id="chk-only-db" /> Downbeats only</label>
+        <label class="chk" id="chk-segments-label" title="View valid segments: dim everything outside them"><input type="checkbox" id="chk-segments" disabled /> Valid segments</label>
         <span class="sep"></span>
         <button id="btn-save" disabled>💾 Save</button>
         <span id="time-readout">0.000 / 0.000</span>
@@ -383,6 +384,8 @@
         <div id="refresh-audio">
           <button id="btn-refresh" disabled title="Re-crawl the audio from the YouTube ID, re-run beat tracking, and drop chord/section labels">↻ Refresh audio</button>
           <div id="refresh-status" class="muted"></div>
+          <button id="btn-gen-segments" disabled title="Derive the valid segments from this song's sections (pending edits are saved first)">⌗ Generate segments</button>
+          <div id="segments-status" class="muted"></div>
           <button id="btn-complete" class="complete-btn" disabled>Mark as complete</button>
         </div>
 

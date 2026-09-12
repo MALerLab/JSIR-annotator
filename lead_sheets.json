@@ -46,7 +46,6 @@
   },
   {
     "title": "All the Things You Are",
-    "performer": "Lee Konitz",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "Ab-maj",
@@ -94,7 +93,6 @@
   },
   {
     "title": "Alone Together",
-    "performer": "Steve Lacy",
     "tempoclass": "MEDIUM",
     "rhythmfeel": "SWING",
     "key": "D-maj",
@@ -148,7 +146,6 @@
   },
   {
     "title": "Along Came Betty",
-    "performer": "Pat Martino",
     "tempoclass": "MEDIUM",
     "rhythmfeel": "LATIN",
     "key": "Ab-maj",
@@ -192,7 +189,6 @@
   },
   {
     "title": "Anthropology",
-    "performer": "Art Pepper",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
@@ -234,7 +230,6 @@
   },
   {
     "title": "Bags' Groove",
-    "performer": "Milt Jackson",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "F-maj",
@@ -256,7 +251,6 @@
   },
   {
     "title": "Bessie's Blues",
-    "performer": "John Coltrane",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "Eb-maj",
@@ -278,7 +272,6 @@
   },
   {
     "title": "Billie's Bounce",
-    "performer": "Charlie Parker",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "F-maj",
@@ -300,7 +293,6 @@
   },
   {
     "title": "Blue Train",
-    "performer": "John Coltrane",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "Eb-maj",
@@ -322,7 +314,6 @@
   },
   {
     "title": "Blues by Five",
-    "performer": "John Coltrane",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
@@ -344,7 +335,6 @@
   },
   {
     "title": "Blues for Alice",
-    "performer": "Charlie Parker",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "F-maj",
@@ -366,7 +356,6 @@
   },
   {
     "title": "Blues in the Closet",
-    "performer": "Stan Getz",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
@@ -388,7 +377,6 @@
   },
   {
     "title": "Bye Bye Blackbird",
-    "performer": "Ben Webster",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "G-maj",
@@ -430,7 +418,6 @@
   },
   {
     "title": "Caravan",
-    "performer": "Wynton Marsalis",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "F-min",
@@ -504,7 +491,6 @@
   },
   {
     "title": "Cherokee",
-    "performer": "Wynton Marsalis",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
@@ -578,7 +564,6 @@
   },
   {
     "title": "Confirmation",
-    "performer": "Michael Brecker",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "F-maj",
@@ -620,7 +605,6 @@
   },
   {
     "title": "Countdown",
-    "performer": "John Coltrane",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
@@ -646,7 +630,6 @@
   },
   {
     "title": "Desafinado",
-    "performer": "Art Pepper",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "LATIN",
     "key": "F-maj",
@@ -727,7 +710,6 @@
   },
   {
     "title": "Dolphin Dance",
-    "performer": "Freddie Hubbard",
     "tempoclass": "MEDIUM",
     "rhythmfeel": "SWING",
     "key": null,
@@ -771,7 +753,6 @@
   },
   {
     "title": "Don't Get Around Much Anymore",
-    "performer": "Milt Jackson",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "C-maj",
@@ -813,7 +794,6 @@
   },
   {
     "title": "Donna Lee",
-    "performer": "Charlie Parker",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "Ab-maj",
@@ -855,7 +835,6 @@
   },
   {
     "title": "E.S.P.",
-    "performer": "Wayne Shorter",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "F-maj",
@@ -897,7 +876,6 @@
   },
   {
     "title": "Embraceable You",
-    "performer": "Charlie Parker",
     "tempoclass": "SLOW",
     "rhythmfeel": "SWING",
     "key": "G-maj",
@@ -939,7 +917,6 @@
   },
   {
     "title": "Footprints",
-    "performer": "Wayne Shorter",
     "tempoclass": "MEDIUM",
     "rhythmfeel": "SWING",
     "key": "C-min",
@@ -961,7 +938,6 @@
   },
   {
     "title": "Giant Steps",
-    "performer": "John Coltrane",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "Eb-maj",
@@ -987,7 +963,6 @@
   },
   {
     "title": "Good Bait",
-    "performer": "Fats Navarro",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
@@ -1029,7 +1004,6 @@
   },
   {
     "title": "Groovin' High",
-    "performer": "Dizzy Gillespie",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "Db-maj",
@@ -1071,7 +1045,6 @@
   },
   {
     "title": "Honeysuckle Rose",
-    "performer": "Phil Woods",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "F-maj",
@@ -1113,7 +1086,6 @@
   },
   {
     "title": "Hot House",
-    "performer": "Dizzy Gillespie",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "C-maj",
@@ -1155,7 +1127,6 @@
   },
   {
     "title": "How Deep Is the Ocean",
-    "performer": "Charlie Parker",
     "tempoclass": "SLOW",
     "rhythmfeel": "SWING",
     "key": "C-min",
@@ -1197,7 +1168,6 @@
   },
   {
     "title": "How High the Moon",
-    "performer": "Pepper Adams",
     "tempoclass": "MEDIUM",
     "rhythmfeel": "SWING",
     "key": "G-maj",
@@ -1224,7 +1194,6 @@
   },
   {
     "title": "I Can't Get Started",
-    "performer": "Joe Lovano",
     "tempoclass": "MEDIUM SLOW",
     "rhythmfeel": "SWING",
     "key": "C-maj",
@@ -1266,7 +1235,6 @@
   },
   {
     "title": "I Got Rhythm",
-    "performer": "Dickie Wells",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
@@ -1316,7 +1284,6 @@
   },
   {
     "title": "I Mean You",
-    "performer": "Michael Brecker",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "F-maj",
@@ -1361,7 +1328,6 @@
   },
   {
     "title": "I'll Remember April",
-    "performer": "Clifford Brown",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "G-maj",
@@ -1423,7 +1389,6 @@
   },
   {
     "title": "If I Were a Bell",
-    "performer": "Woody Shaw",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "F-maj",
@@ -1465,7 +1430,6 @@
   },
   {
     "title": "Impressions",
-    "performer": "John Coltrane",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "D-min",
@@ -1507,7 +1471,6 @@
   },
   {
     "title": "In a Mellow Tone",
-    "performer": "Art Pepper",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "Eb-maj",
@@ -1549,7 +1512,6 @@
   },
   {
     "title": "In a Sentimental Mood",
-    "performer": "Chris Potter",
     "tempoclass": "SLOW",
     "rhythmfeel": "SWING",
     "key": "D-min",
@@ -1584,7 +1546,6 @@
   },
   {
     "title": "Joy Spring",
-    "performer": "Clifford Brown",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "F-maj",
@@ -1626,7 +1587,6 @@
   },
   {
     "title": "Just Friends",
-    "performer": "Chet Baker",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "G-maj",
@@ -1668,7 +1628,6 @@
   },
   {
     "title": "Maiden Voyage",
-    "performer": "Freddie Hubbard",
     "tempoclass": "MEDIUM",
     "rhythmfeel": "SWING",
     "key": null,
@@ -1710,7 +1669,6 @@
   },
   {
     "title": "Milestones",
-    "performer": "David Liebman",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "F-maj",
@@ -1760,7 +1718,6 @@
   },
   {
     "title": "My Funny Valentine",
-    "performer": "J.J. Johnson",
     "tempoclass": "MEDIUM",
     "rhythmfeel": "SWING",
     "key": "C-min",
@@ -1806,7 +1763,6 @@
   },
   {
     "title": "My Little Suede Shoes",
-    "performer": "Charlie Parker",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "LATIN",
     "key": "Eb-maj",
@@ -1848,7 +1804,6 @@
   },
   {
     "title": "Nica's Dream",
-    "performer": "David Liebman",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "LATIN",
     "key": "Eb-maj",
@@ -1923,7 +1878,6 @@
   },
   {
     "title": "Night and Day",
-    "performer": "Ben Webster",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "D-maj",
@@ -1981,7 +1935,6 @@
   },
   {
     "title": "Oleo",
-    "performer": "Red Garland",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
@@ -2023,7 +1976,6 @@
   },
   {
     "title": "On Green Dolphin Street",
-    "performer": "Eric Dolphy",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "Eb-maj",
@@ -2073,7 +2025,6 @@
   },
   {
     "title": "Ornithology",
-    "performer": "Charlie Parker",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "G-maj",
@@ -2115,7 +2066,6 @@
   },
   {
     "title": "Out of Nowhere",
-    "performer": "Charlie Parker",
     "tempoclass": "SLOW",
     "rhythmfeel": "SWING",
     "key": "G-maj",
@@ -2157,7 +2107,6 @@
   },
   {
     "title": "Perdido",
-    "performer": "Coleman Hawkins",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
@@ -2199,7 +2148,6 @@
   },
   {
     "title": "Sandu",
-    "performer": "Clifford Brown",
     "tempoclass": "MEDIUM",
     "rhythmfeel": "SWING",
     "key": "Eb-maj",
@@ -2221,7 +2169,6 @@
   },
   {
     "title": "So What",
-    "performer": "Cannonball Adderley",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "D-min",
@@ -2263,7 +2210,6 @@
   },
   {
     "title": "Softly as in a Morning Sunrise",
-    "performer": "Milt Jackson",
     "tempoclass": "MEDIUM",
     "rhythmfeel": "SWING",
     "key": "C-min",
@@ -2305,7 +2251,6 @@
   },
   {
     "title": "Sophisticated Lady",
-    "performer": "Coleman Hawkins",
     "tempoclass": "SLOW",
     "rhythmfeel": "SWING",
     "key": "Ab-maj",
@@ -2347,7 +2292,6 @@
   },
   {
     "title": "Speak No Evil",
-    "performer": "Freddie Hubbard",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "C-min",
@@ -2407,7 +2351,6 @@
   },
   {
     "title": "St. Thomas",
-    "performer": "Sonny Rollins",
     "tempoclass": "UP",
     "rhythmfeel": "LATIN",
     "key": "C-maj",
@@ -2433,7 +2376,6 @@
   },
   {
     "title": "Star Eyes",
-    "performer": "Cannonball Adderley",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "Eb-maj",
@@ -2479,7 +2421,6 @@
   },
   {
     "title": "Stompin' at the Savoy",
-    "performer": "Clifford Brown",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "Db-maj",
@@ -2521,7 +2462,6 @@
   },
   {
     "title": "Summertime",
-    "performer": "Sidney Bechet",
     "tempoclass": "MEDIUM SLOW",
     "rhythmfeel": "TWOBEAT",
     "key": "G-min",
@@ -2547,7 +2487,6 @@
   },
   {
     "title": "Tenor Madness",
-    "performer": "Sonny Rollins",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
@@ -2569,7 +2508,6 @@
   },
   {
     "title": "The Nearness of You",
-    "performer": "Branford Marsalis",
     "tempoclass": "SLOW",
     "rhythmfeel": "SWING",
     "key": "D-maj",
@@ -2611,7 +2549,6 @@
   },
   {
     "title": "There Will Never Be Another You",
-    "performer": "David Liebman",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "Eb-maj",
@@ -2653,7 +2590,6 @@
   },
   {
     "title": "Tune Up",
-    "performer": "Miles Davis",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "D-maj",
@@ -2695,7 +2631,6 @@
   },
   {
     "title": "Walkin'",
-    "performer": "Miles Davis",
     "tempoclass": "MEDIUM",
     "rhythmfeel": "SWING",
     "key": "F-maj",
@@ -2717,7 +2652,6 @@
   },
   {
     "title": "What's New",
-    "performer": "Milt Jackson",
     "tempoclass": "SLOW",
     "rhythmfeel": "SWING",
     "key": "C-maj",
@@ -2763,7 +2697,6 @@
   },
   {
     "title": "Work Song",
-    "performer": "Cannonball Adderley",
     "tempoclass": "MEDIUM UP",
     "rhythmfeel": "SWING",
     "key": "F-min",
@@ -2789,7 +2722,6 @@
   },
   {
     "title": "Yardbird Suite",
-    "performer": "Charlie Parker",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "C-maj",
@@ -2831,7 +2763,6 @@
   },
   {
     "title": "Yesterdays",
-    "performer": "J.J. Johnson",
     "tempoclass": "MEDIUM",
     "rhythmfeel": "SWING",
     "key": "D-min",
@@ -2857,7 +2788,6 @@
   },
   {
     "title": "You Stepped Out of a Dream",
-    "performer": "Don Ellis",
     "tempoclass": "UP",
     "rhythmfeel": "SWING",
     "key": "D-maj",

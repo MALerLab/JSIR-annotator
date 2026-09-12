@@ -290,7 +290,8 @@ body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 }
 #panel-fields .pf input:focus { outline: none; border-color: var(--accent); }
 #refresh-audio { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
-#btn-refresh {
+#btn-refresh,
+#btn-gen-segments {
   width: 100%;
   padding: 8px 10px;
   background: var(--panel2);
@@ -299,9 +300,13 @@ body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
   border-radius: 6px;
   cursor: pointer;
 }
-#btn-refresh:hover:not(:disabled) { border-color: var(--accent); }
-#btn-refresh:disabled { opacity: 0.5; cursor: default; }
-#refresh-status { font-size: 12px; margin-top: 6px; min-height: 14px; }
+#btn-gen-segments { margin-top: 8px; }
+#btn-refresh:hover:not(:disabled),
+#btn-gen-segments:hover:not(:disabled) { border-color: var(--accent); }
+#btn-refresh:disabled,
+#btn-gen-segments:disabled { opacity: 0.5; cursor: default; }
+#refresh-status,
+#segments-status { font-size: 12px; margin-top: 6px; min-height: 14px; }
 #refresh-status.err { color: var(--danger); }
 #refresh-status.busy { color: var(--accent2); }
 #refresh-status.ok { color: #7ee081; }
@@ -337,6 +342,7 @@ body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 #toolbar button:hover:not(:disabled) { border-color: var(--accent); }
 #toolbar button:disabled { opacity: 0.4; cursor: default; }
 #toolbar .chk { color: var(--muted); display: inline-flex; align-items: center; gap: 4px; }
+#toolbar .chk.disabled { opacity: 0.45; }   /* e.g. no segments for this song */
 #toolbar .tlabel { color: var(--muted); font-size: 12px; margin-left: -4px; }
 #toolbar #bar-jump {
   width: 52px;

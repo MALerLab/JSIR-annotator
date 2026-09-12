@@ -5,6 +5,6 @@ time,name,beats_per_measure
 104.720,solo:horn,
 200.070,solo:piano,
 247.720,"trade:horn,drum",
-295.360,section 8,
+295.360,solo:drum,
 341.350,exclude,
 352.710,head:horn,

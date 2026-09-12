@@ -40,6 +40,10 @@ The dataset is read from this folder:
 - `chords/*.csv`  — chord events (`time,chord`); each lasts until the next start
 - `sections/*.csv` — **output**: section labels (`time,name,beats_per_measure`),
   one file per song (`beats_per_measure` blank = use the song's time signature)
+- `segments/*.csv` — **output**: stretches of a song whose beats and chords
+  are usable as training material (`start,end`, one row per segment). Derived
+  from the sections (see *Valid segments* below); a song with no file has no
+  segment annotation yet.
 - `metadata.json` also stores the annotated **key** per song (`"key"` field,
   e.g. `"D minor"`; absent = None). Edited from the right-hand Song Info panel
   and written back in place (a one-time `metadata.json.orig` backup is made on
@@ -174,6 +178,20 @@ selection.
   `time,name` format); a song with no structure file yet falls back to a copy of
   its sections until you edit and save. **R** (or the *Sec→Struct* toolbar
   button) copies all sections into the structure lane at once.
+- **Valid segments**: the spans whose beat/chord annotations are relevant for
+  training (beat tracking / chord estimation) — each runs from the first
+  section that is *not* an intro, outro, bass solo or `exclude` up to the next
+  one that is; a span reaching the end of the song stops at the last downbeat,
+  so the trailing partial bar is left out. *⌗ Generate segments* in the Song
+  Info panel (re)derives them for the song and writes `segments/<name>.csv` —
+  pending editor edits are saved first, because the derivation runs on the
+  server from the saved sections and beats. Segments get no lane of their own:
+  with the **Valid segments** toolbar toggle on (the default for any song that
+  has a segments file) everything outside them is **greyed out** — a
+  semi-transparent darkening over the chord lane and the beat lines, with the
+  waveform still drawn on top at full contrast. A file with no rows means
+  "nothing here is valid" and dims the whole song; a song with no file dims
+  nothing and the toggle is disabled.
 - **Multi-select events**: with a section, structure, or chord selected, press
   **A** to select all following events of that kind (the anchor included). The
   multi panel lets you delete them together. (**A** with a beat selected or
@@ -230,7 +248,8 @@ selection.
   **YouTube ID** field then click *↻ Refresh audio*. A background job re-downloads
   the audio (yt-dlp → WAV), re-runs beat tracking (madmom `DBNBeatTracker`),
   writes `audio/<id>.wav` + `beats/<id>.txt` (and updates `audio_length`), and
-  drops the song's now-stale chord/section labels. Progress shows live in the
+  drops the song's now-stale chord/section labels (and the segments derived from
+  them). Progress shows live in the
   panel; the canvas reloads when done. Work happens in `cache/crawl/` and is only
   committed on success, so a failure (bad ID, network error) leaves the existing
   files untouched. Requires the app

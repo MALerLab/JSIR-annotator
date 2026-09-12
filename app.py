@@ -7,6 +7,7 @@ Backend responsibilities:
   - serve audio files (with HTTP range support so seeking works)
   - read / write beat files       (beats/<name>.txt   : one float per line)
   - read / write section files     (sections/<name>.csv : columns "time","name")
+  - derive / serve segment files   (segments/<name>.csv : columns "start","end")
 
 Run:
     pip install flask          # or: pipenv install && pipenv shell
@@ -48,6 +49,7 @@ BEATS_DIR = os.path.join(ROOT, "beats")
 SECTIONS_DIR = os.path.join(ROOT, "sections")
 STRUCTURE_DIR = os.path.join(ROOT, "structure")
 CHORDS_DIR = os.path.join(ROOT, "chords")
+SEGMENTS_DIR = os.path.join(ROOT, "segments")
 METADATA_PATH = os.path.join(ROOT, "metadata.json")
 LEADSHEET_PATH = os.path.join(ROOT, "lead_sheets.json")
 # Temporary data for the Library's collection steps. Everything in here is
@@ -333,6 +335,75 @@ def write_chords(stem, chords):
 
 
 # --------------------------------------------------------------------------- #
+# Segments: the stretches of a song whose beat/chord annotations are relevant
+# for training. Derived from the sections (see compute_segments), stored as
+# ``segments/<name>.csv`` with columns "start","end".
+# --------------------------------------------------------------------------- #
+# A section is outside the valid material when its name mentions any of these:
+# the head-in/head-out framing, bass solos (no usable chord/beat reference) and
+# anything explicitly marked for exclusion.
+SEGMENT_EXCLUDE = ("intro", "exclude", "outro", "solo:bass")
+
+
+def read_segments(stem):
+    path = os.path.join(SEGMENTS_DIR, stem + ".csv")
+    if not os.path.exists(path):
+        return []
+    segments = []
+    with open(path, "r", encoding="utf-8", newline="") as f:
+        for row in csv.DictReader(f):
+            try:
+                segments.append({"start": float(row["start"]), "end": float(row["end"])})
+            except (ValueError, KeyError, TypeError):
+                pass
+    segments.sort(key=lambda s: s["start"])
+    return segments
+
+
+def write_segments(stem, segments):
+    os.makedirs(SEGMENTS_DIR, exist_ok=True)
+    path = os.path.join(SEGMENTS_DIR, stem + ".csv")
+    segments = sorted(segments, key=lambda s: float(s["start"]))
+    buf = io.StringIO()
+    writer = csv.writer(buf)
+    writer.writerow(["start", "end"])
+    for s in segments:
+        writer.writerow([f"{float(s['start']):.3f}", f"{float(s['end']):.3f}"])
+    with open(path, "w", encoding="utf-8", newline="") as f:
+        f.write(buf.getvalue())
+
+
+def section_excluded(name):
+    name = (name or "").strip().lower()
+    return any(bad in name for bad in SEGMENT_EXCLUDE)
+
+
+def compute_segments(sections, beats):
+    """Valid segments for a song: maximal runs of non-excluded sections.
+
+    A run starts where the first non-excluded section starts and ends where the
+    next excluded one begins. A run that reaches the end of the song stops at
+    the last downbeat instead of at the audio end, so the final (partial) bar is
+    left out. Same algorithm the dataset notebook used to write the files.
+    """
+    downbeats = [b["time"] for b in beats if b["downbeat"]]
+    spans, start = [], None
+    for i, sec in enumerate(sections):
+        if section_excluded(sec.get("name")):
+            if start is not None:
+                spans.append((start, sec["time"]))
+                start = None
+            continue
+        if start is None:
+            start = sec["time"]
+        if i == len(sections) - 1:
+            tail = [t for t in downbeats if t >= start]
+            spans.append((start, tail[-1] if tail else sec["time"]))
+            start = None
+    return [{"start": s, "end": e} for s, e in spans if e > s]
+
+
+# --------------------------------------------------------------------------- #
 # Routes
 # --------------------------------------------------------------------------- #
 @app.route("/")
@@ -377,6 +448,9 @@ def api_song(stem):
             "sections": read_sections(stem),
             "structure": read_structure(stem),
             "chords": read_chords(stem),
+            "segments": read_segments(stem),
+            # distinguishes "no segments annotated" from "annotated as none"
+            "has_segments": os.path.exists(os.path.join(SEGMENTS_DIR, stem + ".csv")),
         }
     )
 
@@ -530,6 +604,28 @@ def api_save_chords(stem):
     return jsonify({"ok": True, "count": len(data.get("chords", []))})
 
 
+@app.route("/api/segments/<stem>/generate", methods=["POST"])
+def api_generate_segments(stem):
+    """(Re)derive this song's valid segments from its section labels."""
+    stem = safe_stem(stem)
+    sections = read_sections(stem)
+    if not sections:
+        return jsonify({"ok": False, "error": "this song has no sections yet"}), 400
+    segments = compute_segments(sections, read_beats(stem))
+    write_segments(stem, segments)
+    # Keep metadata's file map in step, the way the dataset notebook does.
+    meta = load_metadata()
+    rel = f"segments/{stem}.csv"
+    changed = False
+    for entry in meta:
+        if entry_stem(entry) == stem and entry.get("files", {}).get("segments") != rel:
+            entry.setdefault("files", {})["segments"] = rel
+            changed = True
+    if changed:
+        save_metadata(meta)
+    return jsonify({"ok": True, "segments": segments})
+
+
 @app.route("/api/key/<song>", methods=["POST"])
 def api_save_key(song):
     data = request.get_json(force=True)
@@ -679,6 +775,7 @@ def _commit_refresh(song_id, old_stem, new_stem):
         files["chords"] = f"chords/{new_stem}.csv"
         if "cace_chords" in files:
             files["cace_chords"] = f"consonance_ace_inferences/{new_stem}.lab"
+        files.pop("segments", None)   # derived from the (now dropped) sections
         dur = wav_duration(os.path.join(AUDIO_DIR, new_stem + ".wav"))
         if dur is not None:
             entry["audio_length"] = dur
@@ -692,6 +789,7 @@ def _commit_refresh(song_id, old_stem, new_stem):
             os.path.join(STRUCTURE_DIR, st + ".csv"),
             os.path.join(CHORDS_DIR, st + ".csv"),
             os.path.join(CHORDS_DIR, st + ".csv.orig"),
+            os.path.join(SEGMENTS_DIR, st + ".csv"),
         ):
             if os.path.exists(path):
                 os.remove(path)

@@ -130,6 +130,9 @@ const state = {
   sections: [],         // [{time, name}] (kept sorted)
   structure: [],        // [{time, name}] (kept sorted) — like sections, own lane
   chords: [],           // [{time, chord}] (kept sorted)
+  segments: [],         // [{start, end}] valid (trainable) stretches, derived
+  hasSegments: false,   // does this song have a segments file at all?
+  showSegments: false,  // visual: dim everything outside the valid segments
   selected: null,       // {kind:'section'|'chord', obj} OR {kind:'beat', obj:<anchor>}
   selBeats: new Set(),  // selected beat objects (source of truth for beats)
   selEvents: new Set(), // selected section/structure/chord objects (multi-select)
@@ -318,6 +321,8 @@ function renderSongPanel(song) {
     $('btn-refresh').disabled = false;
     setRefreshStatus('');
   }
+  $('btn-gen-segments').disabled = false;
+  $('segments-status').textContent = '';
   $('btn-complete').disabled = false;
   updateCompleteButton($('btn-complete'), song);
   renderLeadsheetInfo();
@@ -399,6 +404,46 @@ async function postMetaFields(songId, fields, statusEl) {
   }
 }
 $('btn-complete').addEventListener('click', () => { if (state.current) toggleCompleted(state.current); });
+$('btn-gen-segments').addEventListener('click', generateSegments);
+
+// ---- valid segments (derived from the section labels) ----------------------
+// The derivation lives on the server (jsd's notebook pipeline uses the same
+// rule): a segment runs from the first section that is not an intro / outro /
+// bass solo / excluded up to the next one that is, and a run that reaches the
+// end of the song stops at the last downbeat.
+let segmentsBusy = false;
+async function generateSegments() {
+  const song = state.current;
+  if (!song || segmentsBusy) return;
+  const status = $('segments-status');
+  segmentsBusy = true;
+  $('btn-gen-segments').disabled = true;
+  try {
+    // derived from the *saved* sections and beats, so flush pending edits first
+    if (state.dirty) { status.textContent = 'saving edits…'; await save(); }
+    status.textContent = 'generating…';
+    const r = await fetch(`/api/segments/${song.stem}/generate`, { method: 'POST' });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.ok) throw new Error(d.error || `HTTP ${r.status}`);
+    const segs = d.segments || [];
+    if (state.current === song) {
+      state.segments = segs;
+      state.hasSegments = true;
+      state.showSegments = true;
+      updateSegmentsToggle();
+      scheduleRender();
+    }
+    status.textContent = `${segs.length} segment${segs.length === 1 ? '' : 's'} ✓`;
+    setTimeout(() => {
+      if (status.textContent.endsWith('✓')) status.textContent = '';
+    }, 2500);
+  } catch (err) {
+    status.textContent = 'failed: ' + err.message;
+    console.error(err);
+  }
+  segmentsBusy = false;
+  $('btn-gen-segments').disabled = !state.current;
+}
 
 function updateYtLink(song) {
   const links = [];
@@ -539,6 +584,18 @@ function resetViewControls() {
   setMetroVol(100);
   state.onlyDownbeats = false;
   $('chk-only-db').checked = false;
+  updateSegmentsToggle();
+}
+// "Valid segments" view toggle: on by default for songs that have segments,
+// disabled (with a hint) for songs that don't.
+function updateSegmentsToggle() {
+  const chk = $('chk-segments'), label = $('chk-segments-label');
+  chk.disabled = !state.hasSegments;
+  chk.checked = state.showSegments && state.hasSegments;
+  label.classList.toggle('disabled', !state.hasSegments);
+  label.title = state.hasSegments
+    ? 'View valid segments: dim everything outside them'
+    : 'No segments for this song yet — generate them in the Song Info panel';
 }
 $('song-vol').addEventListener('input', (e) => setSongVol(parseInt(e.target.value, 10) || 0));
 $('metro-vol').addEventListener('input', (e) => setMetroVol(parseInt(e.target.value, 10) || 0));
@@ -547,10 +604,14 @@ $('chk-only-db').addEventListener('change', (e) => {
   state.onlyDownbeats = e.target.checked;
   scheduleRender();
 });
+$('chk-segments').addEventListener('change', (e) => {
+  state.showSegments = e.target.checked;
+  scheduleRender();
+});
 
 // After toggling/selecting any of these, drop focus so global keyboard
 // shortcuts (space, B/S/C, etc.) act on the app rather than the control.
-['chk-metro', 'chk-follow', 'chk-only-db', 'beat-downbeat', 'beats-downbeat', 'key-select']
+['chk-metro', 'chk-follow', 'chk-only-db', 'chk-segments', 'beat-downbeat', 'beats-downbeat', 'key-select']
   .forEach((id) => $(id).addEventListener('change', (e) => e.target.blur()));
 
 // ---- refresh audio (re-crawl + re-track) -----------------------------------
@@ -646,6 +707,8 @@ async function selectSong(song, opts) {
   state.selBeats = new Set();
   state.selEvents = new Set();
   state.structure = [];
+  state.segments = [];
+  state.hasSegments = false;
   state.loop = null;
   state.undo = null;
   state.leadsheet = null;
@@ -685,6 +748,10 @@ async function selectSong(song, opts) {
   state.sections = annRes.sections.map((s) => ({ time: s.time, name: s.name, bpm: s.beats_per_measure }));
   state.structure = (annRes.structure || []).map((s) => ({ time: s.time, name: s.name }));
   state.chords = (annRes.chords || []).map((c) => ({ time: c.time, chord: c.chord }));
+  state.segments = (annRes.segments || []).map((s) => ({ start: s.start, end: s.end }));
+  state.hasSegments = !!annRes.has_segments;
+  state.showSegments = state.hasSegments;   // shown by default when annotated
+  updateSegmentsToggle();
   state.buffer = buffer;
   state.duration = state.buffer.duration;
 
@@ -868,6 +935,8 @@ function renderStatic() {
   }
   wctx.globalAlpha = 1;
 
+  drawSegmentMask(vw, h);
+
   // --- waveform (read straight from the peak cache) ---
   // Drawn LAST so the audio stays fully readable over the section / structure
   // tints and the beat lines.
@@ -922,6 +991,30 @@ function drawEventLane(events, laneTop, laneH, kind, palette, barsFn) {
     wctx.fillText(label, Math.max(x0 + 6, LANE_LABEL_W + 4), laneTop + laneH / 2 + 1);
     wctx.restore();
   });
+}
+
+// Valid segments: the stretches of the song whose beat/chord annotations are
+// usable as training material. They get no lane of their own — instead
+// everything *outside* them is greyed out. Drawn over the chord lane and the
+// beats but before the waveform, so the audio itself still reads at full
+// contrast.
+function drawSegmentMask(vw, h) {
+  if (!state.showSegments || !state.hasSegments) return;
+  const top = chordLaneTop();
+  // the gaps between (sorted, merged) segments, plus the tails at either end
+  const gaps = [];
+  let prev = 0;
+  for (const s of [...state.segments].sort((a, b) => a.start - b.start)) {
+    if (s.start > prev) gaps.push([prev, s.start]);
+    prev = Math.max(prev, s.end);
+  }
+  gaps.push([prev, Math.max(prev, state.duration)]);
+  wctx.fillStyle = 'rgba(8,10,14,0.62)';
+  for (const [a, b] of gaps) {
+    const x0 = Math.max(tx(a), LANE_LABEL_W);
+    const x1 = Math.min(tx(b), vw);
+    if (x1 > x0) wctx.fillRect(x0, top, x1 - x0, h - top);
+  }
 }
 
 // Left-edge headers for the timeline lanes. They live in a reserved gutter
@@ -3298,6 +3391,7 @@ function pollLibRefresh(id) {
 // Boot
 // ----------------------------------------------------------------------------
 populateKeySelect();
+updateSegmentsToggle();   // disabled until a song with segments is loaded
 setTab('library');
 (async () => {
   await Promise.all([loadSongs(), loadLeadsheets()]);

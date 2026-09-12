@@ -2,4 +2,4 @@ time,name,beats_per_measure
 0.280,intro,
 5.100,head:piano,
 25.620,solo:piano,
-112.240,last:head:piano,
+112.240,head:piano,
