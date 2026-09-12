@@ -1,4 +1,5 @@
 from typing import Union
+import re
 
 
 roots = {
@@ -47,6 +48,7 @@ wjd_degrees = {
   "4": 5,
   "5b": 6,
   "5": 7,
+  "5#": 8,
   "6b": 8,
   "6": 9,
   "7b": 10,
@@ -95,9 +97,65 @@ wjd_qualities = {
   "9": [0, 4, 7, 10, 14],
   "m7b5": [0, 3, 6, 10],
   "sus": [0, 5, 7],
+  "sus4": [0, 5, 7],
   "sus7": [0, 5, 7, 10],
-  "69": [0, 4, 7, 9, 14],
-  "-69": [0, 3, 7, 9, 14],
+  # "69": [0, 4, 7, 9, 14],
+  # "-69": [0, 3, 7, 9, 14],
+}
+
+wjd2harte_qualities = {
+  "j": "maj",
+  "-": "min",
+  "j7": "maj7",
+  "-7": "min7",
+  "-j7": "minmaj7",
+  "7": "7",
+  "7alt": "7",
+  "+": "aug",
+  "+7": "aug7",
+  "+j7": "augmaj7",
+  "o": "dim",
+  "o7": "dim7",
+  "6": "maj6",
+  "-6": "min6",
+  "9": "9",
+  "m7b5": "hdim7",
+  "sus": "sus4",
+  "sus4": "sus4",
+  "sus7": "sus7",
+}
+
+chord_tones = {
+  "maj": {0:"1", 4: "3", 7: "5"},
+  "min": {0: "1", 3: "b3", 7: "5"},
+  "maj7": {0: "1", 4: "3", 7: "5", 11: "7"},
+  "maj9": {0: "1", 4: "3", 7: "5", 11: "7", 2: "9"},
+  "min7": {0: "1", 3: "b3", 7: "5", 10: "b7"},
+  "min9": {0: "1", 3: "b3", 7: "5", 10: "b7", 2: "9"},
+  "minmaj7": {0: "1", 3: "b3", 7: "5", 11: "7"},
+  "hdim7": {0: "1", 3: "b3", 6: "b5", 10: "b7"},
+  "7": {0: "1", 4: "3", 7: "5", 10: "b7"},
+  "dim": {0: "1", 3: "b3", 6: "b5"},
+  "dim7": {0: "1", 3: "b3", 6: "b5", 9: "bb7"},
+  "maj6": {0: "1", 4: "3", 7: "5", 9: "6"},
+  "min6": {0: '1', 3:'b3', 7: '6'},
+  "9": {0: "1", 4: "3", 7: "5", 10: "b7", 2: "9"},
+  "sus4": {0: "1", 5: "4", 7: "5"},
+}
+
+interval_map = {
+  0: "1",
+  1: "b2",
+  2: "2",
+  3: "b3",
+  4: "3",
+  5: "4",
+  6: "b5",
+  7: "5",
+  8: "b6",
+  9: "6",
+  10: "b7",
+  11: "7",
 }
 
 cace_qualities = {
@@ -119,7 +177,7 @@ cace_qualities = {
 
 
 def parse_wjd_chord(chord_str) -> tuple[Union[int, None], Union[list[int], None], Union[int, None], Union[list[int], None]]:
-  if chord_str == "NC":
+  if chord_str == "N.C.":
     return None, None, None, None
 
   if "/" in chord_str:
@@ -168,6 +226,55 @@ def parse_wjd_chord(chord_str) -> tuple[Union[int, None], Union[list[int], None]
     extension_str = extension_str[last_i:]
   
   return root, quality, bass, extensions
+
+
+def split_wjd_chord(chord_str) -> tuple[Union[str, None], Union[list[str], None], Union[str, None], Union[list[str], None]]:
+  if chord_str == "N.C.":
+    return None, None, None, None
+
+  if "/" in chord_str:
+    chord_str, bass = chord_str.split("/")
+  else:
+    bass = None
+
+  # find root note
+  root = None
+  for i in range(1, 3):
+    if chord_str[:i] in roots:
+      root = roots[chord_str[:i]]
+      root_str = chord_str[:i]
+  if root is None:
+    raise ValueError(f"Invalid chord: {chord_str}")
+
+  # find quality
+  if chord_str[len(root_str):] == "":
+    return root_str, None, bass, None
+  
+  quality = None
+  for i in range (1, 5):
+    if chord_str[len(root_str):len(root_str)+i] in wjd_qualities:
+      quality = chord_str[len(root_str):len(root_str)+i]
+      extension_str = chord_str[len(root_str)+i:] if len(chord_str) > len(root_str) + i else None
+
+  if quality is None:
+    raise ValueError(f"Invalid chord quality: {chord_str[len(root_str):]} in chord {chord_str}")
+  
+  extensions = []
+  # in this version, extensions are written with no separator, e.g. "C7911" instead of "C7(9,11)"
+  if extension_str is None:
+    return root_str, quality, bass, None
+  
+  while len(extension_str) > 0:
+    extension_candidate = None
+    last_i = 0
+    for i in range(1, 4):
+      if extension_str[:i] in wjd_degrees:
+        extension_candidate = extension_str[:i]
+        last_i = i
+    extensions.append(extension_candidate)
+    extension_str = extension_str[last_i:]
+  
+  return root_str, quality, bass, extensions
 
 
 def parse_cace_chord(chord_str) -> tuple[Union[int, None], Union[list[int], None], Union[int, None], Union[list[int], None]]:
@@ -284,3 +391,48 @@ def transpose_progression(changes, semitones):
     " ".join(transpose_wjd_chord(tok, semitones) for tok in bar.split())
     for bar in changes
   ]
+
+
+def wjd_to_harte(chord: str):
+  root, quality, bass, extensions = split_wjd_chord(chord)
+  if root is None:
+    return "N"
+  
+  quality = 'maj' if quality is None else wjd2harte_qualities[quality]
+
+  temp_extensions = []
+
+  if quality == "aug7":
+    temp_extensions.append("7b")
+    quality = "aug"
+  elif quality == "augmaj7":
+    temp_extensions.append("7")
+    quality = "aug"
+  elif quality == "sus7":
+    temp_extensions.append("7b")
+    quality = "sus4"
+
+  if extensions is not None and len(temp_extensions) > 0:
+    extensions.extend(temp_extensions)
+  elif len(temp_extensions) > 0:
+    extensions = temp_extensions
+
+  harte_string = f"{root}:{quality}"
+
+  if extensions is not None:
+    extensions.sort(key=lambda x: int(re.sub(r"[\D]", "", x)))
+    for i in range(len(extensions)):
+      extension = extensions[i]
+      if "#" in extension or "b" in extension:
+        extensions[i] = f"{extension[-1]}{extension[:-1]}"
+    harte_string += f"({','.join(extensions)})"
+
+  if bass is not None:
+    interval = (roots[bass] - roots[root]) % 12
+    if interval in chord_tones[quality]:
+      bass = chord_tones[quality][interval]
+    else:
+      bass = interval_map[interval]
+    harte_string += f"/{bass}"
+
+  return harte_string
