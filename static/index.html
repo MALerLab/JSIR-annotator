@@ -21,6 +21,13 @@
         <button id="lib-add-ls" class="small" title="Add a new standard">+ New</button>
       </div>
       <input id="lib-ls-filter" type="text" placeholder="Filter…" autocomplete="off" />
+      <div class="sort-row">
+        <select id="lib-ls-sort" title="Sort by">
+          <option value="name">Name</option>
+          <option value="added">Date added</option>
+        </select>
+        <button id="lib-ls-sort-dir" class="sort-dir" title="Ascending / descending">↑</button>
+      </div>
       <ul id="lib-ls-list" class="lib-list"></ul>
     </aside>
 
@@ -30,6 +37,14 @@
         <button id="lib-add-song" class="small" title="Add a new song by YouTube ID">+ Add</button>
       </div>
       <input id="lib-song-filter" type="text" placeholder="Filter…" autocomplete="off" />
+      <div class="sort-row">
+        <select id="lib-song-sort" title="Sort by">
+          <option value="name">Name</option>
+          <option value="artist">Artist</option>
+          <option value="added">Date added</option>
+        </select>
+        <button id="lib-song-sort-dir" class="sort-dir" title="Ascending / descending">↑</button>
+      </div>
       <ul id="lib-song-list" class="lib-list"></ul>
     </aside>
 
@@ -166,6 +181,14 @@
     <aside id="sidebar">
       <h1>Songs</h1>
       <input id="song-filter" type="text" placeholder="Filter…" autocomplete="off" />
+      <div class="sort-row">
+        <select id="song-sort" title="Sort by">
+          <option value="name">Name</option>
+          <option value="artist">Artist</option>
+          <option value="added">Date added</option>
+        </select>
+        <button id="song-sort-dir" class="sort-dir" title="Ascending / descending">↑</button>
+      </div>
       <ul id="song-list"></ul>
     </aside>
 

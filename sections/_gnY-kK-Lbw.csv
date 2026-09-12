@@ -1,0 +1,13 @@
+time,name,beats_per_measure
+0.661,intro,
+11.790,head:horn,
+61.250,solo:horn,
+210.540,solo:piano,
+357.590,solo:bass,
+408.090,solo:horn,
+556.010,solo:horn,
+705.500,solo:piano,
+853.660,solo:bass,
+953.050,solo:horn,
+1035.620,head:horn,
+1049.400,outro,

@@ -512,60 +512,43 @@
     "id": "11db2ea3-b12f-4568-8481-782c6d9a4e14"
   },
   {
-    "yt_id": "W78lMZqbq0w",
-    "standard": "All The Things You Are",
-    "artist": "Art Tatum",
-    "album": "California Melodies",
-    "instrumentation": "solo piano",
-    "musicbrainz_id": "2add1cb8-4a47-456f-ba49-3229903da24c",
-    "audio_length": 368.1756041666667,
-    "files": {
-      "audio": "audio/W78lMZqbq0w.wav"
-    },
-    "completed": false,
-    "id": "5500686a-6ffb-4551-9e68-bd492ad46069"
-  },
-  {
-    "yt_id": "UTORd2Y_X6U",
+    "yt_id": "vav1CI1BfFM",
     "standard": "All The Things You Are",
     "artist": "Charlie Parker",
-    "album": "Yardbird in Lotus Land",
+    "album": "Charlie Parker on Dial: The Complete Sessions",
     "instrumentation": "quintet",
-    "musicbrainz_id": "c2d8497d-d078-45e9-92d2-86efe8b86b22",
-    "audio_length": 188.88272916666668,
+    "musicbrainz_id": "f49bc51e-21fc-446c-ac71-5ef231d9ab3c",
+    "audio_length": 193.25968253968253,
     "files": {
-      "audio": "audio/UTORd2Y_X6U.wav"
+      "audio": "audio/vav1CI1BfFM.wav",
+      "beats": "beats/vav1CI1BfFM.txt",
+      "chords": "chords/vav1CI1BfFM.csv"
     },
-    "completed": false,
-    "id": "b5838b17-f8eb-4cc8-9840-14dbf7a832e5"
-  },
-  {
-    "yt_id": "hqwMreEYUHw",
-    "standard": "All The Things You Are",
-    "artist": "Charlie Parker, Dizzy Gillespie, Bud Powell, Max Roach, Charles Mingus",
-    "album": "Charlie Parker Pour la post\u00e9rit\u00e9 il restera l'\"oiseau\"",
-    "instrumentation": "quintet",
-    "musicbrainz_id": "ca415ead-1fb5-43f2-9e76-558f8c78a9c2",
-    "audio_length": 472.2427083333333,
-    "files": {
-      "audio": "audio/hqwMreEYUHw.wav"
-    },
-    "completed": false,
-    "id": "5ee27d5e-0162-4693-90ef-afcde7be5515"
+    "completed": true,
+    "id": "b5838b17-f8eb-4cc8-9840-14dbf7a832e5",
+    "num_bars": 36,
+    "tempo_class": "MEDIUM",
+    "rhythm_feel": "SWING",
+    "time_signature": "4/4",
+    "key": "Ab maj"
   },
   {
     "yt_id": "_gnY-kK-Lbw",
     "standard": "All The Things You Are",
     "artist": "Chet Baker, Stan Getz",
-    "album": "My Funny Valentine",
+    "album": "West Coast Live",
     "instrumentation": "quintet",
-    "musicbrainz_id": "9f0d7a44-9ce6-4f07-a766-06bd3f5f5000",
+    "musicbrainz_id": "06ece56f-1468-44b1-a87a-edb26ff513f7",
     "audio_length": 1063.7733333333333,
     "files": {
       "audio": "audio/_gnY-kK-Lbw.wav"
     },
-    "completed": false,
-    "id": "017a0a66-ba82-4ae7-a6e8-bb7614d8006c"
+    "completed": true,
+    "id": "017a0a66-ba82-4ae7-a6e8-bb7614d8006c",
+    "num_bars": 36,
+    "rhythm_feel": "SWING",
+    "time_signature": "4/4",
+    "key": "Ab maj"
   },
   {
     "yt_id": "r5AQqDSiEws",
@@ -578,8 +561,13 @@
     "files": {
       "audio": "audio/r5AQqDSiEws.wav"
     },
-    "completed": false,
-    "id": "24b4e289-39ca-487c-b5de-17997ebcbbfc"
+    "completed": true,
+    "id": "24b4e289-39ca-487c-b5de-17997ebcbbfc",
+    "num_bars": 36,
+    "tempo_class": "UP",
+    "rhythm_feel": "SWING",
+    "time_signature": "4/4",
+    "key": "Ab maj"
   },
   {
     "yt_id": "ESjNt-V-zRI",
@@ -17930,7 +17918,7 @@
   },
   {
     "id": "7066300b-1c6e-4afa-98b0-cbf27b261b8d",
-    "completed": false,
+    "completed": true,
     "key": "C maj",
     "standard": "Alice in Wonderland",
     "time_signature": "3/4",
@@ -17950,34 +17938,28 @@
     "audio_length": 510.9318820861678
   },
   {
-    "id": "14601935-0ae8-4b7d-ac89-0ef710e6d9bf",
-    "completed": false,
-    "key": "C maj",
-    "standard": "Alice in Wonderland",
-    "time_signature": "3/4",
-    "rhythm_feel": "JAZZ WALTZ",
-    "tempo_class": "MEDIUM UP",
-    "num_bars": 64,
-    "musicbrainz_id": "ccb5bb72-6d45-4f12-aa2c-76328a3418da",
-    "album": "Sunday at the Village Vanguard",
-    "artist": "Bill Evans Trio"
-  },
-  {
     "id": "f0aa3791-14f3-48f5-ace8-5cb6e04d4f92",
-    "completed": false,
-    "key": "C maj",
+    "completed": true,
+    "key": "Bb maj",
     "standard": "Alice in Wonderland",
-    "time_signature": "3/4",
-    "rhythm_feel": "JAZZ WALTZ",
+    "time_signature": "4/4",
+    "rhythm_feel": "SWING",
     "tempo_class": "MEDIUM UP",
-    "num_bars": 64,
+    "num_bars": 68,
     "musicbrainz_id": "3a64d805-2d86-4c66-9b91-7aadfdbc6bc2",
     "album": "Dave Digs Disney",
-    "artist": "The Dave Brubeck Quartet"
+    "artist": "The Dave Brubeck Quartet",
+    "yt_id": "olUu5imUXoc",
+    "files": {
+      "audio": "audio/olUu5imUXoc.wav",
+      "beats": "beats/olUu5imUXoc.txt",
+      "chords": "chords/olUu5imUXoc.csv"
+    },
+    "audio_length": 565.498775510204
   },
   {
     "id": "083a377a-6052-4c28-a8b5-5bc1c5752c6e",
-    "completed": false,
+    "completed": true,
     "key": "C maj",
     "standard": "Alice in Wonderland",
     "time_signature": "3/4",
@@ -17986,33 +17968,35 @@
     "num_bars": 64,
     "musicbrainz_id": "3e116d89-ed7d-4d2c-bea0-f0f0ceb04650",
     "album": "Exclusively for My Friends - Vol. III: The Way I Really Play",
-    "artist": "Oscar Peterson"
-  },
-  {
-    "id": "e1e09742-a70a-4cd2-9ef4-7201305f0c5d",
-    "completed": false,
-    "key": "C maj",
-    "standard": "Alice in Wonderland",
-    "time_signature": "3/4",
-    "rhythm_feel": "JAZZ WALTZ",
-    "tempo_class": "MEDIUM UP",
-    "num_bars": 64,
-    "musicbrainz_id": "e2211b36-4be0-4b40-afe4-fecaa8ca136b",
-    "album": "The Wonderful World of Make Believe",
-    "artist": "Johnny Mathis"
+    "artist": "Oscar Peterson",
+    "yt_id": "wjXqrvgGRXE",
+    "files": {
+      "audio": "audio/wjXqrvgGRXE.wav",
+      "beats": "beats/wjXqrvgGRXE.txt",
+      "chords": "chords/wjXqrvgGRXE.csv"
+    },
+    "audio_length": 281.820589569161
   },
   {
     "id": "b1c57688-7a0c-4d0f-bf3b-64167907662c",
-    "completed": false,
-    "key": "C maj",
+    "completed": true,
+    "key": "Bb maj",
     "standard": "Alice in Wonderland",
-    "time_signature": "3/4",
+    "time_signature": "4/4",
     "rhythm_feel": "JAZZ WALTZ",
     "tempo_class": "MEDIUM UP",
     "num_bars": 64,
     "musicbrainz_id": "bf7cb151-5eb5-495f-a3d7-461b914983db",
     "album": "1975: The Duets",
-    "artist": "Dave Brubeck & Paul Desmond"
+    "artist": "Dave Brubeck & Paul Desmond",
+    "yt_id": "KIiDqJCpOHY",
+    "instrumentation": "piano and saxophone duo",
+    "files": {
+      "audio": "audio/KIiDqJCpOHY.wav",
+      "beats": "beats/KIiDqJCpOHY.txt",
+      "chords": "chords/KIiDqJCpOHY.csv"
+    },
+    "audio_length": 244.13460317460317
   },
   {
     "id": "5019d4d8-66e3-42f3-a9b6-3839d6ee4c6e",
@@ -18025,11 +18009,18 @@
     "num_bars": 64,
     "musicbrainz_id": "8044a20b-8a9e-495b-819a-e65cc2137a34",
     "album": "Current Events",
-    "artist": "John Abercrombie, Marc Johnson & Peter Erskine"
+    "artist": "John Abercrombie, Marc Johnson & Peter Erskine",
+    "yt_id": "rSzsykTkws8",
+    "files": {
+      "audio": "audio/rSzsykTkws8.wav",
+      "beats": "beats/rSzsykTkws8.txt",
+      "chords": "chords/rSzsykTkws8.csv"
+    },
+    "audio_length": 518.5480272108844
   },
   {
     "id": "200e3021-760a-4f7c-8e7b-faa441ec441b",
-    "completed": false,
+    "completed": true,
     "key": "C maj",
     "standard": "Alice in Wonderland",
     "time_signature": "3/4",
@@ -18038,6 +18029,116 @@
     "num_bars": 64,
     "musicbrainz_id": "0439297c-2f23-46fb-93cd-f795c8b67824",
     "album": "Further Explorations",
-    "artist": "Chick Corea, Eddie Gomez & Paul Motian"
+    "artist": "Chick Corea, Eddie Gomez & Paul Motian",
+    "yt_id": "OAe299VeFKI",
+    "files": {
+      "audio": "audio/OAe299VeFKI.wav",
+      "beats": "beats/OAe299VeFKI.txt",
+      "chords": "chords/OAe299VeFKI.csv"
+    },
+    "audio_length": 496.97668934240363,
+    "instrumentation": "piano trio"
+  },
+  {
+    "id": "94f2105d-57ba-4794-b86b-bdea779902d4",
+    "completed": true,
+    "key": "C maj",
+    "standard": "Alice in Wonderland",
+    "time_signature": "3/4",
+    "rhythm_feel": "JAZZ WALTZ",
+    "tempo_class": "MEDIUM UP",
+    "num_bars": 64,
+    "album": "Straight Ahead",
+    "artist": "Yosuke Inoue",
+    "yt_id": "4bN_jpipj9c",
+    "instrumentation": "trio with flute",
+    "files": {
+      "audio": "audio/4bN_jpipj9c.wav",
+      "beats": "beats/4bN_jpipj9c.txt",
+      "chords": "chords/4bN_jpipj9c.csv"
+    },
+    "audio_length": 376.16326530612247
+  },
+  {
+    "id": "dcfd59e0-d28d-4ed7-9982-23ab5b3f0611",
+    "completed": false,
+    "key": "Ab maj",
+    "standard": "All the Things You Are",
+    "time_signature": "4/4",
+    "rhythm_feel": "SWING",
+    "tempo_class": "UP",
+    "num_bars": 36,
+    "musicbrainz_id": "eb6cdd4d-d896-4404-b67d-d7796f77e979",
+    "album": "The Art Tatum - Ben Webster Quartet",
+    "artist": "The Art Tatum/Ben Webster Quartet",
+    "yt_id": "Q3eFTwOD4dA",
+    "files": {
+      "audio": "audio/Q3eFTwOD4dA.wav",
+      "beats": "beats/Q3eFTwOD4dA.txt",
+      "chords": "chords/Q3eFTwOD4dA.csv"
+    },
+    "audio_length": 432.61097505668937
+  },
+  {
+    "id": "ab36f182-093e-4742-ab82-ecf8a04c8863",
+    "completed": true,
+    "key": "Ab maj",
+    "standard": "All the Things You Are",
+    "time_signature": "4/4",
+    "rhythm_feel": "SWING",
+    "tempo_class": "UP",
+    "num_bars": 36,
+    "musicbrainz_id": "0e541da2-44cc-414d-b8cc-224814e07b33",
+    "album": "Jamal at the Pershing, Vol. 2",
+    "artist": "Ahmad Jamal Trio",
+    "yt_id": "jd6SitlZ44I",
+    "files": {
+      "audio": "audio/jd6SitlZ44I.wav",
+      "beats": "beats/jd6SitlZ44I.txt",
+      "chords": "chords/jd6SitlZ44I.csv"
+    },
+    "audio_length": 192.72562358276645,
+    "instrumentation": "piano trio"
+  },
+  {
+    "id": "9b47ff36-043a-413e-94fd-655765df3ab4",
+    "completed": false,
+    "key": "Ab maj",
+    "standard": "All the Things You Are",
+    "time_signature": "4/4",
+    "rhythm_feel": "SWING",
+    "tempo_class": "UP",
+    "num_bars": 36,
+    "musicbrainz_id": "3f8635b0-afd1-4006-a34d-b7ef62d01e32",
+    "album": "Hawkins! Alive! At The Village Gate",
+    "artist": "Coleman Hawkins",
+    "yt_id": "ApkvfMZpFhg",
+    "files": {
+      "audio": "audio/ApkvfMZpFhg.wav",
+      "beats": "beats/ApkvfMZpFhg.txt",
+      "chords": "chords/ApkvfMZpFhg.csv"
+    },
+    "audio_length": 495.93179138321995
+  },
+  {
+    "id": "dce74fc2-1b6a-416e-ae7c-a620f659e243",
+    "completed": true,
+    "key": "Ab maj",
+    "standard": "All the Things You Are",
+    "time_signature": "4/4",
+    "rhythm_feel": "SWING",
+    "tempo_class": "UP",
+    "num_bars": 36,
+    "musicbrainz_id": "677fa4e0-8ddc-4829-8de7-73eeb608166c",
+    "album": "After Hours",
+    "artist": "Chihiro Yamanaka",
+    "yt_id": "z2ycW-_pvw4",
+    "files": {
+      "audio": "audio/z2ycW-_pvw4.wav",
+      "beats": "beats/z2ycW-_pvw4.txt",
+      "chords": "chords/z2ycW-_pvw4.csv"
+    },
+    "audio_length": 368.50068027210887,
+    "instrumentation": "quartet with guitar"
   }
 ]

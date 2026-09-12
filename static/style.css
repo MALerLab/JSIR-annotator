@@ -68,13 +68,39 @@ body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 .lib-col input[type="text"] {
   width: 100%;
   padding: 7px 9px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   background: var(--panel2);
   border: 1px solid var(--line);
   border-radius: 6px;
   color: var(--text);
 }
 .lib-list { list-style: none; margin: 0; padding: 0; overflow-y: auto; flex: 1; }
+
+/* sort controls under the list filters (song list + both library lists) */
+.sort-row { display: flex; gap: 6px; margin-bottom: 8px; }
+.sort-row select {
+  flex: 1;
+  min-width: 0;
+  padding: 5px 7px;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 12px;
+}
+.sort-row .sort-dir {
+  width: 30px;
+  padding: 5px 0;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+}
+.sort-row .sort-dir:hover { border-color: var(--accent); }
+
 .lib-list li {
   padding: 8px 10px;
   border-radius: 6px;
@@ -184,7 +210,7 @@ body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 #song-filter {
   width: 100%;
   padding: 7px 9px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   background: var(--panel2);
   border: 1px solid var(--line);
   border-radius: 6px;

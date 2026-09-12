@@ -77,6 +77,7 @@ const SCHED_MS = 25;          // metronome scheduler tick (ms)
 
 const state = {
   songs: [],
+  songSort: { key: 'name', dir: 'asc' },   // sidebar list order
   current: null,
   buffer: null,
   duration: 0,
@@ -142,18 +143,66 @@ const octx = overlayCanvas.getContext('2d');
 async function loadSongs() {
   const res = await fetch('/api/songs');
   state.songs = await res.json();
+  // position in metadata.json == the order entries were added; kept for sorting
+  state.songs.forEach((s, i) => { s._ord = i; });
   renderSongList();
+}
+
+// ---- list sorting (sidebar song list + both library lists) -----------------
+// Keys: 'name', 'artist' (songs only), 'added' (the order in the JSON file).
+function cmpText(a, b) {
+  return String(a || '').localeCompare(String(b || ''), undefined,
+    { sensitivity: 'base', numeric: true });
+}
+
+// Sorts `rows` in place (callers pass a filtered copy) and returns it.
+function sortSongs(rows, sort) {
+  const dir = sort.dir === 'desc' ? -1 : 1;
+  return rows.sort((a, b) => {
+    let c = 0;
+    if (sort.key === 'name') c = cmpText(a.standard, b.standard) || cmpText(a.artist, b.artist);
+    else if (sort.key === 'artist') c = cmpText(a.artist, b.artist) || cmpText(a.standard, b.standard);
+    if (!c) c = (a._ord || 0) - (b._ord || 0);   // 'added', and the tie-break for the rest
+    return c * dir;
+  });
+}
+
+function sortLeadsheets(rows, sort) {
+  const dir = sort.dir === 'desc' ? -1 : 1;
+  return rows.sort((a, b) => {
+    let c = sort.key === 'name' ? cmpText(a.title, b.title) : 0;
+    if (!c) c = a.index - b.index;              // 'added' = order in lead_sheets.json
+    return c * dir;
+  });
+}
+
+// Binds a <select> + direction button pair to a {key, dir} state object.
+function wireSort(prefix, sort, rerender) {
+  const sel = $(`${prefix}-sort`), btn = $(`${prefix}-sort-dir`);
+  const paint = () => {
+    sel.value = sort.key;
+    btn.textContent = sort.dir === 'desc' ? '\u2193' : '\u2191';
+    btn.title = sort.dir === 'desc'
+      ? 'Descending \u2014 click for ascending' : 'Ascending \u2014 click for descending';
+  };
+  sel.addEventListener('change', () => { sort.key = sel.value; rerender(); });
+  btn.addEventListener('click', () => {
+    sort.dir = sort.dir === 'desc' ? 'asc' : 'desc';
+    paint();
+    rerender();
+  });
+  paint();
 }
 
 function renderSongList() {
   const ul = $('song-list');
   const filter = $('song-filter').value.toLowerCase();
   ul.innerHTML = '';
-  state.songs
-    .filter((s) =>
-      [s.standard, s.artist, s.album, s.instrumentation]
-        .filter(Boolean).join(' ').toLowerCase().includes(filter)
-    )
+  const rows = state.songs.filter((s) =>
+    [s.standard, s.artist, s.album, s.instrumentation]
+      .filter(Boolean).join(' ').toLowerCase().includes(filter)
+  );
+  sortSongs(rows, state.songSort)
     .forEach((s) => {
       const li = document.createElement('li');
       if (state.current && state.current.id === s.id) li.classList.add('active');
@@ -176,6 +225,7 @@ function renderSongList() {
 }
 
 $('song-filter').addEventListener('input', renderSongList);
+wireSort('song', state.songSort, renderSongList);
 
 // The 24 keys (12 roots x major/minor), plus a "None" default. Values are the
 // exact strings written to metadata.json under "key".
@@ -2687,6 +2737,8 @@ const lib = {
   leadsheets: [],       // [{...entry, index}]
   selectedLs: null,     // lead-sheet index, or null
   selectedSong: null,   // song id, or null
+  lsSort: { key: 'name', dir: 'asc' },
+  songSort: { key: 'name', dir: 'asc' },
   refreshBusy: false,
 };
 
@@ -2759,8 +2811,8 @@ function renderLibLists() {
   const lsq = $('lib-ls-filter').value.toLowerCase();
   const lu = $('lib-ls-list');
   lu.innerHTML = '';
-  lib.leadsheets
-    .filter((e) => (e.title || '').toLowerCase().includes(lsq))
+  const lsRows = lib.leadsheets.filter((e) => (e.title || '').toLowerCase().includes(lsq));
+  sortLeadsheets(lsRows, lib.lsSort)
     .forEach((e) => {
       const li = document.createElement('li');
       if (lib.selectedLs === e.index) li.classList.add('active');
@@ -2782,10 +2834,11 @@ function renderLibLists() {
   const selTitle = selLs ? (selLs.title || '').trim().toLowerCase() : null;
   const su = $('lib-song-list');
   su.innerHTML = '';
-  state.songs
+  const songRows = state.songs
     .filter((s) => selTitle == null || (s.standard || '').trim().toLowerCase() === selTitle)
     .filter((s) =>
-      [s.standard, s.artist, s.album].filter(Boolean).join(' ').toLowerCase().includes(sq))
+      [s.standard, s.artist, s.album].filter(Boolean).join(' ').toLowerCase().includes(sq));
+  sortSongs(songRows, lib.songSort)
     .forEach((s) => {
       const li = document.createElement('li');
       if (lib.selectedSong === s.id) li.classList.add('active');
@@ -2803,6 +2856,8 @@ function renderLibLists() {
 }
 $('lib-ls-filter').addEventListener('input', renderLibLists);
 $('lib-song-filter').addEventListener('input', renderLibLists);
+wireSort('lib-ls', lib.lsSort, renderLibLists);
+wireSort('lib-song', lib.songSort, renderLibLists);
 
 function renderLibInspector() {
   $('lib-stats').classList.add('hidden');

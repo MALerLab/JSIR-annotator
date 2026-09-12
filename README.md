@@ -48,6 +48,11 @@ The dataset is read from this folder:
   *+ Add* adds a song by YouTube ID (which becomes its file-name stem — fill in
   its fields, then *Refresh audio* to crawl it). Lead sheets and songs can be
   deleted (song deletion removes only the metadata entry; files stay on disk).
+- Both lists (and the Edit tab's sidebar) have a **filter** box and a **sort**
+  row: by name, by artist (songs only) or by date added (the order entries sit
+  in `metadata.json` / `lead_sheets.json`), ascending or descending via the
+  arrow button. Default is name ascending. Names compare case- and
+  accent-insensitively, with numbers ordered numerically.
 - **Inspector** (right): with nothing selected it shows dataset **stats**
   (lead-sheet/song counts, completion, total & completed audio duration).
   Selecting a lead sheet opens the **Lead Sheet Info** editor: metadata fields,
@@ -102,9 +107,9 @@ selection.
 
 ## Edit tab
 
-- Pick a song in the left sidebar. The waveform loads with green beat lines
-  overlaid; saved sections (if any) appear as translucent rectangles with a
-  label tab along the top.
+- Pick a song in the left sidebar (filter and sort as in the Library tab).
+  The waveform loads with green beat lines overlaid; saved sections (if any)
+  appear as translucent rectangles with a label tab along the top.
 - **Space** play/pause · **Stop** resets to start. A white playhead tracks
   position; a metronome click fires on each beat (toggle in the toolbar).
 - **Seek**: click anywhere on the waveform.
