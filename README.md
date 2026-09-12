@@ -19,8 +19,13 @@ The dataset is read from this folder:
 
 - `lead_sheets.json` — the jazz standards: title, key, signature, tempo/feel,
   `chords_per_measure`, `chord_changes` (one string per measure), optional
-  `coda`. Fully editable from the Library tab (saved in real time; a one-time
-  `.orig` backup is made on first edit).
+  `coda`. Chords are written in **Harte notation** —
+  `{root}:{shorthand}({extensions})/{bass}`, e.g. `F:min7`, `C:7(#9)`,
+  `G:sus4(b7)`, `C:maj7/3` — with `N` for no chord and `%` for "hold the
+  previous chord". The bass after `/` is an interval above the root, not a note
+  name, so transposing a chord only moves its root. Fully editable from the
+  Library tab (saved in real time; a one-time `.orig` backup is made on first
+  edit).
 - `metadata.json` — song list (audio/beats/chords pairing + metadata), incl.
   the boolean `completed` status per song and a stable uuid4 `id` per song
   (assigned once by the app; songs added from MusicBrainz have no audio or
@@ -203,8 +208,18 @@ selection.
   exists). Each maps progression beats onto the section's beats (`%` = held
   chord, no new event) and overwrites existing chords in the section's span. If
   the recording's key differs from the lead sheet's, chords are **transposed** to
-  the recording key (toggle with the *transpose* checkbox, default on). See
-  `jsd/chords.py` for the transposition/key-comparison helpers.
+  the recording key (toggle with the *transpose* checkbox, default on).
+  Transposition shifts the note *letter* as well as the pitch, so the spelling
+  stays musical: Ab → Db turns `F:min7` into `Bb:min7`, not the enharmonic
+  `A#:min7`, and a lead sheet in Gb inserted against a song in F# is simply
+  respelled. Distant key pairs that would need a double accidental
+  (Ab's `B:maj7` in F# is strictly `G##:maj7`) fall back to a plain spelling of
+  the same pitch, sharp or flat according to the recording's key.
+  `jsd/chords.py` holds the same logic for offline use (`transpose_shift`,
+  `transpose_harte_chord`, `transpose_progression`) plus a Harte parser
+  (`parse_harte_chord`) covering the lead sheets, the chord events and the
+  Consonance ACE `.lab` inferences; `static/app.js` mirrors the transposition
+  half of it.
 - **Song Info panel** (right): the **Key** dropdown plus editable text fields
   (Standard, Artist, Album, Instrumentation, Tempo Class, Rhythm Feel, Time
   Signature, YouTube ID, MusicBrainz ID) and the integer **Number of Bars**

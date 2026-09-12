@@ -28,51 +28,96 @@ const LANE_LABEL_W = 66;      // left gutter for the sticky lane labels
 const BEAT_HIT_PX = 5;        // click tolerance for selecting/dragging a beat
 const LOOKAHEAD = 0.12;       // metronome scheduling lookahead (s)
 
-// Note-name <-> pitch-class maps for chord transposition (mirrors jsd/chords.py,
-// with the Ab/G# = 8 fix). Used to transpose lead-sheet progressions into the
-// recording's key.
-const CHORD_ROOTS = {
-  C: 0, Cb: 11, 'C#': 1, D: 2, Db: 1, 'D#': 3, E: 4, Eb: 3, 'E#': 5,
-  F: 5, Fb: 4, 'F#': 6, G: 7, Gb: 6, 'G#': 8, A: 9, Ab: 8, 'A#': 10,
-  B: 11, Bb: 10, 'B#': 0,
+// ----------------------------------------------------------------------------
+// Harte chord notation ({root}:{shorthand}({extensions})/{bass}) -- mirrors
+// jsd/chords.py. Used to transpose lead-sheet progressions into the recording's
+// key when inserting chords; only the root moves, since the shorthand, the
+// extensions and the bass are all written relative to it.
+// ----------------------------------------------------------------------------
+const NOTE_LETTERS = 'CDEFGAB';
+const LETTER_PC = [0, 2, 4, 5, 7, 9, 11];      // pitch class of each natural letter
+const SHARP_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const FLAT_NAMES = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+// Position of each major tonic on the circle of fifths (sharp keys are > 0).
+const FIFTHS = {
+  Cb: -7, Gb: -6, Db: -5, Ab: -4, Eb: -3, Bb: -2, F: -1, C: 0,
+  G: 1, D: 2, A: 3, E: 4, B: 5, 'F#': 6, 'C#': 7, 'G#': 8, 'D#': 9, 'A#': 10,
 };
-const IDX2ROOT = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
-function rootPrefix(s) {
-  if (s.length >= 2 && Object.prototype.hasOwnProperty.call(CHORD_ROOTS, s.slice(0, 2))) {
-    return [s.slice(0, 2), CHORD_ROOTS[s.slice(0, 2)]];
-  }
-  if (s.length >= 1 && Object.prototype.hasOwnProperty.call(CHORD_ROOTS, s.slice(0, 1))) {
-    return [s.slice(0, 1), CHORD_ROOTS[s.slice(0, 1)]];
-  }
-  return [null, null];
+// Leading note name of `s` -> {letter: 0-6, acc: accidentals, len: chars}.
+function parseNote(s) {
+  const m = /^([A-G])([#b]*)/.exec(s || '');
+  if (!m) return null;
+  const acc = (m[2].match(/#/g) || []).length - (m[2].match(/b/g) || []).length;
+  return { letter: NOTE_LETTERS.indexOf(m[1]), acc, len: m[0].length };
 }
 
-// Transpose a WJD chord token by `semitones`, preserving quality/extensions and
-// transposing the bass of slash chords. '%'/no-chord/unparseable pass through.
-function transposeChordToken(tok, semitones) {
-  if (!tok || tok === '%' || tok === 'NC' || tok === 'N') return tok;
-  const slash = tok.indexOf('/');
-  const main = slash >= 0 ? tok.slice(0, slash) : tok;
-  const bass = slash >= 0 ? tok.slice(slash + 1) : null;
-  const [rstr, rpc] = rootPrefix(main);
-  if (rstr === null) return tok;
-  let out = IDX2ROOT[((rpc + semitones) % 12 + 12) % 12] + main.slice(rstr.length);
-  if (bass !== null) {
-    const [bstr, bpc] = rootPrefix(bass);
-    out += '/' + (bstr !== null
-      ? IDX2ROOT[((bpc + semitones) % 12 + 12) % 12] + bass.slice(bstr.length)
-      : bass);
-  }
-  return out;
+// Pitch class of a complete note name ('Bb' -> 10), or null.
+function notePc(name) {
+  const n = parseNote(name);
+  if (!n || n.len !== String(name).length) return null;
+  return (((LETTER_PC[n.letter] + n.acc) % 12) + 12) % 12;
 }
 
-function keyToPc(k) {
-  if (!k) return null;
-  const s = String(k);
-  let root = (s.includes('-') ? s.split('-')[0] : s.split(' ')[0]).trim();
-  return Object.prototype.hasOwnProperty.call(CHORD_ROOTS, root) ? CHORD_ROOTS[root] : null;
+// Spell pitch class `pc` on note letter `letter`. Distant key pairs can push a
+// letter more than one accidental from its pitch (Ab's B:maj7 is G##:maj7 in
+// F#); those fall back to a plain sharp/flat spelling of the same pitch.
+function spellNote(letter, pc, preferSharps) {
+  const li = ((letter % 7) + 7) % 7;
+  const acc = ((((pc - LETTER_PC[li]) % 12) + 12 + 6) % 12) - 6;
+  if (Math.abs(acc) > 1) return (preferSharps ? SHARP_NAMES : FLAT_NAMES)[((pc % 12) + 12) % 12];
+  return NOTE_LETTERS[li] + (acc > 0 ? '#'.repeat(acc) : 'b'.repeat(-acc));
 }
+
+// Key label -> [root note name, mode]. Accepts the lead-sheet form ('Ab-maj')
+// and the song form ('D maj', 'F minor').
+function parseKey(k) {
+  if (!k) return [null, null];
+  const s = String(k).trim();
+  const cut = s.includes('-') ? s.indexOf('-') : s.indexOf(' ');
+  const root = (cut < 0 ? s : s.slice(0, cut)).trim();
+  if (notePc(root) === null) return [null, null];
+  const mode = (cut < 0 ? '' : s.slice(cut + 1)).trim().toLowerCase();
+  return [root, mode.startsWith('min') ? 'min' : 'maj'];
+}
+
+function keyPrefersSharps(k) {
+  const [root, mode] = parseKey(k);
+  if (root === null) return false;
+  return (FIFTHS[root] || 0) - (mode === 'min' ? 3 : 0) > 0;
+}
+
+// How to move chords written in `fromKey` so they sound in `toKey`. Shifting
+// the note letter as well as the pitch keeps the spelling musical: Ab -> Db
+// takes F:min7 to Bb:min7, not to the enharmonic A#:min7. null if either key
+// is unknown; `letters` alone (semitones 0) just respells.
+function transposeShift(fromKey, toKey) {
+  const [a] = parseKey(fromKey);
+  const [b] = parseKey(toKey);
+  if (a === null || b === null) return null;
+  return {
+    letters: ((parseNote(b).letter - parseNote(a).letter) % 7 + 7) % 7,
+    semitones: ((notePc(b) - notePc(a)) % 12 + 12) % 12,
+    sharps: keyPrefersSharps(toKey),
+  };
+}
+const shiftIsNoop = (sh) => !sh || (!sh.letters && !sh.semitones);
+
+// Transpose one Harte chord token. 'N' (no chord), '%' (hold) and anything
+// unparseable pass through untouched.
+function transposeChordToken(tok, shift) {
+  const t = String(tok || '').trim();
+  if (!t || t === '%' || t === 'N') return tok;
+  const main = t.split('/')[0];
+  const n = parseNote(main);
+  if (!n) return tok;
+  const rest = main.slice(n.len);
+  if (rest && !rest.startsWith(':')) return tok;   // not Harte -> leave alone
+  return spellNote(n.letter + shift.letters,
+    (((LETTER_PC[n.letter] + n.acc + shift.semitones) % 12) + 12) % 12,
+    shift.sharps) + t.slice(n.len);
+}
+
 const SCHED_MS = 25;          // metronome scheduler tick (ms)
 
 const state = {
@@ -1100,7 +1145,7 @@ function fmtBars(bars) {
 // ----------------------------------------------------------------------------
 // Chord-progression insertion (from lead_sheet_chords.json)
 // ----------------------------------------------------------------------------
-// Flatten bar strings ("F-7 % % %") into a per-beat token list.
+// Flatten bar strings ("F:min7 % % %") into a per-beat token list.
 function flattenChanges(changes) {
   const out = [];
   for (const bar of changes || []) {
@@ -1112,7 +1157,7 @@ function flattenChanges(changes) {
 function barTokenCount(bars) {
   return (bars && bars.length) ? String(bars[0]).trim().split(/\s+/).length : 4;
 }
-// Distinct consecutive (non-%) chords in a bar: "G-7 % C7 %" -> ["G-7","C7"].
+// Distinct consecutive (non-%) chords in a bar: "G:min7 % C:7 %" -> ["G:min7","C:7"].
 function distinctChordsInBar(bar) {
   const out = [];
   for (const tok of String(bar).trim().split(/\s+/)) {
@@ -1146,13 +1191,18 @@ function sectionBeatsIn(sec) {
     .filter((b) => b.t >= start - 1e-9 && b.t < end - 1e-9)
     .sort((a, b) => a.t - b.t);
 }
-// Semitone shift to transpose lead-sheet chords into the recording's key.
-function insertSemitones() {
-  if (!$('ins-transpose').checked) return 0;
-  const rec = keyToPc(state.current && state.current.key);
-  const ls = state.leadsheet ? keyToPc(state.leadsheet.key) : null;
-  if (rec === null || ls === null) return 0; // can't compare -> no transpose
-  return ((rec - ls) % 12 + 12) % 12;
+// How to transpose lead-sheet chords into the recording's key, or null for
+// "leave them as written" (toggle off, or either key missing/unreadable).
+function insertShift() {
+  if (!$('ins-transpose').checked) return null;
+  const sh = transposeShift(state.leadsheet && state.leadsheet.key,
+                            state.current && state.current.key);
+  return shiftIsNoop(sh) ? null : sh;
+}
+// " (transposed +5)" / " (respelled)" for the insertion status line.
+function shiftLabel(sh) {
+  if (!sh) return '';
+  return sh.semitones ? ` (transposed +${sh.semitones})` : ' (respelled)';
 }
 // Map progression beats onto the section's beats (looping), starting at
 // progression index `startOffset`, overwriting existing chords in the region.
@@ -1160,7 +1210,7 @@ function insertProgression(sec, prog, startOffset) {
   if (!prog.length) return;
   const secBeats = sectionBeatsIn(sec);
   if (!secBeats.length) { flashStatus('no beats in this section'); return; }
-  const semis = insertSemitones();
+  const shift = insertShift();
   const start = sec.time, end = sectionEnd(sec);
   pushUndo();
   // overwrite existing chord events whose start falls in the section region
@@ -1171,8 +1221,7 @@ function insertProgression(sec, prog, startOffset) {
     let tok = prog[idx];
     if (i === 0 && tok === '%') tok = resolveHeldToken(prog, idx); // establish the held chord
     if (!tok || tok === '%') continue;
-    const name = (tok === 'NC' || tok === 'N') ? 'N.C.'
-      : (semis ? transposeChordToken(tok, semis) : tok);
+    const name = shift ? transposeChordToken(tok, shift) : tok;
     state.chords.push({ time: secBeats[i].t, chord: name });
     count++;
   }
@@ -1180,7 +1229,7 @@ function insertProgression(sec, prog, startOffset) {
   markDirty();
   scheduleRender();
   updateInspector();
-  flashStatus(`inserted ${count} chords${semis ? ` (transposed +${semis})` : ''}`);
+  flashStatus(`inserted ${count} chords${shiftLabel(shift)}`);
 }
 
 // Measure-based insertion, used when the section's beats-per-measure differs
@@ -1193,7 +1242,7 @@ function insertProgressionMeasures(sec, bars, startBarOffset) {
   const secBeats = sectionBeatsIn(sec);
   if (!secBeats.length) { flashStatus('no beats in this section'); return; }
   const bpm = sectionBeatsPerMeasure(sec);
-  const semis = insertSemitones();
+  const shift = insertShift();
   const start = sec.time, end = sectionEnd(sec);
   pushUndo();
   state.chords = state.chords.filter((c) => !(c.time >= start - 1e-9 && c.time < end - 1e-9));
@@ -1208,8 +1257,7 @@ function insertProgressionMeasures(sec, bars, startBarOffset) {
       const pos = positions[k];
       if (pos >= mBeats.length) continue;
       const tok = chords[k];
-      const name = (tok === 'NC' || tok === 'N') ? 'N.C.'
-        : (semis ? transposeChordToken(tok, semis) : tok);
+      const name = shift ? transposeChordToken(tok, shift) : tok;
       state.chords.push({ time: mBeats[pos].t, chord: name });
       count++;
     }
@@ -1218,7 +1266,7 @@ function insertProgressionMeasures(sec, bars, startBarOffset) {
   markDirty();
   scheduleRender();
   updateInspector();
-  flashStatus(`inserted ${count} chords${semis ? ` (transposed +${semis})` : ''}`);
+  flashStatus(`inserted ${count} chords${shiftLabel(shift)}`);
 }
 function flashStatus(msg) { setStatus(msg); setTimeout(() => setStatus(''), 2000); }
 
@@ -1815,7 +1863,7 @@ function addChordAtPlayhead() {
     state.selected = { kind: 'chord', obj: existing };
   } else {
     pushUndo();
-    const ch = { time: t, chord: 'N.C.' };
+    const ch = { time: t, chord: 'N' };
     state.chords.push(ch);
     state.chords.sort((a, b) => a.time - b.time);
     state.selected = { kind: 'chord', obj: ch };
