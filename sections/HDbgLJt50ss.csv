@@ -1,0 +1,12 @@
+time,name,beats_per_measure
+0.270,intro,
+106.150,head:horn,
+157.000,solo:horn,
+205.865,solo:horn,
+254.830,solo:horn,
+302.485,exclude,
+438.200,interlude,
+456.310,head:horn,
+504.916,exclude,
+524.590,interlude,
+536.740,outro,

@@ -1,0 +1,9 @@
+time,name,beats_per_measure
+19.990,head:piano,
+62.000,solo:piano,
+283.860,solo:bass,
+374.390,"trade:piano,drum",
+465.820,head:piano,
+508.520,solo:piano,
+567.540,exclude,
+582.390,solo:piano,

@@ -278,6 +278,18 @@ wireSort('song', state.songSort, renderSongList);
 // The 24 keys (12 roots x major/minor), plus a "None" default. Values are the
 // exact strings written to metadata.json under "key".
 const KEY_ROOTS = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
+// Harmonic idiom of a standard; carried by both lead sheets and songs.
+const TONALITIES = ['functional', 'blues', 'modal'];
+
+// Fixed-vocabulary field: a <select> tagged like the text inputs beside it, so
+// the same change handler saves it. The blank option means "unset".
+function fieldSelectHtml(attr, key, value, options) {
+  return `<select ${attr}="${key}">` +
+    ['', ...options].map((o) =>
+      `<option value="${escapeHtml(o)}"${o === value ? ' selected' : ''}>` +
+      `${o ? escapeHtml(o) : '—'}</option>`).join('') +
+    '</select>';
+}
 
 function populateKeySelect() {
   const sel = $('key-select');
@@ -338,15 +350,18 @@ const SONG_META_FIELDS = [
   ['tempo_class', 'Tempo Class', 'text'],
   ['rhythm_feel', 'Rhythm Feel', 'text'],
   ['time_signature', 'Time Signature', 'text'],
+  ['tonality', 'Tonality', 'select', TONALITIES],
   ['yt_id', 'YouTube ID', 'text'],
   ['musicbrainz_id', 'MusicBrainz ID', 'text'],
 ];
 function songFieldsHtml(song, attr) {
-  return SONG_META_FIELDS.map(([k, label, type]) => {
-    const val = song[k] == null ? '' : song[k];
+  return SONG_META_FIELDS.map(([k, label, type, options]) => {
+    const val = String(song[k] == null ? '' : song[k]);
     const extra = type === 'number' ? ' step="1" min="0"' : '';
-    return `<div class="pf"><label>${label}</label>` +
-      `<input type="${type}" ${attr}="${k}"${extra} value="${escapeHtml(String(val))}" /></div>`;
+    const field = type === 'select'
+      ? fieldSelectHtml(attr, k, val, options)
+      : `<input type="${type}" ${attr}="${k}"${extra} value="${escapeHtml(val)}" />`;
+    return `<div class="pf"><label>${label}</label>${field}</div>`;
   }).join('');
 }
 
@@ -530,7 +545,7 @@ async function saveMetaField(field, rawValue) {
 }
 
 $('panel-fields').addEventListener('change', (e) => {
-  const inp = e.target.closest('input[data-field]');
+  const inp = e.target.closest('[data-field]');
   if (inp) saveMetaField(inp.dataset.field, inp.value);
 });
 
@@ -3035,14 +3050,31 @@ const LS_FIELDS = [
   ['signature', 'Time Signature'],
   ['tempoclass', 'Tempo Class'],
   ['rhythmfeel', 'Rhythm Feel'],
+  ['tonality', 'Tonality', 'select', TONALITIES],
 ];
+// Fields that can be pushed onto every song of the standard; the lead-sheet ->
+// song field mapping (and the key translation) lives in app.py.
+const LS_ASSIGNABLE = new Set(['key', 'signature', 'tempoclass', 'rhythmfeel', 'tonality']);
+
+function songsOfStandard(title) {
+  const t = (title || '').trim().toLowerCase();
+  return t ? state.songs.filter((s) => (s.standard || '').trim().toLowerCase() === t) : [];
+}
 
 function renderLsInfo(e) {
   $('lib-ls-info').classList.remove('hidden');
-  $('ls-fields').innerHTML = LS_FIELDS.map(([k, label]) =>
-    `<div class="pf"><label>${label}</label>` +
-    `<input type="text" data-lsfield="${k}" value="${escapeHtml(String(e[k] == null ? '' : e[k]))}" /></div>`
-  ).join('');
+  $('ls-fields').innerHTML = LS_FIELDS.map(([k, label, type, options]) => {
+    const val = String(e[k] == null ? '' : e[k]);
+    const field = type === 'select'
+      ? fieldSelectHtml('data-lsfield', k, val, options)
+      : `<input type="text" data-lsfield="${k}" value="${escapeHtml(val)}" />`;
+    const assign = LS_ASSIGNABLE.has(k)
+      ? `<button class="small" data-lsassign="${k}" ` +
+        `title="Assign this ${label.toLowerCase()} to every song of this standard">Assign</button>`
+      : '';
+    return `<div class="pf"><label>${label}</label>` +
+      `<div class="pf-row">${field}${assign}</div></div>`;
+  }).join('');
   renderLsMbLink(e);
   $('ls-cpm').value = lsCpm(e);
   renderChordGrid($('ls-grid'), e.chord_changes || [], lsCpm(e), 'chord_changes');
@@ -3076,7 +3108,7 @@ async function saveLsFields(fields) {
 }
 
 $('ls-fields').addEventListener('change', (ev) => {
-  const inp = ev.target.closest('input[data-lsfield]');
+  const inp = ev.target.closest('[data-lsfield]');
   const e = currentLs();
   if (!inp || !e) return;
   const k = inp.dataset.lsfield, v = inp.value.trim();
@@ -3084,6 +3116,50 @@ $('ls-fields').addEventListener('change', (ev) => {
   saveLsFields({ [k]: v });
   if (k === 'title') renderLibLists();          // list rows + song filtering
   if (k === 'signature') renderLsInfo(e);       // default cpm may change
+});
+
+// Push one lead-sheet field onto every song of this standard.
+$('ls-fields').addEventListener('click', async (ev) => {
+  const btn = ev.target.closest('button[data-lsassign]');
+  const e = currentLs();
+  if (!btn || !e) return;
+  const field = btn.dataset.lsassign;
+  const value = String(e[field] == null ? '' : e[field]).trim();
+  if (!value) { $('ls-status').textContent = `no ${field} to assign`; return; }
+  const n = songsOfStandard(e.title).length;
+  if (!n) { $('ls-status').textContent = 'no songs of this standard'; return; }
+  if (!confirm(`Assign ${field} "${value}" to all ${n} song(s) of "${e.title}"?`)) return;
+  btn.disabled = true;
+  $('ls-status').textContent = 'assigning…';
+  try {
+    const r = await fetch(`/api/leadsheets/${e.index}/assign`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ field }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.ok) throw new Error(d.error || `HTTP ${r.status}`);
+    await loadSongs();               // list rows follow the change
+    const cur = state.current;       // ...and so does the Edit tab, if it shows one
+    if (cur && songsOfStandard(e.title).some((s) => s.id === cur.id)) {
+      cur[d.song_field] = d.value;
+      const el = d.song_field === 'key'
+        ? $('key-select')   // the key lives in its own dropdown, not the field list
+        : $('panel-fields').querySelector(`[data-field="${d.song_field}"]`);
+      if (el) el.value = d.value;
+      // time signature changes the default beats-per-measure -> refresh lane/lengths
+      if (d.song_field === 'time_signature') { scheduleRender(); updateInspector(); }
+    }
+    renderLibrary();                 // re-renders this panel (and its status)
+    $('ls-status').textContent = `assigned to ${d.changed} of ${d.matched} song(s) ✓`;
+    setTimeout(() => {
+      if ($('ls-status').textContent.endsWith('✓')) $('ls-status').textContent = '';
+    }, 2500);
+  } catch (err) {
+    $('ls-status').textContent = 'assign failed: ' + err.message;
+    console.error(err);
+    btn.disabled = false;
+  }
 });
 
 // ---- chords-per-measure ----------------------------------------------------
@@ -3302,7 +3378,7 @@ function updateLibSongLinks(s) {
   $('lib-song-links').innerHTML = links.join('');
 }
 $('lib-song-fields').addEventListener('change', (ev) => {
-  const inp = ev.target.closest('input[data-libfield]');
+  const inp = ev.target.closest('[data-libfield]');
   const s = currentLibSong();
   if (!inp || !s) return;
   const field = inp.dataset.libfield, value = inp.value.trim();
@@ -3450,6 +3526,7 @@ function inheritedFromLs(ls) {
   if (ls.tempoclass) out.tempo_class = ls.tempoclass;
   if (ls.rhythmfeel) out.rhythm_feel = ls.rhythmfeel;
   if (ls.signature) out.time_signature = ls.signature;
+  if (ls.tonality) out.tonality = ls.tonality;
   return out;
 }
 

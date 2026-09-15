@@ -67,6 +67,9 @@ MB_MIN_INTERVAL = 1.1
 MB_BATCH = 50          # recording ids per search query (URL-length bound)
 YT_ID_RE = re.compile(r"[A-Za-z0-9_-]{1,64}")
 
+# Harmonic idiom of a standard; carried by both lead sheets and songs.
+TONALITIES = ("functional", "blues", "modal")
+
 # Directory holding this interpreter's console scripts (DBNBeatTracker, etc.).
 BIN_DIR = os.path.dirname(sys.executable)
 
@@ -117,6 +120,28 @@ def find_leadsheet_by_title(title):
         if (entry.get("title") or "").strip().lower() == title:
             return entry
     return None
+
+
+def normalize_tonality(value):
+    """One of TONALITIES, or "" for anything else (blank included)."""
+    value = ("" if value is None else str(value)).strip().lower()
+    return value if value in TONALITIES else ""
+
+
+# The key vocabularies differ: lead sheets write "Ab-maj", songs "Ab maj", and
+# songs only use these twelve roots (sharps folded to their flat spelling).
+KEY_ROOTS = ("C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B")
+ENHARMONIC = {"C#": "Db", "D#": "Eb", "Gb": "F#", "G#": "Ab", "A#": "Bb"}
+LS_KEY_RE = re.compile(r"([A-G][b#]?)[\s-]*(maj|min)", re.I)
+
+
+def ls_key_to_song_key(key):
+    """'Ab-maj' -> 'Ab maj'; '' when the lead sheet's key is unusable."""
+    m = LS_KEY_RE.match((key or "").strip())
+    if not m:
+        return ""
+    root = ENHARMONIC.get(m.group(1), m.group(1))
+    return f"{root} {m.group(2).lower()}" if root in KEY_ROOTS else ""
 
 
 def save_metadata(meta):
@@ -483,6 +508,14 @@ def api_leadsheet():
 # --------------------------------------------------------------------------- #
 LS_EDITABLE_TEXT = {"title", "key", "signature", "tempoclass", "rhythmfeel",
                     "musicbrainz_id", "composer"}
+# Lead-sheet field -> the song field it is pushed onto by "Assign" (Library).
+LS_ASSIGN_FIELDS = {
+    "key": "key",
+    "signature": "time_signature",
+    "tempoclass": "tempo_class",
+    "rhythmfeel": "rhythm_feel",
+    "tonality": "tonality",
+}
 
 
 def sweep_mb_cache(leadsheets=None):
@@ -519,6 +552,7 @@ def api_leadsheets_create():
     entry = {
         "title": title,
         "signature": "4/4",
+        "tonality": "functional",
         "chords_per_measure": 4,
         "chord_changes": ["% % % %"],
     }
@@ -537,7 +571,13 @@ def api_leadsheets_update(idx):
     entry = data[idx]
     old_work = entry.get("musicbrainz_id")
     for key, value in fields.items():
-        if key in LS_EDITABLE_TEXT:
+        if key == "tonality":
+            value = normalize_tonality(value)
+            if value:
+                entry[key] = value
+            else:
+                entry.pop(key, None)
+        elif key in LS_EDITABLE_TEXT:
             value = ("" if value is None else str(value)).strip()
             if value:
                 entry[key] = value
@@ -559,6 +599,46 @@ def api_leadsheets_update(idx):
         if entry.get("musicbrainz_id"):
             _persist_mb_result(entry["musicbrainz_id"])   # already fetched in step 1?
     return jsonify({"ok": True})
+
+
+@app.route("/api/leadsheets/<int:idx>/assign", methods=["POST"])
+def api_leadsheets_assign(idx):
+    """Copy one lead-sheet field onto every song of that standard (Library's
+    "Assign" buttons). Songs are matched by title, the way the Edit tab already
+    looks a lead sheet up for a song."""
+    payload = request.get_json(force=True) or {}
+    field = payload.get("field")
+    song_field = LS_ASSIGN_FIELDS.get(field)
+    if song_field is None:
+        return jsonify({"ok": False, "error": f"'{field}' cannot be assigned"}), 400
+    data = load_leadsheets_list()
+    if not (0 <= idx < len(data)):
+        abort(404, "lead sheet not found")
+    ls = data[idx]
+    title = (ls.get("title") or "").strip().lower()
+    if not title:
+        return jsonify({"ok": False, "error": "this lead sheet has no title"}), 400
+    value = (str(ls.get(field) or "")).strip()
+    if field == "key":
+        value = ls_key_to_song_key(value)   # "Ab-maj" -> the song vocabulary
+    elif field == "tonality":
+        value = normalize_tonality(value)
+    if not value:
+        return jsonify({"ok": False,
+                        "error": f"this lead sheet has no usable {field}"}), 400
+    meta = load_metadata()
+    matched = changed = 0
+    for entry in meta:
+        if (entry.get("standard") or "").strip().lower() != title:
+            continue
+        matched += 1
+        if entry.get(song_field) != value:
+            entry[song_field] = value
+            changed += 1
+    if changed:
+        save_metadata(meta)
+    return jsonify({"ok": True, "field": field, "song_field": song_field,
+                    "value": value, "matched": matched, "changed": changed})
 
 
 @app.route("/api/leadsheets/<int:idx>", methods=["DELETE"])
@@ -645,7 +725,7 @@ def api_save_key(song):
 # Fields in the Song Info panel that the UI may edit in place.
 ALLOWED_META_FIELDS = {
     "standard", "artist", "album", "instrumentation", "musicbrainz_id", "yt_id",
-    "tempo_class", "rhythm_feel", "time_signature",
+    "tempo_class", "rhythm_feel", "time_signature", "tonality",
 }
 # Integer-valued editable fields (stored as ints, not strings).
 ALLOWED_INT_FIELDS = {"num_bars"}
@@ -655,7 +735,13 @@ ALLOWED_BOOL_FIELDS = {"completed"}
 
 def _apply_meta_fields(entry, fields):
     for key, value in fields.items():
-        if key in ALLOWED_BOOL_FIELDS:
+        if key == "tonality":
+            value = normalize_tonality(value)
+            if value:
+                entry[key] = value
+            else:
+                entry.pop(key, None)  # blank/unknown -> remove
+        elif key in ALLOWED_BOOL_FIELDS:
             entry[key] = bool(value)
         elif key in ALLOWED_INT_FIELDS:
             raw = ("" if value is None else str(value)).strip()

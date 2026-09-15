@@ -5,6 +5,7 @@
     "rhythmfeel": "SWING",
     "key": "Ab-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "F:min7 % % %",
       "C:7(#9) % % %",
@@ -42,7 +43,9 @@
       "Eb:7 % % %",
       "Ab:maj6 % % %",
       "G:hdim7 % C:7(b9) %"
-    ]
+    ],
+    "musicbrainz_id": "e5413e11-6aec-3b13-8989-8a531202fbd4",
+    "composer": "Sonny Rollins"
   },
   {
     "title": "All the Things You Are",
@@ -50,6 +53,7 @@
     "rhythmfeel": "SWING",
     "key": "Ab-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "F:min7 % % %",
       "Bb:min7 % % %",
@@ -97,6 +101,7 @@
     "rhythmfeel": "SWING",
     "key": "D-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "D:min6 % % %",
       "E:hdim7 % A:7(b9) %",
@@ -150,6 +155,7 @@
     "rhythmfeel": "LATIN",
     "key": "Ab-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Bb:min7 % % %",
       "B:min7 % E:7 %",
@@ -193,6 +199,7 @@
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Bb:maj6 % G:7 %",
       "C:min7 % F:7 %",
@@ -234,6 +241,7 @@
     "rhythmfeel": "SWING",
     "key": "F-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "F:7 % % %",
       "Bb:7 % % %",
@@ -247,7 +255,9 @@
       "C:7 % % %",
       "F:7 % % %",
       "C:7 % % %"
-    ]
+    ],
+    "musicbrainz_id": "e8381339-0422-421f-9fb8-f7a4211ce05c",
+    "composer": "Milt Jackson"
   },
   {
     "title": "Bessie's Blues",
@@ -255,6 +265,7 @@
     "rhythmfeel": "SWING",
     "key": "Eb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Eb:7 % % %",
       "Ab:7 % % %",
@@ -276,6 +287,7 @@
     "rhythmfeel": "SWING",
     "key": "F-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "F:7 % % %",
       "Bb:7 % % %",
@@ -289,7 +301,9 @@
       "C:7 % % %",
       "F:7 % % %",
       "C:7 % % %"
-    ]
+    ],
+    "musicbrainz_id": "03c08242-8b84-32cd-a807-36176b3a50f0",
+    "composer": "Charlie Parker"
   },
   {
     "title": "Blue Train",
@@ -297,6 +311,7 @@
     "rhythmfeel": "SWING",
     "key": "Eb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Eb:7 % % %",
       "Ab:7 % % %",
@@ -318,6 +333,7 @@
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Bb:7 % % %",
       "Eb:7 % % %",
@@ -339,6 +355,7 @@
     "rhythmfeel": "SWING",
     "key": "F-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "F:maj7 % % %",
       "E:hdim7 % A:7(b9) %",
@@ -360,6 +377,7 @@
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Bb:7 % % %",
       "Eb:7 % % %",
@@ -381,6 +399,7 @@
     "rhythmfeel": "SWING",
     "key": "G-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "G:maj7 % % %",
       "G:maj7 % % %",
@@ -414,7 +433,9 @@
       "D:7 % % %",
       "G:maj7 % % %",
       "G:maj7 % % %"
-    ]
+    ],
+    "musicbrainz_id": "a9afcd74-b1d0-30b6-b63c-5a09a45f5bcf",
+    "composer": "Ray Henderson"
   },
   {
     "title": "Caravan",
@@ -422,6 +443,7 @@
     "rhythmfeel": "SWING",
     "key": "F-min",
     "signature": "4/4",
+    "tonality": "modal",
     "chord_changes": [
       "C:7(b9) % % %",
       "C:7(b9) % % %",
@@ -487,7 +509,9 @@
       "F:min % % %",
       "F:min % % %",
       "F:min % % %"
-    ]
+    ],
+    "musicbrainz_id": "b9bcd99f-02df-352a-a749-c4805efb7335",
+    "composer": "Juan Tizol, Duke Ellington"
   },
   {
     "title": "Cherokee",
@@ -495,6 +519,7 @@
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Bb:maj7 % % %",
       "Bb:maj7 % % %",
@@ -560,7 +585,9 @@
       "F:7 % % %",
       "Bb:maj6 % % %",
       "Bb:maj6 % % %"
-    ]
+    ],
+    "musicbrainz_id": "945070ce-3f47-3c6c-9d2c-deed2cb0ceaa",
+    "composer": "Ray Noble"
   },
   {
     "title": "Confirmation",
@@ -568,6 +595,7 @@
     "rhythmfeel": "SWING",
     "key": "F-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "F:maj7 % % %",
       "E:hdim7 % A:7 %",
@@ -601,7 +629,9 @@
       "A:hdim7 % D:7 %",
       "G:min7 % C:7 %",
       "F:maj7 % % %"
-    ]
+    ],
+    "musicbrainz_id": "f56a7b7a-b9a7-37ad-b94b-035a82b904fb",
+    "composer": "Charlie Parker"
   },
   {
     "title": "Countdown",
@@ -609,6 +639,7 @@
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "E:min7 % F:7 %",
       "Bb:maj7 % Db:7 %",
@@ -634,6 +665,7 @@
     "rhythmfeel": "LATIN",
     "key": "F-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "F:maj7 % % %",
       "F:maj7 % % %",
@@ -706,7 +738,9 @@
     ],
     "coda": [
       "F:maj % % %"
-    ]
+    ],
+    "musicbrainz_id": "807b8169-cb39-30c7-a9e2-d8491fc97651",
+    "composer": "Antônio Carlos Jobim"
   },
   {
     "title": "Dolphin Dance",
@@ -714,6 +748,7 @@
     "rhythmfeel": "SWING",
     "key": null,
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "C:min7 % % %",
       "Ab:7(9,#11) % % %",
@@ -757,6 +792,7 @@
     "rhythmfeel": "SWING",
     "key": "C-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "C:maj7 % % %",
       "C:maj7 % % %",
@@ -790,7 +826,9 @@
       "G:7 % % %",
       "C:maj % % %",
       "C:maj % G:7 %"
-    ]
+    ],
+    "musicbrainz_id": "57d2f184-b33c-3ad1-92a1-870a5caa1fe1",
+    "composer": "Duke Ellington"
   },
   {
     "title": "Donna Lee",
@@ -798,6 +836,7 @@
     "rhythmfeel": "SWING",
     "key": "Ab-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Ab:maj % % %",
       "F:7 % % %",
@@ -831,7 +870,9 @@
       "Bb:min7 % Eb:7 %",
       "Ab:maj % % %",
       "Bb:min7 % Eb:7 %"
-    ]
+    ],
+    "musicbrainz_id": "6b3e823f-070a-3a30-ba79-668f416ac56d",
+    "composer": "Charlie Parker, Miles Davis"
   },
   {
     "title": "E.S.P.",
@@ -839,6 +880,7 @@
     "rhythmfeel": "SWING",
     "key": "F-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "E:7 % % %",
       "E:7 % % %",
@@ -880,6 +922,7 @@
     "rhythmfeel": "SWING",
     "key": "G-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "G:maj6 % % %",
       "Bb:dim7 % % %",
@@ -913,7 +956,9 @@
       "A:hdim7 % D:7 %",
       "G:maj6 % % %",
       "A:min7 % D:7 %"
-    ]
+    ],
+    "musicbrainz_id": "13869248-f36a-3fe0-a8bd-7c0d2793d8d9",
+    "composer": "George Gershwin"
   },
   {
     "title": "Footprints",
@@ -921,6 +966,7 @@
     "rhythmfeel": "SWING",
     "key": "C-min",
     "signature": "6/4",
+    "tonality": "functional",
     "chord_changes": [
       "C:min7 % % % % %",
       "C:min7 % % % % %",
@@ -942,6 +988,7 @@
     "rhythmfeel": "SWING",
     "key": "Eb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "B:maj7 % D:7 %",
       "G:maj7 % Bb:7 %",
@@ -959,7 +1006,9 @@
       "F:min7 % Bb:7 %",
       "Eb:maj7 % % %",
       "C#:min7 % F#:7 %"
-    ]
+    ],
+    "musicbrainz_id": "c53130a9-3173-37d2-bedd-f7b6a2e17b89",
+    "composer": "John Coltrane"
   },
   {
     "title": "Good Bait",
@@ -967,6 +1016,7 @@
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Bb:maj6 % G:7 %",
       "C:min7 % F:7 F:7/b7",
@@ -1008,6 +1058,7 @@
     "rhythmfeel": "SWING",
     "key": "Db-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Eb:maj7 % % %",
       "Eb:maj7 % % %",
@@ -1049,6 +1100,7 @@
     "rhythmfeel": "SWING",
     "key": "F-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "G:min7 % C:7 %",
       "G:min7 % C:7 %",
@@ -1082,7 +1134,9 @@
       "F:maj % % %",
       "F:maj % % %",
       "F:maj % % %"
-    ]
+    ],
+    "musicbrainz_id": "8cb1dec5-951d-3ade-9466-29e3269b0dec",
+    "composer": "Fats Waller"
   },
   {
     "title": "Hot House",
@@ -1090,6 +1144,7 @@
     "rhythmfeel": "SWING",
     "key": "C-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "G:hdim7 % % %",
       "C:7(b9) % % %",
@@ -1123,7 +1178,9 @@
       "G:7(b9) % % %",
       "C:maj7 % % %",
       "C:maj7 % % %"
-    ]
+    ],
+    "musicbrainz_id": "f838608f-f99a-366c-95ad-9fbfda213409",
+    "composer": "Tadd Dameron"
   },
   {
     "title": "How Deep Is the Ocean",
@@ -1131,6 +1188,7 @@
     "rhythmfeel": "SWING",
     "key": "C-min",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "C:min7 % % %",
       "B:dim7 % % %",
@@ -1172,6 +1230,7 @@
     "rhythmfeel": "SWING",
     "key": "G-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "G:maj7 % % %",
       "G:maj7 % % %",
@@ -1198,6 +1257,7 @@
     "rhythmfeel": "SWING",
     "key": "C-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "C:maj7 % A:min7 %",
       "D:min7 % G:7 %",
@@ -1231,7 +1291,9 @@
       "D:min7 % G:7 %",
       "C:maj6 % % %",
       "D:min7 % G:7 %"
-    ]
+    ],
+    "musicbrainz_id": "fc4b0fb3-8b63-3d8c-a61c-a43e1c427d73",
+    "composer": "Vernon Duke"
   },
   {
     "title": "I Got Rhythm",
@@ -1239,6 +1301,7 @@
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Bb:maj7 % G:min7 %",
       "C:min7 % F:7 %",
@@ -1280,7 +1343,9 @@
       "D:min7 % G:7 %",
       "C:min7 % F:7 %",
       "Bb:maj7 % % %"
-    ]
+    ],
+    "musicbrainz_id": "e0898f8d-77ff-314e-9888-1bfdc73dc2d8",
+    "composer": "George Gershwin"
   },
   {
     "title": "I Mean You",
@@ -1288,6 +1353,7 @@
     "rhythmfeel": "SWING",
     "key": "F-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "F:maj6 % % %",
       "F:maj6 % % %",
@@ -1324,7 +1390,9 @@
     ],
     "coda": [
       "Eb:7 % % %"
-    ]
+    ],
+    "musicbrainz_id": "41d3197e-6df5-337b-8991-dca4d87788f6",
+    "composer": "Coleman Hawkins, Thelonious Monk"
   },
   {
     "title": "I'll Remember April",
@@ -1332,6 +1400,7 @@
     "rhythmfeel": "SWING",
     "key": "G-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "G:maj7 % % %",
       "G:maj6 % % %",
@@ -1385,7 +1454,9 @@
     "coda": [
       "B:min % Bb:maj %",
       "A:min % Ab:maj %"
-    ]
+    ],
+    "musicbrainz_id": "20a8d308-3ad3-32ed-a142-a33d7efc4f34",
+    "composer": "Gene de Paul"
   },
   {
     "title": "If I Were a Bell",
@@ -1393,6 +1464,7 @@
     "rhythmfeel": "SWING",
     "key": "F-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "G:7 % % %",
       "G:min7 % C:7 %",
@@ -1434,6 +1506,7 @@
     "rhythmfeel": "SWING",
     "key": "D-min",
     "signature": "4/4",
+    "tonality": "modal",
     "chord_changes": [
       "D:min7 % % %",
       "D:min7 % % %",
@@ -1467,7 +1540,9 @@
       "D:min7 % % %",
       "D:min7 % % %",
       "D:min7 % % %"
-    ]
+    ],
+    "musicbrainz_id": "0ae8eb6b-a04a-35ad-9c0a-f5a9cef7ed6a",
+    "composer": "John Coltrane"
   },
   {
     "title": "In a Mellow Tone",
@@ -1475,6 +1550,7 @@
     "rhythmfeel": "SWING",
     "key": "Eb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "F:7 % % %",
       "Bb:7 % % %",
@@ -1516,6 +1592,7 @@
     "rhythmfeel": "SWING",
     "key": "D-min",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "D:min % D:minmaj7 %",
       "D:min7 % D:min6 %",
@@ -1550,6 +1627,7 @@
     "rhythmfeel": "SWING",
     "key": "F-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "F:maj7 % % %",
       "G:min7 % C:7 %",
@@ -1583,7 +1661,9 @@
       "G:min7 % C:7 %",
       "F:maj % % %",
       "G:min7 % C:7 %"
-    ]
+    ],
+    "musicbrainz_id": "26e91ad4-96bb-3177-876d-3476d2f8f506",
+    "composer": "Clifford Brown"
   },
   {
     "title": "Just Friends",
@@ -1591,6 +1671,7 @@
     "rhythmfeel": "SWING",
     "key": "G-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "C:maj7 % % %",
       "C:maj7 % % %",
@@ -1624,14 +1705,17 @@
       "A:min7 % D:7 %",
       "G:maj7 % % %",
       "D:min7 % G:7 %"
-    ]
+    ],
+    "musicbrainz_id": "c06b8498-ad26-3048-ac3b-c3acb5087885",
+    "composer": "John Klenner"
   },
   {
     "title": "Maiden Voyage",
     "tempoclass": "MEDIUM",
-    "rhythmfeel": "SWING",
+    "rhythmfeel": "STRAIGHT",
     "key": null,
     "signature": "4/4",
+    "tonality": "modal",
     "chord_changes": [
       "D:sus4(b7) % % %",
       "D:sus4(b7) % % %",
@@ -1665,7 +1749,9 @@
       "F:sus4(b7) % % %",
       "F:sus4(b7) % % %",
       "F:sus4(b7) % % %"
-    ]
+    ],
+    "musicbrainz_id": "92be6b6d-4715-32d8-bd95-9305892070b0",
+    "composer": "Herbie Hancock"
   },
   {
     "title": "Milestones",
@@ -1673,6 +1759,7 @@
     "rhythmfeel": "SWING",
     "key": "F-maj",
     "signature": "4/4",
+    "tonality": "modal",
     "chord_changes": [
       "G:min7 % % %",
       "G:min7 % % %",
@@ -1714,7 +1801,9 @@
       "G:min7 % % %",
       "G:min7 % % %",
       "G:min7 % % %"
-    ]
+    ],
+    "musicbrainz_id": "8e897f2c-285a-327b-bb74-6dff23096b62",
+    "composer": "Miles Davis"
   },
   {
     "title": "My Funny Valentine",
@@ -1722,6 +1811,7 @@
     "rhythmfeel": "SWING",
     "key": "C-min",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "C:min % % %",
       "C:minmaj7 % % %",
@@ -1759,7 +1849,9 @@
       "F:min7 % Bb:7(b9) %",
       "Eb:maj % % %",
       "D:hdim7 % G:7(b9) %"
-    ]
+    ],
+    "composer": "Richard Rodgers",
+    "musicbrainz_id": "24370021-5f38-39cf-9494-001b10a66181"
   },
   {
     "title": "My Little Suede Shoes",
@@ -1767,6 +1859,7 @@
     "rhythmfeel": "LATIN",
     "key": "Eb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "F:min7 % Bb:7 %",
       "Eb:maj7 % % %",
@@ -1808,6 +1901,7 @@
     "rhythmfeel": "LATIN",
     "key": "Eb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "F:hdim7 % % %",
       "Bb:7 % % %",
@@ -1882,6 +1976,7 @@
     "rhythmfeel": "SWING",
     "key": "D-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "E:hdim7 % % %",
       "A:7 % % %",
@@ -1939,6 +2034,7 @@
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Bb:maj7 % G:7 %",
       "C:min7 % F:7 %",
@@ -1972,7 +2068,9 @@
       "Eb:maj7 % Eb:min6 %",
       "D:min7 % G:7 %",
       "F:7 % Bb:maj7 %"
-    ]
+    ],
+    "musicbrainz_id": "9bd0305e-0636-3624-972e-ec5b55631ea8",
+    "composer": "Sonny Rollins"
   },
   {
     "title": "On Green Dolphin Street",
@@ -1980,6 +2078,7 @@
     "rhythmfeel": "SWING",
     "key": "Eb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Eb:maj7 % % %",
       "Eb:maj7 % % %",
@@ -2021,7 +2120,9 @@
       "F:min7 % Bb:7 %",
       "Eb:maj7 % % %",
       "Eb:maj7 % % %"
-    ]
+    ],
+    "musicbrainz_id": "39d87891-d664-3db0-a4a3-e5e3eabb72ba",
+    "composer": "Bronisław Kaper"
   },
   {
     "title": "Ornithology",
@@ -2029,6 +2130,7 @@
     "rhythmfeel": "SWING",
     "key": "G-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "G:maj7 % % %",
       "G:maj7 % % %",
@@ -2062,7 +2164,9 @@
       "A:min7 % Ab:7 %",
       "G:maj7 % % %",
       "A:min7 % D:7 %"
-    ]
+    ],
+    "musicbrainz_id": "6c3b2860-0c5f-38fc-9e92-bc5765ec131f",
+    "composer": "Charlie Parker, Benny Harris"
   },
   {
     "title": "Out of Nowhere",
@@ -2070,6 +2174,7 @@
     "rhythmfeel": "SWING",
     "key": "G-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "G:maj7 % % %",
       "G:maj7 % % %",
@@ -2111,6 +2216,7 @@
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "C:min7 % % %",
       "F:7 % % %",
@@ -2144,7 +2250,9 @@
       "F:7 % % %",
       "Bb:maj6 % % %",
       "D:min7 % G:7 %"
-    ]
+    ],
+    "musicbrainz_id": "48c04509-35d7-3b90-8978-a0663325ba95",
+    "composer": "Juan Tizol"
   },
   {
     "title": "Sandu",
@@ -2152,6 +2260,7 @@
     "rhythmfeel": "SWING",
     "key": "Eb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Eb:7 % % %",
       "Ab:7 % % %",
@@ -2173,6 +2282,7 @@
     "rhythmfeel": "SWING",
     "key": "D-min",
     "signature": "4/4",
+    "tonality": "modal",
     "chord_changes": [
       "D:min7 % % %",
       "D:min7 % % %",
@@ -2206,7 +2316,9 @@
       "D:min7 % % %",
       "D:min7 % % %",
       "D:min7 % % %"
-    ]
+    ],
+    "musicbrainz_id": "2fafd730-423f-342e-b6c7-3a7d6599a72e",
+    "composer": "Miles Davis"
   },
   {
     "title": "Softly as in a Morning Sunrise",
@@ -2214,6 +2326,7 @@
     "rhythmfeel": "SWING",
     "key": "C-min",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "C:min7 % % %",
       "D:hdim7 % G:7 %",
@@ -2255,6 +2368,7 @@
     "rhythmfeel": "SWING",
     "key": "Ab-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Bb:min7 % % %",
       "Gb:7 F:7 E:7 Eb:7",
@@ -2288,7 +2402,9 @@
       "Bb:min7 % Eb:7 %",
       "Ab:maj7 % % %",
       "C:hdim7 % F:7(b9) %"
-    ]
+    ],
+    "musicbrainz_id": "b831f84a-b8d4-30cf-a875-6f1cda2f66ea",
+    "composer": "Duke Ellington"
   },
   {
     "title": "Speak No Evil",
@@ -2296,6 +2412,7 @@
     "rhythmfeel": "SWING",
     "key": "C-min",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "C:min7 % % %",
       "Db:maj7 % % %",
@@ -2355,6 +2472,7 @@
     "rhythmfeel": "LATIN",
     "key": "C-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "C:maj7 % % %",
       "E:min7 % A:7 %",
@@ -2372,7 +2490,9 @@
       "F:maj7 % F#:dim %",
       "C:maj/5 % G:7 %",
       "C:maj7 % % %"
-    ]
+    ],
+    "musicbrainz_id": "0abe6ce7-802a-3746-802a-55af2c96908a",
+    "composer": "Sonny Rollins"
   },
   {
     "title": "Star Eyes",
@@ -2380,6 +2500,7 @@
     "rhythmfeel": "SWING",
     "key": "Eb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Eb:maj7 % % %",
       "F:min % Bb:7 %",
@@ -2417,7 +2538,9 @@
       "Db:7 % C:7 %",
       "F:min7 % % %",
       "Eb:maj7 % % %"
-    ]
+    ],
+    "musicbrainz_id": "fb453b0b-a038-3dd5-b1e4-601f5eb6b17e",
+    "composer": "Don Raye, Gene de Paul"
   },
   {
     "title": "Stompin' at the Savoy",
@@ -2425,6 +2548,7 @@
     "rhythmfeel": "SWING",
     "key": "Db-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Db:maj7 % % %",
       "Db:maj7 % Ab:7 %",
@@ -2466,6 +2590,7 @@
     "rhythmfeel": "TWOBEAT",
     "key": "G-min",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "G:min % D:7 %",
       "G:min % D:7 %",
@@ -2483,7 +2608,9 @@
       "A:hdim7 % D:7 %",
       "G:min % % %",
       "A:hdim7 % D:7 %"
-    ]
+    ],
+    "musicbrainz_id": "986359d8-34ff-3fe2-84fe-155b5f167975",
+    "composer": "George Gershwin"
   },
   {
     "title": "Tenor Madness",
@@ -2491,6 +2618,7 @@
     "rhythmfeel": "SWING",
     "key": "Bb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Bb:7 % % %",
       "Bb:7 % % %",
@@ -2512,6 +2640,7 @@
     "rhythmfeel": "SWING",
     "key": "D-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "D:maj7 % % %",
       "A:min7 % D:sus4(b7) %",
@@ -2553,6 +2682,7 @@
     "rhythmfeel": "SWING",
     "key": "Eb-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "Eb:maj7 % % %",
       "Eb:maj7 % % %",
@@ -2586,7 +2716,9 @@
       "G:7 % C:7 %",
       "F:min7 % Bb:7 %",
       "Eb:maj6 % Bb:7 %"
-    ]
+    ],
+    "musicbrainz_id": "b6be4fd3-1259-376b-8228-2fad04eee47d",
+    "composer": "Harry Warren"
   },
   {
     "title": "Tune Up",
@@ -2594,6 +2726,7 @@
     "rhythmfeel": "SWING",
     "key": "D-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "E:min7 % % %",
       "A:7 % % %",
@@ -2635,6 +2768,7 @@
     "rhythmfeel": "SWING",
     "key": "F-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "F:7 % % %",
       "Bb:7 % % %",
@@ -2656,6 +2790,7 @@
     "rhythmfeel": "SWING",
     "key": "C-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "C:maj6 % % %",
       "Bb:min7 % Eb:7 %",
@@ -2693,7 +2828,9 @@
     "coda": [
       "C:maj6 % A:min7 %",
       "D:min7 % G:7 %"
-    ]
+    ],
+    "musicbrainz_id": "f5cf3dae-2d9d-3bc2-ba94-8133f7617fa6",
+    "composer": "Bob Haggart"
   },
   {
     "title": "Work Song",
@@ -2701,6 +2838,7 @@
     "rhythmfeel": "SWING",
     "key": "F-min",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "F:min7 % % %",
       "F:min7 % % %",
@@ -2726,6 +2864,7 @@
     "rhythmfeel": "SWING",
     "key": "C-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "C:maj6 % % %",
       "F:min7 % Bb:7 %",
@@ -2759,7 +2898,9 @@
       "G:7 % % %",
       "C:maj6 % % %",
       "D:min7 % G:7 %"
-    ]
+    ],
+    "musicbrainz_id": "c3cfa4f9-e429-3599-a3b0-54a7cadb9ccc",
+    "composer": "Charlie Parker"
   },
   {
     "title": "Yesterdays",
@@ -2767,6 +2908,7 @@
     "rhythmfeel": "SWING",
     "key": "D-min",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "D:min % % %",
       "E:hdim7 % A:7(b9) %",
@@ -2784,7 +2926,9 @@
       "Bb:maj7 % % %",
       "E:hdim7 % % %",
       "A:7(b9) % % %"
-    ]
+    ],
+    "musicbrainz_id": "03afac4f-e4f2-3a29-a2e7-745cebcccee3",
+    "composer": "Jerome Kern"
   },
   {
     "title": "You Stepped Out of a Dream",
@@ -2792,6 +2936,7 @@
     "rhythmfeel": "SWING",
     "key": "D-maj",
     "signature": "4/4",
+    "tonality": "functional",
     "chord_changes": [
       "D:maj7 % % %",
       "D:maj7 % % %",
@@ -2830,6 +2975,7 @@
   {
     "title": "Autumn Leaves",
     "signature": "4/4",
+    "tonality": "functional",
     "chords_per_measure": 4,
     "chord_changes": [
       "A:min7 % % %",
@@ -2875,11 +3021,14 @@
       "B:7(b9) % % %",
       "E:min % % %",
       "E:min % % %"
-    ]
+    ],
+    "musicbrainz_id": "048b4b7a-07c4-3e33-959f-268199324401",
+    "composer": "Joseph Kosma"
   },
   {
     "title": "Blue Bossa",
     "signature": "4/4",
+    "tonality": "functional",
     "chords_per_measure": 4,
     "chord_changes": [
       "C:min % % %",
@@ -2928,11 +3077,14 @@
       "D:hdim7 % % %",
       "G:7 % % %",
       "C:min % % %"
-    ]
+    ],
+    "musicbrainz_id": "58039a99-14fa-3705-bbef-d098e14b219b",
+    "composer": "Kenny Dorham"
   },
   {
     "title": "Alice in Wonderland",
     "signature": "3/4",
+    "tonality": "functional",
     "chords_per_measure": 3,
     "chord_changes": [
       "D:min7 % %",

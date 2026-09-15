@@ -1,0 +1,79 @@
+from pathlib import Path
+import shutil
+import json
+from tqdm.auto import tqdm
+
+EXPORT_DIR = Path("/home/issyun/userdata/storage/JSIR")
+
+with open("metadata.json") as f:
+  metadata = json.load(f)
+
+metadata = [x for x in metadata if x["completed"] == True]
+
+try:
+  if EXPORT_DIR.exists():
+    shutil.rmtree(EXPORT_DIR)
+  EXPORT_DIR.mkdir(parents=True, exist_ok=True)
+  print(f"Exporting {len(metadata)} items to {EXPORT_DIR}")
+
+  print("Copying audio...")
+  audio_dir = EXPORT_DIR / "audio"
+  audio_dir.mkdir(parents=True, exist_ok=True)
+  for item in tqdm(metadata, desc="Exporting"):
+    src = Path(item["files"]["audio"])
+    dst = audio_dir / src.name
+    shutil.copy(src, dst)
+
+  print("Copying labels...")
+  beats_dir = EXPORT_DIR / "beats"
+  chords_dir = EXPORT_DIR / "chords"
+  sections_dir = EXPORT_DIR / "sections"
+  structure_dir = EXPORT_DIR / "structure"
+  segments_dir = EXPORT_DIR / "segments"
+  beats_dir.mkdir(parents=True, exist_ok=True)
+  chords_dir.mkdir(parents=True, exist_ok=True)
+  sections_dir.mkdir(parents=True, exist_ok=True)
+  structure_dir.mkdir(parents=True, exist_ok=True)
+  segments_dir.mkdir(parents=True, exist_ok=True)
+  for item in tqdm(metadata, desc="Exporting"):
+    if "beats" in item["files"]:
+      src = Path(item["files"]["beats"])
+      dst = beats_dir / src.name
+      shutil.copy(src, dst)
+    if "chords" in item["files"]:
+      src = Path(item["files"]["chords"])
+      dst = chords_dir / src.name
+      shutil.copy(src, dst)
+    if "sections" in item["files"]:
+      src = Path(item["files"]["sections"])
+      dst = sections_dir / src.name
+      shutil.copy(src, dst)
+    if "structure" in item["files"]:
+      src = Path(item["files"]["structure"])
+      dst = structure_dir / src.name
+      shutil.copy(src, dst)
+    if "segments" in item["files"]:
+      src = Path(item["files"]["segments"])
+      dst = segments_dir / src.name
+      shutil.copy(src, dst)
+
+  print("Exporting metadata...")
+  standards = set([x["standard"].lower() for x in metadata])
+  with open("lead_sheets.json") as f:
+    lead_sheets = json.load(f)
+  lead_sheets = [x for x in lead_sheets if x["title"].lower() in standards]
+
+  metadata.sort(key=lambda x: x["standard"].lower())
+  lead_sheets.sort(key=lambda x: x["title"].lower())
+
+  with open(EXPORT_DIR / "metadata.json", "w") as f:
+    json.dump(metadata, f, indent=2)
+
+  with open(EXPORT_DIR / "lead_sheets.json", "w") as f:
+    json.dump(lead_sheets, f, indent=2)
+
+except Exception as e:
+  print(f"Error: {e}")
+  print("Cleaning up...")
+  if EXPORT_DIR.exists():
+    shutil.rmtree(EXPORT_DIR)

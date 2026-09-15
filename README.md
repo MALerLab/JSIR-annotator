@@ -18,8 +18,8 @@ and **Edit** (the waveform/beat/section/chord annotation editor).
 The dataset is read from this folder:
 
 - `lead_sheets.json` — the jazz standards: title, key, signature, tempo/feel,
-  `chords_per_measure`, `chord_changes` (one string per measure), optional
-  `coda`. Chords are written in **Harte notation** —
+  `tonality`, `chords_per_measure`, `chord_changes` (one string per measure),
+  optional `coda`. Chords are written in **Harte notation** —
   `{root}:{shorthand}({extensions})/{bass}`, e.g. `F:min7`, `C:7(#9)`,
   `G:sus4(b7)`, `C:maj7/3` — with `N` for no chord and `%` for "hold the
   previous chord". The bass after `/` is an interval above the root, not a note
@@ -48,6 +48,10 @@ The dataset is read from this folder:
   e.g. `"D minor"`; absent = None). Edited from the right-hand Song Info panel
   and written back in place (a one-time `metadata.json.orig` backup is made on
   the first edit).
+- **Tonality** (`tonality`) is carried by both lead sheets and songs and names
+  the harmonic idiom of the standard: `functional`, `blues` or `modal`. Picked
+  from a dropdown in Lead Sheet Info / Song Info (blank clears it); everything
+  currently defaults to `functional`.
 
 ## Library tab
 
@@ -72,9 +76,15 @@ The dataset is read from this folder:
   at the end); everything saves to `lead_sheets.json` in real time. Saved edits
   are pushed straight into the Edit tab's working copy (and it re-reads the lead
   sheet whenever you switch back), so chord insertion always uses the latest
-  progression. A **coda**
-  grid can be added/removed. Selecting a song opens **Song Info** (same fields
-  as the Edit tab, plus links, Refresh audio, and the completion toggle).
+  progression. A **coda** grid can be added/removed. Selecting a song opens
+  **Song Info** (same fields as the Edit tab, plus links, Refresh audio, and the
+  completion toggle).
+- **Assign** (Lead Sheet Info): Key, Time Signature, Tempo Class, Rhythm Feel
+  and Tonality each carry an *Assign* button that copies that value onto every
+  song of the standard (a confirmation names the field, the value and how many
+  songs it will touch). The lead sheet's key spelling is translated to the song
+  vocabulary on the way — `Ab-maj` becomes `Ab maj`, sharps folded to flats —
+  and the same values are what a curated song inherits when it is added.
 - **Completion**: each song has a `completed` flag. The green **Mark as
   complete** / red **Mark as incomplete** button (in both tabs' Song Info)
   toggles it; completed songs show a green dot in every songs list. Songs that
@@ -104,9 +114,9 @@ selection.
    jumps to that song). Tick recordings and **Add selected**: each becomes a
    song with `standard`, `artist`, `album`, `musicbrainz_id` (recording id), and
    inherits `key`, `num_bars` (= number of chord-change lines), `tempo_class`,
-   `rhythm_feel`, `time_signature` from the lead sheet. The recording list is
-   cached under `cache/mb/<work>.json` while the work stays linked (*Refetch*
-   forces a reload).
+   `rhythm_feel`, `time_signature`, `tonality` from the lead sheet. The
+   recording list is cached under `cache/mb/<work>.json` while the work stays
+   linked (*Refetch* forces a reload).
 3. **Crawl audio** (song selected) — search YouTube via yt-dlp (default query
    "{artist} {standard}"), preview a result in the embedded player, **Use this
    video** to store its `yt_id`, then **Crawl audio** to download the WAV and
@@ -238,9 +248,10 @@ selection.
   (`parse_harte_chord`) covering the lead sheets, the chord events and the
   Consonance ACE `.lab` inferences; `static/app.js` mirrors the transposition
   half of it.
-- **Song Info panel** (right): the **Key** dropdown plus editable text fields
-  (Standard, Artist, Album, Instrumentation, Tempo Class, Rhythm Feel, Time
-  Signature, YouTube ID, MusicBrainz ID) and the integer **Number of Bars**
+- **Song Info panel** (right): the **Key** and **Tonality** dropdowns plus
+  editable text fields (Standard, Artist, Album, Instrumentation, Tempo Class,
+  Rhythm Feel, Time Signature, YouTube ID, MusicBrainz ID) and the integer
+  **Number of Bars**
   (`num_bars`). Edits save to `metadata.json` on blur (`num_bars` is an int).
   `tempo_class`/`rhythm_feel`/`time_signature` were seeded from the lead sheets.
   Links to *Open on YouTube* and *Open in MusicBrainz* appear below the fields.

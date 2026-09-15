@@ -120,7 +120,8 @@ body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 .stats dd { margin: 0; font-weight: 600; }
 #lib-inspector .pf { display: flex; flex-direction: column; gap: 3px; margin-bottom: 10px; max-width: 420px; }
 #lib-inspector .pf label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); }
-#lib-inspector .pf input {
+#lib-inspector .pf input,
+#lib-inspector .pf select {
   padding: 6px 8px;
   background: var(--panel2);
   border: 1px solid var(--line);
@@ -128,7 +129,14 @@ body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
   color: var(--text);
   font-size: 13px;
 }
-#lib-inspector .pf input:focus { outline: none; border-color: var(--accent); }
+#lib-inspector .pf input:focus,
+#lib-inspector .pf select:focus { outline: none; border-color: var(--accent); }
+/* value + its "Assign to every song of this standard" button */
+#lib-inspector .pf-row { display: flex; align-items: center; gap: 6px; }
+#lib-inspector .pf-row > input,
+#lib-inspector .pf-row > select { flex: 1; min-width: 0; }
+#lib-inspector .pf-row > button { flex: none; }
+#lib-inspector .pf-row > button:disabled { opacity: 0.4; cursor: default; }
 #lib-inspector .key-field { max-width: 420px; margin-bottom: 12px; }
 #lib-inspector .key-field select {
   width: 100%;
@@ -279,7 +287,8 @@ body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 #panel-fields { margin: 0; }
 #panel-fields .pf { display: flex; flex-direction: column; gap: 3px; margin-bottom: 10px; }
 #panel-fields .pf label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); }
-#panel-fields .pf input {
+#panel-fields .pf input,
+#panel-fields .pf select {
   width: 100%;
   padding: 6px 8px;
   background: var(--panel2);
@@ -288,7 +297,8 @@ body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
   color: var(--text);
   font-size: 13px;
 }
-#panel-fields .pf input:focus { outline: none; border-color: var(--accent); }
+#panel-fields .pf input:focus,
+#panel-fields .pf select:focus { outline: none; border-color: var(--accent); }
 #refresh-audio { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
 #btn-refresh,
 #btn-gen-segments {
