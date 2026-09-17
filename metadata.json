@@ -585,7 +585,7 @@
   },
   {
     "yt_id": "vav1CI1BfFM",
-    "standard": "All The Things You Are",
+    "standard": "All the Things You Are",
     "artist": "Charlie Parker",
     "album": "Charlie Parker on Dial: The Complete Sessions",
     "instrumentation": "quintet",
@@ -610,7 +610,7 @@
   },
   {
     "yt_id": "_gnY-kK-Lbw",
-    "standard": "All The Things You Are",
+    "standard": "All the Things You Are",
     "artist": "Chet Baker, Stan Getz",
     "album": "West Coast Live",
     "instrumentation": "quintet",
@@ -633,7 +633,7 @@
   },
   {
     "yt_id": "r5AQqDSiEws",
-    "standard": "All The Things You Are",
+    "standard": "All the Things You Are",
     "artist": "Clifford Brown",
     "album": "The Complete Paris Sessions",
     "instrumentation": "sextet",
@@ -657,7 +657,7 @@
   },
   {
     "yt_id": "ESjNt-V-zRI",
-    "standard": "All The Things You Are",
+    "standard": "All the Things You Are",
     "artist": "Dizzy Gillespie",
     "album": "Yardbird Suite: The Ultimate Charlie Parker Collection",
     "instrumentation": "sextet",
@@ -679,7 +679,7 @@
   },
   {
     "yt_id": "IRQe5aHvi8Y",
-    "standard": "All The Things You Are",
+    "standard": "All the Things You Are",
     "artist": "Frank Sinatra",
     "album": "Mail Call",
     "instrumentation": "vocal with orchestra",
@@ -8827,36 +8827,27 @@
     "id": "7fed734c-9176-4f9d-8915-cb06f86759ac"
   },
   {
-    "yt_id": "tlnUEBDIvDA",
+    "yt_id": "siwFUDaCA_Y",
     "standard": "Lullaby Of Birdland",
     "artist": "Bud Powell Trio",
     "album": "The Best of Bud Powell 1944-62, Vol. 1",
     "instrumentation": "piano trio",
     "musicbrainz_id": "1f218a26-a35f-44a3-a1e3-7634b68bdd34",
-    "audio_length": 155.1092970521542,
+    "audio_length": 172.17596371882087,
     "files": {
-      "audio": "audio/tlnUEBDIvDA.wav",
-      "beats": "beats/tlnUEBDIvDA.txt"
+      "audio": "audio/siwFUDaCA_Y.wav",
+      "beats": "beats/siwFUDaCA_Y.txt",
+      "chords": "chords/siwFUDaCA_Y.csv",
+      "segments": "segments/siwFUDaCA_Y.csv"
     },
     "tonality": "functional",
-    "completed": false,
-    "id": "09a0d617-aa8f-4b7a-8491-59a77a049068"
-  },
-  {
-    "yt_id": "7hIKcG7Fm-k",
-    "standard": "Lullaby Of Birdland",
-    "artist": "Cal Tjader Quintet",
-    "album": "Cal Tjader Quintet",
-    "instrumentation": "vibraphone quintet (Latin)",
-    "musicbrainz_id": "214b4ad8-8a97-42b5-bfd2-62b9c3d2fe66",
-    "audio_length": 242.55566666666667,
-    "files": {
-      "audio": "audio/7hIKcG7Fm-k.wav",
-      "beats": "beats/7hIKcG7Fm-k.txt"
-    },
-    "tonality": "functional",
-    "completed": false,
-    "id": "5115812e-eca5-4c7a-bd52-954067de9c63"
+    "completed": true,
+    "id": "09a0d617-aa8f-4b7a-8491-59a77a049068",
+    "time_signature": "4/4",
+    "tempo_class": "MEDIUM UP",
+    "rhythm_feel": "SWING",
+    "key": "A min",
+    "num_bars": 32
   },
   {
     "yt_id": "1_BvWeofmTc",
@@ -8868,91 +8859,86 @@
     "audio_length": 171.5258125,
     "files": {
       "audio": "audio/1_BvWeofmTc.wav",
-      "beats": "beats/1_BvWeofmTc.txt"
+      "beats": "beats/1_BvWeofmTc.txt",
+      "segments": "segments/1_BvWeofmTc.csv"
     },
     "tonality": "functional",
-    "completed": false,
-    "id": "0f4c579b-ca0b-4eb1-8875-63f1ebf9bdcd"
+    "completed": true,
+    "id": "0f4c579b-ca0b-4eb1-8875-63f1ebf9bdcd",
+    "time_signature": "4/4",
+    "tempo_class": "MEDIUM",
+    "rhythm_feel": "SWING",
+    "key": "C min",
+    "num_bars": 32
   },
   {
-    "yt_id": "vUmEkL3WHqY",
+    "yt_id": "v2xmf3B7Z4Q",
     "standard": "Lullaby Of Birdland",
     "artist": "Erroll Garner",
     "album": "The Chronological Classics: Erroll Garner 1953",
-    "instrumentation": "solo piano",
-    "musicbrainz_id": "49dfb466-8d26-4e25-a38e-0d8d03cdcf98",
-    "audio_length": 420.525,
+    "instrumentation": "piano trio",
+    "musicbrainz_id": "19cd9ba5-f85b-42dd-a11a-fc53a86901f9",
+    "audio_length": 425.92362811791384,
     "files": {
-      "audio": "audio/vUmEkL3WHqY.wav",
-      "beats": "beats/vUmEkL3WHqY.txt"
+      "audio": "audio/v2xmf3B7Z4Q.wav",
+      "beats": "beats/v2xmf3B7Z4Q.txt",
+      "chords": "chords/v2xmf3B7Z4Q.csv",
+      "segments": "segments/v2xmf3B7Z4Q.csv"
     },
     "tonality": "functional",
-    "completed": false,
-    "id": "20b5a8d2-6ba0-46dd-8495-c04aad2050a8"
+    "completed": true,
+    "id": "20b5a8d2-6ba0-46dd-8495-c04aad2050a8",
+    "time_signature": "4/4",
+    "tempo_class": "MEDIUM",
+    "rhythm_feel": "SWING",
+    "key": "A min",
+    "num_bars": 32
   },
   {
-    "yt_id": "2gbaLitmPUc",
-    "standard": "Lullaby Of Birdland",
-    "artist": "George Shearing Quintet",
-    "album": "History of Jazz 1948\u20131955",
-    "instrumentation": "quintet",
-    "musicbrainz_id": "5f0ebe1a-1bb2-4941-9211-c0cfbe545328",
-    "audio_length": 161.94758333333334,
-    "files": {
-      "audio": "audio/2gbaLitmPUc.wav",
-      "beats": "beats/2gbaLitmPUc.txt"
-    },
-    "tonality": "functional",
-    "completed": false,
-    "id": "a2bdf6f5-ba26-4937-bfac-5d9792b26973"
-  },
-  {
-    "yt_id": "7C1kqrwvTDc",
-    "standard": "Lullaby Of Birdland",
-    "artist": "Mel Torm\u00e9 & George Shearing",
-    "album": "An Evening With George Shearing & Mel Torm\u00e9",
-    "instrumentation": "vocal with piano",
-    "musicbrainz_id": "8d1bdd45-0acd-490f-ba5c-3a8c1c888616",
-    "audio_length": 448.9173333333333,
-    "files": {
-      "audio": "audio/7C1kqrwvTDc.wav",
-      "beats": "beats/7C1kqrwvTDc.txt"
-    },
-    "tonality": "functional",
-    "completed": false,
-    "id": "d9072a00-9eed-46ae-88b2-e957537d5d06"
-  },
-  {
-    "yt_id": "2OOOodYzRt8",
+    "yt_id": "n3RJv3AHsrs",
     "standard": "Lullaby Of Birdland",
     "artist": "Sarah Vaughan with Clifford Brown Sextet",
     "album": "Sarah Vaughan",
     "instrumentation": "vocal with sextet",
     "musicbrainz_id": "27bf94aa-a2df-412a-8832-e40e366a2283",
-    "audio_length": 251.43729166666665,
+    "audio_length": 240.55873015873016,
     "files": {
-      "audio": "audio/2OOOodYzRt8.wav",
-      "beats": "beats/2OOOodYzRt8.txt"
+      "audio": "audio/n3RJv3AHsrs.wav",
+      "beats": "beats/n3RJv3AHsrs.txt",
+      "chords": "chords/n3RJv3AHsrs.csv",
+      "segments": "segments/n3RJv3AHsrs.csv"
     },
     "tonality": "functional",
-    "completed": false,
-    "id": "8a18f1a3-6233-4f11-87c0-23383d76d4f8"
+    "completed": true,
+    "id": "8a18f1a3-6233-4f11-87c0-23383d76d4f8",
+    "time_signature": "4/4",
+    "tempo_class": "MEDIUM",
+    "rhythm_feel": "SWING",
+    "key": "B min",
+    "num_bars": 32
   },
   {
-    "yt_id": "9llkbAsGm0U",
+    "yt_id": "c9POENaBhIU",
     "standard": "Lullaby Of Birdland",
     "artist": "Stan Getz Quintet",
     "album": "The Sound",
     "instrumentation": "quintet",
     "musicbrainz_id": "9f398544-752a-492f-bacd-edb1b93fa250",
-    "audio_length": 154.0411875,
+    "audio_length": 148.21297052154196,
     "files": {
-      "audio": "audio/9llkbAsGm0U.wav",
-      "beats": "beats/9llkbAsGm0U.txt"
+      "audio": "audio/c9POENaBhIU.wav",
+      "beats": "beats/c9POENaBhIU.txt",
+      "chords": "chords/c9POENaBhIU.csv",
+      "segments": "segments/c9POENaBhIU.csv"
     },
     "tonality": "functional",
-    "completed": false,
-    "id": "e4956cb0-183b-4a58-a5f3-674be7d6fefa"
+    "completed": true,
+    "id": "e4956cb0-183b-4a58-a5f3-674be7d6fefa",
+    "time_signature": "4/4",
+    "tempo_class": "MEDIUM",
+    "rhythm_feel": "SWING",
+    "key": "A min",
+    "num_bars": 32
   },
   {
     "yt_id": "ygVgxGSQIsw",
@@ -12015,23 +12001,11 @@
     },
     "tonality": "functional",
     "completed": false,
-    "id": "174ffe1a-6d0a-4deb-ab07-e4759716ab9e"
-  },
-  {
-    "yt_id": "FIYNT6faEFQ",
-    "standard": "Polka Dots And Moonbeams",
-    "artist": "Bud Powell",
-    "album": "The Amazing Bud Powell, Volume 2",
-    "instrumentation": "piano trio",
-    "musicbrainz_id": "fdb8602e-a192-477e-a1e1-f05873acb195",
-    "audio_length": 244.5641875,
-    "files": {
-      "audio": "audio/FIYNT6faEFQ.wav",
-      "beats": "beats/FIYNT6faEFQ.txt"
-    },
-    "tonality": "functional",
-    "completed": false,
-    "id": "7966e838-0bfd-45a5-8d11-8953a6598c79"
+    "id": "174ffe1a-6d0a-4deb-ab07-e4759716ab9e",
+    "num_bars": 32,
+    "tempo_class": "SLOW",
+    "rhythm_feel": "SWING",
+    "time_signature": "4/4"
   },
   {
     "yt_id": "RKBuHggtHIg",
@@ -12040,58 +12014,50 @@
     "album": "The Shadow of Your Smile",
     "instrumentation": "saxophone quartet",
     "musicbrainz_id": "4eb73eb1-49a7-4fd5-afcc-2a46a140ab69",
-    "audio_length": 340.3465,
+    "audio_length": 340.3348752834467,
     "files": {
       "audio": "audio/RKBuHggtHIg.wav",
-      "beats": "beats/RKBuHggtHIg.txt"
+      "beats": "beats/RKBuHggtHIg.txt",
+      "chords": "chords/RKBuHggtHIg.csv"
     },
     "tonality": "functional",
     "completed": false,
-    "id": "15dcc49b-a13f-443c-97bb-d184d0da8077"
+    "id": "15dcc49b-a13f-443c-97bb-d184d0da8077",
+    "time_signature": "4/4"
   },
   {
-    "yt_id": "wKHWQ0sBGN0",
-    "standard": "Polka Dots And Moonbeams",
-    "artist": "Frank Sinatra with Tommy Dorsey and His Orchestra",
-    "album": "Frank Sinatra & Tommy Dorsey",
-    "instrumentation": "vocal with big band",
-    "musicbrainz_id": "1df2c644-8fee-49e7-a072-a99d5ac97331",
-    "audio_length": 199.80772916666666,
-    "files": {
-      "audio": "audio/wKHWQ0sBGN0.wav",
-      "beats": "beats/wKHWQ0sBGN0.txt"
-    },
-    "tonality": "functional",
-    "completed": false,
-    "id": "4fbc2f1f-29fc-40f9-a42f-67607b288bdc"
-  },
-  {
-    "yt_id": "EeRXwm50pqY",
+    "yt_id": "w-K9lUq2CVw",
     "standard": "Polka Dots And Moonbeams",
     "artist": "Lester Young Quartet",
     "album": "Verve Jazz Masters 30",
     "instrumentation": "saxophone quartet",
     "musicbrainz_id": "788c97fe-c656-44aa-ac6c-8381b3649531",
-    "audio_length": 250.65941666666666,
+    "audio_length": 224.1190022675737,
     "files": {
-      "audio": "audio/EeRXwm50pqY.wav",
-      "beats": "beats/EeRXwm50pqY.txt"
+      "audio": "audio/w-K9lUq2CVw.wav",
+      "beats": "beats/w-K9lUq2CVw.txt",
+      "chords": "chords/w-K9lUq2CVw.csv"
     },
     "tonality": "functional",
     "completed": false,
-    "id": "b4811549-0412-420d-8bf8-963d100a8030"
+    "id": "b4811549-0412-420d-8bf8-963d100a8030",
+    "num_bars": 32,
+    "tempo_class": "SLOW",
+    "rhythm_feel": "SWING",
+    "time_signature": "4/4"
   },
   {
-    "yt_id": "fq762QZki0Q",
+    "yt_id": "nN0-41ypXbo",
     "standard": "Polka Dots And Moonbeams",
     "artist": "Sarah Vaughan and Her Trio",
     "album": "Sassy: 1950\u20131954",
     "instrumentation": "vocal with trio",
     "musicbrainz_id": "22ce9f46-2cd7-4e0c-96eb-4e4fd0f70cf0",
-    "audio_length": 362.20807256235827,
+    "audio_length": 156.59537414965988,
     "files": {
-      "audio": "audio/fq762QZki0Q.wav",
-      "beats": "beats/fq762QZki0Q.txt"
+      "audio": "audio/nN0-41ypXbo.wav",
+      "beats": "beats/nN0-41ypXbo.txt",
+      "chords": "chords/nN0-41ypXbo.csv"
     },
     "tonality": "functional",
     "completed": false,
@@ -18800,5 +18766,86 @@
       "segments": "segments/h04lj_PJyek.csv"
     },
     "audio_length": 251.2863492063492
+  },
+  {
+    "id": "5338c21d-4228-4e27-ba0a-eaea813337fd",
+    "completed": true,
+    "key": "Ab min",
+    "rhythm_feel": "SWING",
+    "num_bars": 32,
+    "artist": "George Shearing",
+    "tonality": "functional",
+    "musicbrainz_id": "cf410985-bca4-4784-b26c-0f5185ae8fa2",
+    "time_signature": "4/4",
+    "standard": "Lullaby of Birdland",
+    "album": "Verve Jazz Masters 57",
+    "tempo_class": "MEDIUM",
+    "instrumentation": "quintet",
+    "yt_id": "15Cod69ooZw",
+    "files": {
+      "audio": "audio/15Cod69ooZw.wav",
+      "beats": "beats/15Cod69ooZw.txt",
+      "chords": "chords/15Cod69ooZw.csv",
+      "segments": "segments/15Cod69ooZw.csv"
+    },
+    "audio_length": 160.31056689342404
+  },
+  {
+    "id": "a745f68d-75b9-41f8-acfd-f14cee8c8373",
+    "completed": false,
+    "key": "F maj",
+    "rhythm_feel": "SWING",
+    "num_bars": 32,
+    "artist": "Frank Sinatra & Tommy Dorsey and His Orchestra",
+    "tonality": "functional",
+    "musicbrainz_id": "daf2f41b-c755-4b2f-a986-c5a03f5438ba",
+    "time_signature": "4/4",
+    "standard": "Polka Dots and Moonbeams",
+    "album": "Polka Dots and Moonbeams / I'll Be Seeing You",
+    "tempo_class": "SLOW",
+    "yt_id": "s2FS8BOIuEA",
+    "instrumentation": "vocal with big band",
+    "files": {
+      "audio": "audio/s2FS8BOIuEA.wav",
+      "beats": "beats/s2FS8BOIuEA.txt",
+      "chords": "chords/s2FS8BOIuEA.csv"
+    },
+    "audio_length": 223.19020408163266
+  },
+  {
+    "id": "f0edc82f-d108-413b-b456-335408bacc49",
+    "completed": false,
+    "key": "F maj",
+    "rhythm_feel": "SWING",
+    "num_bars": 32,
+    "artist": "Wes Montgomery",
+    "tonality": "functional",
+    "musicbrainz_id": "70e7d35f-5988-44ee-8b29-f903eb5b0c6c",
+    "time_signature": "4/4",
+    "standard": "Polka Dots and Moonbeams",
+    "album": "The Incredible Jazz Guitar of Wes Montgomery",
+    "tempo_class": "SLOW"
+  },
+  {
+    "id": "5ed78d56-81da-4b32-a2cc-2cd23ab0324c",
+    "completed": false,
+    "key": "F maj",
+    "rhythm_feel": "SWING",
+    "num_bars": 32,
+    "artist": "Elmo Hope Sextet",
+    "tonality": "functional",
+    "musicbrainz_id": "1cd047fc-48c8-43e7-9aa8-09507a73ffee",
+    "time_signature": "4/4",
+    "standard": "Polka Dots and Moonbeams",
+    "album": "Informal Jazz",
+    "tempo_class": "SLOW",
+    "yt_id": "rc6YyJAlKns",
+    "instrumentation": "sextet",
+    "files": {
+      "audio": "audio/rc6YyJAlKns.wav",
+      "beats": "beats/rc6YyJAlKns.txt",
+      "chords": "chords/rc6YyJAlKns.csv"
+    },
+    "audio_length": 516.5278911564626
   }
 ]
