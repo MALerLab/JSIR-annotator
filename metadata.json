@@ -11997,33 +11997,17 @@
     "audio_length": 301.12,
     "files": {
       "audio": "audio/TgU5LM0IUvI.wav",
-      "beats": "beats/TgU5LM0IUvI.txt"
+      "beats": "beats/TgU5LM0IUvI.txt",
+      "segments": "segments/TgU5LM0IUvI.csv"
     },
     "tonality": "functional",
-    "completed": false,
+    "completed": true,
     "id": "174ffe1a-6d0a-4deb-ab07-e4759716ab9e",
     "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
-    "time_signature": "4/4"
-  },
-  {
-    "yt_id": "RKBuHggtHIg",
-    "standard": "Polka Dots And Moonbeams",
-    "artist": "Dexter Gordon Quartet",
-    "album": "The Shadow of Your Smile",
-    "instrumentation": "saxophone quartet",
-    "musicbrainz_id": "4eb73eb1-49a7-4fd5-afcc-2a46a140ab69",
-    "audio_length": 340.3348752834467,
-    "files": {
-      "audio": "audio/RKBuHggtHIg.wav",
-      "beats": "beats/RKBuHggtHIg.txt",
-      "chords": "chords/RKBuHggtHIg.csv"
-    },
-    "tonality": "functional",
-    "completed": false,
-    "id": "15dcc49b-a13f-443c-97bb-d184d0da8077",
-    "time_signature": "4/4"
+    "time_signature": "4/4",
+    "key": "F maj"
   },
   {
     "yt_id": "w-K9lUq2CVw",
@@ -12036,15 +12020,17 @@
     "files": {
       "audio": "audio/w-K9lUq2CVw.wav",
       "beats": "beats/w-K9lUq2CVw.txt",
-      "chords": "chords/w-K9lUq2CVw.csv"
+      "chords": "chords/w-K9lUq2CVw.csv",
+      "segments": "segments/w-K9lUq2CVw.csv"
     },
     "tonality": "functional",
-    "completed": false,
+    "completed": true,
     "id": "b4811549-0412-420d-8bf8-963d100a8030",
     "num_bars": 32,
     "tempo_class": "SLOW",
     "rhythm_feel": "SWING",
-    "time_signature": "4/4"
+    "time_signature": "4/4",
+    "key": "Ab maj"
   },
   {
     "yt_id": "nN0-41ypXbo",
@@ -12057,11 +12043,17 @@
     "files": {
       "audio": "audio/nN0-41ypXbo.wav",
       "beats": "beats/nN0-41ypXbo.txt",
-      "chords": "chords/nN0-41ypXbo.csv"
+      "chords": "chords/nN0-41ypXbo.csv",
+      "segments": "segments/nN0-41ypXbo.csv"
     },
     "tonality": "functional",
-    "completed": false,
-    "id": "fbdca6d7-0744-40ba-b1c4-577e507ee87e"
+    "completed": true,
+    "id": "fbdca6d7-0744-40ba-b1c4-577e507ee87e",
+    "key": "C maj",
+    "num_bars": 32,
+    "tempo_class": "SLOW",
+    "rhythm_feel": "SWING",
+    "time_signature": "4/4"
   },
   {
     "yt_id": "f7Mv6TW-xP8",
@@ -12073,27 +12065,39 @@
     "audio_length": 282.2733958333333,
     "files": {
       "audio": "audio/f7Mv6TW-xP8.wav",
-      "beats": "beats/f7Mv6TW-xP8.txt"
+      "beats": "beats/f7Mv6TW-xP8.txt",
+      "segments": "segments/f7Mv6TW-xP8.csv"
     },
     "tonality": "functional",
-    "completed": false,
-    "id": "b6a3f2ae-50a5-4f5f-b034-aa2ce394c4a8"
+    "completed": true,
+    "id": "b6a3f2ae-50a5-4f5f-b034-aa2ce394c4a8",
+    "num_bars": 32,
+    "tempo_class": "SLOW",
+    "rhythm_feel": "SWING",
+    "time_signature": "4/4",
+    "key": "G maj"
   },
   {
     "yt_id": "4_gwD5e1rCo",
     "standard": "Polka Dots And Moonbeams",
-    "artist": "Wes Montgomery",
+    "artist": "Nat King Cole",
     "album": "Penthouse Serenade",
-    "instrumentation": "piano trio with vocal",
+    "instrumentation": "piano trio",
     "musicbrainz_id": "1b785db3-22fa-4af7-91d3-a86e84668823",
     "audio_length": 185.6,
     "files": {
       "audio": "audio/4_gwD5e1rCo.wav",
-      "beats": "beats/4_gwD5e1rCo.txt"
+      "beats": "beats/4_gwD5e1rCo.txt",
+      "segments": "segments/4_gwD5e1rCo.csv"
     },
     "tonality": "functional",
-    "completed": false,
-    "id": "b73841e5-8ec8-403f-8daf-71922ebbcd8d"
+    "completed": true,
+    "id": "b73841e5-8ec8-403f-8daf-71922ebbcd8d",
+    "num_bars": 32,
+    "tempo_class": "SLOW",
+    "rhythm_feel": "SWING",
+    "time_signature": "4/4",
+    "key": "F maj"
   },
   {
     "yt_id": "-owzPvMuw4o",
@@ -18792,8 +18796,8 @@
   },
   {
     "id": "a745f68d-75b9-41f8-acfd-f14cee8c8373",
-    "completed": false,
-    "key": "F maj",
+    "completed": true,
+    "key": "D maj",
     "rhythm_feel": "SWING",
     "num_bars": 32,
     "artist": "Frank Sinatra & Tommy Dorsey and His Orchestra",
@@ -18808,27 +18812,14 @@
     "files": {
       "audio": "audio/s2FS8BOIuEA.wav",
       "beats": "beats/s2FS8BOIuEA.txt",
-      "chords": "chords/s2FS8BOIuEA.csv"
+      "chords": "chords/s2FS8BOIuEA.csv",
+      "segments": "segments/s2FS8BOIuEA.csv"
     },
     "audio_length": 223.19020408163266
   },
   {
-    "id": "f0edc82f-d108-413b-b456-335408bacc49",
-    "completed": false,
-    "key": "F maj",
-    "rhythm_feel": "SWING",
-    "num_bars": 32,
-    "artist": "Wes Montgomery",
-    "tonality": "functional",
-    "musicbrainz_id": "70e7d35f-5988-44ee-8b29-f903eb5b0c6c",
-    "time_signature": "4/4",
-    "standard": "Polka Dots and Moonbeams",
-    "album": "The Incredible Jazz Guitar of Wes Montgomery",
-    "tempo_class": "SLOW"
-  },
-  {
     "id": "5ed78d56-81da-4b32-a2cc-2cd23ab0324c",
-    "completed": false,
+    "completed": true,
     "key": "F maj",
     "rhythm_feel": "SWING",
     "num_bars": 32,
@@ -18844,7 +18835,8 @@
     "files": {
       "audio": "audio/rc6YyJAlKns.wav",
       "beats": "beats/rc6YyJAlKns.txt",
-      "chords": "chords/rc6YyJAlKns.csv"
+      "chords": "chords/rc6YyJAlKns.csv",
+      "segments": "segments/rc6YyJAlKns.csv"
     },
     "audio_length": 516.5278911564626
   }
