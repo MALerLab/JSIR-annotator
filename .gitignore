@@ -3,7 +3,6 @@
 Pipfile.lock
 **/__pycache__/
 
-beats/*
 cache/
 
 *.orig

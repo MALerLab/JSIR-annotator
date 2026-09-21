@@ -629,7 +629,8 @@
     "num_bars": 36,
     "rhythm_feel": "SWING",
     "time_signature": "4/4",
-    "key": "Ab maj"
+    "key": "Ab maj",
+    "tempo_class": "MEDIUM UP"
   },
   {
     "yt_id": "r5AQqDSiEws",
@@ -2529,31 +2530,6 @@
     "id": "3a68cd52-1cdc-47c8-9f59-014fc5322abb"
   },
   {
-    "yt_id": "AlSVDvNHLPs",
-    "standard": "Bye Bye Blackbird",
-    "artist": "John Coltrane",
-    "album": "Complete Live At the Sutherland Lounge 1961",
-    "instrumentation": "saxophone quartet",
-    "musicbrainz_id": "175387ea-c6be-46ed-a718-2d7de9d1c947",
-    "audio_length": 476.1813333333333,
-    "files": {
-      "audio": "audio/AlSVDvNHLPs.wav",
-      "beats": "beats/AlSVDvNHLPs.txt",
-      "chords": "chords/AlSVDvNHLPs.csv",
-      "sections": "sections/AlSVDvNHLPs.csv",
-      "structure": "structure/AlSVDvNHLPs.csv",
-      "segments": "segments/AlSVDvNHLPs.csv"
-    },
-    "key": "G maj",
-    "num_bars": 32,
-    "tempo_class": "MEDIUM UP",
-    "rhythm_feel": "SWING",
-    "time_signature": "4/4",
-    "tonality": "functional",
-    "completed": true,
-    "id": "5cb69dd2-2d11-47be-98a0-da205362f07f"
-  },
-  {
     "yt_id": "d2YyId3JTck",
     "standard": "Bye Bye Blackbird",
     "artist": "Keith Jarrett, Gary Peacock, Jack DeJohnette",
@@ -2625,31 +2601,6 @@
     "tonality": "functional",
     "completed": true,
     "id": "f63a390b-c30e-42ad-9be5-4013d341ff93"
-  },
-  {
-    "yt_id": "AlSVDvNHLPs",
-    "standard": "Bye Bye Blackbird",
-    "artist": "Red Garland",
-    "album": "Red Garland At The Prelude",
-    "instrumentation": "piano trio",
-    "musicbrainz_id": "5151ea8f-10b5-41ab-a6ba-68ca6c388c38",
-    "audio_length": 476.1813333333333,
-    "files": {
-      "audio": "audio/AlSVDvNHLPs.wav",
-      "beats": "beats/AlSVDvNHLPs.txt",
-      "chords": "chords/AlSVDvNHLPs.csv",
-      "sections": "sections/AlSVDvNHLPs.csv",
-      "structure": "structure/AlSVDvNHLPs.csv",
-      "segments": "segments/AlSVDvNHLPs.csv"
-    },
-    "key": "G maj",
-    "num_bars": 32,
-    "tempo_class": "MEDIUM UP",
-    "rhythm_feel": "SWING",
-    "time_signature": "4/4",
-    "tonality": "functional",
-    "completed": true,
-    "id": "6a5a5b1d-076e-4e76-8e54-d3cc5fb026c7"
   },
   {
     "yt_id": "HDbgLJt50ss",
@@ -18183,7 +18134,8 @@
       "structure": "structure/olUu5imUXoc.csv",
       "segments": "segments/olUu5imUXoc.csv"
     },
-    "audio_length": 565.498775510204
+    "audio_length": 565.498775510204,
+    "instrumentation": "quartet"
   },
   {
     "id": "083a377a-6052-4c28-a8b5-5bc1c5752c6e",
@@ -18207,7 +18159,8 @@
       "structure": "structure/wjXqrvgGRXE.csv",
       "segments": "segments/wjXqrvgGRXE.csv"
     },
-    "audio_length": 281.820589569161
+    "audio_length": 281.820589569161,
+    "instrumentation": "piano trio"
   },
   {
     "id": "b1c57688-7a0c-4d0f-bf3b-64167907662c",
@@ -18303,7 +18256,8 @@
       "chords": "chords/Q3eFTwOD4dA.csv",
       "segments": "segments/Q3eFTwOD4dA.csv"
     },
-    "audio_length": 432.61097505668937
+    "audio_length": 432.61097505668937,
+    "instrumentation": "quartet"
   },
   {
     "id": "ab36f182-093e-4742-ab82-ecf8a04c8863",
@@ -18904,6 +18858,7 @@
       "beats": "beats/ASNSS_G62zw.txt",
       "chords": "chords/ASNSS_G62zw.csv"
     },
-    "audio_length": 195.65133786848074
+    "audio_length": 195.65133786848074,
+    "instrumentation": "vocal with big band"
   }
 ]

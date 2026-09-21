@@ -281,5 +281,3 @@ selection.
 - The metronome uses a synthesised click. To use a real sample, run
   `loadClickSample('/static/click.wav')` in the browser console (or wire it into
   `app.js`).
-
-total length: 390,882 seconds (108h 34m 42s) => 6,514.7 minutes

@@ -42,22 +42,29 @@ try:
   structure_dir.mkdir(parents=True, exist_ok=True)
   segments_dir.mkdir(parents=True, exist_ok=True)
   for item in tqdm(metadata, desc="Exporting"):
-    if "beats" in item["files"]:
-      src = Path(item["files"]["beats"])
-      dst = beats_dir / src.name
-      shutil.copy(src, dst)
-    if "chords" in item["files"]:
-      src = Path(item["files"]["chords"])
-      dst = chords_dir / src.name
-      shutil.copy(src, dst)
-    if "structure" in item["files"]:
-      src = Path(item["files"]["structure"])
-      dst = structure_dir / src.name
-      shutil.copy(src, dst)
-    if "segments" in item["files"]:
-      src = Path(item["files"]["segments"])
-      dst = segments_dir / src.name
-      shutil.copy(src, dst)
+    if "beats" not in item["files"]:
+      item["files"]["beats"] = f"beats/{Path(item['yt_id']).with_suffix('.txt')}"
+    src = Path(item["files"]["beats"])
+    dst = beats_dir / src.name
+    shutil.copy(src, dst)
+
+    if "chords" not in item["files"]:
+      item["files"]["chords"] = f"chords/{Path(item['yt_id']).with_suffix('.csv')}"
+    src = Path(item["files"]["chords"])
+    dst = chords_dir / src.name
+    shutil.copy(src, dst)
+
+    if "structure" not in item["files"]:
+      item["files"]["structure"] = f"structure/{Path(item['yt_id']).with_suffix('.csv')}"
+    src = Path(item["files"]["structure"])
+    dst = structure_dir / src.name
+    shutil.copy(src, dst)
+
+    if "segments" not in item["files"]:
+      item["files"]["segments"] = f"segments/{Path(item['yt_id']).with_suffix('.csv')}"
+    src = Path(item["files"]["segments"])
+    dst = segments_dir / src.name
+    shutil.copy(src, dst)
 
   with open(EXPORT_DIR / "audio" / ".gitignore", "w") as f:
     f.write("*")
