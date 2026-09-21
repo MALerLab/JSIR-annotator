@@ -15877,7 +15877,8 @@
     },
     "tonality": "functional",
     "completed": false,
-    "id": "4ae5f5e8-ea17-48fd-9e99-8a3e5ab8a24c"
+    "id": "4ae5f5e8-ea17-48fd-9e99-8a3e5ab8a24c",
+    "key": "D maj"
   },
   {
     "yt_id": "hsczuCzyUs4",
@@ -16729,52 +16730,73 @@
     "id": "123824bc-69d9-4a9b-b0c6-2dc9b2b9be7a"
   },
   {
-    "yt_id": "tBzyp-2kNhg",
+    "yt_id": "JGqzKmp_5Bg",
     "standard": "Wave",
     "artist": "Ant\u00f4nio Carlos Jobim",
     "album": "Wave",
-    "instrumentation": "orchestra with guitar (composer's lush arrangement)",
+    "instrumentation": "guitar quartet with orchestra",
     "musicbrainz_id": "3070236e-928f-4be0-b45c-81f079a4bc9f",
-    "audio_length": 348.2877291666667,
+    "audio_length": 176.88961451247167,
     "files": {
-      "audio": "audio/tBzyp-2kNhg.wav",
-      "beats": "beats/tBzyp-2kNhg.txt"
+      "audio": "audio/JGqzKmp_5Bg.wav",
+      "beats": "beats/JGqzKmp_5Bg.txt",
+      "chords": "chords/JGqzKmp_5Bg.csv",
+      "segments": "segments/JGqzKmp_5Bg.csv"
     },
     "tonality": "functional",
-    "completed": false,
-    "id": "4bb3b871-081f-48e8-8acb-695b382d3f27"
+    "completed": true,
+    "id": "4bb3b871-081f-48e8-8acb-695b382d3f27",
+    "key": "D maj",
+    "tempo_class": "MEDIUM",
+    "rhythm_feel": "LATIN",
+    "num_bars": 44,
+    "time_signature": "4/4"
   },
   {
     "yt_id": "pKS6uFF2y44",
     "standard": "Wave",
     "artist": "Eliane Elias",
     "album": "Fantasia",
-    "instrumentation": "piano trio (Brazilian jazz)",
+    "instrumentation": "piano trio",
     "musicbrainz_id": "1341d9cf-5328-43db-8286-f983ee94128b",
-    "audio_length": 226.84,
+    "audio_length": 226.85895691609977,
     "files": {
       "audio": "audio/pKS6uFF2y44.wav",
-      "beats": "beats/pKS6uFF2y44.txt"
+      "beats": "beats/pKS6uFF2y44.txt",
+      "chords": "chords/pKS6uFF2y44.csv",
+      "segments": "segments/pKS6uFF2y44.csv"
     },
     "tonality": "functional",
-    "completed": false,
-    "id": "d78d29b9-a9fa-45de-9eb9-ea16dc72ff2c"
+    "completed": true,
+    "id": "d78d29b9-a9fa-45de-9eb9-ea16dc72ff2c",
+    "key": "D maj",
+    "tempo_class": "MEDIUM",
+    "rhythm_feel": "LATIN",
+    "time_signature": "4/4",
+    "num_bars": 44
   },
   {
-    "yt_id": "2RCnbOzCj1I",
+    "yt_id": "vx_uV48z81I",
     "standard": "Wave",
     "artist": "Jo\u00e3o Gilberto",
     "album": "Jo\u00e3o Gilberto in Tokyo",
     "instrumentation": "voice with guitar",
     "musicbrainz_id": "7f92419e-5192-4ac0-87b2-e7854608ad1d",
-    "audio_length": 287.1031458333333,
+    "audio_length": 282.33142857142855,
     "files": {
-      "audio": "audio/2RCnbOzCj1I.wav",
-      "beats": "beats/2RCnbOzCj1I.txt"
+      "audio": "audio/vx_uV48z81I.wav",
+      "beats": "beats/vx_uV48z81I.txt",
+      "chords": "chords/vx_uV48z81I.csv",
+      "segments": "segments/vx_uV48z81I.csv"
     },
     "tonality": "functional",
-    "completed": false,
-    "id": "8f1efa32-b9ea-4704-bbc1-37d7cb217bd4"
+    "completed": true,
+    "id": "8f1efa32-b9ea-4704-bbc1-37d7cb217bd4",
+    "key": "C maj",
+    "tempo_class": "MEDIUM",
+    "rhythm_feel": "LATIN",
+    "time_signature": "4/4",
+    "num_bars": 44
   },
   {
     "yt_id": "IfSOhv6QRKI",
@@ -16786,59 +16808,61 @@
     "audio_length": 446.53333333333336,
     "files": {
       "audio": "audio/IfSOhv6QRKI.wav",
-      "beats": "beats/IfSOhv6QRKI.txt"
+      "beats": "beats/IfSOhv6QRKI.txt",
+      "segments": "segments/IfSOhv6QRKI.csv"
     },
     "tonality": "functional",
-    "completed": false,
-    "id": "f73fb1b5-dca4-4ba1-94e6-2353c82b9dd3"
+    "completed": true,
+    "id": "f73fb1b5-dca4-4ba1-94e6-2353c82b9dd3",
+    "key": "C maj",
+    "tempo_class": "MEDIUM",
+    "rhythm_feel": "LATIN",
+    "time_signature": "4/4",
+    "num_bars": 44
   },
   {
     "yt_id": "Y66-bZPWl0A",
     "standard": "Wave",
     "artist": "Milt Jackson, Joe Pass, Ray Brown",
     "album": "The Big 3",
-    "instrumentation": "vibraphone/guitar/bass trio",
+    "instrumentation": "vibraphone quartet",
     "musicbrainz_id": "3fc39e5b-f9ff-48fc-96c9-b4daf4170649",
     "audio_length": 410.46666666666664,
     "files": {
       "audio": "audio/Y66-bZPWl0A.wav",
-      "beats": "beats/Y66-bZPWl0A.txt"
+      "beats": "beats/Y66-bZPWl0A.txt",
+      "segments": "segments/Y66-bZPWl0A.csv"
     },
     "tonality": "functional",
-    "completed": false,
-    "id": "80d369d5-b4b6-4432-9b12-a2897945853c"
+    "completed": true,
+    "id": "80d369d5-b4b6-4432-9b12-a2897945853c",
+    "key": "D maj",
+    "tempo_class": "MEDIUM UP",
+    "rhythm_feel": "LATIN",
+    "time_signature": "4/4",
+    "num_bars": 44
   },
   {
     "yt_id": "5IAg6XY-0rI",
     "standard": "Wave",
     "artist": "Oscar Peterson",
-    "album": "Oscar Peterson in Russia",
-    "instrumentation": "piano with orchestra",
-    "musicbrainz_id": "1e7c7247-21b8-4a0a-985b-8bcd229786be",
+    "album": "Motions and Emotions",
+    "instrumentation": "piano trio with orchestra",
+    "musicbrainz_id": "b625e121-2b3d-42df-8e33-c37a46486ff8",
     "audio_length": 363.7760625,
     "files": {
       "audio": "audio/5IAg6XY-0rI.wav",
-      "beats": "beats/5IAg6XY-0rI.txt"
+      "beats": "beats/5IAg6XY-0rI.txt",
+      "segments": "segments/5IAg6XY-0rI.csv"
     },
     "tonality": "functional",
-    "completed": false,
-    "id": "e694aa41-854c-4069-bf28-3b9536c1b560"
-  },
-  {
-    "yt_id": "tw_S8lqu0wk",
-    "standard": "Wave",
-    "artist": "Oscar Peterson, Joe Pass, Niels\u2010Henning \u00d8rsted Pedersen",
-    "album": "The Good Life",
-    "instrumentation": "piano/guitar/bass trio",
-    "musicbrainz_id": "9ab784cf-7149-49d0-8272-e1ba8a5547ae",
-    "audio_length": 3530.4431875,
-    "files": {
-      "audio": "audio/tw_S8lqu0wk.wav",
-      "beats": "beats/tw_S8lqu0wk.txt"
-    },
-    "tonality": "functional",
-    "completed": false,
-    "id": "ae358553-7e88-4f30-830d-12b419d90fd4"
+    "completed": true,
+    "id": "e694aa41-854c-4069-bf28-3b9536c1b560",
+    "key": "D maj",
+    "tempo_class": "MEDIUM",
+    "rhythm_feel": "LATIN",
+    "time_signature": "4/4",
+    "num_bars": 44
   },
   {
     "yt_id": "sVUCD5MwqyQ",
@@ -16850,11 +16874,17 @@
     "audio_length": 493.8933333333333,
     "files": {
       "audio": "audio/sVUCD5MwqyQ.wav",
-      "beats": "beats/sVUCD5MwqyQ.txt"
+      "beats": "beats/sVUCD5MwqyQ.txt",
+      "segments": "segments/sVUCD5MwqyQ.csv"
     },
     "tonality": "functional",
-    "completed": false,
-    "id": "422c58ea-5c9d-42ac-8a8d-eab2d7a75078"
+    "completed": true,
+    "id": "422c58ea-5c9d-42ac-8a8d-eab2d7a75078",
+    "key": "C maj",
+    "tempo_class": "MEDIUM",
+    "rhythm_feel": "LATIN",
+    "time_signature": "4/4",
+    "num_bars": 44
   },
   {
     "yt_id": "e5ebCLWLXP8",
@@ -18839,5 +18869,26 @@
       "segments": "segments/rc6YyJAlKns.csv"
     },
     "audio_length": 516.5278911564626
+  },
+  {
+    "id": "98b4fd58-1fdd-4cb6-807d-b282dc3bcf51",
+    "completed": false,
+    "key": "Db maj",
+    "rhythm_feel": "SWING",
+    "num_bars": 36,
+    "artist": "Ella Fitzgerald",
+    "tonality": "functional",
+    "musicbrainz_id": "5276237e-62e7-45b1-84da-048d846ecddf",
+    "time_signature": "4/4",
+    "standard": "All the Things You Are",
+    "album": "Ella Fitzgerald Sings the Jerome Kern Songbook",
+    "tempo_class": "UP",
+    "yt_id": "ASNSS_G62zw",
+    "files": {
+      "audio": "audio/ASNSS_G62zw.wav",
+      "beats": "beats/ASNSS_G62zw.txt",
+      "chords": "chords/ASNSS_G62zw.csv"
+    },
+    "audio_length": 195.65133786848074
   }
 ]
