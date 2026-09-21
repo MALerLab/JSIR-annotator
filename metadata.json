@@ -1198,11 +1198,14 @@
       "structure": "structure/SyNVoUozNPE.csv",
       "segments": "segments/SyNVoUozNPE.csv"
     },
-    "tonality": "functional",
+    "tonality": "blues",
     "completed": true,
     "num_bars": 12,
     "key": "G maj",
-    "id": "d0012f28-999d-4993-8b50-0051d1af0e7b"
+    "id": "d0012f28-999d-4993-8b50-0051d1af0e7b",
+    "tempo_class": "MEDIUM UP",
+    "rhythm_feel": "SWING",
+    "time_signature": "4/4"
   },
   {
     "yt_id": "MiMLOc9h0RM",
@@ -1219,10 +1222,14 @@
       "structure": "structure/MiMLOc9h0RM.csv",
       "segments": "segments/MiMLOc9h0RM.csv"
     },
-    "tonality": "functional",
+    "tonality": "blues",
     "completed": true,
     "key": "G maj",
-    "id": "222eb30d-a936-4795-80d1-367dbf68d6b4"
+    "id": "222eb30d-a936-4795-80d1-367dbf68d6b4",
+    "num_bars": 12,
+    "tempo_class": "MEDIUM UP",
+    "rhythm_feel": "SWING",
+    "time_signature": "4/4"
   },
   {
     "yt_id": "N7FHwhEKWsM",
@@ -1239,7 +1246,7 @@
       "structure": "structure/N7FHwhEKWsM.csv",
       "segments": "segments/N7FHwhEKWsM.csv"
     },
-    "tonality": "functional",
+    "tonality": "blues",
     "completed": true,
     "num_bars": 12,
     "tempo_class": "MEDIUM",
@@ -1263,7 +1270,7 @@
       "structure": "structure/Q0FgtYzjkoo.csv",
       "segments": "segments/Q0FgtYzjkoo.csv"
     },
-    "tonality": "functional",
+    "tonality": "blues",
     "completed": true,
     "num_bars": 16,
     "tempo_class": "MEDIUM UP",
@@ -1287,7 +1294,7 @@
       "structure": "structure/Vsdtve9LKFE.csv",
       "segments": "segments/Vsdtve9LKFE.csv"
     },
-    "tonality": "functional",
+    "tonality": "blues",
     "completed": true,
     "num_bars": 12,
     "key": "G maj",
@@ -1312,7 +1319,7 @@
       "structure": "structure/-uIRZpmwpxQ.csv",
       "segments": "segments/-uIRZpmwpxQ.csv"
     },
-    "tonality": "functional",
+    "tonality": "blues",
     "completed": true,
     "num_bars": 12,
     "tempo_class": "MEDIUM UP",
@@ -1336,7 +1343,7 @@
       "structure": "structure/78h5ppC6KYQ.csv",
       "segments": "segments/78h5ppC6KYQ.csv"
     },
-    "tonality": "functional",
+    "tonality": "blues",
     "completed": true,
     "num_bars": 16,
     "key": "F maj",
@@ -1382,7 +1389,7 @@
     "tempo_class": "MEDIUM UP",
     "rhythm_feel": "SWING",
     "time_signature": "4/4",
-    "tonality": "functional",
+    "tonality": "blues",
     "completed": true,
     "id": "9f0826f4-97e6-4a4f-8183-2991f78368fb"
   },
@@ -1407,7 +1414,7 @@
     "tempo_class": "MEDIUM UP",
     "rhythm_feel": "SWING",
     "time_signature": "4/4",
-    "tonality": "functional",
+    "tonality": "blues",
     "completed": true,
     "id": "7e5e1ca3-615d-414b-8be9-266871231046"
   },
@@ -1432,7 +1439,7 @@
     "tempo_class": "MEDIUM UP",
     "rhythm_feel": "SWING",
     "time_signature": "4/4",
-    "tonality": "functional",
+    "tonality": "blues",
     "completed": true,
     "id": "8c5d2697-98ab-47f4-97cb-3c67904cdccb"
   },
@@ -1457,7 +1464,7 @@
     "tempo_class": "MEDIUM UP",
     "rhythm_feel": "SWING",
     "time_signature": "4/4",
-    "tonality": "functional",
+    "tonality": "blues",
     "completed": true,
     "id": "919e1911-4305-492f-88ab-68648fa1718f"
   },
@@ -1479,7 +1486,7 @@
     "tempo_class": "MEDIUM UP",
     "rhythm_feel": "SWING",
     "time_signature": "4/4",
-    "tonality": "functional",
+    "tonality": "blues",
     "completed": false,
     "id": "abe8151c-2dbc-4dbe-8c05-99da66f119be"
   },
@@ -1504,7 +1511,7 @@
     "tempo_class": "MEDIUM UP",
     "rhythm_feel": "SWING",
     "time_signature": "4/4",
-    "tonality": "functional",
+    "tonality": "blues",
     "completed": true,
     "id": "49db89ca-55a5-467a-9ab3-268c91c53194"
   },
@@ -1529,7 +1536,7 @@
     "tempo_class": "MEDIUM UP",
     "rhythm_feel": "SWING",
     "time_signature": "4/4",
-    "tonality": "functional",
+    "tonality": "blues",
     "completed": true,
     "id": "281711a0-d1f8-40b5-b3f1-c65bc13bcbe2"
   },
@@ -1554,7 +1561,7 @@
     "tempo_class": "MEDIUM UP",
     "rhythm_feel": "SWING",
     "time_signature": "4/4",
-    "tonality": "functional",
+    "tonality": "blues",
     "completed": true,
     "id": "216d529d-cdc4-4c42-8c58-ba21a7005b7a"
   },
@@ -3957,7 +3964,7 @@
     "standard": "Donna Lee",
     "artist": "Lee Konitz, Warne Marsh",
     "album": "Lee Konitz with Warne Marsh",
-    "instrumentation": "saxophone-led quintet",
+    "instrumentation": "quintet",
     "musicbrainz_id": "64c8df7f-15f8-450b-83b6-a0d0ce1e6d47",
     "audio_length": 376.3954791666667,
     "files": {
@@ -3982,7 +3989,7 @@
     "standard": "Donna Lee",
     "artist": "Wynton Marsalis",
     "album": "Live at the House of Tribes",
-    "instrumentation": "trumpet quartet",
+    "instrumentation": "quartet",
     "musicbrainz_id": "f63fcfcc-2390-4958-8ec5-00a48ee59318",
     "audio_length": 407.6533333333333,
     "files": {
@@ -15062,7 +15069,7 @@
     "key": "Bb min",
     "num_bars": 16,
     "tempo_class": "MEDIUM SLOW",
-    "rhythm_feel": "TWOBEAT",
+    "rhythm_feel": "SWING",
     "time_signature": "4/4",
     "tonality": "functional",
     "completed": true,
@@ -15087,7 +15094,7 @@
     "key": "G min",
     "num_bars": 16,
     "tempo_class": "MEDIUM SLOW",
-    "rhythm_feel": "TWOBEAT",
+    "rhythm_feel": "SWING",
     "time_signature": "4/4",
     "tonality": "functional",
     "completed": true,
@@ -18393,7 +18400,8 @@
       "chords": "chords/bTIA7JnEem8.csv",
       "segments": "segments/bTIA7JnEem8.csv"
     },
-    "audio_length": 405.4900680272109
+    "audio_length": 405.4900680272109,
+    "instrumentation": "quartet"
   },
   {
     "id": "acb23d07-5880-4417-8f77-243454f41dc2",
@@ -18415,7 +18423,8 @@
       "chords": "chords/A3vLZNVOgAE.csv",
       "segments": "segments/A3vLZNVOgAE.csv"
     },
-    "audio_length": 658.7036734693878
+    "audio_length": 658.7036734693878,
+    "instrumentation": "piano trio"
   },
   {
     "id": "94cf6522-cea7-41e5-9d55-3761cf5223bf",
@@ -18460,7 +18469,8 @@
       "chords": "chords/LmFlOMQyf5k.csv",
       "segments": "segments/LmFlOMQyf5k.csv"
     },
-    "audio_length": 994.7428571428571
+    "audio_length": 994.7428571428571,
+    "instrumentation": "quartet"
   },
   {
     "id": "1374783e-1eed-468c-87b2-f6c973ecd7c8",
@@ -18505,7 +18515,8 @@
       "chords": "chords/ogJqb011SoI.csv",
       "segments": "segments/ogJqb011SoI.csv"
     },
-    "audio_length": 155.52725623582765
+    "audio_length": 155.52725623582765,
+    "instrumentation": "quintet"
   },
   {
     "id": "724702f6-0852-4c45-98c6-48846499989e",
@@ -18527,7 +18538,8 @@
       "chords": "chords/pX8hN-SlsSA.csv",
       "segments": "segments/pX8hN-SlsSA.csv"
     },
-    "audio_length": 429.6156009070295
+    "audio_length": 429.6156009070295,
+    "instrumentation": "quartet"
   },
   {
     "id": "b67d086c-b03f-4d07-93c4-b1a6f972b8f4",
@@ -18595,7 +18607,8 @@
       "chords": "chords/ULfMsWyWGbs.csv",
       "segments": "segments/ULfMsWyWGbs.csv"
     },
-    "audio_length": 465.65297052154193
+    "audio_length": 465.65297052154193,
+    "instrumentation": "quintet"
   },
   {
     "id": "406e32d8-ab95-434e-b6d3-4da984b2446a",
@@ -18686,7 +18699,8 @@
       "chords": "chords/FzwVeEpFjvE.csv",
       "segments": "segments/FzwVeEpFjvE.csv"
     },
-    "audio_length": 670.8709297052154
+    "audio_length": 670.8709297052154,
+    "instrumentation": "piano trio"
   },
   {
     "id": "a0301d4e-2d05-4f04-aae1-79e2657f9db2",
@@ -18776,7 +18790,8 @@
       "chords": "chords/yAPsAd8zCfk.csv",
       "segments": "segments/yAPsAd8zCfk.csv"
     },
-    "audio_length": 455.1111111111111
+    "audio_length": 455.1111111111111,
+    "instrumentation": "quartet"
   },
   {
     "id": "8fff5c6c-2b17-4f3d-8741-02d15904ae20",

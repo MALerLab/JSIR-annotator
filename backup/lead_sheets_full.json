@@ -241,7 +241,7 @@
     "rhythmfeel": "SWING",
     "key": "F-maj",
     "signature": "4/4",
-    "tonality": "blues",
+    "tonality": "functional",
     "chord_changes": [
       "F:7 % % %",
       "Bb:7 % % %",
@@ -287,7 +287,7 @@
     "rhythmfeel": "SWING",
     "key": "F-maj",
     "signature": "4/4",
-    "tonality": "blues",
+    "tonality": "functional",
     "chord_changes": [
       "F:7 % % %",
       "Bb:7 % % %",
@@ -2587,7 +2587,7 @@
   {
     "title": "Summertime",
     "tempoclass": "MEDIUM SLOW",
-    "rhythmfeel": "SWING",
+    "rhythmfeel": "TWOBEAT",
     "key": "G-min",
     "signature": "4/4",
     "tonality": "functional",
