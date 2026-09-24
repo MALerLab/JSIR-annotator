@@ -11,15 +11,7 @@ with open("metadata.json") as f:
 metadata = [x for x in metadata if x["completed"] == True]
 
 try:
-  if EXPORT_DIR.exists():
-    for item in EXPORT_DIR.iterdir():
-      if item.name not in [".git", ".gitignore"]:
-        if item.is_dir():
-          shutil.rmtree(item)
-        else:
-          item.unlink()
-  else:
-    EXPORT_DIR.mkdir(parents=True, exist_ok=True)
+  EXPORT_DIR.mkdir(parents=True, exist_ok=True)
   print(f"Exporting {len(metadata)} items to {EXPORT_DIR}")
 
   print("Copying audio...")
@@ -37,10 +29,12 @@ try:
   chords_dir = EXPORT_DIR / "chords"
   structure_dir = EXPORT_DIR / "structure"
   segments_dir = EXPORT_DIR / "segments"
-  beats_dir.mkdir(parents=True, exist_ok=True)
-  chords_dir.mkdir(parents=True, exist_ok=True)
-  structure_dir.mkdir(parents=True, exist_ok=True)
-  segments_dir.mkdir(parents=True, exist_ok=True)
+  for dir in [beats_dir, chords_dir, structure_dir, segments_dir]:
+    dir.mkdir(parents=True, exist_ok=True)
+    for file in dir.iterdir():
+      if file.is_file():
+        file.unlink()
+  
   for item in tqdm(metadata, desc="Exporting"):
     if "beats" not in item["files"]:
       item["files"]["beats"] = f"beats/{Path(item['yt_id']).with_suffix('.txt')}"
@@ -87,10 +81,12 @@ try:
 except Exception as e:
   print(f"Error: {e}")
   print("Cleaning up...")
-  if EXPORT_DIR.exists():
-    for item in EXPORT_DIR.iterdir():
-      if item.name not in [".git", ".gitignore"]:
-        if item.is_dir():
-          shutil.rmtree(item)
-        else:
-          item.unlink()
+  beats_dir = EXPORT_DIR / "beats"
+  chords_dir = EXPORT_DIR / "chords"
+  structure_dir = EXPORT_DIR / "structure"
+  segments_dir = EXPORT_DIR / "segments"
+  for dir in [beats_dir, chords_dir, structure_dir, segments_dir]:
+    if dir.exists():
+      for file in dir.iterdir():
+        if file.is_file():
+          file.unlink()
