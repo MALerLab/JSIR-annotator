@@ -1,9 +1,17 @@
 from pathlib import Path
 import shutil
 import json
+import argparse
 from tqdm.auto import tqdm
 
-EXPORT_DIR = Path("/home/issyun/storage/JSIR")
+DEFAULT_EXPORT_DIR = Path("/home/issyun/storage/JSIR")
+
+parser = argparse.ArgumentParser()
+parser.add_argument("export_dir", nargs="?", type=Path, default=DEFAULT_EXPORT_DIR)
+parser.add_argument("--exclude-audio", action="store_true")
+args = parser.parse_args()
+
+EXPORT_DIR = args.export_dir
 
 with open("metadata.json") as f:
   metadata = json.load(f)
@@ -14,15 +22,18 @@ try:
   EXPORT_DIR.mkdir(parents=True, exist_ok=True)
   print(f"Exporting {len(metadata)} items to {EXPORT_DIR}")
 
-  print("Copying audio...")
-  audio_dir = EXPORT_DIR / "audio"
-  audio_dir.mkdir(parents=True, exist_ok=True)
-  for item in tqdm(metadata, desc="Exporting"):
-    src = Path(item["files"]["audio"])
-    dst = audio_dir / src.name
-    shutil.copy(src, dst)
+  for item in metadata:
     if "sections" in item["files"]:
-      del metadata[metadata.index(item)]["files"]["sections"]
+      del item["files"]["sections"]
+
+  if not args.exclude_audio:
+    print("Copying audio...")
+    audio_dir = EXPORT_DIR / "audio"
+    audio_dir.mkdir(parents=True, exist_ok=True)
+    for item in tqdm(metadata, desc="Exporting"):
+      src = Path(item["files"]["audio"])
+      dst = audio_dir / src.name
+      shutil.copy(src, dst)
 
   print("Copying labels...")
   beats_dir = EXPORT_DIR / "beats"
@@ -60,8 +71,9 @@ try:
     dst = segments_dir / src.name
     shutil.copy(src, dst)
 
-  with open(EXPORT_DIR / "audio" / ".gitignore", "w") as f:
-    f.write("*")
+  if not args.exclude_audio:
+    with open(EXPORT_DIR / "audio" / ".gitignore", "w") as f:
+      f.write("*")
 
   print("Exporting metadata...")
   standards = set([x["standard"].lower() for x in metadata])
