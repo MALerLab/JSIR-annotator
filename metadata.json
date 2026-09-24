@@ -6,7 +6,7 @@
     "album": "Where Do You Start",
     "instrumentation": "piano trio",
     "musicbrainz_id": "7ffab180-4e95-48e0-861a-ee52a1fb818d",
-    "audio_length": 383.53333333333336,
+    "audio_length": 383.533,
     "files": {
       "audio": "audio/8fve__DB2og.wav",
       "beats": "beats/8fve__DB2og.txt",
@@ -31,7 +31,7 @@
     "album": "Sundiata",
     "instrumentation": "saxophone quartet",
     "musicbrainz_id": "4b74349f-a704-4f3e-bfb2-f4c3ba1593b4",
-    "audio_length": 458.73333333333335,
+    "audio_length": 458.733,
     "files": {
       "audio": "audio/hp8LPKAtqqk.wav",
       "beats": "beats/hp8LPKAtqqk.txt",
@@ -56,7 +56,7 @@
     "album": "Ca\u2019Purange (instrumental)",
     "instrumentation": "tenor saxophone quartet",
     "musicbrainz_id": "8794b234-70ae-4080-a0a7-606ea1d57dd2",
-    "audio_length": 310.009625,
+    "audio_length": 310.01,
     "files": {
       "audio": "audio/vXkZrM2aNmA.wav",
       "beats": "beats/vXkZrM2aNmA.txt",
@@ -81,7 +81,7 @@
     "album": "Nigeria",
     "instrumentation": "guitar combo",
     "musicbrainz_id": "22fe1c52-4680-44d2-9243-3e76b5438a45",
-    "audio_length": 452.02666666666664,
+    "audio_length": 452.027,
     "files": {
       "audio": "audio/_ZnpcbnXSes.wav",
       "beats": "beats/_ZnpcbnXSes.txt",
@@ -106,7 +106,7 @@
     "album": "Cookin\u2019 With the Miles Davis Quintet",
     "instrumentation": "quintet",
     "musicbrainz_id": "ef30a74f-2394-4eff-ada4-1cbc9c43c223",
-    "audio_length": 267.5519375,
+    "audio_length": 267.552,
     "files": {
       "audio": "audio/WvRqfh5kETw.wav",
       "beats": "beats/WvRqfh5kETw.txt",
@@ -156,7 +156,7 @@
     "album": "The Vancouver Concert 1965",
     "instrumentation": "tenor saxophone quartet",
     "musicbrainz_id": "c01ee412-6b5a-4340-b064-745633fcef9d",
-    "audio_length": 505.51004166666667,
+    "audio_length": 505.51,
     "files": {
       "audio": "audio/5v8VL-_k4U0.wav",
       "beats": "beats/5v8VL-_k4U0.txt",
@@ -181,7 +181,7 @@
     "album": "The Incredible Jazz Guitar of Wes Montgomery",
     "instrumentation": "guitar quartet",
     "musicbrainz_id": "d68580d7-35ad-458e-a417-a62f66e30e82",
-    "audio_length": 268.07466666666664,
+    "audio_length": 268.075,
     "files": {
       "audio": "audio/RLIgJ7t_O2k.wav",
       "beats": "beats/RLIgJ7t_O2k.txt",
@@ -590,7 +590,7 @@
     "album": "Charlie Parker on Dial: The Complete Sessions",
     "instrumentation": "quintet",
     "musicbrainz_id": "f49bc51e-21fc-446c-ac71-5ef231d9ab3c",
-    "audio_length": 193.25968253968253,
+    "audio_length": 193.26,
     "files": {
       "audio": "audio/vav1CI1BfFM.wav",
       "beats": "beats/vav1CI1BfFM.txt",
@@ -615,7 +615,7 @@
     "album": "West Coast Live",
     "instrumentation": "quintet",
     "musicbrainz_id": "06ece56f-1468-44b1-a87a-edb26ff513f7",
-    "audio_length": 1063.7733333333333,
+    "audio_length": 1063.773,
     "files": {
       "audio": "audio/_gnY-kK-Lbw.wav",
       "beats": "beats/_gnY-kK-Lbw.txt",
@@ -663,7 +663,7 @@
     "album": "Yardbird Suite: The Ultimate Charlie Parker Collection",
     "instrumentation": "sextet",
     "musicbrainz_id": "c3c669d5-4aff-4329-8d7e-0cd1b851c320",
-    "audio_length": 167.00954166666668,
+    "audio_length": 167.01,
     "files": {
       "audio": "audio/ESjNt-V-zRI.wav",
       "beats": "beats/ESjNt-V-zRI.txt",
@@ -685,7 +685,7 @@
     "album": "Mail Call",
     "instrumentation": "vocal with orchestra",
     "musicbrainz_id": "2750f43e-4c03-461b-8b8a-1997f1f02fbb",
-    "audio_length": 168.66666666666666,
+    "audio_length": 168.667,
     "files": {
       "audio": "audio/IRQe5aHvi8Y.wav",
       "beats": "beats/IRQe5aHvi8Y.txt",
@@ -1027,7 +1027,7 @@
     "album": "Portrait in Jazz",
     "instrumentation": "piano trio",
     "musicbrainz_id": "b52d3a65-109c-4153-9852-a847e0813ff6",
-    "audio_length": 323.2266666666667,
+    "audio_length": 360.559,
     "files": {
       "audio": "audio/C1mMsz2I1c8.wav",
       "beats": "beats/C1mMsz2I1c8.txt",
@@ -1052,7 +1052,7 @@
     "album": "Somethin\u2019 Else",
     "instrumentation": "sextet",
     "musicbrainz_id": "69c7f51f-10bf-44b1-a319-3c1fb60f538d",
-    "audio_length": 662.03575,
+    "audio_length": 659.54,
     "files": {
       "audio": "audio/CpB7-8SGlJ0.wav",
       "beats": "beats/CpB7-8SGlJ0.txt",
@@ -1077,7 +1077,7 @@
     "album": "This Is Jazz 2",
     "instrumentation": "vocal/trumpet with combo",
     "musicbrainz_id": "f13ce0a3-b6fd-4099-97d3-d6 63c71e78a1",
-    "audio_length": 422.3333333333333,
+    "audio_length": 422.333,
     "files": {
       "audio": "audio/zTVlrOk9a8M.wav",
       "beats": "beats/zTVlrOk9a8M.txt",
@@ -1101,7 +1101,7 @@
     "album": "Concert by the Sea",
     "instrumentation": "piano trio",
     "musicbrainz_id": "132aa7e0-54ec-4fcc-97c9-20a1c4f5735d",
-    "audio_length": 403.620875,
+    "audio_length": 400.451,
     "files": {
       "audio": "audio/zXBOyYDWtg0.wav",
       "beats": "beats/zXBOyYDWtg0.txt",
@@ -1166,7 +1166,7 @@
     "album": "Live at CBC Studios",
     "instrumentation": "piano trio",
     "musicbrainz_id": "a4f08b6b-17ee-4157-bc52-78b890b60201",
-    "audio_length": 202.50666666666666,
+    "audio_length": 202.507,
     "files": {
       "audio": "audio/YmqmdX9oCqo.wav",
       "beats": "beats/YmqmdX9oCqo.txt",
@@ -1190,7 +1190,7 @@
     "album": "Introduction to Jazz Guitar",
     "instrumentation": "guitar and bass duo",
     "musicbrainz_id": "a8fcbe3d-c28c-4b1b-b8df-6327943a339d",
-    "audio_length": 265.58985416666667,
+    "audio_length": 258.856,
     "files": {
       "audio": "audio/SyNVoUozNPE.wav",
       "beats": "beats/SyNVoUozNPE.txt",
@@ -1215,7 +1215,7 @@
     "album": "12-15-78",
     "instrumentation": "guitar quartet",
     "musicbrainz_id": "2a74578a-63ad-4ebb-a5cf-7803ed5389d4",
-    "audio_length": 230.69333333333333,
+    "audio_length": 230.693,
     "files": {
       "audio": "audio/MiMLOc9h0RM.wav",
       "beats": "beats/MiMLOc9h0RM.txt",
@@ -1239,7 +1239,7 @@
     "album": "Bags' Groove",
     "instrumentation": "quintet",
     "musicbrainz_id": "ef91ff3f-5824-4394-a395-b581d2ab96c0",
-    "audio_length": 677.7333333333333,
+    "audio_length": 677.733,
     "files": {
       "audio": "audio/N7FHwhEKWsM.wav",
       "beats": "beats/N7FHwhEKWsM.txt",
@@ -1262,7 +1262,7 @@
     "album": "Milt Jackson With John Lewis, Percy Heath, Kenny Clarke, Lou Donaldson and the Thelonious Monk Quintet",
     "instrumentation": "quintet",
     "musicbrainz_id": "6b533b84-b5d1-46d0-9ab9-447b8cae24a0",
-    "audio_length": 180.0243125,
+    "audio_length": 186.085,
     "files": {
       "audio": "audio/Q0FgtYzjkoo.wav",
       "beats": "beats/Q0FgtYzjkoo.txt",
@@ -1287,7 +1287,7 @@
     "album": "Night Train",
     "instrumentation": "piano trio",
     "musicbrainz_id": "b2aa41e5-52fd-4d0f-9386 -63f3c1eaaf0e",
-    "audio_length": 340.3333333333333,
+    "audio_length": 340.333,
     "files": {
       "audio": "audio/Vsdtve9LKFE.wav",
       "beats": "beats/Vsdtve9LKFE.txt",
@@ -1311,7 +1311,7 @@
     "album": "Monday Night at Birdland",
     "instrumentation": "septet",
     "musicbrainz_id": "4fd79c3f-3671-406d-b746-b25b46de0e2e",
-    "audio_length": 49.16827083333333,
+    "audio_length": 749.981,
     "files": {
       "audio": "audio/-uIRZpmwpxQ.wav",
       "beats": "beats/-uIRZpmwpxQ.txt",
@@ -1336,7 +1336,7 @@
     "album": "The Modern Jazz Quartet",
     "instrumentation": "quartet",
     "musicbrainz_id": "1e37f8fb-c692-4a0d-b996-eb1bf7d6486c",
-    "audio_length": 340.14666666666665,
+    "audio_length": 340.147,
     "files": {
       "audio": "audio/78h5ppC6KYQ.wav",
       "beats": "beats/78h5ppC6KYQ.txt",
@@ -1376,7 +1376,7 @@
     "album": "Timeless Charlie Parker",
     "instrumentation": "quintet",
     "musicbrainz_id": "fbcfc05f-46b7-420f-a3f9-75c416752a25",
-    "audio_length": 218.615875,
+    "audio_length": 218.616,
     "files": {
       "audio": "audio/HVt4792iqcM.wav",
       "beats": "beats/HVt4792iqcM.txt",
@@ -1401,7 +1401,7 @@
     "album": "Billie's Bounce",
     "instrumentation": "tenor quartet",
     "musicbrainz_id": "a07e6917-2fd0-4fae-9c5d-5cd5dd43ab39",
-    "audio_length": 481.3333333333333,
+    "audio_length": 481.333,
     "files": {
       "audio": "audio/1Sy_cy6rQl8.wav",
       "beats": "beats/1Sy_cy6rQl8.txt",
@@ -1426,7 +1426,7 @@
     "album": "Live at Minton's",
     "instrumentation": "two-tenor quintet",
     "musicbrainz_id": "dfd25133-b485-4379-9ddc-b22597d90b3e",
-    "audio_length": 677.8666666666667,
+    "audio_length": 677.867,
     "files": {
       "audio": "audio/0pLDFGGj3XY.wav",
       "beats": "beats/0pLDFGGj3XY.txt",
@@ -1451,7 +1451,7 @@
     "album": "Jimmy Smith at the Organ, Volume 2",
     "instrumentation": "organ trio",
     "musicbrainz_id": "7565b66c-c601-44c9-b61a-2e8d7dc9e852",
-    "audio_length": 502.3466666666667,
+    "audio_length": 502.347,
     "files": {
       "audio": "audio/v-gBpgFD6bA.wav",
       "beats": "beats/v-gBpgFD6bA.txt",
@@ -1498,7 +1498,7 @@
     "album": "Jazz At The Philharmonic Set 1957",
     "instrumentation": "quintet",
     "musicbrainz_id": "a869bb0a-97cc-4a58-80df-d0383c757ea0",
-    "audio_length": 589.0554375,
+    "audio_length": 589.055,
     "files": {
       "audio": "audio/A-tlMEMrK-4.wav",
       "beats": "beats/A-tlMEMrK-4.txt",
@@ -1523,7 +1523,7 @@
     "album": "Dig It!",
     "instrumentation": "quintet",
     "musicbrainz_id": "92dc3fff-aced-4805-82f2-43150075c8f6",
-    "audio_length": 562.050625,
+    "audio_length": 562.051,
     "files": {
       "audio": "audio/C_GCdc_uL1c.wav",
       "beats": "beats/C_GCdc_uL1c.txt",
@@ -1548,7 +1548,7 @@
     "album": "The Best of Wes",
     "instrumentation": "guitar combo",
     "musicbrainz_id": "16588f29-598c-4d26-8f1f-23740647275e",
-    "audio_length": 283.41116666666665,
+    "audio_length": 283.411,
     "files": {
       "audio": "audio/Gv4hS1W922E.wav",
       "beats": "beats/Gv4hS1W922E.txt",
@@ -1597,7 +1597,7 @@
     "album": "Quintergy: Live at the Village Vanguard",
     "instrumentation": "quintet",
     "musicbrainz_id": "8de274b9-6fe2-4cf1-98e2-e67b06ba2bee",
-    "audio_length": 655.7431458333333,
+    "audio_length": 389.352,
     "files": {
       "audio": "audio/Swj48LpoGz8.wav",
       "beats": "beats/Swj48LpoGz8.txt",
@@ -1646,7 +1646,7 @@
     "album": "Moon and Sand",
     "instrumentation": "guitar combo",
     "musicbrainz_id": "535ae45e-64a4-4e30-b282-a15cc471d022",
-    "audio_length": 247.87302083333333,
+    "audio_length": 257.463,
     "files": {
       "audio": "audio/ZgrkHKViZjs.wav",
       "beats": "beats/ZgrkHKViZjs.txt",
@@ -1671,7 +1671,7 @@
     "album": "Blue Bossa",
     "instrumentation": "piano trio",
     "musicbrainz_id": "d1a4717a-de44-4edb-b553-4030b4f912fa",
-    "audio_length": 597.2933333333333,
+    "audio_length": 597.293,
     "files": {
       "audio": "audio/pVFr3Kg4V8g.wav",
       "beats": "beats/pVFr3Kg4V8g.txt",
@@ -2511,7 +2511,7 @@
     "album": "Birds Of A Feather",
     "instrumentation": "vocal with saxophone and combo",
     "musicbrainz_id": "de182e4f-0352-4407-94fb-828f9a7011a7",
-    "audio_length": 205.29333333333332,
+    "audio_length": 205.293,
     "files": {
       "audio": "audio/VO6hjbRbLUY.wav",
       "beats": "beats/VO6hjbRbLUY.txt",
@@ -2536,7 +2536,7 @@
     "album": "Bye Bye Blackbird",
     "instrumentation": "piano trio",
     "musicbrainz_id": "bd0b6c14-65ed-495b-8093-011d08cca4bf",
-    "audio_length": 671.8461678004535,
+    "audio_length": 671.846,
     "files": {
       "audio": "audio/d2YyId3JTck.wav",
       "beats": "beats/d2YyId3JTck.txt",
@@ -2559,7 +2559,7 @@
     "album": "\u2019Round About Midnight",
     "instrumentation": "trumpet quintet",
     "musicbrainz_id": "f850b86a-55d2-41c5-8c4a-e9594cba6ba0",
-    "audio_length": 476.1813333333333,
+    "audio_length": 476.181,
     "files": {
       "audio": "audio/AlSVDvNHLPs.wav",
       "beats": "beats/AlSVDvNHLPs.txt",
@@ -2584,7 +2584,7 @@
     "album": "Songs From Pete Kelly\u2019s Blues",
     "instrumentation": "vocal with combo",
     "musicbrainz_id": "af7b4680-e77c-4b6c-bd4d-856a7ec5a4aa",
-    "audio_length": 184.2851875,
+    "audio_length": 184.285,
     "files": {
       "audio": "audio/wVdz4YuMDQ4.wav",
       "beats": "beats/wVdz4YuMDQ4.txt",
@@ -2632,7 +2632,7 @@
     "album": "Money Jungle",
     "instrumentation": "piano trio",
     "musicbrainz_id": "4cd6b2b7-f9d5-46e0-b220-9bae1775cde8",
-    "audio_length": 252.86666666666667,
+    "audio_length": 252.867,
     "files": {
       "audio": "audio/TPnB56fQJNQ.wav",
       "beats": "beats/TPnB56fQJNQ.txt",
@@ -2657,7 +2657,7 @@
     "album": "Ella Fitzgerald Sings the Duke Ellington Song Book",
     "instrumentation": "vocal with orchestra",
     "musicbrainz_id": "0bb5458a-f451-4162-88e4-502b3a53c1b4",
-    "audio_length": 236.007625,
+    "audio_length": 236.008,
     "files": {
       "audio": "audio/sTjPAjq8OMY.wav",
       "beats": "beats/sTjPAjq8OMY.txt",
@@ -2682,7 +2682,7 @@
     "album": "\"The Giants\"",
     "instrumentation": "piano trio",
     "musicbrainz_id": "079ba02c-0c39-42d3-a2ba-625f45d8f81c",
-    "audio_length": 398.4544375,
+    "audio_length": 398.454,
     "files": {
       "audio": "audio/KqsXxXYBOdc.wav",
       "beats": "beats/KqsXxXYBOdc.txt",
@@ -2707,7 +2707,7 @@
     "album": "Thelonious Monk Plays Duke Ellington",
     "instrumentation": "quartet",
     "musicbrainz_id": "de606651-4708-41c2-be53-4b722919361c",
-    "audio_length": 355.91547916666667,
+    "audio_length": 355.915,
     "files": {
       "audio": "audio/QLOlMnNVkwA.wav",
       "beats": "beats/QLOlMnNVkwA.txt",
@@ -2732,7 +2732,7 @@
     "album": "Movin' Wes",
     "instrumentation": "guitar with big band",
     "musicbrainz_id": "11b38c0f-c44b-4504-80b3-d6f814314886",
-    "audio_length": 181.22014583333333,
+    "audio_length": 157.013,
     "files": {
       "audio": "audio/GpN82RmYhr0.wav",
       "beats": "beats/GpN82RmYhr0.txt",
@@ -2757,7 +2757,7 @@
     "album": "The Best of Bud Powell 1944-62, Vol. 1",
     "instrumentation": "piano trio",
     "musicbrainz_id": "be001653-dffb-4048-9a49-b081154968b4",
-    "audio_length": 378.3066666666667,
+    "audio_length": 378.307,
     "files": {
       "audio": "audio/MdM7fRE44kE.wav",
       "beats": "beats/MdM7fRE44kE.txt",
@@ -2782,7 +2782,7 @@
     "album": "The Complete Birth of the Bebop",
     "instrumentation": "quintet",
     "musicbrainz_id": "727cef0b-7dc4-49dc-a283-649e6e4b4804",
-    "audio_length": 191.43691666666666,
+    "audio_length": 191.437,
     "files": {
       "audio": "audio/Z3vACbUETa0.wav",
       "beats": "beats/Z3vACbUETa0.txt",
@@ -2807,7 +2807,7 @@
     "album": "Study in Brown",
     "instrumentation": "quintet",
     "musicbrainz_id": "ef79bc02-24f2-420c-930b-08e0ce49755f",
-    "audio_length": 350.0292083333333,
+    "audio_length": 350.029,
     "files": {
       "audio": "audio/UXPzAasKWQg.wav",
       "beats": "beats/UXPzAasKWQg.txt",
@@ -2832,7 +2832,7 @@
     "album": "In the Land of Hi-Fi",
     "instrumentation": "vocal with orchestra",
     "musicbrainz_id": "e7887cb9-3758-4b42-9d53-39236758e7f6",
-    "audio_length": 94.44716666666666,
+    "audio_length": 94.447,
     "files": {
       "audio": "audio/PyU7ohXXy7s.wav",
       "beats": "beats/PyU7ohXXy7s.txt",
@@ -2857,7 +2857,7 @@
     "album": "Kaleidoscope",
     "instrumentation": "saxophone with rhythm",
     "musicbrainz_id": "9a8b13a6-f18d-4aa7-9164-36dec554098d",
-    "audio_length": 254.01470833333335,
+    "audio_length": 254.015,
     "files": {
       "audio": "audio/c0Olxorz1fU.wav",
       "beats": "beats/c0Olxorz1fU.txt",
@@ -3010,7 +3010,7 @@
     "album": "New York City, Birdland Club, February 21, 1954",
     "instrumentation": "hard bop quintet",
     "musicbrainz_id": "8e02efcc-2a46-4dd0-9660-ff006e817449",
-    "audio_length": 565.9733333333334,
+    "audio_length": 565.973,
     "files": {
       "audio": "audio/3sD5sxmSkzY.wav",
       "beats": "beats/3sD5sxmSkzY.txt",
@@ -3035,7 +3035,7 @@
     "album": "The Lonely One",
     "instrumentation": "piano trio",
     "musicbrainz_id": "69a597e9-0364-4ef7-9767-d5fd0cc9f57b",
-    "audio_length": 259.4016875,
+    "audio_length": 259.402,
     "files": {
       "audio": "audio/q--eHmrmgwE.wav",
       "beats": "beats/q--eHmrmgwE.txt",
@@ -3058,7 +3058,7 @@
     "album": "The Complete Live Performances on Savoy",
     "instrumentation": "alto saxophone quartet",
     "musicbrainz_id": "83f2d77b-6cf9-455f-824b-36c86808f6e0",
-    "audio_length": 180.8021875,
+    "audio_length": 180.802,
     "files": {
       "audio": "audio/yXK0pZx92MU.wav",
       "beats": "beats/yXK0pZx92MU.txt",
@@ -3083,7 +3083,7 @@
     "album": "Complete Kenny Drew & Carl Perkins Sessions",
     "instrumentation": "tenor saxophone quartet",
     "musicbrainz_id": "4b2ebd45-1928-486b-8fe8-8adb15326810",
-    "audio_length": 470.9239166666667,
+    "audio_length": 470.924,
     "files": {
       "audio": "audio/nCjibEEpQuI.wav",
       "beats": "beats/nCjibEEpQuI.txt",
@@ -3108,7 +3108,7 @@
     "album": "Diz 'n' Bird in Concert",
     "instrumentation": "quintet (bop)",
     "musicbrainz_id": "9adca306-a26f-4c9f-a347-4cbd40cf50b4",
-    "audio_length": 352.04935416666666,
+    "audio_length": 352.049,
     "files": {
       "audio": "audio/cHcJXnVloU0.wav",
       "beats": "beats/cHcJXnVloU0.txt",
@@ -3133,7 +3133,7 @@
     "album": "At Baker\u2019s Keyboard Lounge: The Complete Recordings",
     "instrumentation": "piano trio",
     "musicbrainz_id": "5adc0a33-0fac-4b56-a0a3-cc51eb1dcef4",
-    "audio_length": 613.6746666666667,
+    "audio_length": 613.675,
     "files": {
       "audio": "audio/pT-s1e6en2k.wav",
       "beats": "beats/pT-s1e6en2k.txt",
@@ -3542,7 +3542,7 @@
     "album": "The Collection, Vol 1",
     "instrumentation": "vocal with guitar trio",
     "musicbrainz_id": "bda00c69-932d-4e4c-ba42-1475170fa9d3",
-    "audio_length": 486.0981458333333,
+    "audio_length": 486.098,
     "files": {
       "audio": "audio/1Rhq53sCfRU.wav",
       "beats": "beats/1Rhq53sCfRU.txt",
@@ -3567,7 +3567,7 @@
     "album": "Desafinado",
     "instrumentation": "tenor saxophone with combo",
     "musicbrainz_id": "08340893-a458-424e-955e-5cede31d4d7b",
-    "audio_length": 349.03075,
+    "audio_length": 349.031,
     "files": {
       "audio": "audio/STOuIWxs_Pg.wav",
       "beats": "beats/STOuIWxs_Pg.txt",
@@ -3592,7 +3592,7 @@
     "album": "A Musical Safari",
     "instrumentation": "trumpet quintet",
     "musicbrainz_id": "391b48d5-0c92-4c76-b201-4364c3b0e50f",
-    "audio_length": 203.72464583333334,
+    "audio_length": 203.725,
     "files": {
       "audio": "audio/DCwFTjsN9mM.wav",
       "beats": "beats/DCwFTjsN9mM.txt",
@@ -3617,7 +3617,7 @@
     "album": "Ella Abra\u00e7a Jobim",
     "instrumentation": "vocal with orchestra",
     "musicbrainz_id": "",
-    "audio_length": 131.61070833333332,
+    "audio_length": 131.611,
     "files": {
       "audio": "audio/olkt2VpUaTc.wav",
       "beats": "beats/olkt2VpUaTc.txt",
@@ -3667,7 +3667,7 @@
     "album": "Eu sei que vou te amar",
     "instrumentation": "vocal with guitar",
     "musicbrainz_id": "92a42784-0b7d-4019-a992-7f59ddb7a518",
-    "audio_length": 255.60527083333332,
+    "audio_length": 255.605,
     "files": {
       "audio": "audio/tCMhuN3053o.wav",
       "beats": "beats/tCMhuN3053o.txt",
@@ -3692,7 +3692,7 @@
     "album": "Jazz Samba",
     "instrumentation": "saxophone with guitar combo",
     "musicbrainz_id": "db78a007-de4c-45b9-bf4f-b2e55d884876",
-    "audio_length": 349.5648125,
+    "audio_length": 349.565,
     "files": {
       "audio": "audio/L7lmMNweUVU.wav",
       "beats": "beats/L7lmMNweUVU.txt",
@@ -3742,7 +3742,7 @@
     "album": "The Works of Duke - Integrale Volume 10",
     "instrumentation": "big band",
     "musicbrainz_id": "c6b2381c-d100-4937-bdef-7d40a973e543",
-    "audio_length": 196.46404166666667,
+    "audio_length": 196.464,
     "files": {
       "audio": "audio/lEIhNZd9xEE.wav",
       "beats": "beats/lEIhNZd9xEE.txt",
@@ -3792,7 +3792,7 @@
     "album": "The Complete Johnny Hodges Sessions 1951 - 1955",
     "instrumentation": "alto saxophone with combo",
     "musicbrainz_id": "e77fc191-815e-48e7-8c2b-66c932b04af6",
-    "audio_length": 158.917375,
+    "audio_length": 158.917,
     "files": {
       "audio": "audio/XwIETmyjr7U.wav",
       "beats": "beats/XwIETmyjr7U.txt",
@@ -3817,7 +3817,7 @@
     "album": "The Great Reunion",
     "instrumentation": "vocal/trumpet with combo",
     "musicbrainz_id": "ef263d8f-bb4c-4d1a-b46e-e8bfdd47ef9d",
-    "audio_length": 211.77333333333334,
+    "audio_length": 211.773,
     "files": {
       "audio": "audio/1eJVqsEK8s8.wav",
       "beats": "beats/1eJVqsEK8s8.txt",
@@ -3842,7 +3842,7 @@
     "album": "Just One Of Those Things",
     "instrumentation": "vocal with orchestra",
     "musicbrainz_id": "1a74795e-08bd-483d-aa15-e1238f5fc286",
-    "audio_length": 192.13333333333333,
+    "audio_length": 192.133,
     "files": {
       "audio": "audio/qpAFCPhAhmg.wav",
       "beats": "beats/qpAFCPhAhmg.txt",
@@ -3867,7 +3867,7 @@
     "album": "Oscar Peterson Plays Duke Ellington",
     "instrumentation": "piano trio",
     "musicbrainz_id": "ac741304-4895-4a19-bfcc-941d02dc873e",
-    "audio_length": 153.33333333333334,
+    "audio_length": 153.333,
     "files": {
       "audio": "audio/Kzqvm-yXhL8.wav",
       "beats": "beats/Kzqvm-yXhL8.txt",
@@ -3892,7 +3892,7 @@
     "album": "Street of Dreams / Don't Get Around Much Anymore",
     "instrumentation": "vocal group",
     "musicbrainz_id": "a8c763ad-0cca-4dd2-9074-bb46bfbc39cd",
-    "audio_length": 186.05333333333334,
+    "audio_length": 186.053,
     "files": {
       "audio": "audio/Ik0jULBcY98.wav",
       "beats": "beats/Ik0jULBcY98.txt",
@@ -3917,7 +3917,7 @@
     "album": "Lee Konitz with Warne Marsh",
     "instrumentation": "quintet",
     "musicbrainz_id": "64c8df7f-15f8-450b-83b6-a0d0ce1e6d47",
-    "audio_length": 376.3954791666667,
+    "audio_length": 376.395,
     "files": {
       "audio": "audio/vuScy9j1ib0.wav",
       "beats": "beats/vuScy9j1ib0.txt",
@@ -3942,7 +3942,7 @@
     "album": "Live at the House of Tribes",
     "instrumentation": "quartet",
     "musicbrainz_id": "f63fcfcc-2390-4958-8ec5-00a48ee59318",
-    "audio_length": 407.6533333333333,
+    "audio_length": 407.653,
     "files": {
       "audio": "audio/K-K55SliCCY.wav",
       "beats": "beats/K-K55SliCCY.txt",
@@ -3967,7 +3967,7 @@
     "album": "As Time Goes By / Embraceable You",
     "instrumentation": "vocal with orchestra",
     "musicbrainz_id": "a798f74c-d1eb-42bc-b8cf-932eba59e0e1",
-    "audio_length": 194.176875,
+    "audio_length": 194.177,
     "files": {
       "audio": "audio/ENb4DJpNNfw.wav",
       "beats": "beats/ENb4DJpNNfw.txt",
@@ -3992,7 +3992,7 @@
     "album": "The Complete Birth of the Bebop",
     "instrumentation": "alto saxophone quintet",
     "musicbrainz_id": "5c59537c-9f5d-42db-a602-bc42c098adb4",
-    "audio_length": 226.69333333333333,
+    "audio_length": 226.693,
     "files": {
       "audio": "audio/Ah2r9Jzo82Y.wav",
       "beats": "beats/Ah2r9Jzo82Y.txt",
@@ -4017,7 +4017,7 @@
     "album": "A Touch of Class",
     "instrumentation": "vocal with orchestra",
     "musicbrainz_id": "ca9d94c1-f637-4a02-9db1-1b98e60cb1ff",
-    "audio_length": 225.77333333333334,
+    "audio_length": 225.773,
     "files": {
       "audio": "audio/KQ7BUFg0e5U.wav",
       "beats": "beats/KQ7BUFg0e5U.txt",
@@ -4042,7 +4042,7 @@
     "album": "The King Cole Trio",
     "instrumentation": "piano-vocal trio",
     "musicbrainz_id": "d3d994b8-7b40-4010-9df3-6705f539b017",
-    "audio_length": 225.77333333333334,
+    "audio_length": 225.773,
     "files": {
       "audio": "audio/15MYlx2PQvc.wav",
       "beats": "beats/15MYlx2PQvc.txt",
@@ -4067,7 +4067,7 @@
     "album": "Sarah Vaughan",
     "instrumentation": "vocal with quintet",
     "musicbrainz_id": "9944f81a-8c84-4af5-91ab-5b9d48ddcb6b",
-    "audio_length": 285.175875,
+    "audio_length": 285.176,
     "files": {
       "audio": "audio/XInCrPBQM3U.wav",
       "beats": "beats/XInCrPBQM3U.txt",
@@ -4524,7 +4524,7 @@
     "album": "The Heavyweight Champion: The Complete Atlantic Recordings",
     "instrumentation": "quartet",
     "musicbrainz_id": "5238583d-d19d-48ca-a7f0-7aba0f3fb140",
-    "audio_length": 2252.2659583333334,
+    "audio_length": 2252.266,
     "files": {
       "audio": "audio/xy_fxxj1mMY.wav",
       "beats": "beats/xy_fxxj1mMY.txt",
@@ -4574,7 +4574,7 @@
     "album": "Giant Steps (In Memory of John Coltrane)",
     "instrumentation": "piano trio",
     "musicbrainz_id": "792f8e7a-66b7-4154-9aec-0508afd5af3f",
-    "audio_length": 374.0933333333333,
+    "audio_length": 374.093,
     "files": {
       "audio": "audio/O3PWynH-CEc.wav",
       "beats": "beats/O3PWynH-CEc.txt",
@@ -4599,7 +4599,7 @@
     "album": "Blues in the Closet",
     "instrumentation": "piano trio",
     "musicbrainz_id": "d5cd7874-b08d-4bcf-a175-da49a62f2993",
-    "audio_length": 224.09579166666666,
+    "audio_length": 224.096,
     "files": {
       "audio": "audio/QTZtY9fDfp4.wav",
       "beats": "beats/QTZtY9fDfp4.txt",
@@ -4624,7 +4624,7 @@
     "album": "Jazz Jamboree 77 Vol. 2",
     "instrumentation": "big band",
     "musicbrainz_id": "c517a273-1304-4011-9ca3-1360fc1957b5",
-    "audio_length": 238.84045833333334,
+    "audio_length": 238.84,
     "files": {
       "audio": "audio/dQdf1YhmAbU.wav",
       "beats": "beats/dQdf1YhmAbU.txt",
@@ -5033,7 +5033,7 @@
     "album": "Slipped Disc",
     "instrumentation": "piano trio with clarinet",
     "musicbrainz_id": "7148853b-73ba-4db4-806b-ef48ed25e40e",
-    "audio_length": 1035.8654166666668,
+    "audio_length": 197.021,
     "files": {
       "audio": "audio/2SBWZfJdVvQ.wav",
       "beats": "beats/2SBWZfJdVvQ.txt",
@@ -5058,7 +5058,7 @@
     "album": "Honeysuckle Rose / Crazy Rhythm",
     "instrumentation": "tenor saxophone with combo",
     "musicbrainz_id": "e0e885ac-80ea-4f44-8319-5cde6f184657",
-    "audio_length": 170.0745625,
+    "audio_length": 170.075,
     "files": {
       "audio": "audio/GrkXKx8a3w0.wav",
       "beats": "beats/GrkXKx8a3w0.txt",
@@ -5083,7 +5083,7 @@
     "album": "Volume 3 - 1929-1937 - Complete Edition",
     "instrumentation": "big band",
     "musicbrainz_id": "3deeefce-3906-4c58-9cf8-ebbe40691eb3",
-    "audio_length": 179.00264583333333,
+    "audio_length": 179.003,
     "files": {
       "audio": "audio/GyBjDsgo2Y0.wav",
       "beats": "beats/GyBjDsgo2Y0.txt",
@@ -5108,7 +5108,7 @@
     "album": "Souvenirs",
     "instrumentation": "quintet with guitar and violin",
     "musicbrainz_id": "eff6cb69-4b6a-4293-8f42-441c64eb5e66",
-    "audio_length": 180.04754166666666,
+    "audio_length": 180.048,
     "files": {
       "audio": "audio/uFUE4FpqLSU.wav",
       "beats": "beats/uFUE4FpqLSU.txt",
@@ -5133,7 +5133,7 @@
     "album": "Enregistrements Originaux",
     "instrumentation": "string quintet (guitar/violin)",
     "musicbrainz_id": "4075d949-bcf6-4b4c-828e-f15ce7d35ed6",
-    "audio_length": 202.84954166666665,
+    "audio_length": 202.85,
     "files": {
       "audio": "audio/cpHhHS9o8_0.wav",
       "beats": "beats/cpHhHS9o8_0.txt",
@@ -5183,7 +5183,7 @@
     "album": "Bud Powell",
     "instrumentation": "piano trio",
     "musicbrainz_id": "f583b40c-eaf8-406b-818d-96f3780cf677",
-    "audio_length": 356.855875,
+    "audio_length": 349.427,
     "files": {
       "audio": "audio/WoQeS0rcXyc.wav",
       "beats": "beats/WoQeS0rcXyc.txt",
@@ -5208,7 +5208,7 @@
     "album": "Jazz at Massey Hall",
     "instrumentation": "quintet",
     "musicbrainz_id": "ace622f8-1d0f-4504-97f5-2efcf895bcc1",
-    "audio_length": 555.003375,
+    "audio_length": 555.003,
     "files": {
       "audio": "audio/UwB9sUvYnVk.wav",
       "beats": "beats/UwB9sUvYnVk.txt",
@@ -5233,7 +5233,7 @@
     "album": "Town Hall, New York City, June 22, 1945",
     "instrumentation": "quintet",
     "musicbrainz_id": "52780e43-d007-4707-acaa-e0efd568c8e4",
-    "audio_length": 434.2247708333333,
+    "audio_length": 434.225,
     "files": {
       "audio": "audio/7TUtN-YMC4A.wav",
       "beats": "beats/7TUtN-YMC4A.txt",
@@ -5667,7 +5667,7 @@
     "album": "Kind of Evans",
     "instrumentation": "solo piano",
     "musicbrainz_id": "7d010289-9b28-4e5b-98a4-2880053a7f3f",
-    "audio_length": 419.2914375,
+    "audio_length": 419.291,
     "files": {
       "audio": "audio/HbJHzPTW5Wk.wav",
       "beats": "beats/HbJHzPTW5Wk.txt",
@@ -5692,7 +5692,7 @@
     "album": "Complete Recordings",
     "instrumentation": "vocal with orchestra",
     "musicbrainz_id": "f49eaa69-6e50-41d9-9934-37954bacbfd4",
-    "audio_length": 171.27039583333334,
+    "audio_length": 171.27,
     "files": {
       "audio": "audio/W3cKifJYLi8.wav",
       "beats": "beats/W3cKifJYLi8.txt",
@@ -5717,7 +5717,7 @@
     "album": "Swing That Music!",
     "instrumentation": "big band with trumpet/vocal",
     "musicbrainz_id": "199786e4-a552-4fc4-a19b-1e715e49ac39",
-    "audio_length": 286.2207916666667,
+    "audio_length": 286.221,
     "files": {
       "audio": "audio/yxeqyhpjLjM.wav",
       "beats": "beats/yxeqyhpjLjM.txt",
@@ -5742,7 +5742,7 @@
     "album": "Verve Jazz Masters 15",
     "instrumentation": "alto saxophone with combo",
     "musicbrainz_id": "6060d537-80bc-4c86-ad40-2204cff5ab99",
-    "audio_length": 548.049,
+    "audio_length": 554.893,
     "files": {
       "audio": "audio/LlwUUvgx66Q.wav",
       "beats": "beats/LlwUUvgx66Q.txt",
@@ -5792,7 +5792,7 @@
     "album": "The Chronological Classics: Sarah Vaughan 1946-1947",
     "instrumentation": "vocal with orchestra",
     "musicbrainz_id": "8da7f2ac-a745-46a7-95bf-8752b27ca371",
-    "audio_length": 149.02666666666667,
+    "audio_length": 149.027,
     "files": {
       "audio": "audio/ZBCEnEk4WDI.wav",
       "beats": "beats/ZBCEnEk4WDI.txt",
@@ -5817,7 +5817,7 @@
     "album": "The Modern Jazz Quartet at Music Inn, Volume 2",
     "instrumentation": "vibraphone quartet",
     "musicbrainz_id": "fd1b188e-9ee5-45ab-9bf1-e96cf60e761d",
-    "audio_length": 214.78666666666666,
+    "audio_length": 214.787,
     "files": {
       "audio": "audio/bic58iEVPEk.wav",
       "beats": "beats/bic58iEVPEk.txt",
@@ -5842,7 +5842,7 @@
     "album": "Volume 4 - 1937 - Complete Edition",
     "instrumentation": "big band",
     "musicbrainz_id": "7f159afe-c79b-4293-a6d1-21b8f5b7f39b",
-    "audio_length": 330.3333333333333,
+    "audio_length": 330.333,
     "files": {
       "audio": "audio/VaoTROVfFQ4.wav",
       "beats": "beats/VaoTROVfFQ4.txt",
@@ -5867,7 +5867,7 @@
     "album": "Swing From Paris",
     "instrumentation": "string quintet (guitars and violin)",
     "musicbrainz_id": "6289717f-d861-4d38-9346-d3a62634e7bf",
-    "audio_length": 116.45866666666667,
+    "audio_length": 167.067,
     "files": {
       "audio": "audio/uNT3wPcjjEQ.wav",
       "beats": "beats/uNT3wPcjjEQ.txt",
@@ -5892,7 +5892,7 @@
     "album": "Stardust",
     "instrumentation": "vocal with big band",
     "musicbrainz_id": "94c10302-3a04-44a1-8fbd-73e8a9884828",
-    "audio_length": 217.45489583333332,
+    "audio_length": 183.205,
     "files": {
       "audio": "audio/1PL0eRMh9AM.wav",
       "beats": "beats/1PL0eRMh9AM.txt",
@@ -6213,7 +6213,7 @@
     "album": "Art Blakey's Jazz Messengers With Thelonious Monk",
     "instrumentation": "quintet",
     "musicbrainz_id": "c1ad1181-1d56-47c5-a19b-681509b0880f",
-    "audio_length": 485.0068125,
+    "audio_length": 485.007,
     "files": {
       "audio": "audio/ak3IcTKS4-A.wav",
       "beats": "beats/ak3IcTKS4-A.txt",
@@ -6238,7 +6238,7 @@
     "album": "The Chronological Classics: Coleman Hawkins 1946-1947",
     "instrumentation": "octet/small band",
     "musicbrainz_id": "f1730c67-c888-47b9-bb4d-89b58a48a034",
-    "audio_length": 184.8540589569161,
+    "audio_length": 184.854,
     "files": {
       "audio": "audio/JWghK0Exagg.wav",
       "beats": "beats/JWghK0Exagg.txt",
@@ -6263,7 +6263,7 @@
     "album": "Lookin\u2019 at Monk!",
     "instrumentation": "two-tenor quintet",
     "musicbrainz_id": "feef8872-4267-4940-b8b7-8f34ff73a535",
-    "audio_length": 356.0780208333333,
+    "audio_length": 356.078,
     "files": {
       "audio": "audio/jYUCrCcNHpc.wav",
       "beats": "beats/jYUCrCcNHpc.txt",
@@ -6288,7 +6288,7 @@
     "album": "Infinity",
     "instrumentation": "quartet",
     "musicbrainz_id": "9c67ec3e-9297-4d64-b9fc-70f71395e162",
-    "audio_length": 439.1241875,
+    "audio_length": 439.124,
     "files": {
       "audio": "audio/49eIefljgxE.wav",
       "beats": "beats/49eIefljgxE.txt",
@@ -6313,7 +6313,7 @@
     "album": "Genius of Modern Music, Volume One",
     "instrumentation": "quartet",
     "musicbrainz_id": "0eea4b93-fe71-49d8-86cb-5f7fc9e559ac",
-    "audio_length": 407.08064583333334,
+    "audio_length": 165.008,
     "files": {
       "audio": "audio/Lov30CfofmQ.wav",
       "beats": "beats/Lov30CfofmQ.txt",
@@ -6338,7 +6338,7 @@
     "album": "Live at the Five Spot Discovery!",
     "instrumentation": "quartet",
     "musicbrainz_id": "c9a5a941-aec3-4439-9e76-3b02d7bdc25a",
-    "audio_length": 599.0167916666667,
+    "audio_length": 599.017,
     "files": {
       "audio": "audio/lIhQrRPcCSs.wav",
       "beats": "beats/lIhQrRPcCSs.txt",
@@ -6363,7 +6363,7 @@
     "album": "Mulligan Meets Monk",
     "instrumentation": "quartet (piano, baritone sax, bass, drums)",
     "musicbrainz_id": "9e1051a2-d193-4dbf-be3c-f8e41796d2ce",
-    "audio_length": 419.67747916666667,
+    "audio_length": 410.819,
     "files": {
       "audio": "audio/jvJgi6ASs5o.wav",
       "beats": "beats/jvJgi6ASs5o.txt",
@@ -6644,7 +6644,7 @@
     "album": "Complete Live at Birdland May 17, 1950",
     "instrumentation": "quintet",
     "musicbrainz_id": "4b8be031-b2f0-4581-ada7-7fb35676699e",
-    "audio_length": 658.459875,
+    "audio_length": 581.013,
     "files": {
       "audio": "audio/SD6QTTr0aJA.wav",
       "beats": "beats/SD6QTTr0aJA.txt",
@@ -6669,7 +6669,7 @@
     "album": "At Basin Street",
     "instrumentation": "quintet",
     "musicbrainz_id": "e55a1818-17cc-4969-8dac-d66ea67d306e",
-    "audio_length": 557.1860416666667,
+    "audio_length": 557.186,
     "files": {
       "audio": "audio/yFmXRxM-EXQ.wav",
       "beats": "beats/yFmXRxM-EXQ.txt",
@@ -6694,7 +6694,7 @@
     "album": "Cry Me a River",
     "instrumentation": "quintet",
     "musicbrainz_id": "f30fad73-49bb-41d9-b108-4fe538255e7f",
-    "audio_length": 450.44390022675736,
+    "audio_length": 450.444,
     "files": {
       "audio": "audio/0udof4-CsGY.wav",
       "beats": "beats/0udof4-CsGY.txt",
@@ -6769,7 +6769,7 @@
     "album": "Stan Meets Chet",
     "instrumentation": "quintet",
     "musicbrainz_id": "0107c39d-527a-418c-919b-216c34c5eb85",
-    "audio_length": 732.171625,
+    "audio_length": 740.427,
     "files": {
       "audio": "audio/_dJnP957OzI.wav",
       "beats": "beats/_dJnP957OzI.txt",
@@ -6794,7 +6794,7 @@
     "album": "Coltrane",
     "instrumentation": "saxophone quartet",
     "musicbrainz_id": "66c1f283-4d0b-451b-a4e7-23bd4cb1fda3",
-    "audio_length": 618.660875,
+    "audio_length": 390.107,
     "files": {
       "audio": "audio/7RRxiUw6bkk.wav",
       "beats": "beats/7RRxiUw6bkk.txt",
@@ -6819,7 +6819,7 @@
     "album": "Trident",
     "instrumentation": "piano trio",
     "musicbrainz_id": "cbdd2d66-cd00-4f45-be0f-603a0fbbeb8f",
-    "audio_length": 670.8666666666667,
+    "audio_length": 301.933,
     "files": {
       "audio": "audio/IlKTxP7rPkY.wav",
       "beats": "beats/IlKTxP7rPkY.txt",
@@ -6844,7 +6844,7 @@
     "album": "Consciousness",
     "instrumentation": "guitar combo",
     "musicbrainz_id": "917580b5-834c-4d3a-9495-d9f0d105f4ac",
-    "audio_length": 229.27383333333333,
+    "audio_length": 277.973,
     "files": {
       "audio": "audio/C-PF03PTL3U.wav",
       "beats": "beats/C-PF03PTL3U.txt",
@@ -6867,7 +6867,7 @@
     "album": "Smokin\u2019 at the Half Note",
     "instrumentation": "guitar quartet",
     "musicbrainz_id": "dae28443-0f57-4c4a-8068-37e128b488b8",
-    "audio_length": 303.35710416666666,
+    "audio_length": 303.357,
     "files": {
       "audio": "audio/8Vai7lTj4aI.wav",
       "beats": "beats/8Vai7lTj4aI.txt",
@@ -7708,7 +7708,7 @@
     "album": "The Artistry of Barney Kessel",
     "instrumentation": "guitar quartet",
     "musicbrainz_id": "96c272df-57f0-4233-bf21-8f91aef76eeb",
-    "audio_length": 410.4591458333333,
+    "audio_length": 410.459,
     "files": {
       "audio": "audio/i7equj-RvaA.wav",
       "beats": "beats/i7equj-RvaA.txt",
@@ -7733,7 +7733,7 @@
     "album": "Jordu",
     "instrumentation": "quintet",
     "musicbrainz_id": "70c1bd61-4fd2-4f8f-b684-b13619110a62",
-    "audio_length": 410.78422916666665,
+    "audio_length": 410.784,
     "files": {
       "audio": "audio/dnK6OHPQZbA.wav",
       "beats": "beats/dnK6OHPQZbA.txt",
@@ -7758,7 +7758,7 @@
     "album": "Jazz Immortal",
     "instrumentation": "quintet with two horns",
     "musicbrainz_id": "c0054e1c-9ec3-4b04-963b-56d5c1de85f3",
-    "audio_length": 196.498875,
+    "audio_length": 196.499,
     "files": {
       "audio": "audio/mK43Rt8ahOY.wav",
       "beats": "beats/mK43Rt8ahOY.txt",
@@ -7783,7 +7783,7 @@
     "album": "Born to Be Blue",
     "instrumentation": "quintet",
     "musicbrainz_id": "017459d2-d6bd-4b8a-9cb6-4c7bd10bd157",
-    "audio_length": 340.5903125,
+    "audio_length": 407.573,
     "files": {
       "audio": "audio/7PkTjBycu5M.wav",
       "beats": "beats/7PkTjBycu5M.txt",
@@ -7808,7 +7808,7 @@
     "album": "The Dolphin",
     "instrumentation": "saxophone quartet",
     "musicbrainz_id": "cccce2d8-890b-4dbf-816e-34b3c662669f",
-    "audio_length": 584.5043125,
+    "audio_length": 584.504,
     "files": {
       "audio": "audio/AIlDkJht3oM.wav",
       "beats": "beats/AIlDkJht3oM.txt",
@@ -7833,7 +7833,7 @@
     "album": "Live at the Half Note",
     "instrumentation": "quintet",
     "musicbrainz_id": "6e9f8dcc-e04c-4399-81bf-d700daa7ddaa",
-    "audio_length": 477.2266666666667,
+    "audio_length": 343.51,
     "files": {
       "audio": "audio/tS2uuNjPAhY.wav",
       "beats": "beats/tS2uuNjPAhY.txt",
@@ -7858,7 +7858,7 @@
     "album": "Sings and Plays With Bud Shank, Russ Freeman and Strings",
     "instrumentation": "trumpet quartet",
     "musicbrainz_id": "79c49bcd-91f8-4ea3-9954-6d93aa84e389",
-    "audio_length": 293.02422916666666,
+    "audio_length": 163.28,
     "files": {
       "audio": "audio/NZIE5yNwt0E.wav",
       "beats": "beats/NZIE5yNwt0E.txt",
@@ -7883,7 +7883,7 @@
     "album": "Walking the Line",
     "instrumentation": "piano trio",
     "musicbrainz_id": "e659156d-2336-4288-ba9a-3b7ab655f4c2",
-    "audio_length": 234.12439583333332,
+    "audio_length": 234.124,
     "files": {
       "audio": "audio/DqCM-qeS1Lo.wav",
       "beats": "beats/DqCM-qeS1Lo.txt",
@@ -7908,7 +7908,7 @@
     "album": "Summertime",
     "instrumentation": "vocal with orchestra",
     "musicbrainz_id": "eb072b99-e625-4021-9839-5c59a2f41c1f",
-    "audio_length": 185.1559375,
+    "audio_length": 185.156,
     "files": {
       "audio": "audio/70eiPAom-Ng.wav",
       "beats": "beats/70eiPAom-Ng.txt",
@@ -7933,7 +7933,7 @@
     "album": "Sonny Meets Hawk!",
     "instrumentation": "two tenor saxophones with rhythm",
     "musicbrainz_id": "37c7c408-265c-4327-b2bb-a5d292ad70c2",
-    "audio_length": 290.9344375,
+    "audio_length": 290.934,
     "files": {
       "audio": "audio/g-QUbHfnj-A.wav",
       "beats": "beats/g-QUbHfnj-A.txt",
@@ -7958,7 +7958,7 @@
     "album": "Wes Montgomery and the Billy Taylor Trio",
     "instrumentation": "guitar with quintet",
     "musicbrainz_id": "15509dd8-fb19-41b8-9f7f-082c8db73233",
-    "audio_length": 310.4130625,
+    "audio_length": 539.2,
     "files": {
       "audio": "audio/RNI18JbzFFg.wav",
       "beats": "beats/RNI18JbzFFg.txt",
@@ -8791,7 +8791,7 @@
     "album": "The Best of Bud Powell 1944-62, Vol. 1",
     "instrumentation": "piano trio",
     "musicbrainz_id": "1f218a26-a35f-44a3-a1e3-7634b68bdd34",
-    "audio_length": 172.17596371882087,
+    "audio_length": 172.176,
     "files": {
       "audio": "audio/siwFUDaCA_Y.wav",
       "beats": "beats/siwFUDaCA_Y.txt",
@@ -8814,7 +8814,7 @@
     "album": "Lullaby of Birdland / Later",
     "instrumentation": "vocal with orchestra",
     "musicbrainz_id": "d1f67765-36af-44aa-89f5-3765b963e03e",
-    "audio_length": 171.5258125,
+    "audio_length": 171.526,
     "files": {
       "audio": "audio/1_BvWeofmTc.wav",
       "beats": "beats/1_BvWeofmTc.txt",
@@ -8836,7 +8836,7 @@
     "album": "The Chronological Classics: Erroll Garner 1953",
     "instrumentation": "piano trio",
     "musicbrainz_id": "19cd9ba5-f85b-42dd-a11a-fc53a86901f9",
-    "audio_length": 425.92362811791384,
+    "audio_length": 425.924,
     "files": {
       "audio": "audio/v2xmf3B7Z4Q.wav",
       "beats": "beats/v2xmf3B7Z4Q.txt",
@@ -8859,7 +8859,7 @@
     "album": "Sarah Vaughan",
     "instrumentation": "vocal with sextet",
     "musicbrainz_id": "27bf94aa-a2df-412a-8832-e40e366a2283",
-    "audio_length": 240.55873015873016,
+    "audio_length": 240.559,
     "files": {
       "audio": "audio/n3RJv3AHsrs.wav",
       "beats": "beats/n3RJv3AHsrs.txt",
@@ -8882,7 +8882,7 @@
     "album": "The Sound",
     "instrumentation": "quintet",
     "musicbrainz_id": "9f398544-752a-492f-bacd-edb1b93fa250",
-    "audio_length": 148.21297052154196,
+    "audio_length": 148.213,
     "files": {
       "audio": "audio/c9POENaBhIU.wav",
       "beats": "beats/c9POENaBhIU.txt",
@@ -9033,7 +9033,7 @@
     "album": "Maiden Voyage",
     "instrumentation": "quintet",
     "musicbrainz_id": "7b486d22-ade1-4d61-940b-334071aad0cf",
-    "audio_length": 477.0933333333333,
+    "audio_length": 477.093,
     "files": {
       "audio": "audio/EWC5x9G45yo.wav",
       "beats": "beats/EWC5x9G45yo.txt",
@@ -9058,7 +9058,7 @@
     "album": "Open Space (The Down Beat Poll Winners in Europe)",
     "instrumentation": "vocal with sextet",
     "musicbrainz_id": "735ef01f-473b-43db-82db-e318b2fd198c",
-    "audio_length": 332.230625,
+    "audio_length": 332.231,
     "files": {
       "audio": "audio/9rjVoPzSki4.wav",
       "beats": "beats/9rjVoPzSki4.txt",
@@ -9236,7 +9236,7 @@
     "album": "Milestones",
     "instrumentation": "sextet",
     "musicbrainz_id": "3235e2c8-1fdb-4453-9ade-3ca90555d26c",
-    "audio_length": 342.88908333333336,
+    "audio_length": 342.889,
     "files": {
       "audio": "audio/k94zDsJ-JMU.wav",
       "beats": "beats/k94zDsJ-JMU.txt",
@@ -9261,7 +9261,7 @@
     "album": "Very Alive at Ronnie Scott's",
     "instrumentation": "big band",
     "musicbrainz_id": "f14708c0-644d-4307-b0ae-10d4bfbad6fe",
-    "audio_length": 304.44,
+    "audio_length": 290.92,
     "files": {
       "audio": "audio/aHqFpwxQhDE.wav",
       "beats": "beats/aHqFpwxQhDE.txt",
@@ -9991,7 +9991,7 @@
     "album": "Chet Baker Sings",
     "instrumentation": "vocal with quartet",
     "musicbrainz_id": "5d4fa45c-b979-4142-be7a-f98acf2ddf12",
-    "audio_length": 597.600375,
+    "audio_length": 141.133,
     "files": {
       "audio": "audio/ni9Cp9mOOOg.wav",
       "beats": "beats/ni9Cp9mOOOg.txt",
@@ -10016,7 +10016,7 @@
     "album": "Gerry Mulligan Quartet & Chubby Jackson Big Band",
     "instrumentation": "piano-less quartet",
     "musicbrainz_id": "2ef35cec-ce57-4ad3-acf4-c6cad281d9d3",
-    "audio_length": 178.12029166666667,
+    "audio_length": 178.12,
     "files": {
       "audio": "audio/A-Vfj-yeSP8.wav",
       "beats": "beats/A-Vfj-yeSP8.txt",
@@ -10041,7 +10041,7 @@
     "album": "Cookin\u2019 With the Miles Davis Quintet",
     "instrumentation": "quintet",
     "musicbrainz_id": "77acd812-2f12-4b79-9d9d-41824a06a3b0",
-    "audio_length": 361.4302083333333,
+    "audio_length": 361.43,
     "files": {
       "audio": "audio/-3lY1BwwmLM.wav",
       "beats": "beats/-3lY1BwwmLM.txt",
@@ -10818,7 +10818,7 @@
     "album": "The Complete Prestige 10-Inch LP Collection",
     "instrumentation": "quintet",
     "musicbrainz_id": "1070bfc8-9856-47cb-9ef2-247795741ba3",
-    "audio_length": 323.03602083333334,
+    "audio_length": 323.036,
     "files": {
       "audio": "audio/9IY29EZb1pI.wav",
       "beats": "beats/9IY29EZb1pI.txt",
@@ -10843,7 +10843,7 @@
     "album": "Smokin\u2019 in Seattle: Live at the Penthouse",
     "instrumentation": "guitar with trio",
     "musicbrainz_id": "d2f19b67-b8df-445a-a525-5ecdaca72d48",
-    "audio_length": 128.9984375,
+    "audio_length": 128.998,
     "files": {
       "audio": "audio/Fob3xTDrdxo.wav",
       "beats": "beats/Fob3xTDrdxo.txt",
@@ -10868,7 +10868,7 @@
     "album": "The Complete Ahmad Jamal Trio Argo Sessions 1956-62",
     "instrumentation": "piano trio",
     "musicbrainz_id": "e395ced7-377c-4bb4-b354-3a9267ab8f79",
-    "audio_length": 200.93333333333334,
+    "audio_length": 200.933,
     "files": {
       "audio": "audio/VUAbqDaHbdY.wav",
       "beats": "beats/VUAbqDaHbdY.txt",
@@ -10893,7 +10893,7 @@
     "album": "Live in Nice 1978",
     "instrumentation": "piano trio",
     "musicbrainz_id": "796a72ba-4a0b-45e1-9452-f2ad2fec4fc1",
-    "audio_length": 491.41333333333336,
+    "audio_length": 491.413,
     "files": {
       "audio": "audio/KffQYuD-0hs.wav",
       "beats": "beats/KffQYuD-0hs.txt",
@@ -10918,7 +10918,7 @@
     "album": "Kind of Blue",
     "instrumentation": "sextet",
     "musicbrainz_id": "2d72ac9e-1300-4106-986d-6080b9e61a83",
-    "audio_length": 589.8449166666667,
+    "audio_length": 589.845,
     "files": {
       "audio": "audio/xGVdAlxlp18.wav",
       "beats": "beats/xGVdAlxlp18.txt",
@@ -10943,7 +10943,7 @@
     "album": "The Sound Of The Trio",
     "instrumentation": "piano trio",
     "musicbrainz_id": "940fa118-e00a-4b6d-bbdd-5a60fcb94553",
-    "audio_length": 382.4566041666667,
+    "audio_length": 533.245,
     "files": {
       "audio": "audio/7tsrI0Ce3GE.wav",
       "beats": "beats/7tsrI0Ce3GE.txt",
@@ -11402,7 +11402,7 @@
     "album": "The Best of Bud Powell 1944-62, Vol. 1",
     "instrumentation": "piano trio",
     "musicbrainz_id": "eb5dbfb4-92ad-44f2-83a5-3b1c8d778c3b",
-    "audio_length": 178.12,
+    "audio_length": 143.453,
     "files": {
       "audio": "audio/D2gf6ps0ksM.wav",
       "beats": "beats/D2gf6ps0ksM.txt",
@@ -11427,7 +11427,7 @@
     "album": "From Swing to Bebop: 'round Midnight",
     "instrumentation": "quintet",
     "musicbrainz_id": "49be0da9-2abc-482f-86f0-7d0899c7cd90",
-    "audio_length": 153.76254166666666,
+    "audio_length": 182.184,
     "files": {
       "audio": "audio/OKQcgu8dbuw.wav",
       "beats": "beats/OKQcgu8dbuw.txt",
@@ -11452,7 +11452,7 @@
     "album": "Reunion With Chet Baker",
     "instrumentation": "pianoless quartet",
     "musicbrainz_id": "aa4c67ec-9c3b-4261-89f2-d334d355bd84",
-    "audio_length": 311.3333333333333,
+    "audio_length": 311.333,
     "files": {
       "audio": "audio/yyGjpylkO0U.wav",
       "beats": "beats/yyGjpylkO0U.txt",
@@ -11477,7 +11477,7 @@
     "album": "The Paris Concert",
     "instrumentation": "piano-guitar-bass trio",
     "musicbrainz_id": "1c1eb27c-b27a-4f6c-b051-6a99b97edf96",
-    "audio_length": 307.3625416666667,
+    "audio_length": 304.646,
     "files": {
       "audio": "audio/c6S1TjkhRug.wav",
       "beats": "beats/c6S1TjkhRug.txt",
@@ -11502,7 +11502,7 @@
     "album": "Stitt Plays Bird",
     "instrumentation": "quintet",
     "musicbrainz_id": "84fef8ea-5e18-4b7a-9699-26f1bc2ed4ee",
-    "audio_length": 218.66666666666666,
+    "audio_length": 218.667,
     "files": {
       "audio": "audio/KQB-Ju_fXbc.wav",
       "beats": "beats/KQB-Ju_fXbc.txt",
@@ -11802,7 +11802,7 @@
     "album": "Live at the 1972 Monterey Jazz Festival",
     "instrumentation": "quintet",
     "musicbrainz_id": "9f99b1f9-0eef-4185-a3bc-857705fbb30b",
-    "audio_length": 920.0675,
+    "audio_length": 920.067,
     "files": {
       "audio": "audio/4Dhc-GAU1Po.wav",
       "beats": "beats/4Dhc-GAU1Po.txt",
@@ -11827,7 +11827,7 @@
     "album": "Hot House: The Complete Jazz At Massey Hall Recordings (Live At Massey Hall / 1953)",
     "instrumentation": "vocal with all-star jam",
     "musicbrainz_id": "631012a5-04b4-4feb-9519-81941fb1adf5",
-    "audio_length": 514.0665833333334,
+    "audio_length": 496.536,
     "files": {
       "audio": "audio/G8rBr7tL8Vw.wav",
       "beats": "beats/G8rBr7tL8Vw.txt",
@@ -11852,7 +11852,7 @@
     "album": "The Complete Storyville Broadcasts",
     "instrumentation": "piano quartet",
     "musicbrainz_id": "a9ab8f78-6187-4b87-b09d-c58ed8114a05",
-    "audio_length": 297.2133333333333,
+    "audio_length": 297.213,
     "files": {
       "audio": "audio/V4rKkhJYMoM.wav",
       "beats": "beats/V4rKkhJYMoM.txt",
@@ -11877,7 +11877,7 @@
     "album": "Greatest Hits",
     "instrumentation": "big band",
     "musicbrainz_id": "94262fba-7a34-4816-baac-fc952233c024",
-    "audio_length": 509.6666666666667,
+    "audio_length": 190.38,
     "files": {
       "audio": "audio/npVIPKXLAC8.wav",
       "beats": "beats/npVIPKXLAC8.txt",
@@ -11902,7 +11902,7 @@
     "album": "Passport to Fame: Erroll Garner\u2019s First Recordings",
     "instrumentation": "piano trio",
     "musicbrainz_id": "62de40d8-ffaf-4732-9578-27c187de7e95",
-    "audio_length": 165.012625,
+    "audio_length": 165.013,
     "files": {
       "audio": "audio/0IVhMjHjrhA.wav",
       "beats": "beats/0IVhMjHjrhA.txt",
@@ -11927,7 +11927,7 @@
     "album": "Lover Man",
     "instrumentation": "vocal with big band",
     "musicbrainz_id": "d68ace60-a0d4-429c-baf1-a3139a7d7bbe",
-    "audio_length": 144.7648125,
+    "audio_length": 151.023,
     "files": {
       "audio": "audio/bJwtlvt_q2Y.wav",
       "beats": "beats/bJwtlvt_q2Y.txt",
@@ -11974,7 +11974,7 @@
     "album": "Verve Jazz Masters 30",
     "instrumentation": "saxophone quartet",
     "musicbrainz_id": "788c97fe-c656-44aa-ac6c-8381b3649531",
-    "audio_length": 224.1190022675737,
+    "audio_length": 224.119,
     "files": {
       "audio": "audio/w-K9lUq2CVw.wav",
       "beats": "beats/w-K9lUq2CVw.txt",
@@ -11997,7 +11997,7 @@
     "album": "Sassy: 1950\u20131954",
     "instrumentation": "vocal with trio",
     "musicbrainz_id": "22ce9f46-2cd7-4e0c-96eb-4e4fd0f70cf0",
-    "audio_length": 156.59537414965988,
+    "audio_length": 156.595,
     "files": {
       "audio": "audio/nN0-41ypXbo.wav",
       "beats": "beats/nN0-41ypXbo.txt",
@@ -12020,7 +12020,7 @@
     "album": "Wes Montgomery",
     "instrumentation": "guitar quartet",
     "musicbrainz_id": "90146f5d-a71e-42a5-980d-7fff9dc0e20c",
-    "audio_length": 282.2733958333333,
+    "audio_length": 282.273,
     "files": {
       "audio": "audio/f7Mv6TW-xP8.wav",
       "beats": "beats/f7Mv6TW-xP8.txt",
@@ -12832,7 +12832,7 @@
     "album": "Stable Mable",
     "instrumentation": "saxophone quartet",
     "musicbrainz_id": "9bdc0845-e070-487f-b3f4-aa3c1e75637c",
-    "audio_length": 171.36327083333333,
+    "audio_length": 503.943,
     "files": {
       "audio": "audio/xR0G92riAw4.wav",
       "beats": "beats/xR0G92riAw4.txt",
@@ -12907,7 +12907,7 @@
     "album": "A Tribute to Miles Davis",
     "instrumentation": "quintet",
     "musicbrainz_id": "aa676c19-d4bf-40e6-87ce-0a041fb417af",
-    "audio_length": 620.3675416666666,
+    "audio_length": 620.368,
     "files": {
       "audio": "audio/dKz9ONtYbAA.wav",
       "beats": "beats/dKz9ONtYbAA.txt",
@@ -12932,7 +12932,7 @@
     "album": "J.J.!",
     "instrumentation": "big band with woodwinds",
     "musicbrainz_id": "2c209654-d0de-48ee-ba7c-e3b2e9a3edf0",
-    "audio_length": 563.5715208333334,
+    "audio_length": 262.571,
     "files": {
       "audio": "audio/rgBQHf_IUMY.wav",
       "beats": "beats/rgBQHf_IUMY.txt",
@@ -12957,7 +12957,7 @@
     "album": "Trio in Tokyo",
     "instrumentation": "piano trio",
     "musicbrainz_id": "018963d2-0dd6-46b2-9b30-a246f45e1149",
-    "audio_length": 298.4576875,
+    "audio_length": 449.701,
     "files": {
       "audio": "audio/Anq7GKJkvw0.wav",
       "beats": "beats/Anq7GKJkvw0.txt",
@@ -12982,7 +12982,7 @@
     "album": "Unissued at Birdland 1952-59",
     "instrumentation": "sextet",
     "musicbrainz_id": "64f37547-b059-4f54-9b4b-e749f73288cf",
-    "audio_length": 546.5513125,
+    "audio_length": 728.689,
     "files": {
       "audio": "audio/giUJOe5gqYQ.wav",
       "beats": "beats/giUJOe5gqYQ.txt",
@@ -13647,7 +13647,7 @@
     "album": "Piano Starts Here",
     "instrumentation": "solo piano",
     "musicbrainz_id": "c8449d08-54d0-4193-bd42-df84b2dcaa40",
-    "audio_length": 217.4084375,
+    "audio_length": 195.001,
     "files": {
       "audio": "audio/wnFDsiA9qOo.wav",
       "beats": "beats/wnFDsiA9qOo.txt",
@@ -13672,7 +13672,7 @@
     "album": "Masterpieces by Ellington",
     "instrumentation": "big band",
     "musicbrainz_id": "5c076f55-34cf-4b72-9ef4-1ec07f62d54a",
-    "audio_length": 226.76608333333334,
+    "audio_length": 687.845,
     "files": {
       "audio": "audio/IRBxSrtwbuc.wav",
       "beats": "beats/IRBxSrtwbuc.txt",
@@ -13697,7 +13697,7 @@
     "album": "Ella Fitzgerald Sings the Duke Ellington Song Book",
     "instrumentation": "vocal with sextet",
     "musicbrainz_id": "ad8e3250-274c-42c6-af11-e6abc47472bb",
-    "audio_length": 322.1072291666667,
+    "audio_length": 322.107,
     "files": {
       "audio": "audio/7I35VWEVPKg.wav",
       "beats": "beats/7I35VWEVPKg.txt",
@@ -13722,7 +13722,7 @@
     "album": "The Complete Johnny Hodges Sessions 1951 - 1955",
     "instrumentation": "alto saxophone with combo",
     "musicbrainz_id": "14d3d644-b62b-4c44-b2ae-f2bc0a70d01c",
-    "audio_length": 200.87583333333333,
+    "audio_length": 200.876,
     "files": {
       "audio": "audio/TR15zGel-Uo.wav",
       "beats": "beats/TR15zGel-Uo.txt",
@@ -13747,7 +13747,7 @@
     "album": "Thelonious Monk Plays Duke Ellington",
     "instrumentation": "piano trio",
     "musicbrainz_id": "4a7f48c2-35f8-48be-ad12-813fe6855e9f",
-    "audio_length": 268.2646875,
+    "audio_length": 268.265,
     "files": {
       "audio": "audio/2ucYnej_kIE.wav",
       "beats": "beats/2ucYnej_kIE.txt",
@@ -14028,7 +14028,7 @@
     "album": "Daybreak",
     "instrumentation": "organ combo",
     "musicbrainz_id": "f2039a32-5e70-4477-bbf1-de993ddfb9ee",
-    "audio_length": 346.63910416666664,
+    "audio_length": 395.018,
     "files": {
       "audio": "audio/7urSakUCi50.wav",
       "beats": "beats/7urSakUCi50.txt",
@@ -14053,7 +14053,7 @@
     "album": "Petrucciani NH\u00d8P",
     "instrumentation": "piano and bass duo",
     "musicbrainz_id": "b9b2f196-3b50-4f2e-a08c-76706cdf6b00",
-    "audio_length": 368.18666666666667,
+    "audio_length": 368.187,
     "files": {
       "audio": "audio/AIGFfandAEs.wav",
       "beats": "beats/AIGFfandAEs.txt",
@@ -14078,7 +14078,7 @@
     "album": "Trio in Stockholm 1959 - St Thomas",
     "instrumentation": "saxophone quartet",
     "musicbrainz_id": "ff391677-cb31-40f3-a91a-b8fd388e3ee2",
-    "audio_length": 407.475375,
+    "audio_length": 406.071,
     "files": {
       "audio": "audio/iStOzl51cbw.wav",
       "beats": "beats/iStOzl51cbw.txt",
@@ -14103,7 +14103,7 @@
     "album": "The Master Trio",
     "instrumentation": "piano trio",
     "musicbrainz_id": "de0f6479-616f-4be7-86c6-7b00df310e8f",
-    "audio_length": 334.35575,
+    "audio_length": 334.356,
     "files": {
       "audio": "audio/q6FiaKWYp74.wav",
       "beats": "beats/q6FiaKWYp74.txt",
@@ -14128,7 +14128,7 @@
     "album": "Art Pepper Meets the Rhythm Section",
     "instrumentation": "alto saxophone quartet",
     "musicbrainz_id": "ec9dfa6c-edf1-4c32-930d-101c4758c856",
-    "audio_length": 316.80145833333336,
+    "audio_length": 316.801,
     "files": {
       "audio": "audio/a_XtFZP8We4.wav",
       "beats": "beats/a_XtFZP8We4.txt",
@@ -14153,7 +14153,7 @@
     "album": "Plus",
     "instrumentation": "quintet",
     "musicbrainz_id": "510ddb5d-b84b-4770-8713-a6f3bb5c0493",
-    "audio_length": 425.51729166666667,
+    "audio_length": 425.517,
     "files": {
       "audio": "audio/23VzBuFkTMQ.wav",
       "beats": "beats/23VzBuFkTMQ.txt",
@@ -14178,7 +14178,7 @@
     "album": "Torchy",
     "instrumentation": "vocal with orchestra",
     "musicbrainz_id": "31dec0f4-de11-4577-bc88-43a2146a3fb9",
-    "audio_length": 188.19775,
+    "audio_length": 188.198,
     "files": {
       "audio": "audio/_BmpW2enTcg.wav",
       "beats": "beats/_BmpW2enTcg.txt",
@@ -14203,7 +14203,7 @@
     "album": "Bird At St. Nick's, Volume 2",
     "instrumentation": "alto saxophone with rhythm section",
     "musicbrainz_id": "4e89cf17-85ab-4891-abdd-3ae06da28e00",
-    "audio_length": 366.74758333333335,
+    "audio_length": 208.283,
     "files": {
       "audio": "audio/xxtSiKF6cU0.wav",
       "beats": "beats/xxtSiKF6cU0.txt",
@@ -14253,7 +14253,7 @@
     "album": "Piano Portraits By Phineas Newborn",
     "instrumentation": "piano trio",
     "musicbrainz_id": "9598e799-992c-40b6-a92f-8183df77bc4d",
-    "audio_length": 214.94666666666666,
+    "audio_length": 183.414,
     "files": {
       "audio": "audio/-to3mvkxVlk.wav",
       "beats": "beats/-to3mvkxVlk.txt",
@@ -14278,7 +14278,7 @@
     "album": "Parker's Mood",
     "instrumentation": "trumpet trio",
     "musicbrainz_id": "c73fef7c-8311-42c9-8e58-a7a3285100fe",
-    "audio_length": 341.5733333333333,
+    "audio_length": 341.573,
     "files": {
       "audio": "audio/IjKf9HtA2pk.wav",
       "beats": "beats/IjKf9HtA2pk.txt",
@@ -14303,7 +14303,7 @@
     "album": "Rollins Plays for Bird",
     "instrumentation": "tenor saxophone quartet (medley)",
     "musicbrainz_id": "51bf0130-ea00-4051-a2c7-b0dd1aeba3d7",
-    "audio_length": 540.6266666666667,
+    "audio_length": 540.627,
     "files": {
       "audio": "audio/rnUQ9vU3pfc.wav",
       "beats": "beats/rnUQ9vU3pfc.txt",
@@ -15008,7 +15008,7 @@
     "album": "The Quintessential Billie Holiday Volume 2",
     "instrumentation": "vocal with orchestra",
     "musicbrainz_id": "0107d6bf-b3cc-4335-9073-2b02b0198dd9",
-    "audio_length": 174.79983333333334,
+    "audio_length": 174.8,
     "files": {
       "audio": "audio/THflqYOqm3A.wav",
       "beats": "beats/THflqYOqm3A.txt",
@@ -15033,7 +15033,7 @@
     "album": "April in Paris",
     "instrumentation": "alto sax with strings",
     "musicbrainz_id": "1913a45b-3357-4e94-814f-e43200b8d280",
-    "audio_length": 176.309125,
+    "audio_length": 169.041,
     "files": {
       "audio": "audio/PUKXB-tYpV4.wav",
       "beats": "beats/PUKXB-tYpV4.txt",
@@ -15058,7 +15058,7 @@
     "album": "Porgy and Bess",
     "instrumentation": "trumpet with big band/orchestra",
     "musicbrainz_id": "3dc72e57-93b3-4c15-9a02-cd5f1ae066ba",
-    "audio_length": 199.52908333333335,
+    "audio_length": 197.416,
     "files": {
       "audio": "audio/EPj22GjTUzw.wav",
       "beats": "beats/EPj22GjTUzw.txt",
@@ -15083,7 +15083,7 @@
     "album": "Studio Rio Presents: The Brazil Connection",
     "instrumentation": "vocal with band",
     "musicbrainz_id": "2d6ba412-cddd-4e7f-8023-48949a59c263",
-    "audio_length": 200.2140625,
+    "audio_length": 208.422,
     "files": {
       "audio": "audio/fE5oaM4C0e4.wav",
       "beats": "beats/fE5oaM4C0e4.txt",
@@ -16263,7 +16263,7 @@
     "album": "One September Afternoon",
     "instrumentation": "alto saxophone quartet",
     "musicbrainz_id": "6ef77598-1693-4538-af9e-09396dee2a1b",
-    "audio_length": 369.9626666666667,
+    "audio_length": 369.963,
     "files": {
       "audio": "audio/BWBhiLzvX8Y.wav",
       "beats": "beats/BWBhiLzvX8Y.txt",
@@ -16288,7 +16288,7 @@
     "album": "Chet Baker Sings",
     "instrumentation": "trumpet quartet",
     "musicbrainz_id": "7fc44a17-f353-481a-96f0-066552f7e8ed",
-    "audio_length": 181.01116666666667,
+    "audio_length": 177.377,
     "files": {
       "audio": "audio/5aTZMSyUB14.wav",
       "beats": "beats/5aTZMSyUB14.txt",
@@ -16313,7 +16313,7 @@
     "album": "Come Rain or Come Shine",
     "instrumentation": "tenor saxophone quartet",
     "musicbrainz_id": "f714c1b7-0c10-460e-8e57-9f9b39a01f8c",
-    "audio_length": 747.5626666666667,
+    "audio_length": 743.34,
     "files": {
       "audio": "audio/mwPal21e_Vg.wav",
       "beats": "beats/mwPal21e_Vg.txt",
@@ -16338,7 +16338,7 @@
     "album": "The Jazz Message of Hank Mobley",
     "instrumentation": "tenor saxophone quartet",
     "musicbrainz_id": "4f429242-d483-4928-8012-9050d09cb224",
-    "audio_length": 349.3906666666667,
+    "audio_length": 349.135,
     "files": {
       "audio": "audio/2HBYEuso6Yc.wav",
       "beats": "beats/2HBYEuso6Yc.txt",
@@ -16363,7 +16363,7 @@
     "album": "Lester Young with the Oscar Peterson Trio #2",
     "instrumentation": "tenor saxophone with rhythm",
     "musicbrainz_id": "65803480-aa5d-46c7-91a2-cf58ce85de51",
-    "audio_length": 205.66666666666666,
+    "audio_length": 205.667,
     "files": {
       "audio": "audio/SsekKA-_FNw.wav",
       "beats": "beats/SsekKA-_FNw.txt",
@@ -16388,7 +16388,7 @@
     "album": "Live in Japan",
     "instrumentation": "vocal with quartet",
     "musicbrainz_id": "114f38c4-d1f1-4b1c-8168-ce3a54b4ca1e",
-    "audio_length": 114.69497916666667,
+    "audio_length": 95.736,
     "files": {
       "audio": "audio/9at3l_mt1X4.wav",
       "beats": "beats/9at3l_mt1X4.txt",
@@ -16413,7 +16413,7 @@
     "album": "Wes Montgomery and the Billy Taylor Trio",
     "instrumentation": "guitar with trio",
     "musicbrainz_id": "895ebf38-6316-432f-8c43-a34a87dee169",
-    "audio_length": 186.77333333333334,
+    "audio_length": 186.773,
     "files": {
       "audio": "audio/ObIT8iioWvU.wav",
       "beats": "beats/ObIT8iioWvU.txt",
@@ -16694,7 +16694,7 @@
     "album": "Wave",
     "instrumentation": "guitar quartet with orchestra",
     "musicbrainz_id": "3070236e-928f-4be0-b45c-81f079a4bc9f",
-    "audio_length": 176.88961451247167,
+    "audio_length": 176.89,
     "files": {
       "audio": "audio/JGqzKmp_5Bg.wav",
       "beats": "beats/JGqzKmp_5Bg.txt",
@@ -16717,7 +16717,7 @@
     "album": "Fantasia",
     "instrumentation": "piano trio",
     "musicbrainz_id": "1341d9cf-5328-43db-8286-f983ee94128b",
-    "audio_length": 226.85895691609977,
+    "audio_length": 226.859,
     "files": {
       "audio": "audio/pKS6uFF2y44.wav",
       "beats": "beats/pKS6uFF2y44.txt",
@@ -16740,7 +16740,7 @@
     "album": "Jo\u00e3o Gilberto in Tokyo",
     "instrumentation": "voice with guitar",
     "musicbrainz_id": "7f92419e-5192-4ac0-87b2-e7854608ad1d",
-    "audio_length": 282.33142857142855,
+    "audio_length": 282.331,
     "files": {
       "audio": "audio/vx_uV48z81I.wav",
       "beats": "beats/vx_uV48z81I.txt",
@@ -16763,7 +16763,7 @@
     "album": "Supertrios",
     "instrumentation": "piano trio",
     "musicbrainz_id": "22b110d8-82b0-4c1c-a6d8-6e65d4036f84",
-    "audio_length": 446.53333333333336,
+    "audio_length": 446.533,
     "files": {
       "audio": "audio/IfSOhv6QRKI.wav",
       "beats": "beats/IfSOhv6QRKI.txt",
@@ -16785,7 +16785,7 @@
     "album": "The Big 3",
     "instrumentation": "vibraphone quartet",
     "musicbrainz_id": "3fc39e5b-f9ff-48fc-96c9-b4daf4170649",
-    "audio_length": 410.46666666666664,
+    "audio_length": 410.467,
     "files": {
       "audio": "audio/Y66-bZPWl0A.wav",
       "beats": "beats/Y66-bZPWl0A.txt",
@@ -16807,7 +16807,7 @@
     "album": "Motions and Emotions",
     "instrumentation": "piano trio with orchestra",
     "musicbrainz_id": "b625e121-2b3d-42df-8e33-c37a46486ff8",
-    "audio_length": 363.7760625,
+    "audio_length": 363.776,
     "files": {
       "audio": "audio/5IAg6XY-0rI.wav",
       "beats": "beats/5IAg6XY-0rI.txt",
@@ -16829,7 +16829,7 @@
     "album": "Blue Note Plays Jobim",
     "instrumentation": "tenor saxophone quintet/soul-jazz",
     "musicbrainz_id": "27ecaec7-83f2-4089-baf8-167672a610dd",
-    "audio_length": 493.8933333333333,
+    "audio_length": 493.893,
     "files": {
       "audio": "audio/sVUCD5MwqyQ.wav",
       "beats": "beats/sVUCD5MwqyQ.txt",
@@ -17107,7 +17107,7 @@
     "album": "Art Pepper & Sonny Redd",
     "instrumentation": "alto saxophone quartet",
     "musicbrainz_id": "4ea5c4cc-74d5-4988-a93f-81ca00e3c4a3",
-    "audio_length": 243.712,
+    "audio_length": 207.726,
     "files": {
       "audio": "audio/M5hxANN2xQc.wav",
       "beats": "beats/M5hxANN2xQc.txt",
@@ -17132,7 +17132,7 @@
     "album": "What's New",
     "instrumentation": "flute with piano trio",
     "musicbrainz_id": "69284b6d-2f9a-481b-a4c4-fa9d8ac31b4f",
-    "audio_length": 293.6976041666667,
+    "audio_length": 293.698,
     "files": {
       "audio": "audio/vaBzEzbQ_rs.wav",
       "beats": "beats/vaBzEzbQ_rs.txt",
@@ -17157,7 +17157,7 @@
     "album": "Lady in Satin",
     "instrumentation": "vocal with quartet",
     "musicbrainz_id": "265bff50-186d-478a-95bf-fd6922977c8b",
-    "audio_length": 10117.015520833333,
+    "audio_length": 256.093,
     "files": {
       "audio": "audio/e7Z2wlBWmnU.wav",
       "beats": "beats/e7Z2wlBWmnU.txt",
@@ -17182,7 +17182,7 @@
     "album": "Coleman Hawkins",
     "instrumentation": "tenor saxophone with ensemble",
     "musicbrainz_id": "2c21e9ab-8d32-4c3f-abd4-fd98762f83de",
-    "audio_length": 351.18135416666667,
+    "audio_length": 351.181,
     "files": {
       "audio": "audio/IhcRb7GfE74.wav",
       "beats": "beats/IhcRb7GfE74.txt",
@@ -17207,7 +17207,7 @@
     "album": "Frank Sinatra Sings for Only the Lonely",
     "instrumentation": "vocal with orchestra",
     "musicbrainz_id": "3b5a3996-75c0-45d9-abde-cd7e3e4c655d",
-    "audio_length": 315.03675,
+    "audio_length": 311.287,
     "files": {
       "audio": "audio/SA64eS8eTEw.wav",
       "beats": "beats/SA64eS8eTEw.txt",
@@ -17232,7 +17232,7 @@
     "album": "Ballads",
     "instrumentation": "saxophone quartet",
     "musicbrainz_id": "37282c42-4221-40e2-89ce-a28ff8602f67",
-    "audio_length": 223.65333333333334,
+    "audio_length": 223.653,
     "files": {
       "audio": "audio/SsXprfyx99w.wav",
       "beats": "beats/SsXprfyx99w.txt",
@@ -17513,7 +17513,7 @@
     "album": "The Return of Art Pepper: The Complete Aladdin, Volume 1",
     "instrumentation": "alto saxophone quartet",
     "musicbrainz_id": "dd9f1a40-1b00-4de7-aef3-ca37f40c3baf",
-    "audio_length": 344.37333333333333,
+    "audio_length": 344.373,
     "files": {
       "audio": "audio/Ok4_vHc5B1w.wav",
       "beats": "beats/Ok4_vHc5B1w.txt",
@@ -17538,7 +17538,7 @@
     "album": "Charlie Parker On Dial, Volume 1",
     "instrumentation": "septet",
     "musicbrainz_id": "f69d98a6-7212-4041-a4af-59da03945918",
-    "audio_length": 179.24645833333332,
+    "audio_length": 179.246,
     "files": {
       "audio": "audio/otbRyJHd2AY.wav",
       "beats": "beats/otbRyJHd2AY.txt",
@@ -17563,7 +17563,7 @@
     "album": "\"Chops\"",
     "instrumentation": "guitar and bass duo",
     "musicbrainz_id": "c18fb1a8-4cfd-4a1a-a8a5-255a66d2ad71",
-    "audio_length": 218.26758333333333,
+    "audio_length": 218.268,
     "files": {
       "audio": "audio/yuesDiz2MDM.wav",
       "beats": "beats/yuesDiz2MDM.txt",
@@ -17588,7 +17588,7 @@
     "album": "Unheard Herd",
     "instrumentation": "big band",
     "musicbrainz_id": "ab55e68f-1ab8-4490-b3c9-f856c38e2be8",
-    "audio_length": 436.5466666666667,
+    "audio_length": 436.547,
     "files": {
       "audio": "audio/5VAeSXMYi7A.wav",
       "beats": "beats/5VAeSXMYi7A.txt",
@@ -17613,7 +17613,7 @@
     "album": "Parker's Mood",
     "instrumentation": "trumpet and piano duo",
     "musicbrainz_id": "e0b92f66-df7a-4c5d-8b4c-2a95c1984114",
-    "audio_length": 234.76535416666667,
+    "audio_length": 234.765,
     "files": {
       "audio": "audio/g-baE6aDgoE.wav",
       "beats": "beats/g-baE6aDgoE.txt",
@@ -17638,7 +17638,7 @@
     "album": "West Coast Live",
     "instrumentation": "quintet",
     "musicbrainz_id": "4d0887af-5375-4bbc-a39c-96b9b421a555",
-    "audio_length": 290.8933333333333,
+    "audio_length": 290.893,
     "files": {
       "audio": "audio/AkWOHcPjCTQ.wav",
       "beats": "beats/AkWOHcPjCTQ.txt",
@@ -17663,7 +17663,7 @@
     "album": "Salt Peanuts",
     "instrumentation": "saxophone ensemble with rhythm",
     "musicbrainz_id": "5439f783-fbf5-4855-aee6-3976df3f08e2",
-    "audio_length": 253.61333333333334,
+    "audio_length": 253.613,
     "files": {
       "audio": "audio/476GeDeh3cQ.wav",
       "beats": "beats/476GeDeh3cQ.txt",
@@ -17688,7 +17688,7 @@
     "album": "Hawk in Germany",
     "instrumentation": "saxophone quartet",
     "musicbrainz_id": "f1f12c37-23bc-4d3f-a182-673b5c981aaf",
-    "audio_length": 120.17489583333334,
+    "audio_length": 411.016,
     "files": {
       "audio": "audio/oaOUzHAD6Qg.wav",
       "beats": "beats/oaOUzHAD6Qg.txt",
@@ -17713,7 +17713,7 @@
     "album": "Billie Holiday",
     "instrumentation": "vocal with trio",
     "musicbrainz_id": "6e396b8b-617e-456f-b3e9-92110450c1bb",
-    "audio_length": 202.63185416666667,
+    "audio_length": 203.407,
     "files": {
       "audio": "audio/unb4hSlpIS4.wav",
       "beats": "beats/unb4hSlpIS4.txt",
@@ -17738,7 +17738,7 @@
     "album": "Carmen McRae Sings Lover Man and Other Billie Holiday Classics",
     "instrumentation": "vocal with trio",
     "musicbrainz_id": "00fcf2a1-7327-44d3-b5ce-f9f229591c33",
-    "audio_length": 233.69725,
+    "audio_length": 292.014,
     "files": {
       "audio": "audio/iRQXT4oBFts.wav",
       "beats": "beats/iRQXT4oBFts.txt",
@@ -17763,7 +17763,7 @@
     "album": "With Strings",
     "instrumentation": "trumpet quintet",
     "musicbrainz_id": "573531ea-6792-4f30-8663-3cd01674714f",
-    "audio_length": 183.08935416666668,
+    "audio_length": 181.301,
     "files": {
       "audio": "audio/lhioIjOmSVc.wav",
       "beats": "beats/lhioIjOmSVc.txt",
@@ -17788,7 +17788,7 @@
     "album": "Dizzy in Greece",
     "instrumentation": "big band",
     "musicbrainz_id": "16a28be1-dc52-4d98-b1a7-1392c6bf0878",
-    "audio_length": 223.01333333333332,
+    "audio_length": 223.013,
     "files": {
       "audio": "audio/DxofXh6FwyY.wav",
       "beats": "beats/DxofXh6FwyY.txt",
@@ -17813,7 +17813,7 @@
     "album": "Magician",
     "instrumentation": "band with piano",
     "musicbrainz_id": "cd1676ea-71d0-4f32-ac24-9ac15e11a0bf",
-    "audio_length": 445.0917083333333,
+    "audio_length": 234.87,
     "files": {
       "audio": "audio/CHHXuo1ZDn4.wav",
       "beats": "beats/CHHXuo1ZDn4.txt",
@@ -18110,7 +18110,7 @@
       "structure": "structure/E84PWwiznPQ.csv",
       "segments": "segments/E84PWwiznPQ.csv"
     },
-    "audio_length": 510.9318820861678
+    "audio_length": 510.932
   },
   {
     "id": "f0aa3791-14f3-48f5-ace8-5cb6e04d4f92",
@@ -18134,7 +18134,7 @@
       "structure": "structure/olUu5imUXoc.csv",
       "segments": "segments/olUu5imUXoc.csv"
     },
-    "audio_length": 565.498775510204,
+    "audio_length": 565.499,
     "instrumentation": "quartet"
   },
   {
@@ -18159,7 +18159,7 @@
       "structure": "structure/wjXqrvgGRXE.csv",
       "segments": "segments/wjXqrvgGRXE.csv"
     },
-    "audio_length": 281.820589569161,
+    "audio_length": 281.821,
     "instrumentation": "piano trio"
   },
   {
@@ -18185,7 +18185,7 @@
       "structure": "structure/KIiDqJCpOHY.csv",
       "segments": "segments/KIiDqJCpOHY.csv"
     },
-    "audio_length": 244.13460317460317
+    "audio_length": 244.135
   },
   {
     "id": "200e3021-760a-4f7c-8e7b-faa441ec441b",
@@ -18209,7 +18209,7 @@
       "structure": "structure/OAe299VeFKI.csv",
       "segments": "segments/OAe299VeFKI.csv"
     },
-    "audio_length": 496.97668934240363,
+    "audio_length": 496.977,
     "instrumentation": "piano trio"
   },
   {
@@ -18234,7 +18234,7 @@
       "structure": "structure/4bN_jpipj9c.csv",
       "segments": "segments/4bN_jpipj9c.csv"
     },
-    "audio_length": 376.16326530612247
+    "audio_length": 376.163
   },
   {
     "id": "dcfd59e0-d28d-4ed7-9982-23ab5b3f0611",
@@ -18256,7 +18256,7 @@
       "chords": "chords/Q3eFTwOD4dA.csv",
       "segments": "segments/Q3eFTwOD4dA.csv"
     },
-    "audio_length": 432.61097505668937,
+    "audio_length": 432.611,
     "instrumentation": "quartet"
   },
   {
@@ -18281,7 +18281,7 @@
       "structure": "structure/jd6SitlZ44I.csv",
       "segments": "segments/jd6SitlZ44I.csv"
     },
-    "audio_length": 192.72562358276645,
+    "audio_length": 192.726,
     "instrumentation": "piano trio"
   },
   {
@@ -18306,7 +18306,7 @@
       "structure": "structure/ApkvfMZpFhg.csv",
       "segments": "segments/ApkvfMZpFhg.csv"
     },
-    "audio_length": 495.93179138321995,
+    "audio_length": 495.932,
     "instrumentation": "saxophone quartet"
   },
   {
@@ -18331,7 +18331,7 @@
       "structure": "structure/z2ycW-_pvw4.csv",
       "segments": "segments/z2ycW-_pvw4.csv"
     },
-    "audio_length": 368.50068027210887,
+    "audio_length": 368.501,
     "instrumentation": "quartet with guitar"
   },
   {
@@ -18354,7 +18354,7 @@
       "chords": "chords/bTIA7JnEem8.csv",
       "segments": "segments/bTIA7JnEem8.csv"
     },
-    "audio_length": 405.4900680272109,
+    "audio_length": 405.49,
     "instrumentation": "quartet"
   },
   {
@@ -18377,7 +18377,7 @@
       "chords": "chords/A3vLZNVOgAE.csv",
       "segments": "segments/A3vLZNVOgAE.csv"
     },
-    "audio_length": 658.7036734693878,
+    "audio_length": 658.704,
     "instrumentation": "piano trio"
   },
   {
@@ -18400,7 +18400,7 @@
       "chords": "chords/TRs_E7Z9I4E.csv",
       "segments": "segments/TRs_E7Z9I4E.csv"
     },
-    "audio_length": 140.9683446712018,
+    "audio_length": 140.968,
     "instrumentation": "quartet"
   },
   {
@@ -18423,7 +18423,7 @@
       "chords": "chords/LmFlOMQyf5k.csv",
       "segments": "segments/LmFlOMQyf5k.csv"
     },
-    "audio_length": 994.7428571428571,
+    "audio_length": 994.743,
     "instrumentation": "quartet"
   },
   {
@@ -18446,7 +18446,7 @@
       "chords": "chords/Db_hzwtrQws.csv",
       "segments": "segments/Db_hzwtrQws.csv"
     },
-    "audio_length": 388.0518820861678,
+    "audio_length": 388.052,
     "instrumentation": "piano trio"
   },
   {
@@ -18469,7 +18469,7 @@
       "chords": "chords/ogJqb011SoI.csv",
       "segments": "segments/ogJqb011SoI.csv"
     },
-    "audio_length": 155.52725623582765,
+    "audio_length": 155.527,
     "instrumentation": "quintet"
   },
   {
@@ -18492,7 +18492,7 @@
       "chords": "chords/pX8hN-SlsSA.csv",
       "segments": "segments/pX8hN-SlsSA.csv"
     },
-    "audio_length": 429.6156009070295,
+    "audio_length": 429.616,
     "instrumentation": "quartet"
   },
   {
@@ -18515,7 +18515,7 @@
       "chords": "chords/4qL_hkYEf1M.csv",
       "segments": "segments/4qL_hkYEf1M.csv"
     },
-    "audio_length": 395.6215873015873,
+    "audio_length": 395.622,
     "instrumentation": "quartet"
   },
   {
@@ -18539,7 +18539,7 @@
       "chords": "chords/j6SyZuV1WRI.csv",
       "segments": "segments/j6SyZuV1WRI.csv"
     },
-    "audio_length": 169.7843083900227
+    "audio_length": 169.784
   },
   {
     "id": "66567e7e-d924-48a9-bd8b-c53e97912402",
@@ -18561,7 +18561,7 @@
       "chords": "chords/ULfMsWyWGbs.csv",
       "segments": "segments/ULfMsWyWGbs.csv"
     },
-    "audio_length": 465.65297052154193,
+    "audio_length": 465.653,
     "instrumentation": "quintet"
   },
   {
@@ -18584,7 +18584,7 @@
       "chords": "chords/kDHeCQ84Iy4.csv",
       "segments": "segments/kDHeCQ84Iy4.csv"
     },
-    "audio_length": 291.3639909297052,
+    "audio_length": 291.364,
     "instrumentation": "big band"
   },
   {
@@ -18607,7 +18607,7 @@
       "chords": "chords/28v2yBOkL5s.csv",
       "segments": "segments/28v2yBOkL5s.csv"
     },
-    "audio_length": 204.38204081632654,
+    "audio_length": 204.382,
     "instrumentation": "big band"
   },
   {
@@ -18630,7 +18630,7 @@
       "chords": "chords/UOz1ImvUIx8.csv",
       "segments": "segments/UOz1ImvUIx8.csv"
     },
-    "audio_length": 609.4773696145124,
+    "audio_length": 609.477,
     "instrumentation": "quartet"
   },
   {
@@ -18653,7 +18653,7 @@
       "chords": "chords/FzwVeEpFjvE.csv",
       "segments": "segments/FzwVeEpFjvE.csv"
     },
-    "audio_length": 670.8709297052154,
+    "audio_length": 670.871,
     "instrumentation": "piano trio"
   },
   {
@@ -18675,7 +18675,7 @@
       "chords": "chords/c8fvOJvRmPY.csv",
       "segments": "segments/c8fvOJvRmPY.csv"
     },
-    "audio_length": 349.64607709750567,
+    "audio_length": 349.646,
     "instrumentation": "vibraphone quartet"
   },
   {
@@ -18698,7 +18698,7 @@
       "chords": "chords/9J80pAc8vt0.csv",
       "segments": "segments/9J80pAc8vt0.csv"
     },
-    "audio_length": 392.8816326530612,
+    "audio_length": 392.882,
     "instrumentation": "piano trio"
   },
   {
@@ -18722,7 +18722,7 @@
       "chords": "chords/ODoixA4u6z4.csv",
       "segments": "segments/ODoixA4u6z4.csv"
     },
-    "audio_length": 203.40680272108844
+    "audio_length": 203.407
   },
   {
     "id": "a149414a-697b-4885-bcdc-07ddc5ac82d5",
@@ -18744,7 +18744,7 @@
       "chords": "chords/yAPsAd8zCfk.csv",
       "segments": "segments/yAPsAd8zCfk.csv"
     },
-    "audio_length": 455.1111111111111,
+    "audio_length": 455.111,
     "instrumentation": "quartet"
   },
   {
@@ -18768,7 +18768,7 @@
       "chords": "chords/h04lj_PJyek.csv",
       "segments": "segments/h04lj_PJyek.csv"
     },
-    "audio_length": 251.2863492063492
+    "audio_length": 251.286
   },
   {
     "id": "5338c21d-4228-4e27-ba0a-eaea813337fd",
@@ -18791,7 +18791,7 @@
       "chords": "chords/15Cod69ooZw.csv",
       "segments": "segments/15Cod69ooZw.csv"
     },
-    "audio_length": 160.31056689342404
+    "audio_length": 160.311
   },
   {
     "id": "a745f68d-75b9-41f8-acfd-f14cee8c8373",
@@ -18814,7 +18814,7 @@
       "chords": "chords/s2FS8BOIuEA.csv",
       "segments": "segments/s2FS8BOIuEA.csv"
     },
-    "audio_length": 223.19020408163266
+    "audio_length": 223.19
   },
   {
     "id": "5ed78d56-81da-4b32-a2cc-2cd23ab0324c",
@@ -18837,7 +18837,7 @@
       "chords": "chords/rc6YyJAlKns.csv",
       "segments": "segments/rc6YyJAlKns.csv"
     },
-    "audio_length": 516.5278911564626
+    "audio_length": 516.528
   },
   {
     "id": "98b4fd58-1fdd-4cb6-807d-b282dc3bcf51",
